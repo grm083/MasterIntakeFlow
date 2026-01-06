@@ -1,0 +1,107 @@
+<template>
+    <div class={containerClass}>
+
+        <!-- Question Header -->
+        <div class={questionHeaderClass}>
+            <div class="slds-grid slds-grid_align-spread">
+                <div class="slds-col">
+                    <!-- Checkmark for completed questions -->
+                    <template if:true={isCompleted}>
+                        <lightning-icon
+                            icon-name="utility:check"
+                            size="x-small"
+                            variant="success"
+                            class="slds-m-right_x-small">
+                        </lightning-icon>
+                    </template>
+
+                    <!-- Question number and text -->
+                    <span class="question-number">Q{questionNumber}:</span>
+                    <span class="question-text">{question.questionText}</span>
+                </div>
+
+                <!-- Edit button for completed questions -->
+                <template if:true={canEdit}>
+                    <div class="slds-col slds-no-flex">
+                        <lightning-button
+                            label="Edit"
+                            variant="base"
+                            onclick={handleEditClick}
+                            class="edit-button">
+                        </lightning-button>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Completed Question Summary -->
+        <template if:true={isCompleted}>
+            <div class="answer-summary">
+                <span class="slds-text-color_weak">Answer: </span>
+                <span class="slds-text-body_regular">{displayAnswer}</span>
+            </div>
+        </template>
+
+        <!-- Active Question Input -->
+        <template if:true={isActive}>
+            <div class="question-input slds-m-top_small">
+
+                <!-- Picklist: Few Options (2-4) - Radio Buttons -->
+                <template if:true={isPicklist}>
+                    <template if:true={hasFewOptions}>
+                        <lightning-radio-group
+                            name="answer"
+                            options={radioOptions}
+                            onchange={handlePicklistChange}
+                            variant="label-stacked"
+                            required>
+                        </lightning-radio-group>
+                    </template>
+
+                    <!-- Picklist: Moderate/Many Options (5+) - Combobox -->
+                    <template if:false={hasFewOptions}>
+                        <lightning-combobox
+                            name="answer"
+                            label="Select an option"
+                            placeholder="Choose an answer..."
+                            options={picklistOptions}
+                            onchange={handlePicklistChange}
+                            required>
+                        </lightning-combobox>
+                    </template>
+                </template>
+
+                <!-- Text Input -->
+                <template if:true={isText}>
+                    <lightning-input
+                        type="text"
+                        label="Your Answer"
+                        placeholder="Enter your response..."
+                        onblur={handleTextBlur}
+                        onkeyup={handleTextKeyUp}
+                        required>
+                    </lightning-input>
+                    <div class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                        Press Enter or click outside the field to continue
+                    </div>
+                </template>
+
+                <!-- Instruction (Display Only) -->
+                <template if:true={isInstruction}>
+                    <div class="instruction-box slds-box slds-theme_info slds-m-top_small">
+                        <lightning-icon
+                            icon-name="utility:info"
+                            size="small"
+                            class="slds-m-right_small">
+                        </lightning-icon>
+                        <lightning-formatted-rich-text
+                            value={question.questionText}>
+                        </lightning-formatted-rich-text>
+                    </div>
+                </template>
+
+            </div>
+        </template>
+
+    </div>
+</template>
