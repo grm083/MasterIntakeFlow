@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Confirmation of lock rate, lock characteristics, and request type that is required</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Vendor: Lock - WM_Confirmation of GP Info (CE DLLFAM)</name>
+    <style>freeForm</style>
+    <subject>MAS: {!Asset.MAS_Company_Account_Number__c} - Locks Quote Needed - Ref.#: {!Case.Reference_Number__c} - {!Case.Location_Code__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

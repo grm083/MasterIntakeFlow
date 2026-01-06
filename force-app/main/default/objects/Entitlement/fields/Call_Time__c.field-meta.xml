@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Call_Time__c</fullName>
+    <description>Deadline of Business hours</description>
+    <externalId>false</externalId>
+    <label>Call Time</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>10:00</fullName>
+                <default>false</default>
+                <label>10:00</label>
+            </value>
+            <value>
+                <fullName>12:00</fullName>
+                <default>false</default>
+                <label>12:00</label>
+            </value>
+            <value>
+                <fullName>13:00</fullName>
+                <default>false</default>
+                <label>13:00</label>
+            </value>
+            <value>
+                <fullName>14:00</fullName>
+                <default>false</default>
+                <label>14:00</label>
+            </value>
+            <value>
+                <fullName>15:00</fullName>
+                <default>false</default>
+                <label>15:00</label>
+            </value>
+            <value>
+                <fullName>16:00</fullName>
+                <default>false</default>
+                <label>16:00</label>
+            </value>
+            <value>
+                <fullName>17:00</fullName>
+                <default>false</default>
+                <label>17:00</label>
+            </value>
+            <value>
+                <fullName>23:59</fullName>
+                <default>false</default>
+                <label>23:59</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

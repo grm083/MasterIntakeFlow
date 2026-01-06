@@ -1,0 +1,15 @@
+<apex:component controller="GetChildCase" access="global">
+    <apex:outputText style="text-align: center;font-family:Arial;" value="Thank you,"/><br/>
+    <br/>
+        <apex:outputText style="text-align: center;color:black;font-size:19px;font-weight: bold;font-family:Arial;" value="{!user.FirstName + ' ' + user.LastName}"/><br/>
+     	<apex:outputText style="text-align: center;font-size:13px;font-weight: bold;font-family:Arial;" value="Client Setup & Maintenance"/><br/>
+    <apex:panelGroup layout="block" style="margin-bottom:10pt;">
+    <apex:outputText style="text-align: center;font-size:13px;color:black;font-family:Arial;" value="National Accounts"/>
+    </apex:panelGroup>
+    <apex:outputText style="text-align: center;color:black;font-size:13px;font-family:Arial;" value="(888)625-5323"/><br/>
+    <apex:outputText style="text-align: center;color:black;font-size:13px;font-family:Arial;" value="1 Griffin Rd North,Suite 4C,"/><br/>
+    <apex:panelGroup layout="block" style="margin-bottom:10pt;">
+    <apex:outputText style="text-align: center;color:black;font-size:13px;font-family:Arial;" value="Windsor, CT 06095"/><br/>
+    </apex:panelGroup>
+    <apex:image id="theImage" value="https://wmsbs.file.force.com/servlet/servlet.ImageServer?oid=00D1I000001V0eB&id=0153u000002Omy8" alt="WM Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;width:104px;height: 28px;"  title="WM Logo"/>
+</apex:component>

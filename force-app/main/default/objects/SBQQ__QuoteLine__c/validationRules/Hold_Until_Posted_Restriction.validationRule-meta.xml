@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hold_Until_Posted_Restriction</fullName>
+    <active>true</active>
+    <description>Users cannot select Hold Until Posted when the cost = 0 and a price is provided.</description>
+    <errorConditionFormula>AND( HoldUntilPosted__c = TRUE, SBQQ__ListPrice__c &gt; 0,  SBQQ__UnitCost__c = 0)</errorConditionFormula>
+    <errorMessage>You cannot select Hold Until Posted when there is no cost and a price greater than zero.</errorMessage>
+</ValidationRule>

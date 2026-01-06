@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>STP_Eligibility</fullName>
+    <columns>Active__c</columns>
+    <columns>NAME</columns>
+    <columns>Service_Type__c</columns>
+    <columns>STP_Type__c</columns>
+    <columns>Market_Type__c</columns>
+    <columns>Duration__c</columns>
+    <columns>Equipment__c</columns>
+    <columns>Material__c</columns>
+    <columns>Customer_Included__c</columns>
+    <columns>Customer_All__c</columns>
+    <columns>Customer__c</columns>
+    <columns>Customer_Included_Canada__c</columns>
+    <columns>Customer_All_Canada__c</columns>
+    <columns>Customer_Canada__c</columns>
+    <columns>Parent_VID__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>STP_Criteria__c.STP_Eligibility</value>
+    </filters>
+    <label>STP Eligibility</label>
+</ListView>

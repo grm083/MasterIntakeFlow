@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MobilePhone</fullName>
+    <inlineHelpText>If contact is opted-in to receive text notifications at their current mobile number, then changing the mobile number will result in this contact being opted out of text notifications.  To continue to receive text notifications, this contact would need to opt back in.</inlineHelpText>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+</CustomField>

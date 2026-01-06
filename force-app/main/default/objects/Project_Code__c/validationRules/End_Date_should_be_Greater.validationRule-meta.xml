@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_Date_should_be_Greater</fullName>
+    <active>true</active>
+    <description>End Date should be greater than the provided Effective Date</description>
+    <errorConditionFormula>End_Date__c  &lt;  Effective_Date__c</errorConditionFormula>
+    <errorMessage>End Date should be greater than Effective Date.</errorMessage>
+</ValidationRule>

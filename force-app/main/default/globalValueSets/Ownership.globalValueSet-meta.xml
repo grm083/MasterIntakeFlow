@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>CLT</fullName>
+        <default>false</default>
+        <label>Customer Owned</label>
+    </customValue>
+    <customValue>
+        <fullName>VDR</fullName>
+        <default>false</default>
+        <label>Vendor Owned</label>
+    </customValue>
+    <customValue>
+        <fullName>GRL</fullName>
+        <default>false</default>
+        <label>Greenleaf Owned</label>
+    </customValue>
+    <customValue>
+        <fullName>MLS</fullName>
+        <default>false</default>
+        <label>Mall/Landlord Owned</label>
+    </customValue>
+    <customValue>
+        <fullName>UKW</fullName>
+        <default>false</default>
+        <label>Unknown</label>
+    </customValue>
+    <customValue>
+        <fullName>LRC</fullName>
+        <default>false</default>
+        <label>Lease/Rental Company</label>
+    </customValue>
+    <customValue>
+        <fullName>WM</fullName>
+        <default>false</default>
+        <label>WM</label>
+    </customValue>
+    <masterLabel>Ownership</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

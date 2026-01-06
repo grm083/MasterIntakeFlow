@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Action Reason</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Action_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Non-Responsive Vendor</fullName>
+                <default>false</default>
+                <label>Non-Responsive Vendor</label>
+            </value>
+            <value>
+                <fullName>Non-Responsive Customer</fullName>
+                <default>false</default>
+                <label>Non-Responsive Customer</label>
+            </value>
+            <value>
+                <fullName>Requested Configuration Not Available</fullName>
+                <default>false</default>
+                <label>Requested Configuration Not Available</label>
+            </value>
+            <value>
+                <fullName>Missing Price Calculation</fullName>
+                <default>false</default>
+                <label>Missing Price Calculation</label>
+            </value>
+            <value>
+                <fullName>Missing Information</fullName>
+                <default>false</default>
+                <label>Missing Information</label>
+            </value>
+            <value>
+                <fullName>Cannot Find Vendor to Provide Service</fullName>
+                <default>false</default>
+                <label>Cannot Find Vendor to Provide Service</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Project Required</fullName>
+                <default>false</default>
+                <label>Project Required</label>
+            </value>
+            <value>
+                <fullName>Pending Customer Response</fullName>
+                <default>false</default>
+                <label>Pending Customer Response</label>
+            </value>
+            <value>
+                <fullName>Pending Vendor Response</fullName>
+                <default>false</default>
+                <label>Pending Vendor Response</label>
+            </value>
+            <value>
+                <fullName>Customer Escalation</fullName>
+                <default>false</default>
+                <label>Customer Escalation</label>
+            </value>
+            <value>
+                <fullName>Vendor Escalation</fullName>
+                <default>false</default>
+                <label>Vendor Escalation</label>
+            </value>
+            <value>
+                <fullName>Price Calculation not Available</fullName>
+                <default>false</default>
+                <label>Price Calculation not Available</label>
+            </value>
+            <value>
+                <fullName>Approvals Missing/Conflicting Information</fullName>
+                <default>false</default>
+                <label>Approvals Missing/Conflicting Information</label>
+            </value>
+            <value>
+                <fullName>Missing Customer Specific Information</fullName>
+                <default>false</default>
+                <label>Missing Customer Specific Information</label>
+            </value>
+            <value>
+                <fullName>Pending Customer Approval - Quote</fullName>
+                <default>false</default>
+                <label>Pending Customer Approval - Quote</label>
+            </value>
+            <value>
+                <fullName>Pending Customer Approval - Quote Only</fullName>
+                <default>false</default>
+                <label>Pending Customer Approval - Quote Only</label>
+            </value>
+            <value>
+                <fullName>Pending Response from Customer</fullName>
+                <default>false</default>
+                <label>Pending Response from Customer</label>
+            </value>
+            <value>
+                <fullName>Pending Response from Hauler - WM</fullName>
+                <default>false</default>
+                <label>Pending Response from Hauler - WM</label>
+            </value>
+            <value>
+                <fullName>Pending Response from Hauler - 3PH</fullName>
+                <default>false</default>
+                <label>Pending Response from Hauler - 3PH</label>
+            </value>
+            <value>
+                <fullName>Pending Internal Response</fullName>
+                <default>false</default>
+                <label>Pending Internal Response</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Escalation</controllingFieldValue>
+            <valueName>Customer Escalation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Escalation</controllingFieldValue>
+            <valueName>Vendor Escalation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <controllingFieldValue>Additional Information Needed</controllingFieldValue>
+            <controllingFieldValue>Non-SBS Coordination Needed</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <valueName>Pending Customer Approval - Quote</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <valueName>Pending Customer Approval - Quote Only</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <valueName>Pending Response from Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <valueName>Pending Response from Hauler - WM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <valueName>Pending Response from Hauler - 3PH</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <valueName>Pending Internal Response</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Additional Information Needed</controllingFieldValue>
+            <valueName>Requested Configuration Not Available</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Additional Information Needed</controllingFieldValue>
+            <valueName>Missing Information</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

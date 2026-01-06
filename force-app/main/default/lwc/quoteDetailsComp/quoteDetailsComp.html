@@ -1,0 +1,39 @@
+<!--
+Author: Rishiraj Singh
+Requirement Id/Story: SDT-21793 & SDT-21795(QO Comp)
+FC: Rahul Rana
+Module: Asset Management/Quote Summary on Case Page
+
+Description: quoteDetailsComp to show bundle level info on quoteSummaryComp. quoteOrderComp is being used to create/view QO.
+
+-->
+
+<template>
+    <template if:true={isBundleList}>
+        <lightning-accordion class="example-accordion"
+                         onsectiontoggle={handleToggleSection1}
+                         active-section-name={activeBundle}>
+            <template for:each={bundleList} for:item="bundle" for:index="index">
+                <lightning-accordion-section name={bundle.bundleId} label={bundle.bundleProductName} key={bundle.bundleId}>
+                    <template if:true={bundle.isNotDraft}>
+                        <lightning-button-icon slot="actions" icon-name="utility:fulfillment_order" variant="brand" alternative-text="Create/View Order(s)" onclick={createViewOrder} value={bundle.bundleId}></lightning-button-icon>
+                    </template>
+                    <c-quoteline-details-comp bundle={bundle}></c-quoteline-details-comp>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+        <template if:true={showModal}>
+            <template if:true={isView}>
+                <c-quote-order-comp b-show-modal={showModal} inline-prod={activeProdId} quote-record-id={quoteId} service-picklist={picklistSchema} is-view={isView}></c-quote-order-comp>
+            </template>
+            <template if:false={isView}>
+                <c-quote-order-comp b-show-modal={showModal} inline-prod={activeProdId} quote-record-id={quoteId} service-picklist={picklistSchema}></c-quote-order-comp>
+            </template>
+        </template>
+    </template>
+    <template if:false={isBundleList}>
+        <div class="slds-theme_shade slds-box slds-align_absolute-center slds-text-title_caps">
+            product is to be selected.
+        </div>
+    </template>
+</template>

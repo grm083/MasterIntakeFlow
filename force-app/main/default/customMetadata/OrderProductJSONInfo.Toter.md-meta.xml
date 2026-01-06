@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Toter</label>
+    <protected>false</protected>
+    <values>
+        <field>On_Call_Pickup_Type__c</field>
+        <value xsi:type="xsd:string">On-Call Pickup</value>
+    </values>
+    <values>
+        <field>Removal__c</field>
+        <value xsi:type="xsd:string">Removal</value>
+    </values>
+    <values>
+        <field>Scheduled_On_Call_Pickup_Type__c</field>
+        <value xsi:type="xsd:string">On-Call Pickup (if possible - needs review)</value>
+    </values>
+    <values>
+        <field>Scheduled_Pickup_Type__c</field>
+        <value xsi:type="xsd:string">Extra Pickup</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" >
+    <div class="slds-grid " aura:id="container">
+        <div class="slds-col slds-size_1-of-2">             
+            <p><lightning:formattedUrl value="{!$Label.c.Opus}"  label="Opus" target="_blank" /></p>
+            <p><lightning:formattedUrl value="{!$Label.c.CAAG}"  label="CAAG" target="_blank" /></p>
+            <p><lightning:formattedUrl value="{!$Label.c.OneNote}"  label="OneNote" target="_blank" /></p>
+        </div>
+        
+        <div class="slds-col slds-size_1-of-2">       
+        	<p><lightning:formattedUrl value="{!$Label.c.Republic_Portal}"  label="Republic Portal" target="_blank" /></p>
+         	<p><lightning:formattedUrl value="{!$Label.c.Case_Template_Tool}"  label="Case Template Tool" target="_blank" /></p>
+        </div>    
+    </div>	
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PriceOnlyCall__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This will used to call Price only API. When True price only call when false price cost call.</description>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>PriceOnlyCall</label>
+    <type>Checkbox</type>
+</CustomField>

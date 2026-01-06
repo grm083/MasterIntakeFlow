@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>46.0</apiVersion>
+    <available>true</available>
+    <description>Confirm approval for a pickup request on multiple related requested services (E/R, DNR, XPU)</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Customer or Internal: Pickup Approval - Multi Case Escalation</name>
+    <style>none</style>
+    <subject>Final Request Approval Needed: {!Case.Case_Type__c}- {!Case.Case_Subtype_Email_Format__c} - {!Case.Location_Code__c} - Ref. #: {!Case.Reference_Number__c}</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

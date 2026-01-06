@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_for_line_of_business</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISBLANK(Project_Code_Header__c)),
+RecordType.DeveloperName = &quot;Project_Code_Detail&quot;,
+Text(Project_Code_Header__r.Product_Type__c) &lt;&gt; Text(Product_Type__c),
+NOT(ISPICKVAL(Project_Code_Header__r.Product_Type__c,&apos;Both&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Product_Type__c</errorDisplayField>
+    <errorMessage>Line of business on sub project cannot be different from project</errorMessage>
+</ValidationRule>

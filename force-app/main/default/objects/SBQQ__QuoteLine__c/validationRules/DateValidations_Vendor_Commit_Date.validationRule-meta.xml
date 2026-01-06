@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DateValidations_Vendor_Commit_Date</fullName>
+    <active>true</active>
+    <description>SDT-31408-Validation created to run check on Vendor Commit Date vs Asset&apos;s Start Date</description>
+    <errorConditionFormula>AssetId__c &lt;&gt; null &amp;&amp;
+	SBQQ__RequiredBy__c = null &amp;&amp;
+	Vendor_Commit_Date__c &lt;=  AssetId__r.Start_Date__c</errorConditionFormula>
+    <errorDisplayField>Vendor_Commit_Date__c</errorDisplayField>
+    <errorMessage>Vendor Commit Date cannot be less than or equal to Asset&apos;s Start Date</errorMessage>
+</ValidationRule>

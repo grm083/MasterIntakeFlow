@@ -1,0 +1,92 @@
+<template>
+    <div class={dropdownClass} onfocusout={handleFocusOut}>
+        <lightning-spinner lwc:if={showSpinner} alternative-text="Loading" size="small"></lightning-spinner>
+        <!-- <lightning-input label="Enter a date" type="date"  class="test" date-style="medium" value={test}></lightning-input> -->
+        <label class="slds-form-element__label" for="date-input-id-required">
+            
+            <!--modified as part of SDT 31585-->
+            <!--<abbr class="slds-required" title="required">* </abbr>Delivery/Start Date</label>-->
+            <abbr class="slds-required" title="required">* </abbr>{pickerLabel}</label>
+            <!--31585 ends here-->
+
+        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+            <button class="slds-input input-like" onclick={handleShowCalendar}>{formattedDate}
+                <lightning-icon class='icon-align' icon-name="utility:event" title="Calendar"
+                    size="x-small"></lightning-icon>
+            </button>
+            <!-- <input type="text" id="date-input-id-required" class="slds-input date_input" value={formattedDate} required /> -->
+            <!-- <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Select a date">
+                <lightning-icon icon-name="utility:event" title="Calendar" size="x-small"></lightning-icon>
+            </button> -->
+        </div>
+        <div class="slds-datepicker slds-dropdown slds-dropdown_right" tabindex="0" onmouseover={handleCalHover}
+            onmouseout={handleCalHoverOut}>
+            <div class="slds-datepicker__filter slds-grid">
+                <div class="slds-datepicker__filter_month slds-grid slds-grid_align-spread slds-grow">
+                    <div class="slds-align-middle">
+                        <button class="slds-button slds-button_icon slds-button_icon-container" title="Previous Month"
+                            onclick={handlePreviousMonth}>
+                            <lightning-icon icon-name="utility:left" title="Previous Month"
+                                size="x-small"></lightning-icon>
+                            <span class="slds-assistive-text">Previous Month</span>
+                        </button>
+                    </div>
+                    <h2 aria-atomic="true" aria-live="assertive" class="slds-align-middle" id="pickerRequired-month">
+                        {month}</h2>
+                    <div class="slds-align-middle">
+                        <button class="slds-button slds-button_icon slds-button_icon-container" title="Next Month"
+                            onclick={handleNextMonth}>
+                            <lightning-icon icon-name="utility:right" title="Next Month"
+                                size="x-small"></lightning-icon>
+                            <span class="slds-assistive-text">Next Month</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="slds-shrink-none">
+                    <div class="slds-select_container">
+                        <select class="slds-select" name="yearlist" id="pickerRequired_select"
+                            onchange={handleYearchange}>
+                            <template for:each={yearsRange} for:item="year">
+                                <option key={year} title={year} value={year}>{year}</option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table aria-labelledby="pickerRequired-month" class="slds-datepicker__month" role="grid">
+                <thead>
+                    <tr id="pickerRequired-weekdays">
+                        <template for:each={weekDays} for:item='day'>
+                            <th key={day.FullDayName} scope="col">
+                                <abbr title={day.FullDayName}>{day.uiDay}</abbr>
+                            </th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={dates} for:item="row">
+                        <tr key={row}>
+                            <template for:each={row} for:item="col">
+                                <td key={col.fullDate} onclick={handleDateSelect} aria-selected="false"
+                                    class={col.className} role="gridcell" aria-label={col.fullDate}
+                                    data-date={col.fullDate}>
+                                    <span class="slds-day">{col.date}</span>
+                                </td>
+                            </template>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <button class="slds-button slds-align_absolute-center slds-text-link" name="today"
+                onclick={handleToday}>Today</button>
+        </div>
+        <div lwc:if={availableDatesCheck} class="slds-datepicker slds-dropdown slds-dropdown_right info_box" role="dialog">
+            <div class="info_text">
+                <div class="circle yellow_bg"></div> {slaAvailableDateLabel}
+            </div>
+            <div class="info_text">
+                <div class="circle green_bg"></div> {availableDateLabel}
+            </div>
+        </div>
+    </div>
+</template>

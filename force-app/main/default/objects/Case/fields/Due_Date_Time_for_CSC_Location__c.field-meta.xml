@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Due_Date_Time_for_CSC_Location__c</fullName>
+    <description>This is to built, due date time for Confirm service completion task. It should be service date + 2 days with 1 PM EST</description>
+    <externalId>false</externalId>
+    <formula>DATETIMEVALUE(Text(Service_Date__c+2)+&quot; 17:00:00&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Due Date Time for CSC Location</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

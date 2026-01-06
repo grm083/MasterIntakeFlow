@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Trip Adjust</label>
+    <protected>false</protected>
+    <values>
+        <field>APIServiceChargeCode__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>AcitonName__c</field>
+        <value xsi:type="xsd:string">Adjust</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">We would only provide this information when the customer asks for it.  If we have  a quote line we can include the costs on the quote line.  If we don&apos;t have a quote line we shouldn&apos;t create it.  If the charge type is exclude, we should not create a quote line.</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsCreateAcornBaseline__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsCreateQuoteLine__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsDeleteQuoteLine__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>ServiceChargeCode__c</field>
+        <value xsi:type="xsd:string">DRUN</value>
+    </values>
+    <values>
+        <field>ServiceChargeName__c</field>
+        <value xsi:type="xsd:string">Trip</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A custom metadata record set that stores the mapping between Business Rule records and the objects over which various rules are governed.  The fields provided are primarily relational</description>
+    <label>Business Rule Field Mapping</label>
+    <pluralLabel>Business Rule Field Mappings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,65 @@
+.assetColor{
+    background-color:grey;
+}
+.slds-table .slds-hint-parent td.assetColor:hover{
+    background-color:grey;
+    color: var(--lwc-brandTextLink,rgb(0, 109, 204)) !important;
+    text-decoration: underline;
+}
+.actionColor{
+    color: green;
+}
+.slds-dropdown-trigger{
+    background-color : white;
+    position: relative;
+    display: inline-block;
+}
+.cardtitle{
+    text-align: center;
+}
+.action{
+    cursor: pointer;
+    background-color:red !important;
+    color : white;
+}
+.blankaction{
+    cursor: pointer;
+}
+.blankaction:hover{
+    cursor: pointer;
+    color : black;
+}
+.assetName{
+    color: white;
+    text-decoration: underline;
+}
+.assetName:hover {
+    color: var(--lwc-brandTextLink,rgb(0, 109, 204));
+    text-decoration: underline;
+}
+.assethoverdummy{
+    position: fixed;
+    width: 4rem;
+    height: Min 2rem;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    top: 50px !important;
+    left: 50px !important;
+}
+.slds-popover_tooltip{
+    background-color: white;
+}
+.slds-popover_tooltip .slds-popover__body {
+    color: black;
+}
+td.slds-size_1-of-10.action:hover{
+    color: black;
+}
+td.slds-size_1-of-10:hover{
+    color: black;
+}
+.fontColor{ 
+	color: red;
+}

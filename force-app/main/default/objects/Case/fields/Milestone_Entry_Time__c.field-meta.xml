@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Milestone_Entry_Time__c</fullName>
+    <description>The time that the case entered the current Milestone.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used to accurately create due dates for tasks that reps will be completing.</inlineHelpText>
+    <label>Milestone Entry Time</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

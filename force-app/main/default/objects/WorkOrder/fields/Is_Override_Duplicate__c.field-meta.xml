@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Override_Duplicate__c</fullName>
+    <externalId>false</externalId>
+    <formula>OR(Case.Bypass_WO_Duplicate__c, AND( Case.Create_AM_and_PM_Pickups__c, $Profile.Name &lt;&gt; &quot;System Administrator&quot;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Is Override Duplicate</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

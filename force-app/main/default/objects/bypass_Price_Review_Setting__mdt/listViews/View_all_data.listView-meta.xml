@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>View_all_data</fullName>
+    <columns>MasterLabel</columns>
+    <columns>Default_Value__c</columns>
+    <columns>MarketAreaType__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>View all data</label>
+</ListView>

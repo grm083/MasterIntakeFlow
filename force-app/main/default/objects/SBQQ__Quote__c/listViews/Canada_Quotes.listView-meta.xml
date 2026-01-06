@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Canada_Quotes</fullName>
+    <booleanFilter>(1 OR 4) AND 2 AND 3</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Assigned_To__c</columns>
+    <columns>SBQQ__Account__c</columns>
+    <columns>SBQQ__StartDate__c</columns>
+    <columns>Priority__c</columns>
+    <columns>SBQQ__Status__c</columns>
+    <columns>Action_Type__c</columns>
+    <columns>Action_Reason__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>SBQQ__ShippingCountry__c</field>
+        <operation>equals</operation>
+        <value>Canada</value>
+    </filters>
+    <filters>
+        <field>SBQQ__Status__c</field>
+        <operation>equals</operation>
+        <value>Draft,Product Configured,Procure Service,Cost Configured,Price Configured</value>
+    </filters>
+    <filters>
+        <field>Acorn_Integration_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Success</value>
+    </filters>
+    <filters>
+        <field>Primary_Segment__c</field>
+        <operation>equals</operation>
+        <value>Canada</value>
+    </filters>
+    <label>Canada Quotes</label>
+</ListView>

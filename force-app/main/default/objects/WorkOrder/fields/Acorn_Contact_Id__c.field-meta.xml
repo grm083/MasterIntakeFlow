@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Acorn_Contact_Id__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>External Id referencing the Acorn Contact</description>
+    <externalId>false</externalId>
+    <label>Acorn Contact Id</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Work Orders</relationshipLabel>
+    <relationshipName>Work_Orders</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

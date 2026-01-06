@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Material_Type_Code__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( TEXT( Material_Type__c) == &apos;Trash&apos; ,&apos;T&apos;, IF( TEXT( Material_Type__c) == &apos;Cardboard&apos; ,&apos;c&apos;, IF( TEXT( Material_Type__c) == &apos;Tires&apos; ,&apos;TIR&apos;, IF( TEXT( Material_Type__c) == &apos;Metal&apos; ,&apos;ME&apos;, IF( TEXT( Material_Type__c) == &apos;Pallets&apos; ,&apos;PLT&apos;, &apos;&apos;) ) ) ) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Material Type Code</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

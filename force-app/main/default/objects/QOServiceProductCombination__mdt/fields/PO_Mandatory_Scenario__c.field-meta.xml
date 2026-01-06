@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PO_Mandatory_Scenario__c</fullName>
+    <description>SDT-20110, Defines the PO mandatory scenario.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>PO Mandatory Scenario</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NS_PERM</fullName>
+                <default>false</default>
+                <label>NS_PERM</label>
+            </value>
+            <value>
+                <fullName>NS_TEMP</fullName>
+                <default>false</default>
+                <label>NS_TEMP</label>
+            </value>
+            <value>
+                <fullName>PCK_ER</fullName>
+                <default>false</default>
+                <label>PCK_ER</label>
+            </value>
+            <value>
+                <fullName>PCK_EXPCK</fullName>
+                <default>false</default>
+                <label>PCK_EXPCK</label>
+            </value>
+            <value>
+                <fullName>PCK_OC</fullName>
+                <default>false</default>
+                <label>PCK_OC</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Slant Top</fullName>
+        <default>false</default>
+        <label>Slant Top</label>
+    </customValue>
+    <customValue>
+        <fullName>Tall</fullName>
+        <default>false</default>
+        <label>Tall</label>
+    </customValue>
+    <customValue>
+        <fullName>Split Container</fullName>
+        <default>false</default>
+        <label>Split Container</label>
+    </customValue>
+    <customValue>
+        <fullName>Cathedral</fullName>
+        <default>false</default>
+        <label>Cathedral</label>
+    </customValue>
+    <customValue>
+        <fullName>Loading Dock</fullName>
+        <default>false</default>
+        <label>Loading Dock</label>
+    </customValue>
+    <customValue>
+        <fullName>Apartment Style</fullName>
+        <default>false</default>
+        <label>Apartment Style</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-Crusher</fullName>
+        <default>false</default>
+        <label>Pre-Crusher</label>
+    </customValue>
+    <customValue>
+        <fullName>Horizontal</fullName>
+        <default>false</default>
+        <label>Horizontal</label>
+    </customValue>
+    <customValue>
+        <fullName>Vertical</fullName>
+        <default>false</default>
+        <label>Vertical</label>
+    </customValue>
+    <customValue>
+        <fullName>Flat Top</fullName>
+        <default>false</default>
+        <label>Flat Top</label>
+    </customValue>
+    <customValue>
+        <fullName>Slant-Top</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Slant-Top</label>
+    </customValue>
+    <masterLabel>Equipment Style</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

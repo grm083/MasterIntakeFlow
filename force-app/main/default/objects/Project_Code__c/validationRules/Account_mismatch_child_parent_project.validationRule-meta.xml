@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_mismatch_child_parent_project</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISBLANK(Project_Code_Header__c )),
+RecordType.DeveloperName  = &quot;Project_Code_Detail&quot;,
+Project_Code_Header__r.Client_Account__c  &lt;&gt;  Client_Account__c
+)</errorConditionFormula>
+    <errorMessage>Client Account should be same on the Project and Sub Project.</errorMessage>
+</ValidationRule>

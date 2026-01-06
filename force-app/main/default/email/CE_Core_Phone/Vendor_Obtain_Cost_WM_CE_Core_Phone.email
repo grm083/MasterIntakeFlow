@@ -1,0 +1,199 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style=""><table border="0" cellpadding="0" cellspacing="0" width="784" style="border-collapse:
+ collapse;width:588pt;mso-yfti-tbllook:1536">
+ <colgroup><col width="29" style="mso-width-source:userset;width:22pt">
+ <col width="355" style="mso-width-source:userset;width:266pt">
+ <col width="35" style="mso-width-source:userset;width:26pt">
+ <col width="366" style="mso-width-source:userset;width:275pt">
+ </colgroup><tbody><tr height="91" style="mso-height-source:userset;height:68.57pt">
+  <td colspan="4" height="91" class="oa1" width="784" style="height:68.57pt;width:588pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><span style="color: rgb(87, 87, 79);"><font face="Arial, sans-serif"><br>
+    </font></span></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><font color="#57574f" face="Arial, sans-serif">Hello,</font></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font face="Arial, sans-serif"><span style="color: rgb(87, 87, 79);"><br>
+    </span><span style="color: rgb(87, 87, 79);">Please provide rates for the following services required at the
+  location listed below.&nbsp;&nbsp;The PFEs are listed below the signature
+  line. </span></font></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font face="Arial, sans-serif" style="" color="#ff0000"><b style="">[Specify the services requested, and specify the rates you require.]</b></font></p>
+  </td>
+ </tr>
+ <tr height="24" style="mso-height-source:userset;height:18.0pt">
+  <td colspan="4" height="24" class="oa1" width="784" style="height:18.0pt;width:588pt">
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="48" style="mso-height-source:userset;height:36.0pt">
+  <td height="48" class="oa1" width="29" style="height:36.0pt;width:22pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><img src="{!$Label.Line_Image}" border="0" align="left" alt=""><font face="Arial, sans-serif"><br></font></p>
+  </td>
+  <td colspan="3" class="oa1" width="756" style="width:567pt">
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><font face="Arial, sans-serif"><span style="color: rgb(87, 87, 79); font-weight: bold;">If
+  you </span><span style="color: rgb(87, 87, 79); font-weight: bold;">have </span><span style="color: rgb(87, 87, 79); font-weight: bold;">any questions, please respond to this message or contact us:&nbsp;</span></font><font color="#57574f" face="Arial, sans-serif"><b>{!User.Department_Phone__c}</b></font></p>
+  </td>
+ </tr>
+ <tr height="24" style="mso-height-source:userset;height:18.0pt">
+  <td colspan="2" height="24" class="oa1" width="383" style="height:18.0pt;width:288pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+  <td class="oa1" width="35" style="width:26pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+  <td class="oa1" width="366" style="width:275pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="48" style="mso-height-source:userset;height:36.0pt">
+  <td colspan="4" height="48" class="oa1" width="784" style="height:36.0pt;width:588pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font face="Arial, sans-serif"><span style="color: rgb(87, 87, 79); font-weight: bold;"><img src="{!$Label.Truck_Image}" border="0" align="left" alt=""><br></span></font></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="color: rgb(87, 87, 79); font-weight: bold;"><font face="Arial, sans-serif">Location Details</font></span></p>
+  </td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:10.8pt">
+  <td colspan="2" height="14" class="oa4" width="383" style="height:10.8pt;width:288pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="color: rgb(87, 87, 79); font-weight: bold;"><font face="Arial, sans-serif">Reference Number:&nbsp;</font></span></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font color="#57574f" face="Arial, sans-serif">{!Case.Reference_Number__c}</font></p>
+  </td>
+  <td class="oa4" width="35" style="width:26pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+  <td rowspan="3" class="oa4" width="366" style="width:275pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="color: rgb(87, 87, 79); font-weight: bold;"><font face="Arial, sans-serif">Service Address:</font></span></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font color="#57574f" face="Arial, sans-serif">{!Case.Location_Name_Email_Temp__c}</font></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font color="#57574f" face="Arial, sans-serif">{!Case.Tech_Location_Details__c}</font></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:10.8pt">
+  <td colspan="2" height="14" class="oa4" width="383" style="height:10.8pt;width:288pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+  <td class="oa4" width="35" style="width:26pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:10.8pt">
+  <td colspan="2" height="14" class="oa4" width="383" style="height:10.8pt;width:288pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><span style="color: rgb(87, 87, 79); font-weight: bold;"><font face="Arial, sans-serif">Location ID:</font></span></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font color="#57574f" face="Arial, sans-serif">{!Case.Location_Code__c}</font></p>
+  </td>
+  <td class="oa4" width="35" style="width:26pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="19" style="mso-height-source:userset;height:14.4pt">
+  <td colspan="4" height="19" class="oa1" width="784" style="height:14.4pt;width:588pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="29" style="mso-height-source:userset;height:21.6pt">
+  <td colspan="4" height="29" class="oa1" width="784" style="height:21.6pt;width:588pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><br></p></td></tr>
+ <tr height="29" style="mso-height-source:userset;height:21.6pt">
+  <td colspan="4" height="29" class="oa1" width="784" style="height:21.6pt;width:588pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="29" style="mso-height-source:userset;height:21.6pt">
+  <td colspan="4" height="29" class="oa1" width="784" style="height:21.6pt;width:588pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font face="Arial, sans-serif"><span style="color: rgb(87, 87, 79);">Thank you for </span><span style="color: rgb(87, 87, 79);">working with </span><span style="color: rgb(87, 87, 79);">WM. </span></font></p>
+  </td>
+ </tr>
+ <tr height="24" style="mso-height-source:userset;height:18.0pt">
+  <td colspan="4" height="24" class="oa1" width="784" style="height:18.0pt;width:588pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="58" style="mso-height-source:userset;height:43.2pt">
+  <td colspan="4" height="58" class="oa1" width="784" style="height:43.2pt;width:588pt">
+  <div class="OutlineElement Ltr SCXW35124312 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; clear: both; cursor: text; overflow: visible; position: relative; direction: ltr; font-family: &quot;Segoe UI&quot;, &quot;Segoe UI Web&quot;, Arial, Verdana, sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);"><p class="Paragraph SCXW35124312 BCX0" xml:lang="EN-US" lang="EN-US" paraid="1151162233" paraeid="{769b11b7-f901-4044-816f-e09709bd1f18}{43}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; user-select: text; overflow-wrap: break-word; white-space-collapse: preserve; vertical-align: baseline; font-kerning: none; background-color: transparent; color: windowtext;"><span class="EOP SCXW35124312 BCX0" data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559738&quot;:0,&quot;335559739&quot;:0}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-size: 14pt; line-height: 24.4125px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif;"><b>{!User.FirstName} {!User.LastName}</b></span></p></div><div class="OutlineElement Ltr SCXW35124312 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; clear: both; cursor: text; overflow: visible; position: relative; direction: ltr; font-family: &quot;Segoe UI&quot;, &quot;Segoe UI Web&quot;, Arial, Verdana, sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);"><p class="Paragraph SCXW35124312 BCX0" xml:lang="EN-US" lang="EN-US" paraid="133546672" paraeid="{c18fff52-752f-46a8-9780-134fa6dc07fd}{201}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; user-select: text; overflow-wrap: break-word; white-space-collapse: preserve; vertical-align: baseline; font-kerning: none; background-color: transparent; color: windowtext;"><span data-contrast="auto" xml:lang="EN-US" lang="EN-US" class="TextRun SCXW35124312 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: windowtext; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif; font-weight: bold;">Customer Service Representative</span><span class="EOP SCXW35124312 BCX0" data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559738&quot;:0,&quot;335559739&quot;:0}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif; color: windowtext;">&nbsp;</span></p></div><p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#57574f" face="Arial, sans-serif" size="2"><a href="mailto:{!User.Department_Email__c}">{!User.Department_Email__c}</a></font></p><p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><br></p></td></tr><tr height="89" style="mso-height-source:userset;height:66.84pt"><td colspan="4" height="89" class="oa1" width="784" style="height:66.84pt;width:588pt"><div class="OutlineElement Ltr SCXW27254225 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; clear: both; cursor: text; overflow: visible; position: relative; direction: ltr; font-family: &quot;Segoe UI&quot;, &quot;Segoe UI Web&quot;, Arial, Verdana, sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);"><p class="Paragraph SCXW27254225 BCX0" xml:lang="EN-US" lang="EN-US" paraid="2104344093" paraeid="{c18fff52-752f-46a8-9780-134fa6dc07fd}{210}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; user-select: text; overflow-wrap: break-word; white-space-collapse: preserve; vertical-align: baseline; font-kerning: none; background-color: transparent; color: windowtext;"><span data-contrast="auto" xml:lang="EN-US" lang="EN-US" class="TextRun SCXW27254225 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: windowtext; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif;">WM</span><span class="EOP SCXW27254225 BCX0" data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559738&quot;:0,&quot;335559739&quot;:0}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif; color: windowtext;">&nbsp;</span></p></div><div class="OutlineElement Ltr SCXW27254225 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; clear: both; cursor: text; overflow: visible; position: relative; direction: ltr; font-family: &quot;Segoe UI&quot;, &quot;Segoe UI Web&quot;, Arial, Verdana, sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);"><p class="Paragraph SCXW27254225 BCX0" xml:lang="EN-US" lang="EN-US" paraid="244153962" paraeid="{c18fff52-752f-46a8-9780-134fa6dc07fd}{213}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; user-select: text; overflow-wrap: break-word; white-space-collapse: preserve; vertical-align: baseline; font-kerning: none; background-color: transparent; color: windowtext;"><span data-contrast="auto" xml:lang="EN-US" lang="EN-US" class="TextRun SCXW27254225 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: windowtext; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif;">Strategic Business Solutions</span><span class="EOP SCXW27254225 BCX0" data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559738&quot;:0,&quot;335559739&quot;:0}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif; color: windowtext;">&nbsp;</span></p></div><div class="OutlineElement Ltr SCXW27254225 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; clear: both; cursor: text; overflow: visible; position: relative; direction: ltr; font-family: &quot;Segoe UI&quot;, &quot;Segoe UI Web&quot;, Arial, Verdana, sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);"><p class="Paragraph SCXW27254225 BCX0" xml:lang="EN-US" lang="EN-US" paraid="1590336988" paraeid="{c18fff52-752f-46a8-9780-134fa6dc07fd}{216}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; user-select: text; overflow-wrap: break-word; white-space-collapse: preserve; vertical-align: baseline; font-kerning: none; background-color: transparent; color: windowtext;"><span data-contrast="auto" xml:lang="EN-US" lang="EN-US" class="TextRun SCXW27254225 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: windowtext; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif;">415 Day Hill Rd</span><span class="EOP SCXW27254225 BCX0" data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559738&quot;:0,&quot;335559739&quot;:0}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif; color: windowtext;">&nbsp;</span></p></div><div class="OutlineElement Ltr SCXW27254225 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; clear: both; cursor: text; overflow: visible; position: relative; direction: ltr; font-family: &quot;Segoe UI&quot;, &quot;Segoe UI Web&quot;, Arial, Verdana, sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);"><p class="Paragraph SCXW27254225 BCX0" xml:lang="EN-US" lang="EN-US" paraid="1280713736" paraeid="{c18fff52-752f-46a8-9780-134fa6dc07fd}{219}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; user-select: text; overflow-wrap: break-word; white-space-collapse: preserve; vertical-align: baseline; font-kerning: none; background-color: transparent; color: windowtext;"><span data-contrast="auto" xml:lang="EN-US" lang="EN-US" class="TextRun SCXW27254225 BCX0" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: windowtext; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif;">Windsor, CT 06095</span><span class="EOP SCXW27254225 BCX0" data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559738&quot;:0,&quot;335559739&quot;:0}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif; color: windowtext;">&nbsp;</span></p><p class="Paragraph SCXW27254225 BCX0" xml:lang="EN-US" lang="EN-US" paraid="1280713736" paraeid="{c18fff52-752f-46a8-9780-134fa6dc07fd}{219}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; user-select: text; overflow-wrap: break-word; white-space-collapse: preserve; vertical-align: baseline; font-kerning: none; background-color: transparent; color: windowtext;"><span class="EOP SCXW27254225 BCX0" data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559738&quot;:0,&quot;335559739&quot;:0}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif; color: windowtext;"><br></span></p><p class="Paragraph SCXW27254225 BCX0" xml:lang="EN-US" lang="EN-US" paraid="1280713736" paraeid="{c18fff52-752f-46a8-9780-134fa6dc07fd}{219}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; user-select: text; overflow-wrap: break-word; white-space-collapse: preserve; vertical-align: baseline; font-kerning: none; background-color: transparent; color: windowtext;"><span class="EOP SCXW27254225 BCX0" data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559738&quot;:0,&quot;335559739&quot;:0}" style="-webkit-user-drag: none; -webkit-tap-highlight-color: transparent; margin: 0px; padding: 0px; user-select: text; font-size: 10pt; line-height: 17.4375px; font-family: Arial, Arial_EmbeddedFont, Arial_MSFontService, sans-serif; color: windowtext;"><img src="https://wmsbs.my.salesforce.com/servlet/servlet.ImageServer?id=015Uq000002jTZO&oid=00D1I000001V0eB" border="0" align="left" alt=""><br></span></p></div>
+  </td>
+ </tr>
+ <tr height="19" style="mso-height-source:userset;height:14.4pt">
+  <td colspan="4" height="19" class="oa1" width="784" style="height:14.4pt;width:588pt">
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="35" style="mso-height-source:userset;height:25.91pt">
+  <td colspan="4" height="35" class="oa1" width="784" style="height:25.91pt;width:588pt">
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><br></p>
+  </td>
+ </tr>
+ <tr height="38" style="mso-height-source:userset;height:28.8pt">
+  <td colspan="4" height="38" class="oa1" width="784" style="height:28.8pt;width:588pt">
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+</tbody></table><br></div>]]></td>
+</tr>
+</table>

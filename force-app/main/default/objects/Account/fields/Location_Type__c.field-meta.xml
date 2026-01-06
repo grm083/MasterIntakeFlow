@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Location_Type__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Location Type</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Categorization__c.Category__c</field>
+            <operation>equals</operation>
+            <value>Location Type</value>
+        </filterItems>
+        <filterItems>
+            <field>Categorization__c.Client_Account__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.ParentId</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Categorization__c</referenceTo>
+    <relationshipLabel>Accounts (Location Type)</relationshipLabel>
+    <relationshipName>LocationCategoryAccounts</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

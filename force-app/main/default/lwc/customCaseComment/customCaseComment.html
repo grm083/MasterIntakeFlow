@@ -1,0 +1,129 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 09-22-2022
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div class="slds-float_right">
+        <lightning-button variant="brand" label="View Messages In Portal" title="View Messages In Portal" onclick={handlePortalMessage} class="slds-m-left_x-small"></lightning-button>
+    </div>
+   <table class="slds-table slds-table_bordered slds-table_cell-buffer" >
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                    title="Date">
+                    <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick={sortColumn} name="Date">
+                        Date
+                        <template if:true={isDateSort}>
+                            <lightning-icon icon-name="utility:up" size="x-small" if:true={sortAsc} name="Date"></lightning-icon>
+                            <lightning-icon icon-name="utility:down" size="x-small" if:false={sortAsc} name="Date"></lightning-icon>
+                        </template>
+                    </a> 
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate"  style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                    title="Comments">Comments</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                    title="User/Team">
+                    <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick={sortColumn} name="UserTeam">
+                        User/Team
+                        <template if:true={isUserTeamSort}>
+                            <lightning-icon icon-name="utility:up" size="x-small" if:true={sortAsc} name="UserTeam"></lightning-icon>
+                            <lightning-icon icon-name="utility:down" size="x-small" if:false={sortAsc} name="UserTeam"></lightning-icon>
+                        </template>
+                    </a>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                    title="EditedBy">
+                    <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick={sortColumn} name="EditedBy">
+                        EditedBy
+                        <template if:true={isEditedBySort}>
+                            <lightning-icon icon-name="utility:up" size="x-small" if:true={sortAsc} name="EditedBy"></lightning-icon>
+                            <lightning-icon icon-name="utility:down" size="x-small" if:false={sortAsc} name="EditedBy"></lightning-icon>
+                        </template>
+                    </a>
+                    </div>
+                </th>
+                <th scope="col" style="padding-left: 5px!important;">
+                    <div class="slds-truncate" title="Action">
+                        <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick={sortColumn} name="Action">
+                            Action
+                            <template if:true={isActionSort}>
+                                <lightning-icon icon-name="utility:up" size="x-small" if:true={sortAsc} name="Action"></lightning-icon>
+                                <lightning-icon icon-name="utility:down" size="x-small" if:false={sortAsc} name="Action"></lightning-icon>
+                            </template>
+                        </a>
+                    </div>
+                </th>
+                <th scope="col" style="padding-right: 0px!important;">
+                    <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                    title="Source">
+                        <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick={sortColumn} name="Source">
+                            Source
+                            <template if:true={isSourceSort}>
+                                <lightning-icon icon-name="utility:up" size="x-small" if:true={sortAsc} name="Source"></lightning-icon>
+                                <lightning-icon icon-name="utility:down" size="x-small" if:false={sortAsc} name="Source"></lightning-icon>
+                            </template>
+                        </a>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template if:true={visibleComments.length}>
+                <template for:each={visibleComments} for:item="each"
+                    for:index="index">
+                    <tr key={each.id} >
+                        <td data-label="Date">
+                            <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" title="">
+                                   <lightning-formatted-date-time value={each.CreatedDate} year="numeric" day="numeric" month="numeric" hour="2-digit" minute="2-digit" hour12="true" time-zone="America/New_York" time-zone-name="short"> </lightning-formatted-date-time> 
+                                </div>
+                        </td>
+                        <td data-label="Comments" if:true={each.sobjectKey}>
+                            <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;"  title="">
+                              <lightning-button variant="Base" onclick={handleClick}  style="--lwc-brandAccessible: rgb(0 100 220); --lwc-brandAccessibleActive:  rgb(0 100 220);" label={each.sobjectKey} data-object-type={each.sObjectType} data-id={each.sObjectId} onmouseout={hideData}  onmouseover={showData}></lightning-button>
+                              <lightning-formatted-rich-text value={each.commentData}></lightning-formatted-rich-text>
+                            </div>
+                        </td>
+                        <td data-label="Comments" if:false={each.sobjectKey}>
+                            <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;"  title="">
+                              <lightning-formatted-rich-text value={each.Comment}></lightning-formatted-rich-text>
+                            </div>
+                        </td>
+                        <td data-label="User/Team">
+                            <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                            title="">{each.WorkflowTeamUser}</div>
+                        </td>
+                        <td data-label="EditedBy">
+                            <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                            title="" >{each.CreatedBy}</div>
+                        </td>
+                       
+                        <td data-label="Action">
+                            <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                            title="">{each.WorkflowAction}</div>
+                        </td>
+                       
+                       
+                        <td data-label="Source">
+                            <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;" 
+                            title="">{each.ChannelType}</div>
+                        </td>
+                    </tr>
+                </template>
+            </template>      
+        </tbody>
+    </table>
+    <c-hover-card if:true={showHoverCard} topmargin={top} leftmarginn={left} hover-record-id={selectedRecord.sObjectId} object-a-p-i-name={selectedRecord.sobjectType} title={selectedRecord.title} parent-id={casenumber} onclose={closeModal}></c-hover-card>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+</template>

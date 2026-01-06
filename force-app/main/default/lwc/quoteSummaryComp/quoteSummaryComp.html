@@ -1,0 +1,45 @@
+<!--
+Author: Rishiraj Singh
+Requirement Id/Story: SDT-21793 & SDT-21795(QO Comp)
+FC: Rahul Rana
+Module: Asset Management/Quote Summary on Case Page
+
+Description: LWC Component to show quote summary along with Quote Orders. quoteOrderComp is being used to create/view QO.
+
+-->
+<template>
+    <lightning-card title="Quote(s) Summary" icon-name="utility:cart">
+        <lightning-button-icon icon-name="utility:sync" variant="brand" slot="actions" onclick={connectedCallback}></lightning-button-icon>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+        <template if:true={isQuoteList}>
+            <lightning-accordion class="example-accordion"
+                         onsectiontoggle={handleToggleSection}
+                         active-section-name={activeQuote}
+                         allow-multiple-sections-open>
+                <template for:each={quoteList} for:item="quote" for:index="index">
+                    <lightning-accordion-section name={quote.quoteNumber} label={quote.quoteNumber} key={quote.quoteNumber}>
+                        <lightning-layout multiple-rows="true" vertical-align="center" class="slds-theme_shade slds-box slds-align_absolute-center slds-text-title_caps">
+                            <lightning-layout-item size="12" class="slds-p-around_xxx-small slds-align_absolute-center">
+                                <b>Current Quote Status: </b>&nbsp; {quote.quoteStatus}
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" class="slds-p-around_xxx-small slds-align_absolute-center">
+                                <b>Current Team Assignment: </b>&nbsp; {quote.teamAssignment}
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" class="slds-p-around_xxx-small slds-align_absolute-center">
+                                {quote.quoteDescription}
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <c-quote-details-comp bundle-list={quote.bundleList} quote-id={quote.quoteRecordId} picklist-schema={pickListSchema} cpq-eligible={quote.cpqEligible}></c-quote-details-comp>
+                    </lightning-accordion-section>
+                </template>
+            </lightning-accordion>
+        </template>
+        <template if:false={isQuoteList}>
+            <div class="slds-theme_shade slds-box slds-align_absolute-center slds-text-title_caps">
+                no quote created.
+            </div>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Editable_PO</fullName>
+    <active>true</active>
+    <description>This is used to make as non-editable PO# number for the all tasks except Obtain Customer Info task.</description>
+    <errorConditionFormula>AND( 
+NOT(ISPICKVAL(Process__c , &apos;Obtain Customer Info&apos;)),NOT(ISPICKVAL(Process__c , &apos;Escalation Obtain Customer Info&apos;)),OR(ISCHANGED(PurchaseOrder_Number__c),ISCHANGED(Profile_Number__c)))</errorConditionFormula>
+    <errorMessage>Customer PO#/Profile Number# is Non-Editable on this task.</errorMessage>
+</ValidationRule>

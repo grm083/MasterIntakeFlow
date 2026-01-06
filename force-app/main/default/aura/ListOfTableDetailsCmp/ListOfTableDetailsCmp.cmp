@@ -1,0 +1,108 @@
+<aura:component controller="TableListCmpCls" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <!-- attributes -->
+    <aura:attribute type="String" name="accountType" access="global"/>
+    <aura:attribute type="boolean" name="ToggleFilter" access="global" default = 'false'/>
+    <aura:attribute name="data" type="Object" access="global"/>
+    <aura:attribute name="datafilter" type="Object" access="global"/>
+    <aura:attribute name="PaginationList" type="Object" access="global"/>
+    <aura:attribute name="columns" type="List" access="global"/>
+    <aura:attribute name="taskType" type="String" default="All" access="global"/>
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}" access="public"/>
+    <aura:attribute name="showHide" type="Boolean" default= "false"/>
+    <aura:attribute name="selectedUserView" type="String" default= "All" access="global"/>
+    <aura:attribute name="showReassignButton" type="Boolean" default= "false"/>
+    <aura:attribute name="selectedRows" type="task[]" access="global"/>
+    <aura:attribute name="isRowSelected" type="Boolean" access="public" default="true"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer" default = "0"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="isFirstTime" type="boolean" default="true"/>
+    <aura:registerEvent name="appEvent" type="c:DashboardDatatableRefreshEvent"/>
+    <aura:attribute name="dependentFieldMap" type="map" description="map to store dependent values with controlling value"/>
+    <aura:attribute name="objDetail" type="Task" default="{'sobjectType' : 'Task'}"/>
+    <aura:attribute name="controllingFieldAPI" type="string" default="Process__c" description="store field API name of Controller field"/>
+    <aura:attribute name="dependingFieldAPI" type="string" default="Outcome__c" description="store field API name of dependent field"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="spinnerFunctionClose" type="Aura.action"/>
+    <aura:method name="callChild" action="{!c.handleComponentEvent}">
+        <aura:attribute name="selectedAccountName" type="String" default="param1"/> 
+    </aura:method>    
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <!--<c:selectUserPopup isRowSelected="{!v.displayReassignButton}" selectedRows="{!v.selectedRows}"/>-->
+    <div style="background-color:white">
+        <div class="slds-m-around_xx-large">
+            
+            <aura:if isTrue="{!v.showReassignButton}">
+                <lightning:button variant="brand"
+                                  label="Reassign"
+                                  title="Reassign Task"
+                                  onclick="{!c.reassignButtonClick}"
+                                  disabled="{!v.isRowSelected}"/>
+            </aura:if>
+            &nbsp; 
+            <lightning:button variant="brand"
+                              label="Submit"
+                              title="Save your changes!"
+                              onclick="{!c.saveUpdatedTasks}"
+                              disabled="{!v.isRowSelected}"
+                              />
+            <div>
+                <aura:Text value="Click on Submit to save your changes!"/>
+            </div>
+            
+            <aura:if isTrue="{!v.showHide}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" style="position:fixed" class="slds-modal slds-fade-in-open">
+                    
+                    <div class="slds-modal__container">
+                        
+                        <!-- Modal/Popup Box Header Starts here-->
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select User</h2>
+                        </header>
+                        
+                        <c:customLookup aura:id="customLookup" objectAPIName="user" IconName="standard:user" dashboardTable="{!c.userPress}" dashboardTablecancel ="{!c.userPressfromLookup}" />
+                        <footer class="slds-modal__footer">
+                            <h6 id="modal-heading-02" class="slds-align_absolute-center">Please change the User filter accordinlgy to reflect the changes in Dashboard.!</h6>                        
+                        </footer>   
+                        
+                    </div>
+                    <!-- Modal/Popup Box Header Ends here -->
+                </section>
+                <div class="slds-backdrop slds-backdrop_open" style="position:fixed"></div>
+            </aura:if>
+            
+            <lightning:buttonGroup class="slds-float_right" >
+                <lightning:button label="Previous" disabled="{!v.startPage == 0}"  
+                                  onclick="{!c.previous}" variant="brand"
+                                  iconName='utility:back'/>
+                &nbsp; &nbsp; &nbsp;
+                <lightning:button label="Next" disabled="{!v.endPage >= v.totalRecords}" 
+                                  onclick="{!c.next}" variant="brand"
+                                  iconName='utility:forward' iconPosition='right'/>
+            </lightning:buttonGroup>
+        </div>
+        
+        <!-- list of account  -->
+        <!-- the accordion for the account -->
+        <lightning:accordion allowMultipleSectionsOpen="true">
+            <aura:iteration items="{!v.PaginationList}" var="acc" indexVar="ind">
+                <aura:if isTrue="{!acc.tasklist}">
+                    <lightning:accordionSection name="{!acc.acc}" label="{!acc.acc}">
+                        <!-- the container element determine the height of the datatable -->
+                        <div style="height: 300px ;width:100%;table-layout: fixed;" class="slds-scrollable slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                            
+                            <!-- the container element determine the height of the datatable -->
+                            <c:DashboardDataTable aura:id="dashboardChild" selectedAccountType="{!v.taskType}" selectedUserView="{!v.selectedUserView}" tableName="All Tasks" assets="{!acc.ast}" accValues="{!acc.accRecord}" columns="{!v.columns}" wrappers="{!acc.tasklist}" method="{!c.parentPress}" AccountName="{!acc.acc}" dependentFieldMap ="{!v.dependentFieldMap}"/>
+                            
+                        </div>
+                    </lightning:accordionSection>
+                </aura:if>
+            </aura:iteration>
+        </lightning:accordion>
+    </div>
+</aura:component>

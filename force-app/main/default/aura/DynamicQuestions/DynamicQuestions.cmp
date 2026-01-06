@@ -1,0 +1,109 @@
+<aura:component implements="lightning:availableForFlowScreens"
+                controller = "IntakeProcessAuraHandler">
+    
+    <!--As this will be used in a flow "hasRecordId" cannot be invoked
+ A designer may choose to pass in either the Question Id, if an outcome was
+ previous provided, or they may pass in a CaseId to determine validity-->
+    <aura:attribute name="QuestionId" type="String" />
+    <aura:attribute name="CaseId" type="String" />
+    <aura:attribute name="caseRecord" type="Case" />
+    <aura:attribute name="boolEnd" type="Boolean" />
+    <aura:attribute name="EndStatement" type="String" />
+    <aura:attribute name="IsTaskCreation" type ="Boolean"/>
+    
+    <!--The responses should be committed to the flow to ensure we can appropriately
+ identify the next steps, and log as a comment-->
+    <aura:attribute name="QuestionAnswer" type="String" />
+    <aura:attribute name="response" type="String" />
+    
+    <!--Finally, we need a place to set our questions and outcomes-->
+    <aura:attribute name="Question" type="Intake_Process__c" />
+    <aura:attribute name="Outcomes" type="Intake_Process__c[]" />
+    <aura:attribute name="NextQuestionId" type="String" />
+    <aura:attribute name="FinalOutcome" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <!--Case Update and Task Create Criteria-->
+    <aura:attribute name="CaseRecordType" type="String" />
+    <aura:attribute name="CaseType" type="String" />
+    <aura:attribute name="CaseSubType" type="String" />
+    <aura:attribute name="CaseReason" type="String" />
+    <aura:attribute name="CaseServDate" type="Date" />
+    <aura:attribute name="TaskType" type="String" />
+    <aura:attribute name="TaskAssigned" type="String" />
+    
+    <!--These cards will have no title per the request of the business-->
+    <lightning:card>
+        <lightning:layout multipleRows="true" verticalAlign="center">
+            <!--Someone may want the buttons at the top instead of bottom.  Uncommenting here will do that.-->
+            
+            <!--
+   <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:button variant="brand-outline" label="Back" onclick="{!c.back}" class="slds-float_right" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:button variant="brand" label="Next" onclick="{!c.next}" class="slds-float_left" />
+            </lightning:layoutItem>
+   -->
+            <aura:if isTrue="{!v.Question.Input_Type__c == 'Instruction'}">
+                <lightning:layoutItem size="12" padding="around-small">
+                    <lightning:recordViewForm recordId="{!v.Question.Id}" objectApiName="Intake_Process__c">
+                        <lightning:outputField fieldName="Question__c" variant="label-hidden" class="slds-align-middle" />
+                    </lightning:recordViewForm>
+                </lightning:layoutItem>
+                <aura:set attribute="else">
+                    <lightning:layoutItem size="6" padding="around-small">
+                        <lightning:recordViewForm recordId="{!v.Question.Id}" objectApiName="Intake_Process__c">
+                            <lightning:outputField fieldName="Question__c" variant="label-hidden" class="slds-align-middle" />
+                        </lightning:recordViewForm>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" padding="around-small">
+                        <aura:if isTrue="{!v.Question.Input_Type__c == 'Phone'}">
+                            <lightning:input name="DynamicPhone" 
+                                             aura:id="DynamicPhone" 
+                                             type="tel" 
+                                             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+                                             placeholder="###-###-####" 
+                                             class="slds-align-middle" 
+                                             variant="label-hidden" 
+                                             value="{!v.response}" />
+                        </aura:if>
+                        <aura:if isTrue="{!v.Question.Input_Type__c == 'Picklist'}">
+                            <lightning:select aura:id="DynamicPicklist" 
+                                              name="DynamicPicklist"
+                                              class="slds-align-middle" 
+                                              onchange="{!c.handlePicklistChange}" 
+                                              value="{!v.response}" 
+                                              variant="label-hidden" >
+                                <option value="0"><i>Please make your selection...</i></option>
+                                <aura:iteration items="{!v.Outcomes}" var="item">
+                                    <option value="{!item.Outcome__c}" label="{!item.Outcome__c}" />
+                                </aura:iteration>
+                            </lightning:select>
+                        </aura:if>
+                        <aura:if isTrue="{!and(notequals(v.Question.Input_Type__c, 'Phone'), 
+                                         notequals(v.Question.Input_Type__c, 'Picklist'))}">
+                            <lightning:input type="{!v.Question.Input_Type__c}" 
+                                             name="DynamicField" 
+                                             class="slds-align-middle" 
+                                             aura:id="DynamicField" 
+                                             variant="label-hidden" 
+                                             value="{!v.response}"/>
+                        </aura:if>
+                    </lightning:layoutItem>
+                </aura:set>
+            </aura:if>
+            
+            <!-- If the above code for buttons is uncommented, comment the below to not show buttons on the bottom-->
+            <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:button variant="brand-outline" label="Back" onclick="{!c.back}" class="slds-float_right" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:button variant="brand" label="Next" onclick="{!c.next}" class="slds-float_left" />
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+    </lightning:card>
+    
+</aura:component>

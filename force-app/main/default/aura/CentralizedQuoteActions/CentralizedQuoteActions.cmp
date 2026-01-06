@@ -1,0 +1,175 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId"
+                controller="QuoteActionsController" access="global" >
+	
+    <aura:attribute name="showModal" type="boolean" default="false" />
+    <aura:attribute name="modalType" type="string" default="" />
+    <aura:attribute name="currQuote" type="SBQQ__Quote__c" />
+    <aura:attribute name="showProcure" type="Boolean" default="false" />
+    <aura:attribute name="showQuoteActions" type="Boolean" default="false" />
+    <aura:attribute name="CurrentStep" type="String" default="EditLines" />
+    <aura:attribute name="timeLeft" type="String" default="" />
+    <aura:attribute name="intervalId" type="Integer" default="" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" access="global" />
+    <aura:handler event="force:refreshView" action="{!c.init}" />
+    <lightning:quickActionAPI aura:id="quickActionAPI" />
+    <lightning:navigation aura:id="navService" />
+    <aura:if isTrue="{!v.showQuoteActions}">
+        <lightning:card title="Quote Actions">
+            <aura:set attribute="actions">
+                <lightning:buttonIcon iconName="utility:refresh" variant="brand" onclick="{!c.init}" />
+            </aura:set>
+            <lightning:layout multipleRows="true" verticalAlign="center" horizontalAlign="center">
+                <lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                    <lightning:tile label="Target Time to Completion" class="slds-page-header">
+                        <aura:set attribute="media">
+                            <lightning:avatar size="large" fallbackIconName="utility:date_time" />
+                        </aura:set>
+                        {!v.timeLeft}
+                    </lightning:tile>
+                </lightning:layoutItem>
+                
+                <aura:if isTrue="{!v.currQuote.SBQQ__Status__c == 'Approved'}">
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!v.currQuote.SBQQ__Status__c == 'Declined'}">
+                            <aura:set attribute="else">
+                                <lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                                    <div class="slds-text-title_caps">Global Actions</div>
+                                </lightning:layoutItem>
+                                <!--Marks quote as pending information and fires assignment/update trigger-->
+                                <aura:if isTrue="{!v.currQuote.SBQQ__Status__c == 'Cost Configured'}">
+                                    <aura:set attribute="else">
+                                        <!--<aura:if isTrue="{!v.currQuote.SBQQ__Status__c == 'Price Configured'}">
+                                            <aura:set attribute="else">-->
+                                                <lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                                                    <lightning:button label="Pending Information" 
+                                                                    aura:id="PendingInformation" 
+                                                                    onclick="{!c.actionClick}"
+                                                                    disabled="{!v.showProcure}"
+                                                                    class="slds-button_stretch" />
+                                                </lightning:layoutItem>
+                                            <!--</aura:set>
+                                        </aura:if>-->
+                                    </aura:set>
+                                </aura:if>
+                                
+                                <!--Escalates the quote-->
+                                <lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                                    <lightning:button label="Escalate"
+                                                    aura:id="Escalate" 
+                                                    onclick="{!c.actionClick}"
+                                                    disabled="{!v.showProcure}"
+                                                    class="slds-button_stretch" />
+                                </lightning:layoutItem>
+                            </aura:set>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+                
+                <!--Actions are conditionally displayed based on status of the quote-->
+                <aura:if isTrue="{!v.currQuote.SBQQ__Status__c == 'Draft'}">
+                    <lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                        <div class="slds-text-title_caps">Configuration Actions</div>
+                    </lightning:layoutItem>
+                    
+                    <!--Navigate user to the Quote Line Editor
+                    <lightning:layoutItem size="1" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_xx-small">
+                        <div class="slds-align_absolute-center">1</div>
+                    </lightning:layoutItem>-->
+                    <lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                        <lightning:button label="Edit Quote Lines" 
+                                        variant="brand" 
+                                        aura:id="EditLines" 
+                                        onclick="{!c.actionClick}"
+                                        class="slds-button_stretch" />
+                    </lightning:layoutItem>
+                </aura:if>
+            <!--commenting the below as part of SDT-20939-->
+            <!--Pops the user to the Create and View Order interface-->
+            <!--<aura:if isTrue="{!or((v.currQuote.SBQQ__Status__c == 'Draft') , or((v.currQuote.SBQQ__Status__c == 'Product Configured') , (v.currQuote.SBQQ__Status__c == 'Cost Configured')))}">-->
+                <!--<lightning:layoutItem size="1" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_xx-small">
+                	<div class="slds-align_absolute-center">{!v.currQuote.SBQQ__Status__c}}</div>
+                </lightning:layoutItem>-->
+                <!--<lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                    <lightning:button label="Create And View Order(s)" 
+                                      value="new"
+                                      variant="brand" 
+                                      aura:id="orderRequest" 
+                                      onclick="{!c.actionClick}"
+                                      class="slds-button_stretch" />
+                </lightning:layoutItem>-->
+                <!--<lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                    <lightning:button label="Create And View Order(s)" 
+                                      value="new"
+                                      variant="brand" 
+                                      aura:id="orderRequest" 
+                                      onclick="{!c.actionClick}"
+                                      class="slds-button_stretch" />
+                </lightning:layoutItem> -->
+            <!--<aura:set attribute="else">-->
+                <!--<lightning:layoutItem size="1" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_xx-small">
+                	<div class="slds-align_absolute-center">{!v.currQuote.SBQQ__Status__c}</div>
+                </lightning:layoutItem>-->
+                <!--<lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                    <lightning:button label="View Order(s)"
+                                      value="view" 
+                                      variant="brand" 
+                                      aura:id="viewOrderRequest" 
+                                      onclick="{!c.actionClick}"
+                                      class="slds-button_stretch" />
+                </lightning:layoutItem>-->
+            <!--</aura:set>
+            </aura:if>  -->
+            <!-- SDT-20939, ends here-->
+
+                    <!--Submits the request to the Pricing API-->
+                <aura:if isTrue="{!v.currQuote.SBQQ__Status__c == 'Draft'}">
+                    <!--<lightning:layoutItem size="1" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_xx-small">
+                        <p class="slds-align_absolute-center">3</p>
+                    </lightning:layoutItem>-->
+                    <lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                        <lightning:button label="Submit Request" 
+                                        variant="brand" 
+                                        aura:id="SubmitRequest" 
+                                        onclick="{!c.actionClick}"
+                                        disabled="{!v.showProcure}"
+                                        class="slds-button_stretch" />
+                    </lightning:layoutItem>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.currQuote.SBQQ__Status__c == 'Price Configured'}">
+                    <lightning:layoutItem size="12" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                        <div class="slds-text-title_caps">Approval Actions</div>
+                    </lightning:layoutItem>
+                    
+                    <!--Provide a user with Approve/Decline Buttons-->
+                    <lightning:layoutItem size="6" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                        <lightning:button label="Approve Quote" 
+                                        variant="brand" 
+                                        aura:id="ApproveOrder" 
+                                        onclick="{!c.actionClick}"
+                                        class="slds-button_stretch"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" class="slds-p-left_medium slds-p-top_xx-small slds-p-bottom_xx-small slds-p-right_medium">
+                        <lightning:button label="Decline Quote" 
+                                        variant="destructive" 
+                                        aura:id="DeclineOrder" 
+                                        onclick="{!c.actionClick}"
+                                        class="slds-button_stretch"/>
+                    </lightning:layoutItem>
+                </aura:if>
+            </lightning:layout>
+        </lightning:card>
+    </aura:if>
+    
+    
+    <!--<aura:if isTrue="{!v.showModal}">-->
+        <aura:if isTrue="{!v.modalType == 'Pricing'}">
+        	
+        </aura:if>
+        <!--<aura:if isTrue="{!v.modalType == 'NewOrders'}">  
+            <c:quoteOrderComp aura:id="workOrderLwc1" bShowModal="true" recordId="{!v.recordId}"  isNew="true"/>
+        </aura:if>
+        <aura:if isTrue="{!v.modalType == 'ViewOrders'}">  
+            <c:quoteOrderComp aura:id="workOrderLwc2" bShowModal="true" recordId="{!v.recordId}" isView="true"/> 
+        </aura:if>-->
+</aura:component>

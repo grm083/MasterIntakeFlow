@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Market_Area__c</fullName>
+    <description>Market Areas Vendor Operates</description>
+    <externalId>false</externalId>
+    <label>Market Area</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Four Corners</fullName>
+                <default>false</default>
+                <label>Four Corners</label>
+            </value>
+            <value>
+                <fullName>Florida</fullName>
+                <default>false</default>
+                <label>Florida</label>
+            </value>
+            <value>
+                <fullName>WI/MN</fullName>
+                <default>false</default>
+                <label>WI/MN</label>
+            </value>
+            <value>
+                <fullName>Texoma</fullName>
+                <default>false</default>
+                <label>Texoma</label>
+            </value>
+            <value>
+                <fullName>MI/OH/IN</fullName>
+                <default>false</default>
+                <label>MI/OH/IN</label>
+            </value>
+            <value>
+                <fullName>Pacific Northwest</fullName>
+                <default>false</default>
+                <label>Pacific Northwest</label>
+            </value>
+            <value>
+                <fullName>Greater Mid-Atlantic</fullName>
+                <default>false</default>
+                <label>Greater Mid-Atlantic</label>
+            </value>
+            <value>
+                <fullName>New England</fullName>
+                <default>false</default>
+                <label>New England</label>
+            </value>
+            <value>
+                <fullName>ATAK</fullName>
+                <default>false</default>
+                <label>ATAK</label>
+            </value>
+            <value>
+                <fullName>Northern California</fullName>
+                <default>false</default>
+                <label>Northern California</label>
+            </value>
+            <value>
+                <fullName>Southern California</fullName>
+                <default>false</default>
+                <label>Southern California</label>
+            </value>
+            <value>
+                <fullName>WPA/WV/MD/VA</fullName>
+                <default>false</default>
+                <label>WPA/WV/MD/VA</label>
+            </value>
+            <value>
+                <fullName>South Atlantic</fullName>
+                <default>false</default>
+                <label>South Atlantic</label>
+            </value>
+            <value>
+                <fullName>IL/Missouri Valley</fullName>
+                <default>false</default>
+                <label>IL/Missouri Valley</label>
+            </value>
+            <value>
+                <fullName>Gulf Coast</fullName>
+                <default>false</default>
+                <label>Gulf Coast</label>
+            </value>
+            <value>
+                <fullName>Western Canada</fullName>
+                <default>false</default>
+                <label>Western Canada</label>
+            </value>
+            <value>
+                <fullName>Eastern Canada</fullName>
+                <default>false</default>
+                <label>Eastern Canada</label>
+            </value>
+            <value>
+                <fullName>Puerto Rico</fullName>
+                <default>false</default>
+                <label>Puerto Rico</label>
+            </value>
+            <value>
+                <fullName>Montana</fullName>
+                <default>false</default>
+                <label>Montana</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

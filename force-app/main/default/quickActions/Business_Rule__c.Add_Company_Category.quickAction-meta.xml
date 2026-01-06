@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Adds a company category to the target business rule record</description>
+    <flowDefinition>Business_Rule_Company_Category</flowDefinition>
+    <label>Add/Update Company Category</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

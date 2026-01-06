@@ -1,0 +1,22 @@
+<template>
+    <div class="slds-theme_default">
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-cell-wrap slds-p-horizontal_small">
+                <b>{lbl_header_outage}</b>
+            </span>
+        </h3>
+    </div>
+    <template lwc:if={outages}>
+        <template if:true={columns.length}>
+            <lightning-datatable key-field="Id" data={outages} columns={columns} hide-checkbox-column="true">
+            </lightning-datatable>
+        </template>
+    </template>
+    <template lwc:else>
+        <div class="outer-section">
+            <span class="warning-text">
+                {errorOutageMessage}
+            </span>
+        </div>
+    </template>
+</template>

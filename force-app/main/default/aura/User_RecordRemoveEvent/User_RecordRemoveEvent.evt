@@ -1,0 +1,2 @@
+<aura:event type="COMPONENT" description="by this event is used to enable Teams on Task Pop up">
+</aura:event>

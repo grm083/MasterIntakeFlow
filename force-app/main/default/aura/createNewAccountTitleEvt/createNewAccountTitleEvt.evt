@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event to handle the creation of a new account title">
+    <aura:attribute name="titleId" type="String" description="The ID of the newly created title" />
+    <aura:attribute name="titleName" type="String" description="The name of the newly created title" />
+</aura:event>

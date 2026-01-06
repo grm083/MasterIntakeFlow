@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ISD_Phone__c</fullName>
+    <description>Field to store contact phone number in 11 digit format for Marketing cloud SMS notification.</description>
+    <externalId>false</externalId>
+    <label>ISD Phone</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Phone</type>
+</CustomField>

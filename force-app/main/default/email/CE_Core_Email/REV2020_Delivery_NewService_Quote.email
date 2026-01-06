@@ -1,0 +1,57 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style=""><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font style="">&nbsp;Hello,</font></font></div><div style=""><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font style=""><br></font></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif">Below is a summary of your new service request.</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b style=""><font face="Arial, sans-serif" style="" color="#cc0000">[If there is an urgent need for service, what are we doing to escalate the request?]</font></b></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b style=""><font color="#cc0000" face="Arial, sans-serif">[If a follow up is needed: What is the next step? Who will follow up with them? When will we contact them next?]</font></b></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b><font face="Arial, sans-serif">SERVICE DETAILS</font></b></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b><font face="Arial, sans-serif"><br></font></b></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div style=""><table border="0" cellpadding="0" cellspacing="0" width="748" style="
+ /* border-collapse:
+ collapse; */
+ width:561pt;
+ mso-yfti-tbllook:1536;
+ ">
+ <colgroup><col width="202" style="mso-width-source:userset;width:151pt">
+ <col width="18" style="mso-width-source:userset;width:14pt">
+ <col width="528" style="mso-width-source:userset;width:396pt">
+ </colgroup><tbody><tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-weight: bold;"><font face="Arial, sans-serif">Quote #:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-family: Arial, sans-serif; font-size: 12pt;"><br></span></p><p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif" style="">&nbsp;{!SBQQ__Quote__c.Name}</font></p><p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif"><br></font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-weight: bold;"><font face="Arial, sans-serif"><br></font></span></p><p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-weight: bold;"><font face="Arial, sans-serif">Location
+  ID:</font></span><span style="font-family: Arial, sans-serif; font-size: 12pt; font-weight: bold; text-indent: 0in;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></p><p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><br></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif">{!SBQQ__Quote__c.SBQQ__Account__c}</font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-weight: bold;"><font face="Arial, sans-serif"><br></font></span></p><p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-weight: bold;"><font face="Arial, sans-serif">Service
+  Address:</font></span></p><p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-weight: bold;"><font face="Arial, sans-serif"><br></font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt"><p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif"><br></font></p><p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif">{!SBQQ__Quote__c.SBQQ__ShippingStreet__c}, {!SBQQ__Quote__c.SBQQ__ShippingCity__c}{!</font><span style="font-size: 12pt;">SBQQ__ShippingCountry__c}</span></p><p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><br></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-weight: bold;"><font face="Arial, sans-serif"><br></font></span></p><p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-weight: bold;"><font face="Arial, sans-serif">Service:</font></span></p></td><td class="oa2" width="18" style="width:14pt"></td><td class="oa2" width="528" style="width:396pt"><p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="text-indent: 0in;"><font face="Arial, sans-serif"><br></font></span></p><p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif">{!SBQQ__Quote__c.Case_Type__c} - {!SBQQ__Quote__c.Case_Sub_Type__c}</font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><b><br></b></p><p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif"><b>Start Date:</b>&nbsp;</font> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p></td><td class="oa2" width="18" style="width:14pt">&nbsp; &nbsp; &nbsp;<span style="white-space:pre">	</span> &nbsp; &nbsp; &nbsp;&nbsp;</td><td class="oa2" width="528" style="width:396pt"><font face="Arial, sans-serif"><br><br></font>{!SBQQ__Quote__c.SBQQ__StartDate__c}<br><br><br></td></tr>
+</tbody></table><span style="font-size: 12pt;"><font face="Arial, sans-serif" style=""><br></font></span></div><div style=""><span style="font-size: 12pt;"><font face="Arial, sans-serif" style="">Please let us know if you need to change or cancel this request, or have any questions.</font></span></div><div style="color: rgb(0, 0, 0);"><font face="Arial, sans-serif"><br></font></div></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif">Thank you,</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><p style="color: rgb(0, 0, 0); margin: 0pt 0in; text-indent: 0in; line-height: normal; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#3b8a2e" face="Arial, sans-serif"><b>{!User.FirstName} {!User.LastName}</b></font></p><div style=""><font face="Arial, sans-serif" style="">Customer Service Representative</font></div></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><a href="mailto:{!User.Department_Email__c}" style=""><font face="Arial, sans-serif" color="#000000">{!User.Department_Email__c}</font></a></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif"><br></font></div><div style=""><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif">Waste Management</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div>1 Griffin Road N</div><div>Suite 4C</div></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif">Windsor, CT 06095</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif"><br></font></div><div style=""><font face="Arial, sans-serif">{!SBQQ__Quote__c.Quote_Thread_Id__c}</font></div></div></div>]]></td>
+</tr>
+</table>

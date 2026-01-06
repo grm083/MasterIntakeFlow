@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Group__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Group</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>$Source.Category_Type__c</field>
+            <operation>equals</operation>
+            <valueField>Categorization__c.Category__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>$Source.AccountId__c</field>
+            <operation>equals</operation>
+            <valueField>Categorization__c.Client_Account__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Categorization__c</referenceTo>
+    <relationshipLabel>Business Rules</relationshipLabel>
+    <relationshipName>Business_Rules</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

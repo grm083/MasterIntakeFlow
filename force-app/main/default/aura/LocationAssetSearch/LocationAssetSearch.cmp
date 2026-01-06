@@ -1,0 +1,317 @@
+<aura:component controller="CaseController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">	    
+	
+	<aura:attribute name="searchResult" type="Account[]" description="use for store and display account list return from server"/>
+    <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+    <aura:attribute name="previousSearchKeyword" type="String" description="use for store user search input"/>
+    <aura:attribute name="Message" type="boolean" default="false" description="use for display no record found message"/>
+    <aura:attribute name="TotalNumberOfRecord" type="integer" default="0" description="use for display Number of records"/>
+    
+    <aura:attribute name="selectedLocationAccount" type="Account"/>
+    <aura:attribute name="selectedLocationAccountId" type="String"/>
+    <aura:attribute name="selectedClientAccountId" type="String"/>
+    <aura:attribute name="selectedAssetId" type="String[]"/>
+    <aura:attribute name="showIcon" type="Boolean" default="true"/>
+    <aura:attribute name="AccountAssetWrapperList" type="CaseController.LocationAssetWrapper[]"/>
+    
+    <aura:attribute name="recordId" type="String" description="ID of the record."/>
+    <aura:attribute name="selectedLocationAccountName" type="String"/>	
+    <aura:attribute name="selectedClientAccountName" type="String"/>	
+	<aura:attribute name="selectedAssetName" type="String"/>	
+    <aura:attribute name="SelectionDetails" type="Boolean" default="false"/>
+	<aura:attribute name="showSaveButton" type="Boolean" default="false"/>
+    <aura:attribute name="selectedText" type="Boolean" default="false"/>
+    
+    <aura:attribute name="selectedAccountFilter" type="Boolean" default="false"/>
+    
+    
+	<aura:attribute name="PageNumber" type="integer" default="0"/>
+    <aura:attribute name="TotalPages" type="integer" default="0"/>
+    <aura:attribute name="TotalRecords" type="integer" default="0"/>
+    <aura:attribute name="RecordStart" type="integer" default="0"/>
+    <aura:attribute name="RecordEnd" type="integer" default="0"/>
+    <aura:attribute name="inactiveAssets" type="Boolean" default="false"/>
+    <aura:attribute name="saveEnabled" type="Boolean" default="false"/>
+    <!--<aura:registerEvent name="RefreshEvent" type="c:RefreshEvent"/>-->
+	<aura:registerEvent name="SingleTabRefreshEvent" type="c:SingleTabComponentRefresh"/>
+  <!--  <ltng:require styles="{!$Resource.slds + '/styles/salesforce-lightning-design-system.css'}" />-->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<lightning:workspaceAPI aura:id="workspace"/>
+    <!-- SHOW LOADING SPINNER-->
+    
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    
+    
+    <div class="slds-m-around_medium">
+       <!-- SEARCH INPUT AND SEARCH BUTTON--> 
+        <lightning:layout >
+            <lightning:layoutItem size="3" padding="around-small">
+                
+                <div>
+                	<lightning:input type="checkbox" label="All Active and Inactive Accounts" class="slds-size_small" checked="{!v.selectedAccountFilter}"/>
+                </div>
+                <div>
+                    <lightning:input type="checkbox" label="All Active and Inactive Assets" class="slds-size_small" checked="{!v.inactiveAssets}"/>
+                </div>                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" padding="around-small">
+				<span onkeypress="{!c.searchEvents}">                
+                <lightning:input value="{!v.searchKeyword}"
+                                 required="true"
+                                 placeholder="search Accounts.."
+                                 aura:id="searchField"                                 
+                                 label="Location Account"/>
+                    </span>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" padding="around-small">
+                <br/>
+                <lightning:button onclick="{!c.Search}"
+                                  variant="brand"
+                                  label="Search"
+                                  iconName="utility:search"/> 
+                <aura:if isTrue="{!v.showSaveButton}">
+                <lightning:button onclick="{!c.SaveSelection}"
+                                  variant="brand"
+                                  label="Save"
+                                  disabled="{!v.saveEnabled}"
+                                  iconName="utility:save"/>
+                </aura:if>
+            </lightning:layoutItem>
+            
+            <aura:if isTrue="{!v.SelectionDetails}">
+                <Div>
+                    You have selected <br/><b>Client Name: <ui:outputText value="{!v.selectedClientAccountName}"/>, Location Name : <ui:outputText value="{!v.selectedLocationAccountName}"/> and Asset Name : <ui:outputText value="{!v.selectedAssetName}"/></b>
+                </Div>
+            </aura:if>
+        </lightning:layout>
+       
+        <!-- TOTAL RECORDS BADGES--> 
+        <!--<div class="slds-m-around_x-small">
+            <lightning:badge label="{!v.TotalNumberOfRecord}" />
+        </div>-->
+        
+        <!-- ERROR MESSAGE IF NOT RECORDS FOUND--> 
+        <aura:if isTrue="{!v.Message}">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">No Records Found...</h2>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+       
+        <div class="slds-float_right">
+            <ui:inputSelect aura:id="pageSize" label="Display Records Per Page: " change="{!c.onSelectChange}">
+                <ui:inputSelectOption text="10" label="10" value="true"/>
+                <ui:inputSelectOption text="15" label="15"/>
+                <ui:inputSelectOption text="20" label="20"/>
+            </ui:inputSelect>
+            <br/>
+        </div>
+        
+        <!-- TABLE CONTENT--> 
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer" style="table-layout:fixed !important">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th >
+                        <div class="slds-truncate" title="Action">Action</div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" title="Account Name">Location Code</div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" title="Account Name">Location Name</div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" title="Type">Street</div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" title="Type">City</div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" title="Type">State</div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" title="Industry">Zip Code</div>
+                    </th>
+                    <th>
+                        <div class="slds-truncate" title="Type">Country</div>
+                    </th>                                        
+                </tr>
+            </thead>
+            <tbody> 
+                <!--### display all records of searchResult attribute by aura:iteration ###-->
+                <aura:iteration items="{!v.AccountAssetWrapperList}" var="acc" indexVar="ind">
+                    <tr>                        
+                        <td>
+                            <!--<div class="slds-truncate">{!count + 1}</div>-->
+                            <div id="{!acc.objAcc.Id + 'show'}" data-record="{!acc.objAcc.Id}" data-index="{!ind}" onclick="{!c.divClick}">                                
+                                <lightning:icon iconName="utility:chevrondown" size="small" alternativeText="sss"/>                                
+                            </div>                              
+                            
+                            <div id="{!acc.objAcc.Id + 'hide'}" data-record="{!acc.objAcc.Id}" data-index="{!ind}" onclick="{!c.divHide}" style="display:none;">
+                                <lightning:icon iconName="utility:chevronup" size="small" alternativeText="sss"/>
+                            </div>
+                        </td> 
+                        <td>
+                            <div class="slds-truncate">{!acc.objAcc.Location_Code__c}</div>
+                        </td>
+                        <td>
+                            <div class="wrapText">{!acc.objAcc.Customer_Location_Code__c}</div>
+                        </td>
+                        <td>
+                            <div class="wrapText">{!acc.objAcc.ShippingStreet}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{!acc.objAcc.ShippingCity}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{!acc.objAcc.ShippingState}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{!acc.objAcc.ShippingPostalCode}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{!acc.objAcc.ShippingCountry}</div>
+                        </td>                        
+                    </tr>                      
+                        <tr>
+                            <td colspan="8" style="padding:0px !important">
+                            <div class="slds-scrollable">
+                            <div id="{!acc.objAcc.Id}" style="display:none;width:100% !important">                        
+                        	<table class="slds-table slds-table_bordered" >
+                            <thead>
+                                <tr class="slds-text-title_caps">
+                                    <th >
+                                        <div class="slds-truncate" title="Action">
+                                            
+                                        </div>
+                                    </th>  
+                                    <th >
+                                        <div >ASSET NAME</div>
+                                    </th>                                   
+                                    <th >
+                                        <div>SID</div>
+                                    </th>
+                                    <th >
+                                        <div >MATERIAL TYPE</div>
+                                    </th>	
+                                    <th >
+                                        <div class="slds-truncate" >DURATION</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >OCCURRENCE TYPE</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >SCHEDULE</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >QUANTITY</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >CATEGORY</div>
+                                    </th>
+                                    <th >
+                                        <div>CONTAINER POSITION</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >HAS XPU</div>
+                                    </th>
+                                    
+                                    <th >
+                                        <div >ACCOUNT NAME</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >VENDOR ID</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >S-CODE</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >VENDOR ACCOUNT NUMBER</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >MAS COMPANY # - ACCOUNT #</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >MAS UNIQUE #</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >MAS LIBRARY</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >Start Date</div>
+                                    </th>
+                                    <th >
+                                        <div class="slds-truncate" >END DATE</div>
+                                    </th>
+                                    
+                                    <th >
+                                        <div class="slds-truncate" >EQUIPMENT OWNER</div>
+                                    </th>
+                                      <th >
+                                        <div>Project</div>
+                                    </th>  
+                                </tr>
+                            </thead>    
+                            <tbody>
+                                <aura:iteration items="{!acc.assetList}" var="asst" indexVar="assIndex">
+                                     <tr class="{!(asst.End_Dated_Asset__c ? 'rowenddateTrue' : '' )}">
+                                        <!--<td class="slds-truncate"><div class="slds-truncate"><ui:inputRadio text="{!asst.Id}" name="Role" change="{!c.onRadioChange}" /></div></td>-->
+                                        <td class="cell">
+                                            <div aura:id="checkbox" onchange="{!c.onRadioChange}" data-value="{!asst.Id}" data-record="{!idx}">
+                                                <ui:inputCheckbox aura:id="multiSelect"/>
+                                            </div>
+                    					</td>
+                                        <td class="slds-truncate"><div class="wrapText">{!asst.Name}</div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!asst.Acorn_SID__c}</div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!asst.Material_Type__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Duration__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Occurrence_Type__c}</div></td>                                                
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Schedule__c}</div></td>                                                
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Quantity__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Category__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Container_Position__c}</div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!asst.Has_Extra_Pickup__c}</div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!asst.Supplier__r.Name}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Vendor_ID__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Sensitivity_Code__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Vendor_Account_Number__c}</div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!asst.MAS_Company_Account_Number__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.MAS_Customer_Unique_Id__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.MAS_Library__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Start_Date__c}</div></td>
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.End_Date__c}</div></td>
+                                       
+                                        <td class="slds-truncate"><div class="slds-truncate">{!asst.Equipment_Owner__c}</div></td>
+                                          <td class="slds-truncate"><div class="slds-truncate"><aura:if isTrue="{!asst.Active__c}">Yes
+                                            <aura:set attribute="else">
+                                               No
+                                            </aura:set>
+                                        </aura:if></div></td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>                            
+                                </div>
+                                </div>
+                            </td>
+                        </tr>					                    
+                </aura:iteration>
+            </tbody>
+        </table>  
+        
+        <div class="slds-clearfix">
+            <div class="slds-page-header" role="banner">
+                <div class="slds-float_right">            
+                    <lightning:button disabled="{!or(v.PageNumber == 0,v.PageNumber == 1)}" variant="brand" aura:id="prevPage" label="Prev" onclick="{!c.handlePrev}" />            
+                    <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="Next" onclick="{!c.handleNext}"/>
+                </div>
+                <p class="slds-page-header__title">{!v.RecordStart}-{!v.RecordEnd} of {!v.TotalRecords} | Page {!v.PageNumber} of {!v.TotalPages}</p>
+            </div>
+        </div>
+        
+    </div>
+    
+</aura:component>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SSM_Users_Team_Quotes</fullName>
+    <booleanFilter>(1 OR 5) AND 2 AND (3 AND 4)</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Assigned_To__c</columns>
+    <columns>SBQQ__Account__c</columns>
+    <columns>SBQQ__StartDate__c</columns>
+    <columns>Priority__c</columns>
+    <columns>SBQQ__Status__c</columns>
+    <columns>Action_Type__c</columns>
+    <columns>Action_Reason__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Assigned_To__c</field>
+        <operation>equals</operation>
+        <value>Service Setup &amp; Maintenance Team</value>
+    </filters>
+    <filters>
+        <field>SBQQ__Status__c</field>
+        <operation>notEqual</operation>
+        <value>Declined,Cancelled</value>
+    </filters>
+    <filters>
+        <field>SBQQ__Status__c</field>
+        <operation>notEqual</operation>
+        <value>Approved</value>
+    </filters>
+    <filters>
+        <field>Acorn_Integration_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Success</value>
+    </filters>
+    <filters>
+        <field>Assigned_To_Role__c</field>
+        <operation>startsWith</operation>
+        <value>Client Setup</value>
+    </filters>
+    <label>SSM Quotes</label>
+    <sharedTo>
+        <roleAndSubordinatesInternal>Client_Setup_Maintenance_Manager</roleAndSubordinatesInternal>
+    </sharedTo>
+</ListView>

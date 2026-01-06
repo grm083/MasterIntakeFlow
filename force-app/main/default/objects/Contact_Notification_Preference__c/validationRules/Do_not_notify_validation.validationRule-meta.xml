@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_not_notify_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( 
+INCLUDES(Notification_Preference__c , &quot;Do Not Notify&quot;), 
+OR(
+INCLUDES(Notification_Preference__c , &quot;SMS&quot;), 
+INCLUDES(Notification_Preference__c , &quot;Email&quot;)
+) 
+)</errorConditionFormula>
+    <errorMessage>You can not select any other notification preference with Do Not Notify</errorMessage>
+</ValidationRule>

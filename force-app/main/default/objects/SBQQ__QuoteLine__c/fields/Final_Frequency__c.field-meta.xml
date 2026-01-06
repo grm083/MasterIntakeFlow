@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Final_Frequency__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL( Schedule_Frequency__c , &apos;D&apos;) , VALUE(Text(Frequency_Interval__c )),
+
+	IF( ISPICKVAL( Schedule_Frequency__c , &apos;W&apos;) , 
+
+	IF(INCLUDES(   Service_Days__c , &quot;S1&quot;),1,0) +
+	IF(INCLUDES( Service_Days__c , &quot;M&quot;),1,0) +
+	IF(INCLUDES( Service_Days__c , &quot;T1&quot;),1,0) +
+	IF(INCLUDES( Service_Days__c  , &quot;W&quot;),1,0) +
+	IF(INCLUDES( Service_Days__c , &quot;T&quot;),1,0) +
+	IF(INCLUDES( Service_Days__c , &quot;F&quot;),1,0) +
+	IF(INCLUDES(  Service_Days__c , &quot;S&quot;),1,0),
+
+
+
+	IF( ISPICKVAL( Schedule_Frequency__c , &apos;M&apos;) ,  VALUE(Text(Frequency_Interval__c )),
+	IF( ISPICKVAL( Schedule_Frequency__c , &apos;Y&apos;) , VALUE(Text(Frequency_Interval__c )),
+	0
+	))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Final Frequency</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

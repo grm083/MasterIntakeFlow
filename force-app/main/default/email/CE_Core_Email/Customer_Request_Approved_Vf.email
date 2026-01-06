@@ -1,0 +1,83 @@
+<messaging:emailTemplate subject="Request Approved: {!relatedTo.Case_Type__c} at {!relatedTo.Location_Code__c}, Ref. #: {!relatedTo.Reference_Number__c}" recipientType="Contact" relatedToType="Case">
+<messaging:htmlEmailBody >
+   <div style="align=right">
+            <apex:variable value="{!LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260))}" var="hostUrl"/>
+            <apex:variable value="servlet/servlet.ImageServer?id=" var="staticUrl_1"/>
+            <apex:variable value="&oid=" var="staticUrl_2"/>
+            <apex:variable value="{!$Organization.Id}" var="orgId"/>
+    </div> 
+     <html>
+     
+         <style type="text/css">
+            body {font-size: 11pt;}
+         </style>
+        <body>       
+            <br><apex:image width="1000" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.DocumentId__c}{!staticUrl_2}{!orgId}"/></br>   
+            <br><apex:outputText style="font-family:Arial;" value="Hi {!relatedTo.Contact_Name__c},"/></br>                
+            <br/>
+            <apex:outputText style="font-family:Arial;" value="The {!relatedTo.Case_Type__c} - {!relatedTo.Case_Sub_Type__c} service you requested on {!relatedTo.CreatedDate} has been approved by "/>  <c:GetApproverName CaseDetails="{!relatedTo}" />
+             <br/>                 
+            <b><apex:outputText style="text-align: center;font-family:Arial;font-size:11pt; font-weight: bold;" value=" SERVICE DETAILS" /></b>
+             <br/>                      
+            <table border="0" cellpadding="0" width="550" cellspacing="5" >    
+               <tr> 
+                   <td width= "217">
+                      <p><font size="3" face="Arial, sans-serif"><b>Reference #:</b></font></p>
+                   </td>
+                   <td width ="217">
+                      <p ><font size="3" face="Arial, sans-serif">{!relatedTo.Reference_Number__c}</font></p>
+                   </td>
+               </tr>
+                <tr> 
+                   <td width= "217">
+                      <p><font size="3" face="Arial, sans-serif"><b>Location ID:</b></font></p>
+                   </td>
+                   <td width ="217">
+                      <p ><font size="3"  face="Arial, sans-serif">{!relatedTo.Location_Code__c}</font></p>
+                   </td>
+               </tr>
+                <tr> 
+                   <td width= "217" style="vertical-align:Top">
+                  
+                      <p><font size="3" face="Arial, sans-serif"><b>Service Address:</b></font></p>
+                     
+                   </td>
+                   <td width ="217" style="vertical-align:Top">
+                   
+                      <p ><font size="3" face="Arial, sans-serif"><apex:outputText style="text-align:center;font-family:Arial;" value= "{!relatedTo.Location_Name_Email_Temp__c} <br>{!relatedTo.Tech_Location_Details__c} </br>" escape="false"/> </font></p>
+                   
+                   </td>
+               </tr>
+                <tr> 
+                   <td width= "217">
+                      <p><font size="3" face="Arial, sans-serif"><b>Estimated Completion Date:</b></font></p>
+                   </td>
+                   <td width ="217">
+                      <p ><font size="3" face="Arial, sans-serif"><apex:outputText style="text-align:center;font-family:Arial;" value="{!relatedTo.Service_Date__c} " /> </font></p>
+                   </td>
+               </tr>
+               <tr> 
+                   <td width= "217">
+                      <p><font size="3" face="Arial, sans-serif"><b>Request:</b></font></p>
+                   </td>
+                   <td width ="217">
+                      <p ><font size="3" face="Arial, sans-serif">{!relatedTo.Case_Type__c}</font></p>
+                   </td>
+               </tr>
+                <tr> 
+                   <td width= "217">
+                      <p><font size="3" face="Arial, sans-serif"><b>Container:</b></font></p>
+                   </td>
+                   <td width ="217">
+                      <p ><font size="3" face="Arial, sans-serif">{!relatedTo.Asset.Name},{!relatedTo.Asset.Material_Type__c} {!relatedTo.Asset.Container_Position__c}</font></p>
+                   </td>
+               </tr>
+            </table>
+            
+            
+            <br><apex:outputText style="text-align: center;font-family:Arial;" value="Thank you."/></br>
+            <c:LoggedInUserDetails />
+        </body>
+     </html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

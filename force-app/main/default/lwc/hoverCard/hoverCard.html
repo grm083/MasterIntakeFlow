@@ -1,0 +1,189 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 09-19-2022
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+   
+    <div class="slds-popover slds-nubbin_left potato slds-box slds-scrollable_y" style={boxClass}> 
+         <lightning-button-icon icon-name="utility:close"
+            variant="bare"
+            size="large"
+            class="slds-modal__close slds-float--right"
+            onclick={handleClose}
+            if:true={isEmailMessage}/>
+        </lightning-button-icon>
+        <article class="slds-card" style={articleClass}>
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-account" title="Work Order">
+                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                    </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body" >
+                    <h2 class="slds-card__header-title">
+                    <a href="#" class="slds-card__header-link slds-truncate" title="Work Order">
+                        <span>{title}</span>
+                    </a>
+                    </h2>
+                </div>
+                <div class="slds-no-flex">
+                    Related To: {parentId}
+                </div>
+                </header>
+            </div>
+        <lightning-record-view-form record-id={objectRecordId} object-api-name={objectAPIName} title={title} if:true={objectFieldSet}>    
+            <div class="slds-box slds-theme_default">
+                <div class="slds-grid slds-wrap slds-theme_default">
+                    <div class="slds-col slds-size_1-of-1 slds-border_bottom">
+                            <lightning-output-field field-name={masterField}>
+                        </lightning-output-field>
+                    </div> 
+                    <template for:each={fieldSet} for:item="f">
+                        <div key={f} class="slds-col slds-size_1-of-2 slds-border_bottom">
+                            <lightning-output-field field-name={f}>
+                            </lightning-output-field>
+                        </div> 
+                    </template>      
+                </div>   
+            </div>            
+        </lightning-record-view-form>
+        <div class="slds-box slds-theme_default" if:true={isTask}>
+            <div class="slds-grid slds-wrap slds-theme_default">
+                <div class="slds-col slds-size_1-of-1 slds-border_bottom">
+                        <span  class="slds-form-element__label">Subject</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={taskData.subject}></lightning-formatted-text>
+                            <slot ></slot>
+                        </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Status</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text class="slds-form-element__static"  value={taskData.status}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Due Date</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text class="slds-form-element__static"  value={taskData.activityDate}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Assigned To</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={taskData.owner}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Outcome</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={taskData.outcome}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Created By</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={taskData.createdBy}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Last Modified By</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={taskData.lastModifiedBy}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Description</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={taskData.description}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Comment</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={taskData.comment}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+            </div>
+        </div>	
+
+        <div class="slds-box slds-theme_default slds-scrollable_y" if:true={isEmailMessage}>
+            <div class="slds-grid slds-wrap slds-theme_default">
+                <div class="slds-col slds-size_1-of-1 slds-border_bottom">
+                        <span  class="slds-form-element__label">Subject</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={emailData.subject}></lightning-formatted-text>
+                            <slot ></slot>
+                        </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">From Name</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text class="slds-form-element__static"  value={emailData.fromName}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">To Address</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text class="slds-form-element__static"  value={emailData.toAddress}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">From Address</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={emailData.fromAddress}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">CC Address</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={emailData.ccAddress}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Status</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={emailData.status}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                    <span  class="slds-form-element__label">Message Date</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-text  class="slds-form-element__static"  value={emailData.messageDate}></lightning-formatted-text>
+                        <slot ></slot>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-border_bottom">
+                    <span  class="slds-form-element__label">Message Body</span>
+                    <div  class="slds-form-element__control">
+                        <lightning-formatted-rich-text class="slds-form-element__static"  value={emailData.htmlBody}></lightning-formatted-rich-text>
+                        <slot ></slot>
+                    </div>
+                </div> 
+            </div>
+        </div>	
+        </article>
+    </div>
+
+    
+    
+</template>

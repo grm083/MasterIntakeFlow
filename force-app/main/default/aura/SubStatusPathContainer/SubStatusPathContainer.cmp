@@ -1,0 +1,25 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller = "subStatusPathController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="allStages" type="String[]" />
+    <aura:attribute name="currentStage" type="String" />
+    <aura:attribute name="isFlowVisible" type="Boolean" default="false" />
+    <!-- Commented as part of SDT-8434 <aura:handler event="force:refreshView"  action="{!c.init}" /> -->
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}" 
+                      layoutType="FULL"
+                      targetRecord="{!v.case}"
+                      targetFields="{!v.caseRecord}"
+                      fields="Id,Status,Case_Sub_Status__c" 
+                      mode="VIEW"
+                      recordUpdated="{!c.recordUpdated}"/>
+    <aura:if isTrue="{!v.isFlowVisible}">
+    <div class="slds-card slds-theme_shade">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" aura:id="flowHolder">
+               <!-- <lightning:flow aura:id="flow" /> -->
+               <c:flowCaseSubstatus currentStage = "{!v.currentStage}" allStages = "{!v.allStages}" />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    </aura:if>
+</aura:component>

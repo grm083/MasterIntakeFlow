@@ -1,0 +1,47 @@
+.THIS .forceHighlightsPanel {
+    position: sticky;
+    top: 5.2rem;
+    z-index:2;
+}
+
+.THIS .forceHighlightsPanelSandBox {
+    position: sticky;
+    top: 7.7rem;
+    z-index:2;
+}
+
+ .THIS .stickySection {
+	position: fixed;
+    z-index:3;
+	border-radius: 1px;
+    width:100%;
+}
+
+.THIS .tabSection {
+	position: unset;
+    top: 6rem;
+    z-index:2;
+	border-radius: 1px;
+    width:100%;
+}
+
+.THIS .subtabPostion {
+    margin: 60px 1px 24px -24px !important;
+}
+
+.THIS .tabPostion {
+    margin: 24px 1px 24px -24px !important;
+}
+
+.THIS .aftercontent {
+  padding-top: 430px;
+}
+
+.THIS .content {
+    position:relative;
+    top: 55%;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    /*overflow-y:scroll; */      
+}

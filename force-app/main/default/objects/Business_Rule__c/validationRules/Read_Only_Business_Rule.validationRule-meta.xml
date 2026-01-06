@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Read_Only_Business_Rule</fullName>
+    <active>true</active>
+    <description>When Business Rule is active Account and Account Location can be modified.</description>
+    <errorConditionFormula>IF( Active__c ,ISCHANGED(AccountId__c) || ISCHANGED(LocationId__c),false)</errorConditionFormula>
+    <errorDisplayField>Active__c</errorDisplayField>
+    <errorMessage>Active Business Rule cannot be modified.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approval_Log__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Used to display the corresponding Approval Log</description>
+    <externalId>false</externalId>
+    <label>Approval Log</label>
+    <referenceTo>Approval_Log__c</referenceTo>
+    <relationshipLabel>Activities</relationshipLabel>
+    <relationshipName>Approval_Logs</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

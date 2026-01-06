@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proposed_Service_date_validation</fullName>
+    <active>true</active>
+    <description>Proposed Service Date cannot be today&apos;s date or in the past.</description>
+    <errorConditionFormula>AND( NOT($User.Bypass_Validation__c),  ISCHANGED( Proposed_Service_Date__c ) ,Proposed_Service_Date__c  &lt;  TODAY())</errorConditionFormula>
+    <errorDisplayField>Proposed_Service_Date__c</errorDisplayField>
+    <errorMessage>Proposed Service Date can be today or future date.</errorMessage>
+</ValidationRule>

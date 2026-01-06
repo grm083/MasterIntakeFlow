@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Open</fullName>
+        <default>true</default>
+        <label>Open</label>
+    </customValue>
+    <customValue>
+        <fullName>Closed Exclusive</fullName>
+        <default>false</default>
+        <label>Closed Exclusive</label>
+    </customValue>
+    <customValue>
+        <fullName>Closed Vendor Choice</fullName>
+        <default>false</default>
+        <label>Closed Vendor Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Closed Utility</fullName>
+        <default>false</default>
+        <label>Closed Utility</label>
+    </customValue>
+    <customValue>
+        <fullName>Validate Vendor Service Area</fullName>
+        <default>false</default>
+        <label>Validate Vendor Service Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Market Depends on Address</fullName>
+        <default>false</default>
+        <label>Market Depends on Address</label>
+    </customValue>
+    <customValue>
+        <fullName>Closed Vendor Depends on Address</fullName>
+        <default>false</default>
+        <label>Closed Vendor Depends on Address</label>
+    </customValue>
+    <customValue>
+        <fullName>Market and Vendor Depends on Address</fullName>
+        <default>false</default>
+        <label>Market and Vendor Depends on Address</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Exclusive</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Non-Exclusive</label>
+    </customValue>
+    <customValue>
+        <fullName>Validate Open</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Validate Open</label>
+    </customValue>
+    <customValue>
+        <fullName>Validate Franchised</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Validate Franchised</label>
+    </customValue>
+    <description>Type of Franchise</description>
+    <masterLabel>Franchise Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

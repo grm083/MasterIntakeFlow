@@ -1,0 +1,244 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+    controller="QuoteProcurementController">
+	
+    <!--SDT 33101-->
+    <aura:attribute name="disableQuoteonly" type="boolean" default="false" />
+    <aura:attribute name="addQuoteOnlyService" type="boolean" default="false" />
+    <aura:attribute name="showSpinner" type="boolean" />
+    <!--SDT 33101 end-->
+    <!--SDT 33101 new-->
+    <aura:attribute name="parent" type="Aura.Component" />
+    <aura:registerEvent name="RefreshConfiguredProducts" type="c:RefreshConfiguredProducts" />
+    <!--SDT 33101 new end-->
+    <aura:attribute name="quoteStatus" type="String" default="" />
+    <aura:attribute name="currentAssignment" type="String" default="" />
+    <aura:attribute name="statusDescription" type="String" default="" />
+    <aura:attribute name="configuredOrders" type="Quote_Order__c[]" />
+    <aura:attribute name="quoteOnly" type="boolean" default="false" />
+    <aura:attribute name="servicePicklistValues" type="List"/>
+    <aura:attribute name="showOrderModal" type="Boolean" default="false" />
+    <aura:attribute name="isAssetChangeDisable" type="boolean" default="false" />
+    <!--TCS-pkulkarn-SDT-42718-31-Jan-2025-Added below attribute-->
+    <aura:attribute name="quoteType" type="String" default="" />
+    <!--Changes related to SDT-39632-->
+    <aura:attribute name="quoteUpdateStatus" type="boolean" />
+    <aura:handler name="change" value="{!v.quoteUpdateStatus}" action="{!c.callUpdateWrapper}" />
+
+    <!--SDT-37527-->
+	    <aura:attribute name="showMaterialGrade" type="boolean" default="false" />
+
+    <aura:attribute name="targetProduct" type="Object" default="[]" />
+    <aura:attribute name="createdProduct" type="Object" default="[]" />
+    <aura:attribute name="targetProductId" type="String" default="" />
+    <aura:attribute name="caseId" type="String" default="" />
+	
+    <aura:attribute name="serviceWrapper" type="object" />
+    <aura:attribute name="currentProduct" type="object"/>
+    <aura:attribute name="recordId" type="string"/>
+    <aura:attribute name="extraParams" type="object"/>
+    <!--aura:handler name="change" value="{!v.showOrderModal}" action="{!c.showOrderModalChange}"/-->
+    <aura:attribute name="inlineProdId" type="string" />
+	 <!--Attribute to reset Accessory List SDT-22397-->
+    <aura:attribute name="selectedAccessoryList" type="Object[]" default="[]" />
+
+    <!-- Changes for SDT-24401 -->
+    <aura:attribute name="isAssetAvailable" type="boolean" default="false" />
+    <aura:attribute name="isAssetConfirmAvailable" type="boolean" default="false" />
+    <aura:attribute name="assetProducts" type="Object" default="[]" />
+    <aura:attribute name="quoteProducts" type="Object" default="[]" />
+    <aura:attribute name="quoteActiveTabId" type="String" default="" />
+    <aura:attribute name="tabCount" type="integer" default="1" />
+    <aura:attribute name="assetActiveTabId" type="String" default="" />
+	<!-- yeshas new attributes -->
+
+    <!-- changes for story SDT-26026 -->
+    <aura:attribute name="QuoteComment" type="String"/>
+    <!-- SDT-29084 start -->
+    <aura:attribute name="byPassStpCheckBox" type="Boolean" default="false" />
+    <aura:attribute name="byPassStpReasons" type="String[]" default="[]" />
+    <aura:attribute name="byPassStpSelectedReasonVal" type="string" default="-1" />
+    <aura:attribute name="stpOtherReasonText" type="string" default="" />
+    <aura:attribute name="specialHandlingEnable" type="Boolean" default="false" />
+    <!-- SDT-29084 end -->
+    <!-- SDT-47978 - Added by Yugandhar Adem : START -->
+    <aura:attribute name="enableSpecialHandlingReason" type="Boolean" default="false" />
+    <!-- SDT-47978 - Added by Yugandhar Adem : END -->
+
+<aura:attribute name="assetAvailabilityAccess" type="boolean" default="false" /><!--SDT-30072-->
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <aura:registerEvent name="UpdateWrapperState" type="c:UpdateWrapperStateEvent" />
+
+    <lightning:card title="Quote Summary">
+        <lightning:layout multipleRows="true" verticalAlign="center" >
+            <lightning:layoutItem size="12" class="greenBox slds-box slds-align_absolute-center slds-text-title_caps">
+                <b>Quote Summary and Confirmation</b>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="grayBox slds-box slds-align_absolute-center slds-text-title_caps">
+                <lightning:layout multipleRows="true" verticalAlign="center">
+                    <lightning:layoutItem size="12" class="slds-p-around_xxx-small slds-align_absolute-center">
+                        <b>Current Quote Status:</b> {!v.quoteStatus}
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-p-around_xxx-small slds-align_absolute-center">
+                        <b>Current Team Assignment:</b> {!v.currentAssignment}
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-p-around_xxx-small slds-align_absolute-center">
+                        {!v.statusDescription}
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="equipmentType" label="Equipment Type" disabled="true" value="{!v.targetProduct.equipmentType}" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="equipmentType" label="Equipment Size" disabled="true" value="{!v.targetProduct.equipmentSize}" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="equipmentType" label="Duration" disabled="true" value="{!v.targetProduct.duration}" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="equipmentType" label="Material (Waste Stream)" disabled="true" value="{!v.targetProduct.materialType}" />
+            </lightning:layoutItem>
+            <!--SDT-37527-->
+            <aura:if isTrue="{!v.showMaterialGrade}">
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="equipmentType" label="Material Grade" disabled="true" value="{!v.targetProduct.selectedMaterialGrade}" />
+            </lightning:layoutItem>
+            </aura:if>
+            <!--SDT-37527-->
+
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="equipmentType" label="Service Schedule" disabled="true" value="{!v.targetProduct.lineFrequency}" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-around_medium" >
+                <!--33101 adding disabled = "{!v.disableQuoteonly}"-->
+                <lightning:input type="checkbox" name="quoteOnly" label="Quote Only" 
+                                 										value="{!v.quoteOnly}"
+                                 										disabled = "{!v.disableQuoteonly}"
+                                 										checked="{!v.quoteOnly}" 
+                                 										variant="brand" 
+                                 										class="slds-checkbox" 
+                                 										onchange="{!c.handleQuoteOnly}" />
+            </lightning:layoutItem>
+            <!-- SDT - 29084 Start-->
+            <!-- <aura:if isTrue="{!!v.isAssetAvailable}"> -->
+                <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                    <lightning:input type="checkbox" label="Special Handling Needed" disabled = "{!v.specialHandlingEnable}" checked="{!v.byPassStpCheckBox}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                    <aura:if isTrue="{!v.byPassStpCheckBox}">
+                        
+                        <lightning:select name="byPassStpReasons" value="{!v.byPassStpSelectedReasonVal}" disabled = "{!v.enableSpecialHandlingReason}" aura:id="byPassStpReasonsPicklist" label="Special Handling Reason" required="true" >
+                                    <option text="--Select Reason--" value="-1"/>
+                                    <aura:iteration items="{!v.byPassStpReasons}" var="item">
+                                        <option text="{!item.key}" value="{!item.value}" />
+                                    </aura:iteration>
+                        </lightning:select>
+                    </aura:if>
+                </lightning:layoutItem>
+                <aura:if isTrue="{!and(v.byPassStpSelectedReasonVal == 'Other',v.byPassStpCheckBox) }" >
+                    <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                    <lightning:input  type="text" required="true" name="stpOtherReason" value="{!v.stpOtherReasonText}" label="Special Handling Details" />
+                    </lightning:layoutItem>
+                </aura:if>
+            <!-- </aura:if> -->
+            <!-- SDT - 29084 End -->
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="equipmentType" label="Start Date" disabled="true" value="{!v.targetProduct.startDate}" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="equipmentType" label="End Date" disabled="true" value="{!v.targetProduct.endDate}" />
+            </lightning:layoutItem>
+           
+            <!-- Changes done for story SDT-26026 -->
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <lightning:input aura:id="Comments" name="Comments" label="Comments" placeholder="type here..."/>
+                <!-- <lightning:inputRichText  value="{!v.QuoteComment}" /> -->
+            </lightning:layoutItem>
+            <!-- End -->
+
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-wrap">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Action">Action</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Type">Type</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Service Date">Service Date</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-wrap">
+                                    <div class="slds-truncate" title="Instructions">Instructions</div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.configuredOrders}" var="item" >
+                            <tr class="slds-hint-parent slds-wrap">
+                                <th data-label="Action" scope="row">
+                                    <div class="slds-truncate" title="{!item.Id}">
+                                        <lightning:buttonIcon iconName="utility:check" variant="bare" value="{!item.Id}"/>
+                                    </div>
+                                </th>
+                                <td data-label="Type">
+                                    <div class="slds-truncate">{!item.Service_Type__c}</div>
+                                </td>
+                                <td data-label="Service Date">
+                                    <div class="slds-truncate">{!item.Service_Date__c}</div>
+                                </td>
+                                <td data-label="Instructions" class="slds-cell-wrap">
+                                    {!item.Acorn_Instructions__c}
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <lightning:layout multipleRows="true" verticalAlign="middle" horizontalAlign="stretch">
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <lightning:button label="Back" variant="brand" class="slds-align_absolute-center" onclick="{!c.goBack}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <lightning:button label="Add Work Order(s)" aura:id="btnAddWO" variant="brand" class="slds-align_absolute-center" disabled="{!v.isAssetChangeDisable}" onclick="{!c.addPickUp}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <aura:if isTrue="{!!v.isAssetAvailable}">
+                            <lightning:button label="Add Another Service" variant="brand" class="slds-align_absolute-center" onclick="{!c.addMore}" />
+                        </aura:if>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <aura:if isTrue="{!v.isAssetConfirmAvailable}">
+                            <lightning:button label="Confirm Configuration" aura:id="btnConfirmConfig" variant="brand" class="slds-align_absolute-center" disabled="{!v.isAssetChangeDisable}" onclick="{!c.updateStatus}" />
+                        </aura:if>
+                    </lightning:layoutItem>
+                    <!--SDT 33101-->
+                    <lightning:layoutItem size="3" flexibility="auto" class="slds-p-around_xxx-small">
+                        <aura:if isTrue="{!and(v.addQuoteOnlyService,v.quoteOnly)}">
+                            <lightning:button label="Add Quote Only Service" variant="brand" class="slds-align_absolute-center" onclick="{!c.addMoreQuoteOnly}" />
+                        </aura:if>
+                    </lightning:layoutItem>
+                    <!--SDT 33101 end-->
+                </lightning:layout>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <!-- Pick Up Service Pop Up -->
+        <aura:if isTrue="{!v.showOrderModal}">
+            <c:quoteOrderComp 	aura:id="workOrderLwc1" 
+                              bShowModal="{!v.showOrderModal}" 
+                              inlineProd="{!v.inlineProdId}" 
+                              recordId="{!v.recordId}" 
+                              servicePicklist="{!v.servicePicklistValues}"
+                              onvaluechange="{!c.msgFromChildLWC}"/>
+        </aura:if>
+        <!-- Pick Up Service Pop Up -->
+    </lightning:card>
+
+</aura:component>

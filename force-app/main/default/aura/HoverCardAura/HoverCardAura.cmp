@@ -1,0 +1,14 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:attribute type="String" name="hoverRecordId"/> 
+    <aura:attribute type="String" name="sobjectType"/> 
+    <aura:attribute type="String" name="title"/> 
+    <aura:attribute type="String" name="casenumber"/>
+    <aura:attribute type="String" name="top"/> 
+    <aura:attribute type="String" name="left"/> 
+    <aura:attribute type="Boolean" name="showHover" default="true"/> 
+    <aura:if isTrue="{!v.showHover}"> 
+        <c:hoverCard hoverRecordId="{!v.hoverRecordId}" objectAPIName="{!v.sobjectType}" title="{!v.title}" parentId="{!v.casenumber}" 
+        topmargin="{!v.top}" leftmargin="{!v.left}" fixedUI="true" onclose="{!c.hideHover}"></c:hoverCard>
+    </aura:if> 
+    
+</aura:component>

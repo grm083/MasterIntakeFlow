@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QuoteLineNotEditable</fullName>
+    <active>false</active>
+    <description>QuoteLine cannot be edited if Quote status is approved</description>
+    <errorConditionFormula>AND(OR(AND($User.FirstName&lt;&gt; &apos;Acorn&apos;, $User.LastName &lt;&gt; &apos;Integration&apos;),AND($User.FirstName&lt;&gt; &apos;API&apos;, 
+$User.LastName &lt;&gt; &apos;User Only&apos;)), 
+ISPICKVAL(SBQQ__Quote__r.SBQQ__Status__c, &apos;Approved&apos;), 
+IsSynced__c)</errorConditionFormula>
+    <errorMessage>QuoteLine cannot be modified if Quote status is approved.</errorMessage>
+</ValidationRule>

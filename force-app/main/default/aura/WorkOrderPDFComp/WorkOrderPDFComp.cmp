@@ -1,0 +1,76 @@
+<aura:component controller="GetWorkOrderPDFCntrlr" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId">
+        <aura:attribute name="myText" type="string" default="Hello there!"/>
+        <aura:attribute name="myTextRec" type="string" default="Hello there!"/>
+        <aura:attribute name="myIntText" type="string" default=" "/>
+        <aura:attribute name="stopLoad" type="Boolean" default="false"/>
+        <aura:attribute name="items" type="List"/>
+        
+        <aura:attribute name="selectedDocumentId" type="string"/>
+        <aura:attribute name="lstContentDoc" type="List"/>
+        <aura:attribute name="hasModalOpen" type="boolean" default="false"/>
+
+        <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+        <div class="api_spinner" style="height:6rem">
+                <div class="slds-spinner_container">
+                  <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                  </div>
+                </div>
+              </div>
+
+        <div class="success">    
+          <!-- Custom DataTable to Display List Of Available ContentDocuments Start-->  
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+              <thead>
+                  <tr class="slds-line-height_reset">
+                      <th class="slds-text-title_caps" scope="col">
+                          <div class="slds-truncate" title="Title">Title</div>
+                      </th>
+                      <th class="slds-text-title_caps" scope="col">
+                          <div class="slds-truncate" title="File Type">File Type</div>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <aura:iteration items="{!v.lstContentDoc}" var="CD">
+                      <tr>
+                          <th scope="row">
+                              <div class="slds-truncate" title="{!CD.Title}">
+                                  <!--store contentDocument Id in data-Id attribute-->
+                                  <a onclick="{!c.getSelected}" data-Id="{!CD.Id}">{!CD.Title}</a>
+                              </div>
+                          </th>
+                          <th scope="row">
+                              <div class="slds-truncate" title="{!CD.FileType}">{!CD.FileType}</div>
+                          </th>
+                      </tr>  
+                  </aura:iteration>
+              </tbody>
+          </table>
+          <!-- Custom DataTable to Display List Of Available ContentDocuments End-->  
+          <!--###### FILE PREVIEW MODAL BOX START ######--> 
+          <aura:if isTrue="{!v.hasModalOpen}">
+              <section onclick="{!c.closeModel}"
+                      role="dialog"
+                      aria-modal="true"
+                      class="slds-modal slds-fade-in-open">
+                  <div class="slds-modal__container">
+                      <div class="slds-modal__content slds-p-around_medium slds-text-align_center"
+                          style="background: transparent;">
+                          <div style="width: 50%; margin: 0 auto; text-align: left">
+                              <!--<lightning:fileCard> to preview file using content document Id -->
+                              <lightning:fileCard fileId="{!v.selectedDocumentId}"/>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+              <div class="slds-backdrop slds-backdrop_open"></div>
+          </aura:if>
+      </div>
+        <div class="failed slds-text-color_error ">
+            No Attachments Found !
+        </div>
+</aura:component>

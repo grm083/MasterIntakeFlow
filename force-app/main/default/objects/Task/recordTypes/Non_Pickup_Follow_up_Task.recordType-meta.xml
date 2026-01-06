@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Pickup_Follow_up_Task</fullName>
+    <active>true</active>
+    <description>This record type is for non pickup follow up tasks</description>
+    <label>Non Pickup Follow up Task</label>
+    <picklistValues>
+        <picklist>Follow_Up_Reasons__c</picklist>
+        <values>
+            <fullName>Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal WM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Outcome__c</picklist>
+        <values>
+            <fullName>Alternate Contact Provided</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Accepts New Date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Accepts Status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Disputes Status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Notified of Decline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Requests Cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emergency Service Required</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Follow Up Not Required</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information Not Obtained</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information Obtained</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Charges Needed%2FVendor Disputes Cost%2F Customer Disputes Resolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Charges Needed%2FVendor Disputes Cost%2F Incorrect Hauler%2FIncorrect Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New ETA Provided</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Response%2FPending Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Reviewed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reviewed - Action Required</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reviewed - No Action Required</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule Recovery%2FService Rescheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Date Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Dispatched</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Evidence Received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Not Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Not Performed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Performed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Rescheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Accepts Work Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Available</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Unavailable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Normal</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Process__c</picklist>
+        <values>
+            <fullName>Confirm Service Completion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confirm Service Completion with Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confirm Vendor Availability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Unresponsive Contact Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Unresponsive Contact Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manually Dispatch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monitor New Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Portal Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notify Customer Of Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notify Customer Of Service Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notify Customer of Decline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Obtain Customer Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Obtain Schedule Confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Obtain Vendor Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portal Alert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portal Comments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portal Unsatisfactory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected Work Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resolve Service Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validate Email Comments</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Root_Cause__c</picklist>
+        <values>
+            <fullName>Carryover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed of Service Date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Container Blocked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Container Contaminated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Container Overloaded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Container not ready</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Refused</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Duplicate Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stop Service %28New PO needed after payment issue s resolve%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor did not have on schedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong Container</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong Vendor on site</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subject</picklist>
+        <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Send Letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Send Quote</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Task_Team_Name__c</picklist>
+        <values>
+            <fullName>Account Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Billing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core Customer Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Family Dollar%2FDollar Tree Customer Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greenleaf</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Launch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M%26I Customer Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mall Customer Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Stores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Resolution Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Setup %26 Maintenance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Relations Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wasteless</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Task_Team_Queue__c</picklist>
+        <values>
+            <fullName>AM Broker Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Bale Resolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Corporate Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Dollar Tree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Eservices</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Follow Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS M%26I %2F Healthcare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS M%26I Follow Ups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS MONITOR TEAM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Portal Requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Resolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS SCS Mall Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Same Day Req Follow Ups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Billing Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Credits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dollar Tree - Family Dollar Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FAST Response Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance Recycling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Follow Up DT%2FFD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greenleaf Billing Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greenleaf Equipment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greenleaf Quotes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Home Depot Projects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Home Depot Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indore Follow Up Queue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Launch Indore Ticket Resolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Launch Outbound Communication</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Light Bulbs Recycled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MCY QUOTES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NS Quote Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NS Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Acevedo%2C H</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Adler C</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Bailey-Haas%2C K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Bouchard%2C T</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Brooks%2C J</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Chantler%2C R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Curley%2C S</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM DeRosa%2C K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Evans%2C K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Farquharson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Ferrer%2C L</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Filburn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Freeman%2C C</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM GAGNE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Gneiting%2C K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Gotay%2C M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Greene%2C C</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Grossi%2C J</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Hartford%2C A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Herald%2C M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Hill%2C B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Hundhausen%2C H</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Hunter%2C N</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Hylas%2C K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Kelsey%2C S</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Kidwai%2C L</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Kirwin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Kowalik%2C M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Laliberte%2C A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Lassonde%2C M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Mailhot%2C K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Maurer%2C P</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM May%2C R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Miller%2C S</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Novi%2C B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM O%27Neill%2C D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Padilla%2C M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Pelletier%2C L</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Richardson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Rossi%2C D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Sheffield%2C M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Stolarz%2C E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Stycharz%2C M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Torres%2C L</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Waversak%2C T</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Williams%2C R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Yeamans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PM Zenofio%2C C</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS Delivery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS Location Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS Portal Requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS Resolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS Vendor Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recycle Bale Escalation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Repair Follow ups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Repairs Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSM-FollowUp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSM-Launch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSM-Rightsizing Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSM-Setup %26 Maintenance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSMVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SST Locks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SST Resolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Resolution Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Texas Roadhouse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Third Party Repairs Follow Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tier 2 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VRM Canada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VRM Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VRNS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VRSSM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS Pre-Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VS Stop Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management %E2%80%93 Issue Invoices%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Payments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Account Managers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Billing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Cust Svc Incomplete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Customer Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Project Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC SSM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wal-Mart Monitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wasteless</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

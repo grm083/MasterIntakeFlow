@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This will store the SERVICE CHARGE TYPE CODE that will be used to send to price only API. This will be fetched with the combination of line of business, service type, market area code, product code.</description>
+    <label>serviceChargesCodeMapping</label>
+    <pluralLabel>serviceChargesCodeMappings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

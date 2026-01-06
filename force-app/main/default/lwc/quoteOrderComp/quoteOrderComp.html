@@ -1,0 +1,350 @@
+<!--
+Author: Rishiraj Singh
+Requirement Id/Story: https://wastemanagement.atlassian.net/wiki/spaces/SPFH/pages/1385137700/Work+Order+Design+Pointers & SDT-21795
+FC: Pankaj Kakkar
+Module: Order Management
+.................................................................................................................
+Description: Custom LWC Component, child component of Aura comp QuoteProducts. Getting invoked from Create and View Order(s) button. 
+-->
+<template>
+    <template if:true={bShowModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="bare"
+                        size="small" >
+                    </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Product Order</h2>
+                </header>
+                <!-- modal body start -->
+                <div style="height:100%;" class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="3" padding="around-small"><lightning-badge label={selectedProd} icon-name="utility:fulfillment_order"></lightning-badge></lightning-layout-item>
+                        <template if:true={selectedProd}>
+                            <lightning-layout-item size="9">
+                                <!--SDT-32136 :START--> 
+                                <lightning-layout multiple-rows="true">
+                                    
+                                <!--modified as part of SDT 31585-->
+                                <lightning-layout-item size="2" padding="around-small">
+                                    <template lwc:if={assetAvailabilityAccess}>
+                                        <c-aav-custom-date-picker picker-label = "Vendor Commit Date" 
+                                            equipment-size={equipmentSize} sla-date={slaDate}
+                                            quote-line-id={inlineProd} selected-date={vendorCommitDate} 
+                                            onupdateparent={handleVendorCommitDateUpdate} class="aavCustomDatePicker">
+                                        </c-aav-custom-date-picker>
+
+                                    </template>
+                                    <template lwc:else>
+                                        <lightning-layout-item size="2"><lightning-input data-id="vendorCommitDate" name="vendorCommitDate" type="date" label="Vendor Commit Date" value ={vendorCommitDate} onchange={vendorCommitDateUpdate} disabled={isView}></lightning-input></lightning-layout-item>
+</template>
+                                </lightning-layout-item>
+
+                                    <lightning-layout-item size="2" padding="around-small" style="white-space: nowrap;"><lightning-input data-id="customerRequestedServiceDate" name="customerRequestedServiceDate" type="date" label="Customer Requested Service Date" value ={customerServiceDate}  disabled={isView} read-only></lightning-input></lightning-layout-item>
+
+                                <!--31585 ends here-->
+                                </lightning-layout> 
+                                 <!--SDT-32136 :END-->   
+                                <lightning-layout multiple-rows="true">
+                                    <lightning-layout-item size="2" padding="around-small">
+
+                                        <!--modified as part of SDT 31585-->
+                                        <!--SDT-29723 :START-->
+                                        <template lwc:if={assetAvailabilityAccess}>
+                                            <c-aav-custom-date-picker picker-label = "Delivery/Start Date" 
+                                                equipment-size={equipmentSize} sla-date={slaDate}
+                                                quote-line-id={inlineProd} selected-date={bundleStartDateForm} 
+                                                onupdateparent={handleStartDateUpdate} class="aavCustomDatePicker">
+                                            </c-aav-custom-date-picker>
+                                        </template>
+
+
+                                        <template lwc:else>
+                                            <lightning-input data-id="bundleStartDateBlock" name="bundleStartDate" type="date" 
+                                            label="Start Date" value ={bundleStartDateForm} onchange={bundleStartDateUpdate}
+                                             disabled={isView} read-only></lightning-input>  <!--SDT-32136: made read only-->
+                                        </template>
+                                        <!--SDT-29723 :END-->
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="2" padding="around-small"><lightning-input data-id="bundleEndDateBlock" name="bundleEndDate" type="date" label="End Date" value ={bundleEndDateForm} onchange={bundleEndDateUpdate} disabled={isView}></lightning-input></lightning-layout-item>
+
+                                    <template lwc:if={assetAvailabilityAccess}>
+                                        <lightning-layout-item size="8" padding="around-small">
+                                            <lightning-layout  multiple-rows="true">
+                                                <lightning-layout-item size="3" padding="around-small">
+                                                    <lightning-button label="Update Availability" title="Update Availability" onclick={updateAvailability} class="slds-m-left_x-small"></lightning-button>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item size="9" padding="around-small">
+                                                    <p>{availabilityMessage}</p>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </lightning-layout-item>
+                                    </template>    
+
+                                </lightning-layout>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                    <!--<div style="width: 30%;">
+                        
+                    </div>-->
+                    </br>
+                    <!--SDT-20110,20121,20299,SDT-21162 Starts-->
+                    <template if:true={showNote}>
+                        <div style="text-align: right; color:red">
+                            <!--<div class="slds-badge slds-theme_warning">-->
+                                <lightning-icon icon-name="utility:warning" alternative-text="Warning!" variant="warning" title="warning variant x-small" size="x-small"></lightning-icon>
+                                <lightning-formatted-text value={note} ></lightning-formatted-text>
+                            <!--</div>-->
+                        </div>
+                    </template>
+                    <!-- SDT-32136 : START-->
+                    <div style="text-align: right; color:red;white-space: nowrap;">
+                        
+                            <lightning-icon icon-name="utility:warning" alternative-text="Warning!" variant="warning" title="warning variant x-small" size="x-small"></lightning-icon>
+                            <lightning-formatted-text value="Start Date will be updated to match the Vendor Commit Date when quote is approved." ></lightning-formatted-text>
+                 
+                    </div>
+                    <!-- SDT-32136 : END-->
+                    <!--SDT-,20110,20121,20299 Stopped-->
+                    <!--Quote Order Table Start-->
+                    <table class="slds-table slds-table_bordered" id='createQuote' width="100%">
+                        <thead>
+                            <tr class="slds-line-height_reset slds-text-title_caps">
+                                <th class="" scope="col" style="width:10%">
+                                    <div class="slds-truncate" title="Service Type">Service Type</div>
+                                </th>
+                                <th class="" scope="col" style="width:10%">
+                                    <div class="slds-truncate" title="product Option">Component</div>
+                                </th>
+                                <th class="" scope="col" style="width:10%">
+                                    <div class="slds-truncate" title="Service Date">Service Date</div>
+                                </th>
+                                <th class="" scope="col" style="width:6%">
+                                    <div class="slds-truncate" title="Service Time Span">Service Window</div>
+                                </th>
+                                <th class="" scope="col" style="width:15%">
+                                    <div class="slds-truncate" title="Contact">Contact</div>
+                                </th>
+                                <th class="" scope="col" style="width:15%">
+                                    <div class="slds-truncate" title="Phone">Phone</div>
+                                </th>
+                                <th class="" scope="col" style="width:10%">
+                                    <div class="slds-truncate" title="Cust Ref No.">PO #</div>
+                                </th>
+                                <th class="" scope="col" style="width:19%">
+                                    <div class="slds-truncate" title="Instructions">Instructions</div>
+                                </th>
+                                <th class="" scope="col" style="width:5%">
+                                    <div class="slds-truncate" title="Bypass Work Order">Bypass Work Order</div>
+                                </th>
+                                <th class="" scope="col" style="width:5%">
+                                    <lightning-button-icon icon-name="utility:add" alternative-text="Add" class="slds-m-left_xx-small slds-button_icon" title="Add" onclick={addRow} disabled={isView}></lightning-button-icon>
+                                    <lightning-button-icon icon-name="utility:undo" alternative-text="Undo All The Unsaved"  class="slds-m-left_xx-small" title="Undo All The Unsaved" onclick={undoAllUnsavedChanges} disabled={isDo}></lightning-button-icon>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-rowid='CreateQuoteFormRow'>
+                                <td style="display:none;">
+                                    <lightning-input data-id="snBlock" name="serialno" type="text" variant="label-hidden" label="S.No." value ={serialno}  access-key ={index} disabled="true" ></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="idBlock" name="idField" type="text" variant="label-hidden" label="idField" value ={idField}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="actionTypeBlock" name="actionType" type="text" variant="label-hidden" label="actionType" value ={actionType}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="quoteLineBlock" name="quoteLine" type="text" variant="label-hidden" label="quoteLine" value ={quoteLineId}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="parentProductQuoteLineBlock" name="parentProductQuoteLine" type="text" variant="label-hidden" label="parentProductQuoteLine" value ={quoteLineParentId}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="occurenceTypeBlock" name="occurenceType" type="text" variant="label-hidden" label="occurenceType" value ={occurenceType}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="durationBlock" name="duration" type="text" variant="label-hidden" label="duration" value ={duration}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="startDateBlock" name="startDate" type="text" variant="label-hidden" label="startDate" value ={serviceStartDate}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="endDateBlock" name="endDate" type="text" variant="label-hidden" label="endDate" value ={serviceEndDate}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="display:none;">
+                                    <lightning-input data-id="disableDeleteBlock" name="disableDelete" type="checkbox" variant="label-hidden" label="disableDelete" checked={disableDelete}  access-key ={index} disabled="true"></lightning-input>
+                                </td>
+                                <td style="width:10%">
+                                    <lightning-combobox label="serviceType"
+                                        data-id="serviceTypeBlock"
+                                        name="serviceType"
+                                        options={serviceTypeOptions} 
+                                        variant = "label-hidden"
+                                        placeholder="--None--" 
+                                        value={serviceType}
+                                        onchange={serviceTypeUpdate}
+                                        required
+                                        disabled={disableFields}
+                                        >
+                                    </lightning-combobox>
+                                </td>
+                                <td style="width:10%">
+                                    <lightning-combobox label="quoteLineProductOption"
+                                        data-id="productTypeBlock"
+                                        name="productType"
+                                        options={componentList} 
+                                        variant = "label-hidden"
+                                        placeholder="--None--" 
+                                        value={productType}
+                                        onchange={componentNameUpdate}
+                                        required
+                                        disabled={disableFields}
+                                        >
+                                    </lightning-combobox>
+                                </td>
+                                <td style="width:10%">
+                                    <lightning-input data-id="serviceDateBlock" name="serviceDate" type="date" variant="label-hidden" label="serviceDate" value ={serviceDateForm} required onchange={serviceDateUpdate} disabled={disableFields}></lightning-input>
+                                </td>
+                                <td style="width:6%">
+                                    <lightning-combobox label="serviceTimeSpan"
+                                        data-id="serviceTimeBlock"
+                                        name="serviceTime"
+                                        options={serviceTimeOptions} 
+                                        variant = "label-hidden"
+                                        placeholder="--None--" 
+                                        value={serviceTime}
+                                        onchange={serviceTimeUpdate}
+                                        disabled={disableFields}
+                                        >
+                                    </lightning-combobox>
+                                </td>
+                                <td style="width:15%">
+                                    <lightning-input data-id="contactBlock" name="contact" type="text" variant="label-hidden" label="contact" value ={contactForm} onchange={contactUpdate} disabled={disableFields}></lightning-input>
+                                </td>
+                                <td style="width:15%">
+                                    <lightning-input data-id="phoneBlock" name="phone" type="text" variant="label-hidden" label="phone" value ={phoneForm} onchange={phoneUpdate} disabled={disableFields}></lightning-input>
+                                </td>
+                                <td style="width:10%">
+                                    <lightning-input data-id="custRefNumberBlock" name="custRefNumber" type="text" variant="label-hidden" label="Cust Ref. No." value ={custRefNumberForm} onchange={customerRefUpdate} disabled={disableFields}></lightning-input>
+                                </td>
+                                
+                                <td style="width:19%">
+                                    <lightning-textarea data-id="instructionBlock" name="instruction" maxlength="244" value={instructionForm} onchange={instructionUpdate} disabled={disableFields}></lightning-textarea>
+                                    <!--<lightning-input data-id="instructionBlock" name="instruction" variant="label-hidden" label="instruction" value ={instructionForm} onchange={instructionUpdate} disabled={disableFields}></lightning-input>-->
+                                </td>
+                                <td style="width:5%">
+                                    <lightning-input type="checkbox" data-id="bypassWorkOrderBlock" name="bypasworkorder" maxlength="40" checked={bypassworkorderForm} onchange={bypassworkorderUpdate} disabled={disableFields}></lightning-input>
+                                </td>
+                                <td style="width:5%">
+                                    <lightning-button-icon icon-name="utility:edit" alternative-text="Edit"  class="slds-m-left_xx-small" title="Edit" disabled="true"></lightning-button-icon>
+                                    <template if:true={disableDeleteForm}>
+                                        <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={deleteCreateFormRow} data-delid="CreateQuoteFormRow" disabled=true></lightning-button-icon>
+                                    </template>
+                                    <template if:false={disableDeleteForm}>
+                                        <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={deleteCreateFormRow} data-delid="CreateQuoteFormRow" disabled={isView}></lightning-button-icon>   
+                                    </template>
+                                </td> 
+                            </tr>
+                            <template if:true={isShowTable}>
+                                <template if:true={quoteOrderToCreateList.length}>
+                                    <template for:each={quoteOrderToCreateList} for:item="row" for:index="index">
+                                        <tr key={row.Id} data-rowid={index} data-subtableid="table2">
+                                            <td style="display:none;">
+                                                <lightning-input data-id="snBlock1" name="serialno1" type="text" variant="label-hidden" label="S.No." value ={index}  access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="idBlock1" name="idField1" type="text" variant="label-hidden" label="idField" value ={row.idField}  access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="actionTypeBlock1" name="actionType1" type="text" variant="label-hidden" label="actionType" value ={row.actionType}  access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="quoteLineBlock1" name="quoteLine1" type="text" variant="label-hidden" label="quoteLine" value ={row.quoteLineId}  access-key ={index} readonly></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="parentProductQuoteLineBlock1" name="parentProductQuoteLine1" type="text" variant="label-hidden" label="parentProductQuoteLine" value ={row.quoteLineParentId}  access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="occurenceTypeBlock1" name="occurenceType1" type="text" variant="label-hidden" label="occurenceType" value ={row.occurenceType}  access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="durationBlock1" name="duration1" type="text" variant="label-hidden" label="duration" value ={row.duration}  access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="startDateBlock1" name="startDate1" type="text" variant="label-hidden" label="startDate" value ={row.serviceLineStartDate}  access-key ={index} readonly></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="endDateBlock1" name="endDate1" type="text" variant="label-hidden" label="endDate" value ={row.serviceLineEndDate}  access-key ={index} readonly></lightning-input>
+                                            </td>
+                                            <td style="display:none;">
+                                                <lightning-input data-id="disableDeleteBlock1" name="disableDelete1" type="checkbox" variant="label-hidden" label="disableDelete" checked ={row.disableDelete}  access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="width:10%">
+                                                <lightning-input data-id="serviceTypeBlock1" name="serviceType1" type="text" variant="label-hidden" label="serviceType" value ={row.serviceType} access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="width:10%">
+                                                <lightning-input data-id="productTypeBlock1" name="productType1" type="text" variant="label-hidden" label="productType" value ={row.productType} access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="width:10%">
+                                                <lightning-input data-id="serviceDateBlock1" name="serviceDate1" type="date" variant="label-hidden" label="serviceDate" value ={row.serviceDate} access-key ={index} readonly></lightning-input>
+                                            </td>
+                                            <td style="width:6%">
+                                                <lightning-input data-id="serviceTimeBlock1" name="serviceTime1" type="text" variant="label-hidden" label="serviceTime" value ={row.serviceTime} access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="width:15%">
+                                                <lightning-input data-id="contactBlock1" name="contact1" type="text" variant="label-hidden" label="contact" value ={row.contact} access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="width:15%">
+                                                <lightning-input data-id="phoneBlock1" name="phone1" type="tel" variant="label-hidden" label="phone" value ={row.phone} access-key ={index} readonly></lightning-input>
+                                            </td>
+                                            <td style="width:10%">
+                                                <lightning-input data-id="custRefNumberBlock1" name="custRefNumber1" type="text" variant="label-hidden" label="Cust Ref. No." value ={row.custRefNumber}  access-key ={index} readonly ></lightning-input>
+                                            </td>
+                                            <td style="width:19%">
+                                                <!--<lightning-input data-id="instructionBlock1" name="instruction1" type="text" variant="label-hidden" label="instruction" value ={row.instruction}  access-key ={index} disabled="true" ></lightning-input>-->
+                                                <lightning-textarea data-id="instructionBlock1" name="instruction1" max-length="800" message-when-too-long="Max Char Limit Exceeded" value={row.instruction} access-key ={index} readonly ></lightning-textarea>
+                                            </td>
+                                            <td style="width:5%">
+                                                <lightning-input type="checkbox" data-id="bypassworkorderBlock1" name="bypassworkorder1" checked={row.bypassWorkOrder} access-key ={index} disabled="true" ></lightning-input>
+                                            </td>
+                                            <td style="width:5%">
+                                                <lightning-button-icon icon-name="utility:edit" alternative-text="Edit"  class="slds-m-left_xx-small" title="Edit" onclick={editRow} data-editid={index} data-item={row} disabled={isView}></lightning-button-icon>
+                                                <template if:true={row.disableDelete}>
+                                                    <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={deleteRow} data-delid={index} data-item={row} access-key ={index} disabled=true></lightning-button-icon>
+                                                </template>
+                                                <template if:false={row.disableDelete}>
+                                                    <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={deleteRow} data-delid={index} data-item={row} access-key ={index} disabled={isView}></lightning-button-icon>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template> 
+                                </template>
+                            </template> 
+                        </tbody>
+                    </table> 
+                </div>
+                <!-- modal footer start-->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={saveQuoteOrders} disabled={isDisabled}>Save</button>
+                    <button class="slds-button slds-button_text-destructive" onclick={closeModal}>Cancel</button>
+                </footer>
+            </div>
+            </br>
+            <!-- spinner start-->
+            <template if:true={loading}>
+                <div class="spinner">
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div> 
+    </template>
+</template>

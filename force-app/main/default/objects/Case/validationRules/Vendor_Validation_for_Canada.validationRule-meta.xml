@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vendor_Validation_for_Canada</fullName>
+    <active>true</active>
+    <errorConditionFormula>And(Is_Haul_Away_Service__c, UPPER(Account.ShippingCountry)=&apos;CANADA&apos;,ISPICKVAL(Haul_Away_Vendor__c , &apos;7803&apos;))</errorConditionFormula>
+    <errorDisplayField>Haul_Away_Vendor__c</errorDisplayField>
+    <errorMessage>“Vendor ‘Junk King’ is not available for Canada locations.
+
+Please select either ‘Got Junk’ or ‘Check Sammy’ for Canada Locations”</errorMessage>
+</ValidationRule>

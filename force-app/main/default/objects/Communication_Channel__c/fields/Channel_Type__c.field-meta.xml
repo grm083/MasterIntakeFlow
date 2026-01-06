@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Channel Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CPHN</fullName>
+                <default>false</default>
+                <label>Cell Phone</label>
+            </value>
+            <value>
+                <fullName>CHTNW</fullName>
+                <default>false</default>
+                <label>Chat Now</label>
+            </value>
+            <value>
+                <fullName>DGNRS</fullName>
+                <default>false</default>
+                <label>DGN Respond</label>
+            </value>
+            <value>
+                <fullName>EBZ</fullName>
+                <default>false</default>
+                <label>E-Business</label>
+            </value>
+            <value>
+                <fullName>EFTU</fullName>
+                <default>false</default>
+                <label>EFT URI</label>
+            </value>
+            <value>
+                <fullName>EMAL</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>EWS</fullName>
+                <default>false</default>
+                <label>Ewaste</label>
+            </value>
+            <value>
+                <fullName>SYS</fullName>
+                <default>false</default>
+                <label>External System</label>
+            </value>
+            <value>
+                <fullName>FAXN</fullName>
+                <default>false</default>
+                <label>Fax</label>
+            </value>
+            <value>
+                <fullName>FSTNM</fullName>
+                <default>false</default>
+                <label>First Name</label>
+            </value>
+            <value>
+                <fullName>IPHN</fullName>
+                <default>false</default>
+                <label>Intl Phone</label>
+            </value>
+            <value>
+                <fullName>LTR</fullName>
+                <default>false</default>
+                <label>Lamp Tracker</label>
+            </value>
+            <value>
+                <fullName>LSTNM</fullName>
+                <default>false</default>
+                <label>Last Name</label>
+            </value>
+            <value>
+                <fullName>MADR</fullName>
+                <default>false</default>
+                <label>Mailing Address</label>
+            </value>
+            <value>
+                <fullName>MANU</fullName>
+                <default>false</default>
+                <label>Manual Delivery</label>
+            </value>
+            <value>
+                <fullName>MASSETUP</fullName>
+                <default>false</default>
+                <label>MAS Service Setup</label>
+            </value>
+            <value>
+                <fullName>MOBAPP</fullName>
+                <default>false</default>
+                <label>Mobile Application</label>
+            </value>
+            <value>
+                <fullName>MON</fullName>
+                <default>false</default>
+                <label>Monitor</label>
+            </value>
+            <value>
+                <fullName>NND</fullName>
+                <default>false</default>
+                <label>None Needed</label>
+            </value>
+            <value>
+                <fullName>PAGR</fullName>
+                <default>false</default>
+                <label>Pager</label>
+            </value>
+            <value>
+                <fullName>PHON</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>SVC</fullName>
+                <default>false</default>
+                <label>Service Channel</label>
+            </value>
+            <value>
+                <fullName>SUPINT</fullName>
+                <default>false</default>
+                <label>Supplier Integration</label>
+            </value>
+            <value>
+                <fullName>TEXT</fullName>
+                <default>false</default>
+                <label>Text Message</label>
+            </value>
+            <value>
+                <fullName>WIRE</fullName>
+                <default>false</default>
+                <label>The Wire</label>
+            </value>
+            <value>
+                <fullName>VECC</fullName>
+                <default>false</default>
+                <label>Vendor Emergency</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

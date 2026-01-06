@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Sub_Status__c</fullName>
+    <description>Captures the sub-status for a Case State</description>
+    <externalId>false</externalId>
+    <label>Case Sub-Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Status</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Initial Inbound Interaction</fullName>
+                <default>false</default>
+                <label>Initial Inbound Interaction</label>
+            </value>
+            <value>
+                <fullName>Pending Customer Information</fullName>
+                <default>false</default>
+                <label>Pending Customer Information</label>
+            </value>
+            <value>
+                <fullName>Pending Vendor Procurement</fullName>
+                <default>false</default>
+                <label>Pending Vendor Procurement</label>
+            </value>
+            <value>
+                <fullName>Pending Cost Configuration</fullName>
+                <default>false</default>
+                <label>Pending Cost Configuration</label>
+            </value>
+            <value>
+                <fullName>Pending Request Approval</fullName>
+                <default>false</default>
+                <label>Pending Request Approval</label>
+            </value>
+            <value>
+                <fullName>Pending Price Configuration</fullName>
+                <default>false</default>
+                <label>Pending Price Configuration</label>
+            </value>
+            <value>
+                <fullName>Pending Quote Approval</fullName>
+                <default>false</default>
+                <label>Pending Quote Approval</label>
+            </value>
+            <value>
+                <fullName>Pending Vendor Information</fullName>
+                <default>false</default>
+                <label>Pending Vendor Information</label>
+            </value>
+            <value>
+                <fullName>Pending Service Integration</fullName>
+                <default>false</default>
+                <label>Pending Service Integration</label>
+            </value>
+            <value>
+                <fullName>Pending Dispatch</fullName>
+                <default>false</default>
+                <label>Pending Dispatch</label>
+            </value>
+            <value>
+                <fullName>Pending Manual Dispatch</fullName>
+                <default>false</default>
+                <label>Pending Manual Dispatch</label>
+            </value>
+            <value>
+                <fullName>Pending Schedule Confirmation</fullName>
+                <default>false</default>
+                <label>Pending Schedule Confirmation</label>
+            </value>
+            <value>
+                <fullName>Pending Service Confirmation</fullName>
+                <default>false</default>
+                <label>Pending Service Confirmation</label>
+            </value>
+            <value>
+                <fullName>Service Not Performed</fullName>
+                <default>false</default>
+                <label>Service Not Performed</label>
+            </value>
+            <value>
+                <fullName>Service Confirmed</fullName>
+                <default>false</default>
+                <label>Service Confirmed</label>
+            </value>
+            <value>
+                <fullName>Service Not Confirmed</fullName>
+                <default>false</default>
+                <label>Service Not Confirmed</label>
+            </value>
+            <value>
+                <fullName>Request Not Approved</fullName>
+                <default>false</default>
+                <label>Request Not Approved</label>
+            </value>
+            <value>
+                <fullName>Request Canceled</fullName>
+                <default>false</default>
+                <label>Request Canceled</label>
+            </value>
+            <value>
+                <fullName>Pending Vendor Follow Up</fullName>
+                <default>false</default>
+                <label>Pending Vendor Follow Up</label>
+            </value>
+            <value>
+                <fullName>Pending Service Issue Resolution</fullName>
+                <default>false</default>
+                <label>Pending Service Issue Resolution</label>
+            </value>
+            <value>
+                <fullName>Pending Schedule Recovery</fullName>
+                <default>false</default>
+                <label>Pending Schedule Recovery</label>
+            </value>
+            <value>
+                <fullName>Pending Recovery Confirmation</fullName>
+                <default>false</default>
+                <label>Pending Recovery Confirmation</label>
+            </value>
+            <value>
+                <fullName>Status Provided</fullName>
+                <default>false</default>
+                <label>Status Provided</label>
+            </value>
+            <value>
+                <fullName>Status Not Provided</fullName>
+                <default>false</default>
+                <label>Status Not Provided</label>
+            </value>
+            <value>
+                <fullName>Recovery Scheduled</fullName>
+                <default>false</default>
+                <label>Recovery Scheduled</label>
+            </value>
+            <value>
+                <fullName>Recovery Not Performed</fullName>
+                <default>false</default>
+                <label>Recovery Not Performed</label>
+            </value>
+            <value>
+                <fullName>Recovery Confirmed</fullName>
+                <default>false</default>
+                <label>Recovery Confirmed</label>
+            </value>
+            <value>
+                <fullName>Integration Error</fullName>
+                <default>false</default>
+                <label>Integration Error</label>
+            </value>
+            <value>
+                <fullName>Request Closed</fullName>
+                <default>false</default>
+                <label>Request Closed</label>
+            </value>
+            <value>
+                <fullName>Pending Additional Research</fullName>
+                <default>false</default>
+                <label>Pending Additional Research</label>
+            </value>
+            <value>
+                <fullName>Pending Service Recovery</fullName>
+                <default>false</default>
+                <label>Pending Service Recovery</label>
+            </value>
+            <value>
+                <fullName>Verify Account Number</fullName>
+                <default>false</default>
+                <label>Verify Account Number</label>
+            </value>
+            <value>
+                <fullName>Verify Services</fullName>
+                <default>false</default>
+                <label>Verify Services</label>
+            </value>
+            <value>
+                <fullName>Pending Service Procurement</fullName>
+                <default>false</default>
+                <label>Pending Service Procurement</label>
+            </value>
+            <value>
+                <fullName>Verify Waste Stream</fullName>
+                <default>false</default>
+                <label>Verify Waste Stream</label>
+            </value>
+            <value>
+                <fullName>Validate Service Provider</fullName>
+                <default>false</default>
+                <label>Validate Service Provider</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>New</controllingFieldValue>
+            <valueName>Initial Inbound Interaction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New</controllingFieldValue>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Verify Account Number</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New</controllingFieldValue>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Verify Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New</controllingFieldValue>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Verify Waste Stream</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New</controllingFieldValue>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Validate Service Provider</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Service Not Performed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Service Confirmed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Service Not Confirmed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Request Not Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Request Canceled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Status Provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Status Not Provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Recovery Scheduled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Recovery Not Performed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Recovery Confirmed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Request Closed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Pending Customer Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Pending Vendor Procurement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Pending Cost Configuration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Pending Request Approval</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Pending Price Configuration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Pending Quote Approval</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Pending Vendor Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Service Integration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Dispatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Manual Dispatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Schedule Confirmation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Service Confirmation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Vendor Follow Up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Service Issue Resolution</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Schedule Recovery</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Recovery Confirmation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Integration Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Additional Research</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Pending Service Recovery</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

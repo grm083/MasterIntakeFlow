@@ -1,0 +1,167 @@
+<template>
+    <template if:true={caseDetails}>
+        <div class="slds-m-top--none slds-m-bottom--none">
+            <table class="slds-table slds-box spacing">
+                <thead>
+                    <tr class="slds-table slds-table--bordered slds-table--striped">
+                        <th colspan="5" class="heading">{caseDetails.Asset.Name}&nbsp;- {caseDetails.Asset.Material_Type__c}</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr class="slds-table slds-table--bordered slds-table--striped">
+                        <th scope="col" class="head slds-size_1-of-6"><span class="slds-truncate">SID</span></th>
+                        <th scope="col" class="head slds-size_1-of-6"><span class="slds-truncate">Duration</span></th>
+                        <th scope="col" class="head slds-size_1-of-6"><span class="slds-truncate">Occurrence</span></th>
+                        <th scope="col" class="head slds-size_1-of-6"><span class="slds-truncate">Schedule</span></th>
+                        <th scope="col" class="head slds-size_1-of-6"><span class="slds-truncate">Quantity</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="slds-size_1-of-6">{caseDetails.Asset.Acorn_SID__c}</td>
+                        <td class="slds-size_1-of-6">{caseDetails.Asset.Duration__c}</td>
+                        <td class="slds-size_1-of-6">{caseDetails.Asset.Occurrence_Type__c}</td>
+                        <td class="slds-size_1-of-6">{caseDetails.Asset.Schedule__c}</td>
+                        <td class="slds-size_1-of-6">{caseDetails.Asset.Quantity__c}</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="slds-table slds-table--bordered slds-table--striped">
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Vendor</span></th>
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Vendor ID</span></th>
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">S-Code</span></th>
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Has XPU</span></th>
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Ownership</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.Supplier__r.Name}</td>
+                        <td class="slds-size_1-of-5">
+                            <a data-value={caseDetails.Asset.Supplier__c} onclick={handleClick}>{caseDetails.Asset.Vendor_ID__c}</a> 
+                        </td>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.Sensitivity_Code__c}</td>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.Has_Extra_Pickup__c}</td>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.Equipment_Owner__c}</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="slds-table slds-table--bordered slds-table--striped">
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Start Date</span></th>
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Pickup</span><span class="slds-truncate red"> Price</span></th>
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Extra Pickup</span><span class="slds-truncate red"> Price</span></th>
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Haul</span><span class="slds-truncate red"> Price</span></th>
+                        <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Disposal</span><span class="slds-truncate red"> Price</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.Start_Date__c}</td>
+                        <template if:true={pickUpPrice}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate"><lightning-formatted-number value={assetdetails.pickUpPrice} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></span></td>
+                        </template>
+                        <template if:false={pickUpPrice}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">N/A</span></td>
+                        </template>
+                        <template if:true={extraPickUpPrice}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate"><lightning-formatted-number value={assetdetails.extraPickUpPrice} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></span></td>
+                        </template>
+                        <template if:false={extraPickUpPrice}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">N/A</span></td>
+                        </template>
+                        <template if:true={haulPrice}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate"><lightning-formatted-number value={assetdetails.haulPrice} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></span></td>
+                        </template>
+                        <template if:false={haulPrice}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">N/A</span></td>
+                        </template>
+                        <template if:true={disposalPrice}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate"><lightning-formatted-number value={assetdetails.disposalPrice} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></span></td>
+                        </template>
+                        <template if:false={disposalPrice}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">N/A</span></td>
+                        </template>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="slds-table slds-table--bordered slds-table--striped">
+                        <template if:true={caseDetails.Asset.End_Date__c}>
+                            <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate red">End Date</span></th>
+                        </template>
+                        <template if:false={caseDetails.Asset.End_Date__c}>
+                            <th scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">End Date</span></th>
+                        </template>
+                        <th scope="col" class="slds-size_1-of-5"><span class="slds-truncate">Pickup Cost</span></th>
+                        <th scope="col" class="slds-size_1-of-5"><span class="slds-truncate">Extra Pickup Cost</span></th>
+                        <th scope="col" class="slds-size_1-of-5"><span class="slds-truncate">Haul Cost</span></th>
+                        <th scope="col" class="slds-size_1-of-5"><span class="slds-truncate">Disposal Cost</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <template if:true={caseDetails.Asset.End_Date__c}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate highlight">{caseDetails.Asset.End_Date__c}</span></td>
+                        </template>
+                        <template if:false={caseDetails.Asset.End_Date__c}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">{caseDetails.Asset.End_Date__c}</span></td>
+                        </template>
+                        <template if:true={pickUpCost}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate"><lightning-formatted-number value={assetdetails.pickUpCost} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></span></td>                            
+                        </template>
+                        <template if:false={pickUpCost}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">N/A</span></td>
+                        </template>
+                        <template if:true={extraPickUpCost}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate"><lightning-formatted-number value={assetdetails.extraPickUpCost} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></span></td>    
+                        </template>
+                        <template if:false={extraPickUpCost}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">N/A</span></td>
+                        </template>
+                        <template if:true={haulCost}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate"><lightning-formatted-number value={assetdetails.haulCost} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></span></td> 
+                        </template>
+                        <template if:false={haulCost}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">N/A</span></td>
+                        </template>
+                        <template if:true={disposalCost}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate"><lightning-formatted-number value={assetdetails.disposalCost} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></span></td>
+                        </template>
+                        <template if:false={disposalCost}>
+                            <td  class="slds-size_1-of-5"><span class="slds-truncate">N/A</span></td>
+                        </template>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="slds-table slds-table--bordered slds-table--striped">
+                        <th colspan="3"  scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Container Position</span></th>
+                        <th colspan="2"  scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Category</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">{caseDetails.Asset.Container_Position__c}</td> 
+                        <td colspan="2">{caseDetails.Asset.Category__c}</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="slds-table slds-table--bordered slds-table--striped">
+                        <th  scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Vendor Account #</span></th>
+                        <th  scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">MAS Unique #</span></th>
+                        <th  scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Company/Account</span></th>
+                        <th  scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">MAS Library</span></th>
+                        <th  scope="col" class="head slds-size_1-of-5"><span class="slds-truncate">Project Name</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="slds-size_1-of-5"><span class="slds-truncate">{caseDetails.Asset.Vendor_Account_Number__c}</span></td>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.MAS_Customer_Unique_Id__c}</td>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.MAS_Company_Account_Number__c}</td>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.MAS_Library__c}</td>
+                        <td class="slds-size_1-of-5">{caseDetails.Asset.Project_Code__r.ProjectCode_Id__c}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+</template>

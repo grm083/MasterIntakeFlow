@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supplier_Score__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(Landfill_Agreement__c , &quot;Yes&quot;, 25, 0)+ CASE(Integration_Type__c , &quot;API&quot;,20,&quot;Flat File&quot;, 20,&quot;Supplier Portal&quot;,15,&quot;Email&quot;,10,&quot;Fax&quot;,5,0)+ CASE(Payment_Methods__c, &quot;CC&quot;,10,&quot;ACH&quot;,6,&quot;Paper&quot;,2,0)+ CASE( Invoice_Method__c, &quot;EDI&quot;,15,&quot;Email&quot;,9,&quot;Mail&quot;,3,0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Supplier Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

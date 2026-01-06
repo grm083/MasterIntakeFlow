@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Role__c</fullName>
+    <externalId>false</externalId>
+    <label>Role</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Customer Account</fullName>
+                <default>false</default>
+                <label>Customer Account</label>
+            </value>
+            <value>
+                <fullName>Vendor Account Role</fullName>
+                <default>false</default>
+                <label>Vendor Account Role</label>
+            </value>
+            <value>
+                <fullName>Program Manager Director</fullName>
+                <default>false</default>
+                <label>Program Manager Director</label>
+            </value>
+            <value>
+                <fullName>Program Manager</fullName>
+                <default>false</default>
+                <label>Program Manager</label>
+            </value>
+            <value>
+                <fullName>Program Manager Specialist</fullName>
+                <default>false</default>
+                <label>Program Manager Specialist</label>
+            </value>
+            <value>
+                <fullName>Strategic Account Manager</fullName>
+                <default>false</default>
+                <label>Strategic Account Manager</label>
+            </value>
+            <value>
+                <fullName>Sales Director</fullName>
+                <default>false</default>
+                <label>Sales Director</label>
+            </value>
+            <value>
+                <fullName>Sales Program Manager</fullName>
+                <default>false</default>
+                <label>Sales Program Manager</label>
+            </value>
+            <value>
+                <fullName>Manager Strategic Accounts</fullName>
+                <default>false</default>
+                <label>Manager Strategic Accounts</label>
+            </value>
+            <value>
+                <fullName>Receivable Account Manager (RAM)</fullName>
+                <default>false</default>
+                <label>Receivable Account Manager (RAM)</label>
+            </value>
+            <value>
+                <fullName>Billing Manager</fullName>
+                <default>false</default>
+                <label>Billing Manager</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

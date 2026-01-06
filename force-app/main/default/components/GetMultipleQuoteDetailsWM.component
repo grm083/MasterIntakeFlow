@@ -1,0 +1,165 @@
+<apex:component controller="GetDetails" access="global">
+    
+    <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!objQuote}"/>
+    <div class="redText" contenteditable="true">
+        
+         <apex:outputText style="color:black;font-family:Arial;" value="Please provide rates for the new "/> <apex:outputText value="{!QuoteFields.Duration__c}"/> 
+    
+         <apex:outputText style="color:black;font-family:Arial;" value=" services requested by the location below. The anticipated delivery date is "/>
+        
+        <!--  <apex:outputText style="color:black;font-family:Arial;" value="Please provide rates for the new services requested by the location below. If approved by client, anticipated delivery is"/>
+     -->   <apex:outputText value="{0,Date, MM/dd/yyyy}"> 
+        <apex:param value="{!QuoteFields.SBQQ__StartDate__c}"/>
+        </apex:outputText> 
+        <apex:outputText style="color:black;font-family:Arial;" value=". Please wait to receive a delivery Work Order and Schedule A before taking action."/>
+        <br/>
+        <br/>
+        <apex:outputText style="color:black;font-family:Arial;" value=" We attempted to obtain costs using WM pricing tools but were unable to find the service in question."/>
+        <b><apex:outputText style="color:red;font-family:Arial;" value=" [Provide screenshot of error message when sending to Market Area for pricing.]"/></b>
+        <br/>
+        <br/>    
+        <b><apex:outputText style="color:black;font-family:Arial;" value="SERVICE DETAILS"/> </b><br/><br/>
+        <b><apex:outputText style="color:black;font-family:Arial;" value="Reference #:"/> </b>{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}<br/>
+        <b><apex:outputText style="color:black;font-family:Arial;" value="Location ID:"/> </b>{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Code__c}<br/>
+        <b><apex:outputText style="color:black;font-family:Arial;" value="Location Name:"/> </b>{!QuoteFields.SBQQ__Account__r.Common_Name__c}<br/>
+        <b><apex:outputText style="color:black;font-family:Arial;" value="Service Address:" /></b><br/>
+        <apex:outputText style="color:black;font-family:Arial;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Tech_Location_Details__c}" escape="false"/> 
+        <br/>
+        <br/>
+       
+        <div>
+            <table width ="1100px" border ="0" contenteditable="true">
+           <b><apex:outputText style="color:black;font-family:Arial;" value="Please provide rates for the following services:"/> </b>
+     
+            <apex:repeat value="{!WrapperData}" var="fieldKey"><!-- Looping Keys-->
+                
+                <tr width="70%">
+                        <td width = "100%" colspan ="7">    
+                             <hr/>
+                        <b style="color:black;font-family:Arial;">Requested Service  {!mapCount[fieldKey]}: </b>    
+                        <br/>
+                        
+                             
+                    </td>           
+                </tr> 
+                
+                <tr width="70%"> 
+                    <td width = "350px!important">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="Duration"/></b> &nbsp; &nbsp;
+                    </td>
+                    <td  width = "350px!important">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="Equipment Type"/></b> &nbsp; &nbsp; 
+                    </td>
+                    <td  width = "350px!important">
+                       <b> <apex:outputText style="color:black;font-family:Arial;" value="Quantity"/></b> &nbsp; &nbsp;
+                    </td>
+                    <td  width = "350px!important">
+                       <b> <apex:outputText style="color:black;font-family:Arial;" value="Equipment Size"/></b> &nbsp; &nbsp; 
+                    </td>
+                    <!--<td width = "150px">
+                        <apex:outputText style="color:black;font-family:Arial;" value="Occurrence Type"/> &nbsp; &nbsp; 
+                    </td>-->
+                    <td width = "350px!important">
+                       <b> <apex:outputText style="color:black;font-family:Arial;" value="Schedule"/></b>&nbsp; &nbsp; 
+                    </td>
+                    <td width = "350px!important">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="Material"/></b> &nbsp; &nbsp;
+                    </td>
+                </tr>
+                <tr width="70%">
+                    <td  width = "350px!important">
+                        <apex:outputText style="text-align: Top;" value="{!mQLI[fieldKey].Duration__c}"/> &nbsp; &nbsp;
+                    </td>
+                    <td width = "350px!important">
+                        <apex:outputText style="text-align: Top;"  value="{!mQLI[fieldKey].SBQQ__Product__r.Name}"/> &nbsp; &nbsp; 
+                    </td>
+                    <td  width = "350px!important">  
+                        <apex:outputText style="text-align: Top;"  value="{!mQLI[fieldKey].SBQQ__Quantity__c}"/> &nbsp; &nbsp; 
+                    </td>
+                    <td  width = "350px!important">
+                        <apex:outputText style="text-align: Top;"  value="{!mQLI[fieldKey].Equipment_Size__c}"/> &nbsp; &nbsp;
+                    </td>
+                    <td  width = "350px!important">
+                        <apex:outputText style="text-align: Top;"  value="{!mQLI[fieldKey].Service_Schedule__c }"/> &nbsp; &nbsp;
+                    </td>
+                    <!--<td  width = "150px">
+                        <apex:outputText style="text-align: Top;"  value="{!mQLI[fieldKey].Schedule_Frequency__c}"/> &nbsp; &nbsp;
+                    </td>-->
+                    <td  width = "350px!important">
+                        <apex:repeat value="{!MaterialCode}" var="materialKey"><!-- Looping Keys-->
+
+                            
+                                <apex:outputText rendered="{!fieldKey==materialKey}" style="text-align: Top;"  value="{!mQLIMaterialCode[fieldKey]}"/>&nbsp; &nbsp;
+                        </apex:repeat>
+                        
+                    </td>
+                </tr>
+                  <td>
+        &nbsp;
+        <!--you just need a space in a row-->
+    </td>
+                
+                <tr width = "70%">
+                    <td colspan="7"> 
+                        <tr> 
+                                
+                            <td width="100%" colspan="7">  <b> <apex:outputText rendered="{!mQLI[fieldKey].SBQQ__Product__r.Family == 'Commercial'}" value=" New Monthly Rate (per bin):"/></b></td>
+                        </tr> 
+                        <tr> 
+                            <td width="100%" colspan="7">  <b> <apex:outputText rendered="{!mQLI[fieldKey].SBQQ__Product__r.Family == 'Commercial'}" value=" Extra Pickup Rate:"/></b></td>
+                        </tr> 
+                        <tr> 
+                            <td width="100%" colspan="7">  <b> <apex:outputText rendered="{!mQLI[fieldKey].SBQQ__Product__r.Family == 'Commercial'}" value=" Delivery:"/></b></td>
+                            <br/>
+                        </tr> 
+                        <tr>      
+                            <td width="100%" colspan="7">  <b> <apex:outputText rendered="{!mQLI[fieldKey].SBQQ__Product__r.Family == 'Rolloff'}" value=" Haul:"/></b></td>
+                        </tr> 
+                        <tr>
+                            <td width="100%" colspan="7">  <b> <apex:outputText rendered="{!mQLI[fieldKey].SBQQ__Product__r.Family == 'Rolloff'}" value=" Disposal:"/></b></td>
+                        </tr> 
+                        <tr>
+                            <td width="100%" colspan="7" >  <b> <apex:outputText rendered="{!mQLI[fieldKey].SBQQ__Product__r.Family == 'Rolloff'}" value=" Delivery:"/></b></td> 
+                        </tr> 
+                        <tr>
+                            <td width="100%" colspan="7" >  <b> <apex:outputText rendered="{!mQLI[fieldKey].SBQQ__Product__r.Family == 'Rolloff'}" value=" Container Service Charge:"/></b></td> 
+                        </tr> 
+                        <!-- <tr>
+                            <td width="100%" colspan="7">  <b> <apex:outputText rendered="{!mQLI[fieldKey].SBQQ__Product__r.Family == 'Rolloff'}" value=" Rental (If applicable):"/></b></td> 
+                        <br/>
+                        </tr>     -->
+                    </td>
+                </tr>             
+                
+            </apex:repeat>
+            
+                
+            </table>
+            <table contenteditable="true">
+                <apex:repeat value="{!WrapperData}" var="fieldKey"><!-- Looping Keys-->
+                    <br/>
+                    <b><apex:outputText style="color:black;font-family:Arial;" value="Any additional fees:"/></b>
+                    <br/>
+                    <apex:repeat value="{!priceDetailsMapAll[fieldKey]}" var="childQlPrice">
+                        
+                        <tr style="text-align:left">
+                            <apex:outputPanel rendered="{!NOT(OR(childQlPrice.productName == 'Haul',childQlPrice.productName == 'Disposal',childQlPrice.productName == 'Delivery',childQlPrice.productName == 'Extra Pickup',childQlPrice.productName == 'Pickup' , childQlPrice.productName == 'Container Service Charge'))}">	
+                                <td ><b>{!childQlPrice.productName}</b></td>
+                                <td width = "30%">
+                                    <apex:outputText value="{0, number, currency}" 
+                                    rendered="{!IF(NOT(ISNULL(childQlPrice.price)) && childQlPrice.price > 0, true, false)}">
+                                        <apex:param value="{!childQlPrice.price}" />
+                                    </apex:outputText>
+                                    
+                                    <!--{!childQlPrice.price} -->
+                                </td>
+                            </apex:outputPanel>
+                        </tr>   
+                    </apex:repeat>   
+                </apex:repeat> 
+        </table>
+            </div>
+        <br/>
+        <br/>
+    </div>
+</apex:component>

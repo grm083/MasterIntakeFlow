@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_Override_Description</fullName>
+    <active>true</active>
+    <description>Please provide Price Override Description for this Reason.</description>
+    <errorConditionFormula>IF(
+AND(
+(TEXT(Price_Override_Reason__c) = &quot;Per Sales&quot; 
+|| TEXT(Price_Override_Reason__c) = &quot;Service requested is part of closed market&quot;
+|| TEXT(Price_Override_Reason__c) = &quot;Core Service Amount incorrect&quot;
+|| TEXT(Price_Override_Reason__c) = &quot;Ancillary amount was incorrect per PFE/CMT action and value&quot;
+|| TEXT(Price_Override_Reason__c) = &quot;Ancillary amount was incorrect per PFE/CMT comment&quot;
+|| TEXT(Price_Override_Reason__c) = &quot;Amount updated per Business Rule&quot;
+|| TEXT(Price_Override_Reason__c) = &quot;Schedule changed&quot;
+|| TEXT(Price_Override_Reason__c) = &quot;Other&quot;
+),
+ISBLANK(Price_Override_Description__c)), True, False
+)</errorConditionFormula>
+    <errorMessage>Please provide Price Override Description for this Reason.</errorMessage>
+</ValidationRule>

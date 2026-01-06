@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pricing_Frequency_Count__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL( Schedule_Frequency__c , &apos;D&apos;) , 7,
+
+IF(AND( ISPICKVAL( Schedule_Frequency__c , &apos;W&apos;), ISPICKVAL(Frequency_Interval__c, &apos;2&apos;)) ,0.5 ,
+
+IF( ISPICKVAL( Schedule_Frequency__c , &apos;W&apos;) , Final_Frequency__c ,
+
+IF(ISPICKVAL( Schedule_Frequency__c , &apos;M&apos;), 1,
+
+IF( ISPICKVAL( Schedule_Frequency__c , &apos;Y&apos;) , 0 ,
+
+0
+)))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Pricing Frequency Count</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>1</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

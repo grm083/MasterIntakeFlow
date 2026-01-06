@@ -1,0 +1,9 @@
+<aura:event type="COMPONENT" description="Passes state and productId into parent wrapper">
+    <aura:attribute name="currentState" type="string" />
+    <aura:attribute name="currentProductId" type="string" />
+    <aura:attribute name="targetProduct" type="object"/>
+    <aura:attribute name="selectedAccessoryList" type="object"/>
+    <aura:attribute name="keyQuantityList" type="object"/>
+    <aura:attribute name="extraParams" type="object"/>
+    <aura:attribute name="productSize" type="String" />
+</aura:event>

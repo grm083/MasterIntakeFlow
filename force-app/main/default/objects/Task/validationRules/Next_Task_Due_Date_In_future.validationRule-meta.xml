@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Next_Task_Due_Date_In_future</fullName>
+    <active>true</active>
+    <description>Next Task due date should be always in future</description>
+    <errorConditionFormula>IF( AND( NOT(ISNULL(Next_Task_Due_Date_Time__c) ), 
+		Next_Task_Due_Date_Time__c &lt;= NOW(),ISCHANGED(Next_Task_Due_Date_Time__c ),OR(Subject ==&apos;Pending Information&apos;, Subject ==&apos;Service Follow up&apos;,Subject ==&apos;Resolve Service Issue&apos;,Subject =&apos;Initiate Service Request&apos;,Subject = &apos;Obtain Internal Response&apos;,Subject = &apos;Service Escalation&apos;,Subject = &apos;Spec Processing&apos;)) ,true, false)</errorConditionFormula>
+    <errorDisplayField>Next_Task_Due_Date_Time__c</errorDisplayField>
+    <errorMessage>Next Task Due Date Should be in Future</errorMessage>
+</ValidationRule>

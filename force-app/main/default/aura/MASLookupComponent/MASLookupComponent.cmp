@@ -1,0 +1,122 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+                controller="QuoteProcurementController">
+    
+    <aura:attribute name="productWrapper" type="object" />
+    <aura:attribute name="configured" type="boolean" default="true" />
+    <aura:attribute name="origProductWrapper" type="object" />
+    <aura:attribute name="MASInfo" type="AggregateResult[]" />
+    <aura:attribute name="MASFields" type="List" default="[
+                                                          {label: 'Library',  fieldName: 'MAS_Library__c', type: 'text'},
+                                                          {label: 'Company', fieldName: 'MAS_Company_Code__c', type: 'text'},
+                                                          {label: 'LOB', fieldName: 'MAS_Line_of_Business__c', type: 'text'}]"/> 
+    <aura:attribute name="showFields" type="boolean" default="false" />
+    <aura:attribute name="showhide" type="string" default="Show Fields" />
+    <!--added for SDT 29392-->
+    <aura:attribute name="MASBypassPrice" type="boolean" default="false" />
+    <aura:attribute name="DoNotCreateTaskGridTickets" type="boolean" default="false" />
+    <aura:attribute name="IsVisibleDoNotCreateTaskGridAndMASTicket" type="boolean" default="false" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <aura:registerEvent name="CloseSIDModalEvent" type="c:QuoteProductsDetailsCloseModal" />
+    <aura:attribute name="setupCommentSize" type="integer" default="0" />
+    <lightning:layout multipleRows="true"
+                      horizontalAlign="spread"
+                      verticalAlign="stretch">
+        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+            <div class="slds-align_absolute-center slds-text-heading_medium">
+                MAS Setup
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="6">
+            <div class="slds-text-title_caps slds-align_absolute-center slds-box slds-p-bottom_xx-small">Available MAS Libraries</div>
+            <lightning:layout multipleRows="true" verticalAlign="center">
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:datatable aura:id="MASDetails"
+                                         columns="{!v.MASFields}"
+                                         data="{!v.MASInfo}"
+                                         resizeColumnDisabled="true"
+                                         keyField="id"
+                                         maxRowSelection="1"
+                                         onrowselection="{!c.pushValues}" />
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="6">
+            <div class="slds-text-title_caps slds-align_absolute-center slds-box slds-p-bottom_xx-small">Current MAS Details</div>
+            <lightning:layout multipleRows="true" verticalAlign="center">
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <b>Standard Setup Fields</b>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small padding-0px" size="12">
+                    <lightning:recordEditForm objectApiName="SBQQ__QuoteLine__c">
+                        <lightning:inputField fieldName="VCRCode__c" value="{!v.productWrapper.MAS.VCRCode}" />
+                    </lightning:recordEditForm>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:input aura:id="MASLib" label="MAS Library" 
+                                     name="masLibrary" placeholder="Please make a selection from the right..."
+                                     disabled="true" value="{!v.productWrapper.MAS.MASLibrary}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:input aura:id="MASComp" label="MAS Company Code" 
+                                     name="masCompanyCode" placeholder="Please make a selection from the right..."
+                                     disabled="true" value="{!v.productWrapper.MAS.MASCompany}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:textarea name="setupComment" label="MAS Setup Comment" maxlength="1000"
+                                        placeholder="Enter your setup comment here (up to 1000 characters)"
+                                        value="{!v.productWrapper.MAS.MASComment}" />
+                    <c:CharacterRemainingComponent setupCommentSize="{!v.setupCommentSize}" mASComment="{!v.productWrapper.MAS.MASComment}"/>
+                </lightning:layoutItem>
+                <!--added for SDT 29392-->
+                <aura:if isTrue="{!v.IsVisibleDoNotCreateTaskGridAndMASTicket}">
+                    <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                        <lightning:input aura:id="BypassTaskTicket" label="Do Not Create Task Grid Tickets" type="checkbox"
+                                        name="bypassTaskTicket" checked="{!v.productWrapper.MAS.DoNotCreateTaskGridTickets}"
+                                        onchange="{!c.handleBypassTaskTicketCheckboxCheck}" />
+                    </lightning:layoutItem>
+                </aura:if>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                        <lightning:input aura:id="BypassPrice" label="Bypass Price Review" type="checkbox"
+                                         name="bypassPrice" checked="{!v.productWrapper.MAS.MASBypassPrice}"
+                                         disabled="{!v.MASBypassPrice}"/>
+                    </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="6">
+                    <b>Extended Setup Fields</b>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small right-align" size="6">
+                    <lightning:button label="{!v.showhide}"
+                                      variant="base"
+                                      onclick="{!c.showFields}" />
+                </lightning:layoutItem>
+                <aura:if isTrue="{!v.showFields}">
+                    
+                    <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                        <lightning:input aura:id="MASAcct" label="MAS Account" 
+                                         name="masAccount" value="{!v.productWrapper.MAS.MASAccount}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                        <lightning:input aura:id="MASBox" label="MAS Box" 
+                                         name="masBox" value="{!v.productWrapper.MAS.MASBox}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                        <lightning:input aura:id="MASUnique" label="Customer Unique Id" 
+                                         name="masUnique" value="{!v.productWrapper.MAS.MASUniqueId}" />
+                    </lightning:layoutItem>
+                    <aura:if isTrue="{!v.IsVisibleDoNotCreateTaskGridAndMASTicket}">
+                        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                            <lightning:input aura:id="BypassTicket" label="Do Not Create MAS Tickets" type="checkbox"
+                                            name="bypassTicket" checked="{!v.productWrapper.MAS.MASDoNotCreate}"/>
+                        </lightning:layoutItem>
+                    </aura:if>
+                </aura:if>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="right-align slds-p-around_xx-small " alignmentBump="right" size="12">
+            <lightning:button label="Save"
+                              variant="brand"
+                              onclick="{!c.saveMAS}" />
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+</aura:component>

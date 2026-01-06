@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Acorn_Work_Order_Number_to_Acorn__c</fullName>
+    <description>Holds the value of the Acorn work order number</description>
+    <externalId>false</externalId>
+    <label>Acorn Work Order Number to Acorn</label>
+    <length>20</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

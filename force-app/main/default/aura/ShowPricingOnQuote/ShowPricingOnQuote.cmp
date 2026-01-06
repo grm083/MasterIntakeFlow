@@ -1,0 +1,104 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
+                controller="ProcessQLIPricingRequest" access="global">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    
+    <aura:attribute name="QuotePringRequestList" Type="List" />
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false"/>
+	<aura:attribute name="IsMultiVendorPriceOn" type="Boolean" default="false"/> 
+   
+    <aura:handler event="c:AssetPriceRefreshEvent" action="{!c.doInit}"/>
+    <aura:html tag="style">
+        .slds-modal__container{
+        max-width: 80rem !important;
+        width:70% !important;
+        max-height : 80rem !important;
+        }
+    </aura:html>
+    
+    <div class="slds-truncate">
+            <div class="setHeight slds-truncate slds-col slds-scrollable">
+                <lightning:card title="Pricing Response"  class=" slds-scrollable" aura:id="showPricing">
+                    <div class="slds-p-around_x-small slds-size_6-of-12"> 
+                        <lightning:button  label="Refresh" title="Refresh" onclick="{!c.doInit }"/>
+                    </div>
+                    
+                    <aura:if isTrue="{!v.loadingSpinner}">
+                        <lightning:spinner alternativeText="Loading" size="medium" variant="brand" />
+                    </aura:if>
+                    <table class="slds-table slds-table--bordered">
+                        <thead>
+                            <tr class="slds-table slds-table--bordered">
+                                <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Pricing Request
+                                    Link</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Pricing
+                                    Type</b></span></th> 
+                                <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Container
+                                    </b></span></th>
+                                <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Pricing
+                                    Response</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Bundle
+                                    Link</b></span></th>
+                                <!-- <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Resultant</b></span></th> -->
+                         
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.QuotePringRequestList}" var="pr">
+                                <tr>
+                                    <td class="slds-size_1-of-9"><a data-id="{!pr.PricingReqId}"
+                                        onclick="{!c.navigateTosObject}"> {!pr.PricingRequestLink}</a></td>
+                                    <td class="slds-size_1-of-9">{!pr.PricingType}</td>
+                                    <td class="slds-size_1-of-9">{!pr.Container}</td>
+                                    <td class="slds-size_1-of-9">{!pr.PricingResponse}</td>
+                                    <td class="slds-size_1-of-9"><a data-id="{!pr.BundleID}"
+                                        onclick="{!c.navigateTosObject}"> {!pr.BundleLink}</a></td>
+                                    <!-- <td class="slds-size_1-of-9">{!pr.Resultant}</td> -->
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </lightning:card>
+            </div>
+            <aura:if isTrue="{!v.IsMultiVendorPriceOn}">
+                <div class="setHeight slds-truncate slds-col slds-scrollable">
+                    <lightning:card title="Vendor Change History"  class=" slds-scrollable" aura:id="showPricing">
+                        <div class="slds-p-around_x-small slds-size_6-of-12"> 
+                            <lightning:button  label="Refresh" title="Refresh" onclick="{!c.doInit }"/>
+                        </div>
+                        
+                        <aura:if isTrue="{!v.loadingSpinner}">
+                            <lightning:spinner alternativeText="Loading" size="medium" variant="brand" />
+                        </aura:if>
+                        <table class="slds-table slds-table--bordered">
+                            <thead>
+                                <tr class="slds-table slds-table--bordered">
+                                    <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Pricing Request
+                                        Name</b></span></th>
+                                    <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Pricing
+                                        Type</b></span></th> 
+                                    <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Old Vendor
+                                        </b></span></th>
+                                    <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>New Vendor
+                                        </b></span></th>
+                            
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.QuotePringRequestList}" var="pr">
+                                    <aura:iteration items="{!pr.VendorTracking}" var="historyRec">
+                                        <tr>
+                                            <td class="slds-size_1-of-9"><a data-id="{!pr.PricingReqId}"
+                                                onclick="{!c.navigateTosObject}"> {!historyRec.PricingReqId}</a></td>
+                                            <td class="slds-size_1-of-9">{!historyRec.PricingType}</td>
+                                            <td class="slds-size_1-of-9">{!historyRec.OldVendor}</td>
+                                            <td class="slds-size_1-of-9">{!historyRec.NewVendor}</td>
+                                        </tr>
+                                    </aura:iteration>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </lightning:card>
+                </div>
+            </aura:if>
+        </div>
+    </aura:component>

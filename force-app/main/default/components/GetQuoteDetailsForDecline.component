@@ -1,0 +1,105 @@
+<!--
+Author: Rishiraj Singh
+Requirement Id/Story: SDT-20076
+FC: Anmoal Bharti
+Module: Asset Management/Quote Lifecycle
+Description: VFC is being used to show Quote Details on Email Template 'Declined Quote Email Template'
+-----------------------------------------------------------------
+Story             Sprint             Modified By           Description
+SDT-20076         AM-MVP3            Rishi                 Show Quote Details
+-->
+<apex:component controller="GetDetails" access="global">
+    
+    <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!objQuote}"/>
+    <br/>
+    <table width = "50%">
+      	<apex:repeat value="{!WrapperData}" var="fieldKey"><!-- Looping Keys-->
+       
+        <tr>
+            <td width = "50%" colspan = "2"> 
+                <hr/>
+                <b>Request :   {!mapCount[fieldKey]} </b>                 
+            </td>        
+             
+        </tr> 
+            
+            <tr>
+                <td width="50%">
+                    <b>Container:</b>   
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLI[fieldKey].SBQQ__Product__r.Name}"/>
+                </td>
+            </tr>
+             <tr>
+                <td width="50%">
+                    <b>Duration:</b>   
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLI[fieldKey].Duration__c}"/>
+                </td>
+            </tr>
+            <tr>    
+                <td>
+                    <b>Size:</b>
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLI[fieldKey].Equipment_Size__c}"/>
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <b>Material:</b>
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLIMaterialCode[fieldKey]}"/> 
+                </td>
+            </tr>
+            <tr>  
+                <td>
+                    <b>Service Type:</b> 
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLI[fieldKey].Occurrence_Type__c}, {!mQLI[fieldKey].Schedule_Frequency__c}"/>
+                </td>
+                
+            </tr>
+            <tr>
+                <td width="50%"><b>Requested Start Date:</b> </td>
+                <td width="50%"><apex:outputText value="{0,Date, MM/dd/yyyy}"> 
+                    <apex:param value="{!mQLI[fieldKey].SBQQ__EffectiveStartDate__c}"/>
+                 
+                    </apex:outputText>    
+                </td>
+            </tr>
+      
+               
+            <tr>
+                <td colspan= "2">
+                        <b> <apex:outputText value="Service Charges:"/> </b>
+                        <apex:repeat value="{!quoteLineMap[fieldKey]}" var="QuoteLine">
+                            <tr>
+                                
+                                <td width="50%"> <apex:outputText value="{!QuoteLine.SBQQ__Product__r.Name}"/></td>
+                                
+                                
+                                <td>
+                                    <apex:outputText value="${!QuoteLine.SBQQ__ListPrice__c}"/>
+                                </td>
+                                <td>
+                                    <apex:outputText value="{!QuoteLine.PriceUOM__c }"/>
+                                </td>
+
+                            </tr>                                                       
+                        </apex:repeat>
+                
+                </td>
+            </tr>             
+            
+        </apex:repeat>
+      
+    </table>    
+    <br/>
+    <br/>
+    
+</apex:component>

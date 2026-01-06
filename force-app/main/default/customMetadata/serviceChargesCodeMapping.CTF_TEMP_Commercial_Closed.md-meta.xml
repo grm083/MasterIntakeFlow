@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>CTF-TEMP-Commercial-Closed</label>
+    <protected>false</protected>
+    <values>
+        <field>Line_of_business__c</field>
+        <value xsi:type="xsd:string">Commercial</value>
+    </values>
+    <values>
+        <field>Market_area_code__c</field>
+        <value xsi:type="xsd:string">Closed</value>
+    </values>
+    <values>
+        <field>Product_code__c</field>
+        <value xsi:type="xsd:string">CTF</value>
+    </values>
+    <values>
+        <field>Product_name__c</field>
+        <value xsi:type="xsd:string">Unknown</value>
+    </values>
+    <values>
+        <field>Service_charge_code__c</field>
+        <value xsi:type="xsd:string">R_C_TEMP_CLOSED</value>
+    </values>
+    <values>
+        <field>Service_charge_name__c</field>
+        <value xsi:type="xsd:string">Container Service Fee (This is the &quot;Insurance&quot; or Rental for Commercial Accounts)</value>
+    </values>
+    <values>
+        <field>Service_type__c</field>
+        <value xsi:type="xsd:string">TEMP</value>
+    </values>
+</CustomMetadata>

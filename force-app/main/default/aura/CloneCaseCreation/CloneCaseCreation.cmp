@@ -1,0 +1,121 @@
+<aura:component controller="CaseDetailHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:hasPageReference">
+    <aura:attribute name="recordId" type="string" default="5000U0000086y1N" />
+    <aura:attribute name="childCase" type="string" />
+    <aura:attribute name="emailMessageId" type="string" default="02s0U000001iUNAQA2"/>
+    <aura:attribute name="showPopup" type="boolean" default="false"/>   
+    <aura:attribute name="renderComponent" type="boolean" default="true"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:handler name="closeModalBoxEvent" event="c:closeModalBoxEvent" action="{!c.cancelButton}"/>
+    <aura:handler name="BoxEvent" event="c:closeModalBoxEvent" action="{!c.subButton}"/>
+    
+    <aura:html tag="style">
+        .slds-modal__container {
+        width : 100% !important;
+        max-width : 100% !important;
+        height : 153% !important;
+        max-height : 190% !important;
+        margin-top:-30px;
+        }
+    </aura:html>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--<lightning:quickActionAPI aura:id="quickActionAPI"/>-->
+    <lightning:navigation aura:id="navService"/>
+    <div class="slds">        
+        <div class="slds-page-header " >
+        <div class="slds-col slds-size_1-of-1">
+            <aura:if isTrue="{!v.renderComponent}">                
+                <h2 class="slds-text-heading--medium" style="font-weight:bolder">Case Details</h2>
+                <div class="slds-text-align_right" style="    margin-right: 10px;margin-top: -20px;">
+                    <lightning:button aura:id="clone"  label="Clone Case" title="Clone Case" onclick="{!c.cloneCase}"  />
+                </div>
+                
+            </aura:if>
+            </div>
+            <aura:if isTrue="{!v.showPopup}">
+                <div class="demo-only" aura:id="modalBox">
+                    
+            
+                    
+                    
+                    
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div aura:id="modalContainer" class="slds-modal__container">
+                           <!-- <header class="slds-modal__header">
+                                <lightning:icon size="small" iconName="standard:case" variant="container"/>
+                                <span class="space space-left-align slds-text-heading_medium"><b style="vertical-align: bottom;">Update Case</b></span>-->
+                                <!--<h2 id="modal-heading-01" class="slds-text-heading_medium">{!v.labelName}</h2>-->
+                           <!--</header> --> 
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                
+    <!-- yes no popup -->
+                    
+                     <aura:if isTrue="{!v.isModalOpen}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="width:30%;margin-left:35%;margin-bottom:33%">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b> If you continue, the status of new case will be closed. Do you want to proceed?
+                            </b>
+                        </p>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="brand"
+                                          label="Yes"
+                                          title="Yes"
+                                          onclick="{!c.yesBtn}"/>
+                        <lightning:button variant="neutral"
+                                          label="No"
+                                          title="No"
+                                          onclick="{! c.noBtn }"/>
+                        
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+                    
+                    
+                    
+                    <!-- popup end-->
+                                
+                                
+                                
+                                <div class="slds">
+                                    <div class="slds-grid slds-wrap">
+                                        
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <c:EmailDetailViewComponent recordId="{!v.emailMessageId}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <c:CaseEditComponent recordId="{!v.childCase}"/>
+                                            
+                                        </div>
+                                    </div>
+                                    {!v.body}
+                                </div>
+                            </div>
+                            <!--<footer class="slds-modal__footer" aura:id="modalBoxFooter">
+                                <lightning:button variant="brand" label="Cancel" onclick="{!c.cancelButton}" />
+                            </footer>-->
+                        </div>
+                    </section>
+                </div>
+            </aura:if>
+        </div>    
+        
+    </div>
+    
+    
+</aura:component>

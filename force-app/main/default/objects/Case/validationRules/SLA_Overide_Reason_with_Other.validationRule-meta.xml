@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SLA_Overide_Reason_with_Other</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT(DATEVALUE( SLA_Service_Date_Time__c )= Service_Date__c &amp;&amp; $User.Bypass_Validation__c &amp;&amp; ISBLANK( TEXT(SLA_Override_Reason__c))) &amp;&amp;  OR(ISPICKVAL(SLA_Override_Reason__c, &apos;Other&apos;),ISPICKVAL(SLA_Override_Reason__c, &apos;NAM/PM&apos;)) &amp;&amp; ISBLANK( SLA_Override_Comment__c) &amp;&amp; NOT( ISNEW() )</errorConditionFormula>
+    <errorDisplayField>SLA_Override_Comment__c</errorDisplayField>
+    <errorMessage>Please provide &apos;SLA Override Comments&apos; if SLA Override Reason is selected as &apos;Other&apos;/&apos;NAM/PM&apos;.</errorMessage>
+</ValidationRule>

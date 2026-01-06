@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="caseId" type="String"/>
+    <aura:attribute name="multiAssetIds" type="List"/>
+</aura:event>

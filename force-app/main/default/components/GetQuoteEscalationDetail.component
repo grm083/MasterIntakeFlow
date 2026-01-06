@@ -1,0 +1,125 @@
+<apex:component controller="GetDetails" access="global">
+        
+    <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote Escaltion Email" assignTo="{!objQuote}"/>
+    <br><apex:outputText style="color:black;font-family:Arial;" value="Hello, {!QuoteFields.SBQQ__Account__r.Parent.Name} Sales Team,"/> </br>
+    <apex:outputText style="color:black;font-family:Arial;" value="{!user.FirstName + ' ' + user.LastName}"/><apex:outputText style="color:black;font-family:Arial;" value=" has requested escalation for the following quote:"/>
+    <br/>
+    <br/>
+    <b>
+    <apex:outputLink style="color:black;font-family:Arial;" value="{!LEFT($Api.Partner_Server_URL_140,FIND('.com',$Api.Partner_Server_URL_140)+4)}" target="_parent">
+      {!QuoteFields.Name}
+        </apex:outputLink></b>
+    <br/>
+    <b>
+    <apex:outputText style="color:black;font-family:Arial;" value="Location Details:"/></b>
+    <br/>
+    <apex:outputText style="color:black;font-family:Arial;"  value="{!QuoteFields.SBQQ__Account__r.Name}"/><br/>
+    <apex:outputText style="color:black;font-family:Arial;"  value="{!QuoteFields.SBQQ__ShippingStreet__c}"/><br/>
+    <apex:outputText style="color:black;font-family:Arial;"  value="{!QuoteFields.SBQQ__ShippingState__c}"/>, 
+    <apex:outputText style="color:black;font-family:Arial;"  value="{!QuoteFields.SBQQ__ShippingPostalCode__c}"/>
+    <br/>
+    <br/>
+    <b>
+      <apex:outputText style="color:black;font-family:Arial;" value="Quote Start Date:"/></b>
+    <apex:outputText style="color:black;font-family:Arial;" value="{0,Date, MM/dd/yyyy}"> 
+    <apex:param value="{!QuoteFields.SBQQ__StartDate__c}"/>
+    </apex:outputText>
+    <br/>
+    <br/>
+    <b>
+    <apex:outputText style="color:black;font-family:Arial;" value="Requested By:"/><br/></b>
+    <apex:outputText style="color:black;font-family:Arial;" value="{!QuoteFields.SBQQ__PrimaryContact__r.Name}"/>, &nbsp; <apex:outputText style="color:black;font-family:Arial;" value="{!QuoteFields.SBQQ__PrimaryContact__r.Account_Title__r.Name}"/>
+    <br/>
+    <br/>
+    <b>
+    <apex:outputText style="color:black;font-family:Arial;" value="Reason for Escalation:"/><br/></b>
+    <apex:outputText style="color:black;font-family:Arial;" value="{!QuoteFields.SBQQ__Notes__c}"/>
+    <br/>
+    <br/>
+    
+    <apex:outputText style="color:black;font-family:Arial;" value=" Requested Products are as follows:"/>  
+    <br/>
+    <br/>
+    
+    <div style="overflow-x:auto;">
+        <table width ="900px" border ="1"> 
+            
+                <tr width="70%" align ="center"> 
+                    <td  width = "350px!important">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="Container"/></b> &nbsp; &nbsp; 
+                    </td>
+                    <td width = "350px!important">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="Duration"/></b> &nbsp; &nbsp;
+                    </td>
+                    <td  width = "350px!important">
+                       <b> <apex:outputText style="color:black;font-family:Arial;" value="Equipment Size"/></b> &nbsp; &nbsp; 
+                    </td>
+                    <!--<td width = "150px">
+                        <apex:outputText style="color:black;font-family:Arial;" value="Occurrence Type"/> &nbsp; &nbsp; 
+                    </td>-->
+                    <td width = "350px!important">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="Material"/></b> &nbsp; &nbsp;
+                    </td>
+                    
+                    <td  width = "350px!important">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="Vendor"/></b> &nbsp; &nbsp; 
+                    </td>
+                    
+                    <td  width = "350px!important">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="S-Code"/></b> &nbsp; &nbsp; 
+                    </td>
+                </tr>
+            <apex:repeat value="{!WrapperData}" var="fieldKey"><!-- Looping Keys-->
+                <tr width="70%" align ="center">
+                    <td width = "350px!important">
+                        <apex:outputText style="color:black;font-family:Arial;"  value="{!mQLI[fieldKey].SBQQ__Product__r.Name}"/> &nbsp; &nbsp; 
+                    </td>
+                    <td  width = "350px!important">
+                        <apex:outputText style="color:black;font-family:Arial;" value="{!mQLI[fieldKey].Duration__c}"/> &nbsp; &nbsp;
+                    </td>
+                    
+                   
+                    <td  width = "350px!important">
+                        <apex:outputText style="color:black;font-family:Arial;"  value="{!mQLI[fieldKey].Equipment_Size__c}"/> &nbsp; &nbsp;
+                    </td>
+                 
+                    <!--<td  width = "150px">
+                        <apex:outputText style="text-align: Top;"  value="{!mQLI[fieldKey].Schedule_Frequency__c}"/> &nbsp; &nbsp;
+                    </td>-->
+                    <td  width = "350px!important">
+                        <apex:repeat value="{!MaterialCode}" var="materialKey"><!-- Looping Keys-->
+                            <apex:outputText rendered="{!fieldKey==materialKey}" style="color:black;font-family:Arial;"  value="{!mQLIMaterialCode[fieldKey]}"/>
+                        </apex:repeat>
+                        <br/>
+                    </td>
+                    
+                    <td  width = "350px!important">
+                        <apex:outputText style="color:black;font-family:Arial;"  value="{!mQLI[fieldKey].Vendor__r.Name}"/> &nbsp; &nbsp;
+                    </td>
+                    
+                    <td  width = "350px!important">
+                        <apex:outputText style="color:black;font-family:Arial;"  value="{!mQLI[fieldKey].sCode__c}"/> &nbsp; &nbsp;
+                    </td>
+                    <br/>
+                </tr>
+                
+               
+            </apex:repeat>
+            
+        </table>
+            </div>
+    <br/>
+    <apex:outputText style="color:black;font-family:Arial;" value="Please respond to this message with further instructions, or navigate to the quote in Salesforce to take action."/>
+    <br/>
+    <br/>
+    <apex:outputText style="color:black;font-family:Arial;" value="Thank you,"/>
+    <br/>
+    <div>
+        <br/><b><apex:outputText style="text-align: center;font-family:Arial; font-size:19px" value="{!user.FirstName + ' ' + user.LastName}"/></b>
+        <br/><apex:outputText style="text-align: center;font-family:Arial; font-size:13px" value="{!user.Email}" />
+        <br/><apex:outputText style="text-align: center;font-family:Arial; font-size:13px" value="{!user.Phone}" />
+     </div>
+     <div style="height: 10pt;"></div>
+   
+    
+</apex:component>

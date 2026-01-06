@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT" description="Passes the close modal command to the Quote Products parent component">
+    <aura:attribute name="showModal" type="Boolean" />
+    <aura:attribute name="showQuoteModal" type="Boolean" />
+    <aura:attribute name="closeLocationModal" type="Boolean" />
+    <aura:attribute name="closeGetprice" type="Boolean" />
+
+</aura:event>

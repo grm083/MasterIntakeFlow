@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Service</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Quote_Compact_Layout</compactLayoutAssignment>
+    <description>This record type will use to main the different Quote type.</description>
+    <label>New Service</label>
+    <picklistValues>
+        <picklist>AAV_Asset_Availability_Flag__c</picklist>
+        <values>
+            <fullName>Availability Assumed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability NOT Confirmed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Action_Reason__c</picklist>
+        <values>
+            <fullName>Approvals Missing%2FConflicting Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cannot Find Vendor to Provide Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Escalation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing Customer Specific Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing Price Calculation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Responsive Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Responsive Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Customer Approval - Quote</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Customer Approval - Quote Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Customer Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Internal Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Response from Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Response from Hauler - 3PH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Response from Hauler - WM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Vendor Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price Calculation not Available</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Required</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requested Configuration Not Available</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Escalation</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Action_Type__c</picklist>
+        <values>
+            <fullName>Additional Information Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-SBS Coordination Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Status Change</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Cost_Price_Override_Reason__c</picklist>
+        <values>
+            <fullName>Modeled Rates Provided</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pricing Rates Were Incorrect for Ancillary Service%2FPFE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pricing Rates Were Incorrect for Core Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pricing Vendor Unable to Provide Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pricing Vendor is not the Incumbent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Duration__c</picklist>
+        <values>
+            <fullName>Permanent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporary</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>GR_Service_Flag__c</picklist>
+        <values>
+            <fullName>CS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VR</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Integration_Status__c</picklist>
+        <values>
+            <fullName>Acorn integration not required</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Success</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PO_Mandatory__c</picklist>
+        <values>
+            <fullName>NS_PERM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NS_TEMP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PCK_ER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PCK_EXPCK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PCK_OC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>P1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>P2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>P3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>P4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QuoteProcuredStatus__c</picklist>
+        <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Success</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__BillingFrequency__c</picklist>
+        <values>
+            <fullName>Annual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semiannual</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__ContractingMethod__c</picklist>
+        <values>
+            <fullName>By Subscription End Date</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Single Contract</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__DeliveryMethod__c</picklist>
+        <values>
+            <fullName>Download</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ship</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__DocumentStatus__c</picklist>
+        <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__GenerateContractedPrice__c</picklist>
+        <values>
+            <fullName>Discount Schedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Do Not Generate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__OrderBy__c</picklist>
+        <values>
+            <fullName>ProductFamily%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QuantityBasedFormulaField%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__PaperSize__c</picklist>
+        <values>
+            <fullName>A4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Default</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Legal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letter</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__PaymentTerms__c</picklist>
+        <values>
+            <fullName>Due on receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Net 15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Net 30</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Net 45</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Net 60</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Net 90</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__ProrationDayOfMonth__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>12</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>14</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>17</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>18</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>21</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>26</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>27</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>28</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__QuoteLanguage__c</picklist>
+        <values>
+            <fullName>Chinese %28Simplified%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chinese %28Traditional%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Danish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dutch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>English</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finnish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>French</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>German</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Italian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Japanese</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Korean</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Norwegian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portuguese %28Brazilian%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Russian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spanish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spanish %28Mexican%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swedish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Thai</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__Status__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost Configured</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declined</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Draft</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Price Configured</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Configured</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__Type__c</picklist>
+        <values>
+            <fullName>Amendment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exception</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quote</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Re-Quote</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renewal</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SFDC_Team_User__c</picklist>
+        <values>
+            <fullName>Canada VRM Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Stores Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSM Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Amazon Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Dollar Tree%2FFamily Dollar Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Greystar Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Home Depot Projects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Home Depot Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales M%26I Team</fullName>
+            <default>false</default>
+        </values>        
+        <values>
+            <fullName>Service Fulfillment - Service Change</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SFDC_Team__c</picklist>
+        <values>
+            <fullName>Account Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New%2C Add and Change Service</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>STP_Success_Report__c</picklist>
+        <values>
+            <fullName>Full STP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Partial STP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Schedule_or_On_Call__c</picklist>
+        <values>
+            <fullName>On-Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled On Call</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Special_Handling_Reason__c</picklist>
+        <values>
+            <fullName>Automatically flagged by system</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client requires multiple quotes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delivery not needed%2Fcontainer on site</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emergency vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipment Repairs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Contractual Client Pricing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor costs attached</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor preference</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

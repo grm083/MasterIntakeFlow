@@ -1,0 +1,17 @@
+.slds-modal__content{
+    overflow: initial;
+}
+.errormsg {
+    color: #464646;
+    padding: 5px;
+    margin: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    font-size: 13px;
+    line-height: 18px;
+    border-color: #f2a199;
+    background-color: #fdedea;
+    opacity: 1;
+    transition: opacity .2s ease-out;
+}

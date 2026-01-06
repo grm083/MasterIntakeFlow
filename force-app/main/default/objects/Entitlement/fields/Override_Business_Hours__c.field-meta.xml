@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Override_Business_Hours__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If this check box is checked, business hours will not be considered for calculating the SLA. This is related to SDT-42452. This was implemented initially for HMD location only. Dated 06/11/2024</description>
+    <externalId>false</externalId>
+    <label>Override Business Hours</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

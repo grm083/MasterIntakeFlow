@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MAS_Integration__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Account integration with MAS</description>
+    <externalId>false</externalId>
+    <label>MAS Integration</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

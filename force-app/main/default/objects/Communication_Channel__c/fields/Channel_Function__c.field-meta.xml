@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel_Function__c</fullName>
+    <externalId>false</externalId>
+    <label>Channel Function</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BILLMGR</fullName>
+                <default>false</default>
+                <label>Billing Manager</label>
+            </value>
+            <value>
+                <fullName>BILLTO</fullName>
+                <default>false</default>
+                <label>Bill To</label>
+            </value>
+            <value>
+                <fullName>BILLLOCAL</fullName>
+                <default>false</default>
+                <label>Bill To Local</label>
+            </value>
+            <value>
+                <fullName>ClientAccTeam</fullName>
+                <default>false</default>
+                <label>Client Email eBusiness Account Team</label>
+            </value>
+            <value>
+                <fullName>COMPL</fullName>
+                <default>false</default>
+                <label>Compliance</label>
+            </value>
+            <value>
+                <fullName>COMPLTEAM</fullName>
+                <default>false</default>
+                <label>Compliance Team</label>
+            </value>
+            <value>
+                <fullName>CONFIRMSVC</fullName>
+                <default>false</default>
+                <label>Confirm Service</label>
+            </value>
+            <value>
+                <fullName>COSA</fullName>
+                <default>false</default>
+                <label>Continuation of Services Administrator</label>
+            </value>
+            <value>
+                <fullName>CPCNT</fullName>
+                <default>false</default>
+                <label>Coupa Contact</label>
+            </value>
+            <value>
+                <fullName>CUSTSVC</fullName>
+                <default>false</default>
+                <label>Customer Service</label>
+            </value>
+            <value>
+                <fullName>DISPATCH</fullName>
+                <default>false</default>
+                <label>Dispatcher</label>
+            </value>
+            <value>
+                <fullName>EMRG</fullName>
+                <default>false</default>
+                <label>Emergency</label>
+            </value>
+            <value>
+                <fullName>EPROC</fullName>
+                <default>false</default>
+                <label>eProcurement</label>
+            </value>
+            <value>
+                <fullName>FTPTON</fullName>
+                <default>false</default>
+                <label>FTP Response</label>
+            </value>
+            <value>
+                <fullName>HLINTCNT</fullName>
+                <default>false</default>
+                <label>Hauler Integration Contact</label>
+            </value>
+            <value>
+                <fullName>HDISPATCH</fullName>
+                <default>false</default>
+                <label>Home Depot Dispatch</label>
+            </value>
+            <value>
+                <fullName>ISVTON</fullName>
+                <default>false</default>
+                <label>ISV TONNAGE</label>
+            </value>
+            <value>
+                <fullName>MAIN</fullName>
+                <default>false</default>
+                <label>Main</label>
+            </value>
+            <value>
+                <fullName>MALLMGMT</fullName>
+                <default>false</default>
+                <label>Mall Management</label>
+            </value>
+            <value>
+                <fullName>NATPRC</fullName>
+                <default>false</default>
+                <label>National Account Contact - Pricing</label>
+            </value>
+            <value>
+                <fullName>OCR</fullName>
+                <default>false</default>
+                <label>OCR look up</label>
+            </value>
+            <value>
+                <fullName>OFFSITEADDRESS</fullName>
+                <default>false</default>
+                <label>OffSiteAddress</label>
+            </value>
+            <value>
+                <fullName>ORDRACKNWDG</fullName>
+                <default>false</default>
+                <label>Order Acknowledgement</label>
+            </value>
+            <value>
+                <fullName>OTHR</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>PRSN</fullName>
+                <default>false</default>
+                <label>Personal</label>
+            </value>
+            <value>
+                <fullName>POWOSCHD</fullName>
+                <default>false</default>
+                <label>POWO Scheduler (Friday Fax)</label>
+            </value>
+            <value>
+                <fullName>REMITTO</fullName>
+                <default>false</default>
+                <label>Remit To</label>
+            </value>
+            <value>
+                <fullName>SCHEDA</fullName>
+                <default>false</default>
+                <label>Schedule-A Administrator</label>
+            </value>
+            <value>
+                <fullName>SCALERT</fullName>
+                <default>false</default>
+                <label>Service Channel Alert</label>
+            </value>
+            <value>
+                <fullName>WORK</fullName>
+                <default>false</default>
+                <label>Work</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

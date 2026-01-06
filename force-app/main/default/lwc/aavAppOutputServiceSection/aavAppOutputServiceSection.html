@@ -1,0 +1,53 @@
+<template>
+    <div class="slds-theme_default">
+        <!-- heading Section -->
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-cell-wrap slds-p-horizontal_small">
+                <b>{label_ServiceHeader}</b>
+            </span>
+            <span if:false={serviceWeekDaysError} class="week_days_theme">
+                <template for:each={weekDays} for:item="item">
+                    <span key={item.dayName} title={item.dayName} class={item.design}>{item.day}</span>
+                </template>
+            </span>
+        </h3>
+        <!-- Content Section -->
+        <div>
+            <table style="table-layout: fixed;"
+                class="slds-table slds-table_header-hidden slds-table_striped slds-var-p-vertical_x-small">
+                <tbody>
+                    <!-- capture Service Days Error -->
+                    <tr if:true={serviceWeekDaysError} class="slds-hint-parent" scope="row">
+                        <th scope="col" colspan="4">
+                            <div class="warning-box">
+                                <span style="font-size: 1.2em;"> &#9888; </span>
+                                <div class="slds-cell-wrap warning-text">
+                                    <ul class={cssServiceClassError}>
+                                        <template for:each={serviceWeekDaysError} for:item="errorMsg">
+                                            <li key={errorMsg}>{errorMsg}</li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <!-- Display Dynamic Fields Information -->
+                    <template for:each={displayFieldsRows} for:item="row">
+                        <tr key={row.index} class="slds-hint-parent" scope="row">
+                            <template for:each={row.columns} for:item="column">
+                                <th key={column.label} scope="col" title={column.label}>
+                                    <div class="slds-cell-wrap">
+                                        <p><b>{column.label}</b></p>
+                                    </div>
+                                </th>
+                                <td key={column.value} title={column.value} scope="col">
+                                    <div class="slds-cell-wrap">: {column.value}</div>
+                                </td>
+                            </template>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

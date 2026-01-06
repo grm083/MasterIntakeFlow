@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assing_To_Me_Action__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Set this Field true when user clicks assign to me button.</description>
+    <externalId>false</externalId>
+    <label>Assign To Me Action</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

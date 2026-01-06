@@ -1,0 +1,83 @@
+<aura:component controller="CaseDetailHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,lightning:actionOverride,lightning:hasPageReference">
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="subject" type="string"/>
+    <aura:attribute name="emailMessageList" type="object"/>
+    <aura:attribute name="attachmentList" type="object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <div class="slds">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1" style="padding:10px">
+                <ui:scrollerWrapper class="scrollerSize">
+                    <div class="slds-m-around--medium slds-border">
+                        <div class="slds-container--medium">
+                            <div class="slds-form--stacked ">
+                                <div class="slds-form-element">
+                                    <div style="width:100%;">
+                                        <div class="slds-scrollable_y" style="height:100%;">
+                                              <div class="slds-modal__header slds-theme--info" style="background-color:#00693c!Important">
+                                                    <h2 class="slds-text-heading--medium">Email Message</h2>   
+                                                 <!-- <lightning:quickActionAPI aura:id="quickActionAPI"/>
+                                                  <div class="slds-text-align_right">
+                                                      <lightning:button aura:id="reply"  label="Reply" title="Reply" onclick="{!c.replyAction}"  />
+                                                      <lightning:button aura:id="attachment"  label="Link to Attachments" title="Attachment" onclick="{!c.viewAttachment}"  />
+                                                  </div>-->
+                                                </div>
+                                            <aura:iteration items="{!v.emailMessageList}" var="messageVal" indexVar="index">
+                                              
+                                                <div class="slds-m-left--large">            
+                                                    
+                                                    <h2 class="slds-text-heading--medium" style="font-weight:bolder;">Message Content</h2>
+                                                </div>
+                                                
+                                                <div class="slds-form-element">                                            
+                                                    <div class="slds-wrap"><label class="slds-form-element__label">Subject</label>  <ui:outputText value="{!messageVal.Subject}"/></div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element">
+                                                    <div class="slds-wrap"><label class="slds-form-element__label">Body</label>  <ui:outputRichText aura:id="outputRT" value="{!messageVal.HtmlBody}"/></div>
+                                                </div>
+                                                
+                                                <div class="slds-m-left--large">            
+                                                    
+                                                    <h2 class="slds-text-heading--medium" style="font-weight:bolder;">Address Information</h2>
+                                                </div>
+                                                
+                                                <div class="slds-form-element">
+                                                    <div class="slds-wrap"><label class="slds-form-element__label">FromAddress</label>  <ui:outputText value="{!messageVal.FromAddress}"/></div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element">
+                                                    <div class="slds-wrap"><label class="slds-form-element__label">FromName </label>  <ui:outputText value="{!messageVal.FromName}"/></div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element">
+                                                    <div class="slds-wrap"><label class="slds-form-element__label"> ToAddress</label>  <ui:outputText value="{!messageVal.ToAddress}"/></div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element">
+                                                    <div class="slds-wrap"><label class="slds-form-element__label"> CC Address</label>  <ui:outputText value="{!messageVal.CcAddress}"/></div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element">
+                                                    <div class="slds-wrap"><label class="slds-form-element__label">BCC Address</label>  <ui:outputText value=""/>{!messageVal.BccAddress}</div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element">
+                                                    <div class="slds-wrap"><label class="slds-form-element__label">ParentNumber </label>  <ui:outputText value="{!messageVal.Parent}"/></div>
+                                                </div>
+                                                
+                                            </aura:iteration>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ui:scrollerWrapper>
+            </div>
+            
+        </div>
+        {!v.body}
+    </div>
+</aura:component>

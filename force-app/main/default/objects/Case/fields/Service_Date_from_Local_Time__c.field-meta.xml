@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Date_from_Local_Time__c</fullName>
+    <description>This is technical field used to update from local time field through workflow further to use in Backdated case logic</description>
+    <externalId>false</externalId>
+    <label>Service Date from Local Time</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

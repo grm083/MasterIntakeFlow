@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_Numbers_allowed_for_Phone_field</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT($User.Bypass_Validation__c),IF( ISBLANK(Phone) , false, OR( LEN(Phone) &lt;&gt; 10, NOT(REGEX(Phone,&quot;^[0-9]+$&quot;)))))</errorConditionFormula>
+    <errorDisplayField>Phone</errorDisplayField>
+    <errorMessage>Please enter 10 digit numbers only.</errorMessage>
+</ValidationRule>

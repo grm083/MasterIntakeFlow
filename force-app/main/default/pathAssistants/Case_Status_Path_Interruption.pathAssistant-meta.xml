@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Case</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Case Status Path - Interruption</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Close_Irrelevant_Case__c</fieldNames>
+        <fieldNames>Case_Close_Reason__c</fieldNames>
+        <picklistValueName>New</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Close_Irrelevant_Case__c</fieldNames>
+        <fieldNames>Case_Close_Reason__c</fieldNames>
+        <picklistValueName>Open</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Close_Irrelevant_Case__c</fieldNames>
+        <fieldNames>Case_Close_Reason__c</fieldNames>
+        <picklistValueName>Pending</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Interruption_Case</recordTypeName>
+</PathAssistant>

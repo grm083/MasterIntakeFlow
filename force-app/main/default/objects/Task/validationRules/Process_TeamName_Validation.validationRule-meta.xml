@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Process_TeamName_Validation</fullName>
+    <active>true</active>
+    <description>Validate that Team Name not select with Process is null</description>
+    <errorConditionFormula>AND( NOT( ISPICKVAL( Process__c , &quot;Case Assignment&quot;) ),
+     NOT( ISBLANK( TEXT(Task_Team_Name__c) ) )
+   )</errorConditionFormula>
+    <errorDisplayField>Task_Team_Name__c</errorDisplayField>
+    <errorMessage>Team Name is not allowed for non Case Assignment task.</errorMessage>
+</ValidationRule>

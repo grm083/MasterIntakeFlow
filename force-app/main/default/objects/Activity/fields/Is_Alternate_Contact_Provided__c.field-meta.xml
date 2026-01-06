@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Alternate_Contact_Provided__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is used to identify whether Resolve Service Issue is created from the outcome of Escalation Unresponsive Contact Customer Task.</description>
+    <externalId>false</externalId>
+    <label>Is Alternate Contact Provided</label>
+    <type>Checkbox</type>
+</CustomField>

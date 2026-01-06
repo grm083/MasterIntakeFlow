@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Check Case Workorder Duplicate">
+    <aura:attribute name="isDuplicate" type="boolean" default="false" />
+</aura:event>

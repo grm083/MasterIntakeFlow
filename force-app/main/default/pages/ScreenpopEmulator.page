@@ -1,0 +1,171 @@
+<apex:page controller="ScreenpopEmulatorController" action="{!updateScreenpopUrl}" showHeader="false" standardStylesheets="true" sidebar="false" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>Screenpop Emulator</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <style>
+                div.banner {
+                    background-color: #54698D;
+                    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(90,110,145,.5) 15px, rgba(90,110,145,.5) 30px);
+                    color: white;
+                    font-size: 10px;
+                    text-align: center;
+                    height: 24px;
+                    padding-top: 10px;
+                    padding: 0px;
+                    margin: 0px;
+                }
+                hr.topDivider {
+                    border-top: 2px solid #7AB800;
+                }
+                select {
+                    width: 200px;
+                }
+                .userInputField {
+                    width: 196px;
+                }
+                .overlay {
+                    display: none;
+                    height: 100%;
+                    left: 0;
+                    position: fixed;
+                    top: 0;
+                    opacity: 0.75;
+                    -moz-opacity: 0.75;
+                    width: 100%;
+                    -ms-filter: “progid:DXImageTransform.Microsoft.Alpha(Opacity=75)”;
+                    filter: alpha(opacity=75);
+                    background: #000;
+                    -khtml-opacity: 0.75;
+                    z-index: 1000;
+                }
+               
+            </style>
+            <apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
+        </head>    
+        <body>            
+            <script type="text/javascript">
+                function startLoading() {
+                    $('#load_scrl').css('top', $(document).scrollTop() + 200);
+                    $('.loadingBox').show();
+                }
+                function endLoading() {
+                    $('.loadingBox').hide();
+                }
+            </script>
+            <div id="load_scrl" class="loadingBox " style="display:none"></div>
+            <div class="loadingBox overlay"></div>
+            <apex:actionStatus id="loading" onstart="startLoading();" onstop="endLoading();" />
+            <div>
+                <!-- PAGE HEADER -->
+                <div class="banner" style="padding-top: 10px;">{!PageTitle}</div>
+                <!-- / PAGE HEADER -->
+                <apex:pageMessages />
+                <apex:form id="mainForm">                                
+                    <apex:pageBlock title="Screenpop Emulator" mode="maindetail" >
+                        <apex:pageBlockSection title="Customer Interaction Parameters">                            
+                            <apex:selectList size="1" label="Media Type:" value="{!MediaType}" onchange="toggleOnMediaType();">
+                                <apex:selectOption itemValue="voice" itemLabel="Voice (IVR)" />
+                                <apex:selectOption itemValue="workitem" itemLabel="Workitem (Email)" />
+				<apex:selectOption itemValue="chat" itemLabel="Chat (IVR)" />
+                            </apex:selectList>
+                            <br />
+                            <apex:input value="{!GenesysId}" label="Genesys ID:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="IVR & ANI Lookup Parameters"> 
+                            <apex:selectList id="lstIntent" value="{!IntentSelected}" onchange="updateScreenpopUrl();" size="1" label="IVR Intent:" disabled="{!MediaTypeToggle}">
+                                <apex:selectOption itemValue="pickup" itemLabel="Pickup (Pickup Case)" />
+                                <apex:selectOption itemValue="eta" itemLabel="ETA (Status Case)" />
+                                <apex:selectOption itemValue="delivery" itemLabel="Delivery (New Service Case)" />
+                                <apex:selectOption itemValue="other" itemLabel="Other (Standard Case)" />
+                                <!-- Start SDT-19322 Added values -->
+                                <!-- SDT-20935 Modified Intent Names (add lock,container lids,bulk ) -->
+                                <apex:selectOption itemValue="missed service" itemLabel="Missed Service (Status Case)" />
+                                <apex:selectOption itemValue="service change" itemLabel="Service Change (Modify Existing Service Case)" />
+                                <apex:selectOption itemValue="relocation" itemLabel="Relocation (Service Request Case)" />
+                                <apex:selectOption itemValue="add lock" itemLabel="Adding locks (Service Request Case)" />
+                                <apex:selectOption itemValue="container lids" itemLabel="Adding lids (Service Request Case)" />
+                                <apex:selectOption itemValue="bulk" itemLabel="Bulk Pickup (Pickup Case)" />
+                                <apex:selectOption itemValue="repair" itemLabel="Repair (Repair Case)" />
+                                <apex:selectOption itemValue="haul away" itemLabel="Haul Away (Pickup Case)" />
+                                <apex:selectOption itemValue="bale" itemLabel="Bale (Pickup Case)" />
+                                <!-- End SDT-19322 Added values -->
+                            </apex:selectList>
+                            <br />                            
+                            <apex:selectList id="lstAccount" value="{!AccountSelected}" onchange="loadAccountLists();" size="1" label="Account ID:" disabled="{!MediaTypeToggle}">
+                                <apex:selectOptions value="{!AccountList}" />
+                            </apex:selectList>
+                            <br />
+                            <apex:selectList id="lstLocation" value="{!LocationSelected}" onchange="loadContactList();" size="1" label="Location ID (Optional):" disabled="{!MediaTypeToggle}" >
+                                <apex:selectOptions value="{!LocationList}" />
+                            </apex:selectList>                            
+                            <br />
+                            <apex:selectList id="lstasset" value="{!AssetSelected}" onchange="updateScreenpopUrl();" size="1" label="Container ID (Optional):" disabled="{!MediaTypeToggle}" >
+                                <apex:selectOptions value="{!assetselectList}" />
+                            </apex:selectList>                            
+                            <br />
+                            <apex:input value="{!tpFlag}" label="T/P Flag" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <br/>
+                            <apex:input type="date" value="{!pickDate}" label="Pick Date" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <br/>
+                            <apex:selectList id="lstContact" value="{!ContactSelected}" onchange="updateScreenpopUrl();" size="1" label="Contact ID (Optional):" disabled="{!MediaTypeToggle}">
+                                <apex:selectOptions value="{!ContactList}" />
+                            </apex:selectList>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="IVR Attached Data"> 
+                            <apex:input value="{!ivrr4c}" label="R4C:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrqueue}" label="Queue:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrlanguage}" label="Language:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrlob}" label="LOB:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrexitpoint}" label="IVR EXit Point:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrsseligible}" label="IVR Self-service Eligible?:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrsseligiblestatus}" label="IVR Self-service Status?:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrsseligiblepickup}" label="IVR Self-service Pickup ?:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!isVendor}" label="Vendor:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrdnis}" label="IVR DNIS:" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrani}" label="IVR ANI (Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+
+                             <!-- SDT-17701 Start -->
+                            <apex:input value="{!ivrSpokenName}" label="Spoken Name (Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrIntentName}" label="Intent Name (Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrSpokenLoc}" label="Spoken Location Name (Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <apex:input value="{!ivrSpokenRefNum}" label="Spoken Ref Number (Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <!-- SDT-17701 END -->
+                            <!-- SDT-18313 Start-->
+                            <apex:input value="{!ivrSpokenIntent}" label="Spoken Intent(Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                            <!-- SDT-18313 END-->
+                            <!-- Start SDT-23351 --> 
+                            <apex:selectList size="1" label="Case Sub Type:" value="{!ivrSubTypeReturn}" onchange="updateScreenpopUrl();">
+                                <apex:selectOption itemValue="" itemLabel="--None--" />
+                                <apex:selectOption itemValue="Empty and Return" itemLabel="Empty and Return" />
+                                <apex:selectOption itemValue="Empty and Do NOT Return" itemLabel="Empty and Do NOT Return" />
+                            </apex:selectList>
+                            <!-- End -->
+                        </apex:pageBlockSection>  
+                        <apex:pageBlockSection title="Case Parameters"> 
+                            <apex:input value="{!ReferenceNumber}" label="Reference Number (Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="Work Order Parameters"> 
+                            <apex:input value="{!workOrder}" label="Work Order Number (Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                        </apex:pageBlockSection>
+                         <apex:pageBlockSection title="Quote Parameters"> 
+                            <apex:input value="{!quote}" label="Quote Name (Optional):" onchange="updateScreenpopUrl();" styleClass="userInputField" />
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <apex:pageBlock title="Screenpop URL" mode="maindetail" >
+                        <apex:pageBlockSection collapsible="false" showHeader="false">                            
+                            <!--button name="btnSend" type="button" onclick="window.open('{!ScreenpopUrl}'); return null;">Send</button-->
+                            <apex:outputLink id="lnkSend" onclick="window.open('{!ScreenpopUrl}'); return false;">{!ScreenpopUrl}</apex:outputLink>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <apex:actionFunction name="toggleOnMediaType" action="{!toggleOnMediaType}" rerender="lstIntent,lstAccount,lstLocation,lstContact,txtUrl,lnkSend" status="loading"/>
+                    <apex:actionFunction name="loadAccountLists" action="{!loadAccountLists}" rerender="lstLocation,lstContact,txtUrl,lnkSend" status="loading"/>
+                    <apex:actionFunction name="loadContactList" action="{!loadContactList}" rerender="lstContact,txtUrl,lnkSend,lstasset" status="loading"/>
+                    <apex:actionFunction name="updateScreenpopUrl" action="{!updateScreenpopUrl}" rerender="txtUrl,lnkSend" status="loading"/>
+                </apex:form>
+            </div>
+        </body>
+    </html>
+</apex:page>

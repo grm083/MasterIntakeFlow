@@ -1,0 +1,19 @@
+<apex:component controller="GetChildCase" access="global">
+    <apex:attribute name="parentcase" type="Case" description="Case from which Email is invoked" assignTo="{!parentcse}"/>
+    <table border = "1" cellspacing = "5" style="font-family:Arial;font-size:11pt;">
+        <tr>
+            <td width="20%"><b>Case Number</b></td> 
+            <td width="30%"><b>Service Requested</b></td>
+            <td width="30%"><b>Location</b></td> 
+            <td width="20%"><b>Requested Service Date</b></td>  
+        </tr>
+        <apex:repeat value="{!cases}" var="o">
+        <tr>
+            <td>{!o.CaseNumber}</td>
+            <td>{!o.Case_Sub_Type__c} - {!o.Asset.Equipment_Size__c} {!o.Asset.Material_Type__c} {!o.Asset.Equipment_Type__c} </td>
+            <td>{!o.Location_Customer_Name_Email_Teamp__c}, {!o.Description}</td>
+            <td><apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!o.Service_Date__c}" /> </apex:outputText></td>
+        </tr>              
+        </apex:repeat>       
+    </table>
+</apex:component>

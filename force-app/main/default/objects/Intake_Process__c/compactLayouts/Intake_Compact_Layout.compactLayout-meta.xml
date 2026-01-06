@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Intake_Compact_Layout</fullName>
+    <fields>Name</fields>
+    <fields>Case_Type__c</fields>
+    <fields>Case_Sub_Type__c</fields>
+    <fields>Customer_Account__c</fields>
+    <fields>Customer_Location__c</fields>
+    <fields>Customer_Asset__c</fields>
+    <label>Intake Compact Layout</label>
+</CompactLayout>

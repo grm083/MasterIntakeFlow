@@ -1,0 +1,101 @@
+<aura:component controller="AccountTeamMemberUIController" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <!-- Attributes -->
+    <aura:attribute name="accountTeamList" type="List"/>
+    <aura:attribute name="showTable" type="Boolean" default="false"/>
+    <aura:attribute name="tableTitile" type="String" default="false"/>
+    <!--SDT-40683-->
+    <aura:attribute name="showAccTeamEmail" type="Boolean" default="false"/>
+    <aura:attribute name="accTeamEmails" type="String"/>
+    <aura:attribute name="accEmailTitle" type="String"/>
+    
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- <lightning:workspaceAPI aura:id="workspace" />-->
+    <aura:handler event="lightning:tabRefreshed" action="{! c.doInit }"/>
+    <!-- UI -->
+    
+    <!--SDT-40683-->
+    <aura:if isTrue="{!v.showAccTeamEmail}">
+        <lightning:layout>
+            <div class="slds-box">
+                <div class="slds-clearfix"> 
+                    <lightning:buttonIcon class="slds-float_right" iconName="utility:refresh"  alternativeText="Refresh" title="Refresh Account Teams" onclick="{!c.doInit }"/>
+                </div>
+                <lightning:card title="{!v.accEmailTitle}">
+                    <div>
+                        <table class="slds-table slds-table_bordered slds-table_fixed-layout">
+                            <tbody>
+                                <aura:iteration  items="{!v.accTeamEmails}" var="email" indexVar="index">
+                                    <tr class="slds-hint-parent">                                
+                                        <td class="slds-truncate">							
+                                            <div class="slds-cell-wrap slds-truncate" >{!email}</div>							
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </lightning:card>
+            </div>
+        </lightning:layout>    
+    </aura:if>
+    <!--SDT-40683 ends-->
+    
+    <aura:if isTrue="{!v.showTable}">
+        <lightning:layout>
+            <div class="slds-box">
+                      <div class="slds-clearfix"> 
+                        <lightning:buttonIcon class="slds-float_right" iconName="utility:refresh"  alternativeText="Refresh" title="Refresh Account Teams" onclick="{!c.doInit }"/>
+                    </div>
+                <lightning:card title="{!v.tableTitile}">
+                    <div>
+                        <table class="slds-table slds-table_bordered slds-table_fixed-layout">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Drug Name">Team Role</div>
+                                    </th>
+                                    <th class="" scope="col" >
+                                        <div class="slds-truncate" title="Reaction">Team Member</div>
+                                    </th>
+                                    <th class="" scope="col" >
+                                        <div class="slds-truncate" title="Onset Date">Email</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration  items="{!v.accountTeamList}" var="accountTeamData" indexVar="index">
+                                    <tr class="slds-hint-parent">                                
+                                        <td class="slds-truncate">							
+                                            <div class="slds-cell-wrap slds-truncate" >{!accountTeamData.teamRole}</div>							
+                                        </td>
+                                        <td class=" slds-truncate" >                                
+                                            <div class="slds-cell-wrap slds-truncate" >
+                                                <lightning:formattedUrl value="{!'/' + accountTeamData.userId}" label="{!accountTeamData.userName}" target="_self" />
+                                            </div>	
+                                        </td>
+                                        <td class=" slds-truncate" > 
+                                            <div class="slds-truncate" >
+                                                <lightning:formattedEmail value="{!accountTeamData.userEmail}" hideIcon="true" > 
+                                                </lightning:formattedEmail>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </lightning:card>
+            </div>
+        </lightning:layout>
+        <aura:set attribute="else">
+            <div class="slds-clearfix">
+                <lightning:buttonIcon class="slds-float_right" iconName="utility:refresh"  alternativeText="Refresh" title="Refresh" onclick="{!c.doInit }"/>
+            </div>
+            <div class="slds-text-heading_medium slds-text-color_error slds-text-align_center">No Records Found...</div>
+            
+        </aura:set>
+    </aura:if> 
+    <!-- UI -->
+</aura:component>

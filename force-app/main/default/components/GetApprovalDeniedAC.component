@@ -1,0 +1,400 @@
+<apex:component controller="GetDetails" access="global">
+    
+    <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!objQuote}"/>
+     <br/><br/>
+    <apex:outputText style="color:black;font-family:Arial;" value="The following service change request you submitted has been declined."/><br/><br/>
+    <apex:outputText style="color:black;font-family:Arial;" value="If you have any questions or would like to submit a new request, please contact customer service number at 888-625-5323. "/>
+
+     <br/><br/>
+    <table width = "100%" style="color:black;font-family:Arial;border:0px solid black">
+        <tr>
+            <td><b>Requested By:</b> </td>
+            <td>{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Contact_Name__c}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b>Reference #:</b> </td>
+            <td>{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b> Quote #: </b></td>
+            <td width = "30%">{!QuoteFields.Name}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b>Location Id: </b></td>
+            <td>{!QuoteFields.SBQQ__Account__r.Name}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <!--TCS-ruchikak-SDT-42536-21-Nov-2024-Added following block-->
+        <tr>
+            <td><b>Location Name: </b></td>
+            <td width = "60%">{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Name_Email_Temp__c}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <!--TCS-ruchikak-SDT-42536-21-Nov-2024-End-->
+        <tr>
+            <td><b>Service Address:</b> </td>
+            <td width = "60%"><apex:outputText style="text-align: Top;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Name_Email_Temp__c}">  </apex:outputText> &nbsp;<apex:outputText escape="false" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Tech_Location_Details__c}"></apex:outputText></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b>Description of Change:</b> </td>
+            <td>{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Case_Sub_Type__c}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b>Requested Change Date: </b></td>
+            <td width = "30%"><apex:outputText value="{0,Date, MM/dd/yyyy}"> <apex:param value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Service_Date__c}"/></apex:outputText></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        
+    </table>
+    <apex:repeat value="{!ConfigData}" var="fieldKey">
+        
+        <br/><b><apex:outputText style="color:black;font-family:Arial;text-transform:uppercase;" value="Container: {!mQLI[fieldKey].SBQQ__Product__r.Family}"/></b>
+        <br/><br/>
+        <b><apex:outputText style="color:black;font-family:Arial;" value="Current Container Configuration (Old Service):"/></b>
+        <br/><br/>
+        <table border="1" width = "100%" style="color:black;font-family:Arial;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align:left !important">
+                        Quantity 
+                    </th>
+                    <th style="text-align:left !important">
+                        Equipment Size
+                    </th>
+                    <th style="text-align:left !important">
+                        Product Name
+                    </th>
+                    <th style="text-align:left !important">
+                        Material
+                    </th>
+                    <th style="text-align:left !important">
+                        Occurrence Type
+                    </th>
+                    <th style="text-align:left !important">
+                        Duration
+                    </th>
+                    <!--TCS-ruchikak-SDT-42536-21-Nov-2024-Added following block-->
+                    <th style="text-align:left !important">
+                        Frequency
+                    </th>
+                    <!--TCS-ruchikak-SDT-42536-21-Nov-2024-End-->
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;text-align: Top;" value="{!configMap[fieldKey].oldQuantity}"/> 
+                    </td>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;" value="{!configMap[fieldKey].oldEquipmentSize}"/>
+                    </td>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;text-align: Top;"  value="{!configMap[fieldKey].ProductName}"/> 
+                    </td>
+                    
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;" value="{!mQLIMaterialCode[fieldKey]}"/> 
+                    </td>                    <td>
+                    <apex:outputText style="color:black;font-family:Arial;" value="{!configMap[fieldKey].oldOccurenceType}"/> 
+                    </td>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;" value="{!configMap[fieldKey].oldDuration}"/> 
+                    </td>
+                    <!--TCS-ruchikak-SDT-42536-21-Nov-2024-Added following block-->
+                    <td>
+                         <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!configMap[fieldKey].oldScheduleFrequency}"></apex:outputText>
+                        
+                        
+                     <!--   
+                     <apex:outputpanel rendered="{!If(configMap[fieldKey].oldOccurenceType=='Scheduled On-Call', TRUE, FALSE)}">
+<apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!configMap[fieldKey].oldOccurenceType}"/><br/>
+</apex:outputpanel>
+<apex:outputpanel rendered="{!If(AND(configMap[fieldKey].oldOccurenceType=='Scheduled On-Call',configMap[fieldKey].oldOccurenceType=='Scheduled'), TRUE, FALSE)}">
+<apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLISchedule[fieldKey]}"/><br/>
+</apex:outputpanel>  -->  
+                        
+                    <!--    <apex:outputText style="color:black;font-family:Arial;" value="{!configMap[fieldKey].oldScheduleFrequency}"/> 
+                    --></td>
+                    <!--TCS-ruchikak-SDT-42536-21-Nov-2024-End-->
+                    
+                    
+                </tr>
+                
+            </tbody>
+        </table>
+        <!--Changes related to SDT - 19967-->
+        <!--<apex:repeat value="{!ChildQls}" var="parentIds"> -->
+        <!--<br/><b><apex:outputText style="color:black;font-family:Arial;!important" value="Extended Price"/></b><br/> -->
+        <br/>
+        <b><apex:outputText style="color:black;font-family:Arial;" value="Current Rate:"/></b>
+        <br/>
+        <br/>
+        <table border="1" width = "90%" style="color:black;font-family:Arial;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align:left !important;width =30%;">
+                        Service Type 
+                    </th>
+                    <!--TCS-ruchikak-SDT-42536-23-Nov-2024-Added following block-->
+                    <apex:outputPanel rendered="{!configMap[fieldKey].ProductFamily == 'Rolloff'}">	
+                        <th style="text-align:left !important;width =30%;">
+                            List unit price <apex:outputText style="font-family:Arial;font-weight:bold;" value="({!QuoteFields.CurrencyIsoCode})"/>
+                        </th>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!configMap[fieldKey].ProductFamily == 'Commercial'}">	
+                        <th style="text-align:left !important;width =30%;">
+                            List extended price <apex:outputText style="font-family:Arial;font-weight:bold;" value="({!QuoteFields.CurrencyIsoCode})"/>
+                        </th>
+                    </apex:outputPanel>
+                    <!--TCS-ruchikak-SDT-42536-23-Nov-2024-End-->
+                    
+                    <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-Added following block-->
+                    <th style="text-align:left !important;width =30%;">
+                        UOM
+                    </th>
+                    <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-End-->
+                </tr>
+            </thead>
+            <tbody>
+                
+                <apex:repeat value="{!childConfigMap[fieldKey]}" var="childQlPrice">
+                    <apex:outputPanel rendered="{!childQlPrice.checkAsset!= null}">
+                    <tr style="text-align:left" width ="30%">
+                        <td ><b>{!childQlPrice.productName}</b></td>
+                              
+                        
+                        <apex:outputPanel rendered="{!childQlPrice.productName != 'Disposal'}">		<!--TCS-pkulkarn-SDT-42459-18-Nov-2024-Added ProductName check-->
+                            <td width = "30%">
+                                <apex:outputText style="color:black;font-family:Arial;" value="{0, number, currency}">
+                                    <apex:param value="{!childQlPrice.oldListUnitPrice}" />
+                                </apex:outputText>
+                                
+                            </td>
+                        </apex:outputPanel>
+                        <!--TCS-pkulkarn-SDT-42459-18-Nov-2024-Added following block-->
+                        <apex:outputPanel rendered="{!childQlPrice.productName == 'Disposal'}">
+                            <td width = "30%">
+                                <apex:outputText style="color:black;font-family:Arial;" value="{0, number, currency}">
+                                    <apex:param value="{!childQlPrice.disposalNewPriceAsset}" />
+                                </apex:outputText>
+                            </td>
+                        </apex:outputPanel>
+                        
+                        <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-Added following block-->
+                        <td width = "30%">
+                             <apex:outputText style="color:black;font-family:Arial;" value="Per "/>
+                             <apex:outputText style="color:black;font-family:Arial;" value=" {!childQlPrice.oldPriceUOM}" />
+                        </td>
+                        <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-End-->
+                    </tr> 
+                       </apex:outputPanel>  
+                </apex:repeat>
+            </tbody>
+        </table>
+        <br/><br/>
+         <apex:repeat value="{!childConfigMap[fieldKey]}" var="childQlPrice">
+            <apex:outputPanel rendered="{!IF(AND(childQlPrice.ProductFamily == 'Rolloff',childQlPrice.productName == 'Disposal'), TRUE, FALSE)}">
+                
+                <apex:outputPanel rendered="{!IF(AND(childQlPrice.oldpriceMinimumQuantity != null),TRUE, FALSE)}">	
+                    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Additional pricing information:"/><br/><br/>
+                    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="You will be charged a minimum of {!childQlPrice.oldpriceMinimumQuantity} tons per pick-up. The disposal charge will be a minimum of $ {!childQlPrice.oldListUnitPrice}. For any additional tons, the charge will be $ {!childQlPrice.disposalNewPriceAsset} per ton (based on the listed unit price)."/><br/>
+                </apex:outputPanel>
+             
+                <apex:outputPanel rendered="{!IF(childQlPrice.oldcheckSTP == true, TRUE, FALSE)}">	
+                    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Tons will be charged at a stepped rate. You will be charged $ {!childQlPrice.oldsteppedPrice1} per ton for the first {!childQlPrice.oldstep1UptoTons} tons. You will be charged ${!childQlPrice.oldsteppedPrice2} per ton for the remaining tons."/><br/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:repeat> 
+        <br/><br/>
+        ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        <br/><br/>
+        <br/><br/>
+        <br/>
+        <b style ="font-family:Arial;">Requested Change (New Service):</b>
+        <br/>
+        <br/>
+        <table border="1" width = "100%" style="color:black;font-family:Arial;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align:left !important">
+                        Quantity 
+                    </th>
+                    <th style="text-align:left !important">
+                        Equipment Size
+                    </th>
+                    <th style="text-align:left !important">
+                        Product Name
+                    </th>
+                    <th style="text-align:left !important">
+                        Material
+                    </th>
+                    <th style="text-align:left !important">
+                        Occurrence Type
+                    </th>
+                    <th style="text-align:left !important">
+                        Duration
+                    </th>
+                    <th style="text-align:left !important">
+                        Frequency
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;text-align: Top;" value="{!configMap[fieldKey].newQuantity}"/> 
+                    </td>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;" value="{!configMap[fieldKey].newEquipmentSize}"/>
+                    </td>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;text-align: Top;"  value="{!configMap[fieldKey].ProductName}"/> 
+                    </td>
+                    
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;" value="{!mQLIMaterialCode[fieldKey]}"/> 
+                    </td>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;" value="{!configMap[fieldKey].OccurenceType}"/> 
+                    </td>
+                    <td>
+                        <apex:outputText style="color:black;font-family:Arial;" value="{!configMap[fieldKey].Duration}"/> 
+                    </td>
+                    <td>
+                         <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!configMap[fieldKey].newScheduleFrequency}"></apex:outputText>
+                        
+                        <!--
+                      <apex:outputpanel rendered="{!If(mQLI[fieldKey].Occurrence_Type__c=='Scheduled On-Call', TRUE, FALSE)}">
+                            <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].Occurrence_Type__c}"/><br/>
+                      </apex:outputpanel>
+                        <apex:outputpanel rendered="{!If(AND(mQLI[fieldKey].Occurrence_Type__c=='Scheduled On-Call',mQLI[fieldKey].Occurrence_Type__c=='Scheduled'), TRUE, FALSE)}">
+                            <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLISchedule[fieldKey]}"/><br/>
+                       </apex:outputpanel>  -->
+                 <!--       <apex:outputText style="color:black;font-family:Arial;" value="{!configMap[fieldKey].newScheduleFrequency}"/> 
+                 -->   </td>
+                    
+                </tr>
+                
+            </tbody>
+        </table>
+        <!--Changes related to SDT - 19967-->
+        <!--<apex:repeat value="{!ChildQls}" var="parentIds"> -->
+        <!--<br/><b><apex:outputText style="color:black;font-family:Arial;!important" value="Extended Price"/></b><br/> -->
+        <br/>
+        <b><apex:outputText style="color:black;font-family:Arial;" value="New Rate:"/></b>
+        <br/>
+        <br/>
+        <table border="1" width = "90%" style="color:black;font-family:Arial;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align:left !important;width =30%;">
+                        Service Type 
+                    </th>
+                    <!--TCS-ruchikak-SDT-42536-23-Nov-2024-Added following block-->
+                    <apex:outputPanel rendered="{!configMap[fieldKey].ProductFamily == 'Rolloff'}">	
+                        <th style="text-align:left !important;width =30%;">
+                            List unit price <apex:outputText style="font-family:Arial;font-weight:bold;" value="({!QuoteFields.CurrencyIsoCode})"/>
+                        </th>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!configMap[fieldKey].ProductFamily == 'Commercial'}">	
+                        <th style="text-align:left !important;width =30%;">
+                            List extended price <apex:outputText style="font-family:Arial;font-weight:bold;" value="({!QuoteFields.CurrencyIsoCode})"/>
+                        </th>
+                    </apex:outputPanel>
+                    <!--TCS-ruchikak-SDT-42536-23-Nov-2024-End-->
+                    
+                    <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-Added following block-->
+                    <th style="text-align:left !important;width =30%;">
+                        UOM
+                    </th>
+                    <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-End-->
+                </tr>
+            </thead>
+            <tbody>
+                
+                <apex:repeat value="{!childConfigMap[fieldKey]}" var="childQlPrice">
+                    <tr style="text-align:left">
+                        <td ><b>{!childQlPrice.ProductName}</b></td>
+                        <apex:outputPanel rendered="{!childQlPrice.productName != 'Disposal'}">		<!--TCS-pkulkarn-SDT-42459-18-Nov-2024-Added ProductName check-->
+                            <td width = "30%">
+                                <apex:outputText style="color:black;font-family:Arial;" value="{0, number, currency}">
+                                    <apex:param value="{!childQlPrice.newListUnitPrice}" />
+                                </apex:outputText>
+                                <!--{!childQlPrice.newPrice} -->
+                            </td>
+                        </apex:outputPanel>
+                        <!--TCS-pkulkarn-SDT-42459-18-Nov-2024-Added following block-->
+                        <apex:outputPanel rendered="{!childQlPrice.productName == 'Disposal'}">
+                            <td width = "30%">
+                                <apex:outputText style="color:black;font-family:Arial;" value="{0, number, currency}">
+                                    <apex:param value="{!childQlPrice.newListUnitPrice}" />
+                                </apex:outputText>
+                            </td>
+                        </apex:outputPanel>
+                        <!--TCS-pkulkarn-SDT-42459-18-Nov-2024-End-->
+                        
+                        <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-Added following block-->
+                        <td width = "30%">
+                        <apex:outputText style="color:black;font-family:Arial;" value="Per "/>
+                        <apex:outputText style="color:black;font-family:Arial;" value=" {!childQlPrice.newPriceUOM}"/>
+                        </td>
+                        <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-End-->
+                    </tr>   
+                </apex:repeat>
+            </tbody>
+        </table>
+        <!--SDT-39629-->
+        
+        <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-Added following block-->
+        <br/>
+        
+       <apex:repeat value="{!childConfigMap[fieldKey]}" var="childQlPrice">
+            <apex:outputPanel rendered="{!IF(AND(childQlPrice.ProductFamily == 'Rolloff',childQlPrice.productName == 'Disposal'), TRUE, FALSE)}">
+                <apex:outputPanel rendered="{!IF(childQlPrice.newpriceMinimumQuantity != null, true ,false)}">	
+                    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Additional pricing information:"/><br/><br/>
+                    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="You will be charged a minimum of {!childQlPrice.newpriceMinimumQuantity} tons per pick-up. The disposal charge will be a minimum of $ {!childQlPrice.disposalNewPrice}. For any additional tons, the charge will be $ {!childQlPrice.newListUnitPrice} per ton (based on the listed unit price)."/><br/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(childQlPrice.newcheckSTP == true, TRUE, FALSE)}">	
+                    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Tons will be charged at a stepped rate. You will be charged $ {!childQlPrice.newsteppedPrice1} per ton for the first {!childQlPrice.newstep1UptoTons} tons. You will be charged ${!childQlPrice.newsteppedPrice2} per ton for the remaining tons."/><br/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:repeat>
+        
+        
+        <br/>
+        <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-End-->
+        
+        
+        <!--SDT-39629-->
+        
+    </apex:repeat>
+    <!--</apex:repeat> -->
+    <br/>
+    <br/>
+    <apex:outputText style="color:black;font-family:Arial;" value="Additional fees may apply."/>
+    <br/>
+    </apex:component>

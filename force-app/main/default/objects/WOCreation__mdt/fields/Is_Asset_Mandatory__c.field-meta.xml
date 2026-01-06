@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Asset_Mandatory__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>an asset to be selected if a WO is required</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Is Asset Mandatory</label>
+    <type>Checkbox</type>
+</CustomField>

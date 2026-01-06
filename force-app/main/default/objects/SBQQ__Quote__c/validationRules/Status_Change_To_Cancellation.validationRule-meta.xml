@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_Change_To_Cancellation</fullName>
+    <active>true</active>
+    <description>Validation added for story SDT-23803 - This will block user from cancelling quote from Chevron (Path) by clicking mark status as complete.</description>
+    <errorConditionFormula>AND( ISBLANK( Cancellation_Reason__c ) , ISPICKVAL( SBQQ__Status__c , &apos;Cancelled&apos;) )</errorConditionFormula>
+    <errorMessage>Please use the Cancel Quote button to cancel the quote.</errorMessage>
+</ValidationRule>

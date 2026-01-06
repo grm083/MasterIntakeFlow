@@ -1,0 +1,15 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,lightning:actionOverride,lightning:hasPageReference" controller="ButtonAccessController" access="global" >
+    <aura:attribute name="noAccess" type="Boolean" default="false" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    
+    <aura:if isTrue="{!v.noAccess}">
+        <div class="slds-card slds-align_absolute-center">
+            <div class="slds-p-around_medium">
+                <div class="slds-text-heading_large">
+                    <h1 class="slds-align_absolute-center slds-text-color_error">You Don't Have Access To Create CPQ Quote From List View</h1>
+                </div>
+            </div>
+        </div>
+
+    </aura:if>
+</aura:component>

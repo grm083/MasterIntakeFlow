@@ -1,0 +1,30 @@
+<aura:component controller="FetchEmailMessages" implements="force:lightningQuickAction,force:hasRecordId">
+    <aura:html tag="style">
+        .slds-spinner_container{
+        background: transparent !important;
+        }
+        .slds-modal__header--empty {
+        display: none !important;
+        }
+        .modal-container{
+        width: 95% !important;
+        max-width: initial !important;
+        }
+    </aura:html>
+    <aura:attribute name="spinner" type="Boolean"/>
+    <aura:attribute name="data" type="List" default="[]"/> 
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedRows" type="List" access="PRIVATE"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:if isTrue="{!v.spinner}">
+        <lightning:spinner class="spins" size="medium" variant="brand" alternativeText="Loading" />
+    </aura:if>
+    <div class="slds-box" style="height: 350px">
+        <lightning:datatable
+                             columns="{! v.columns }"
+                             data="{! v.data }"
+                             keyField="id"
+                             hideCheckboxColumn="true" 
+                             />
+    </div>
+</aura:component>

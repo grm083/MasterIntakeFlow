@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>ChannelReqInBusinessRule</fullName>
+        <field>Is_Channel_Requirements__c</field>
+        <literalValue>1</literalValue>
+        <name>ChannelReqInBusinessRule</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Deactivate_Business_Rule</fullName>
+        <field>Active__c</field>
+        <literalValue>0</literalValue>
+        <name>Deactivate Business Rule</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SpecialinsBusinessRules</fullName>
+        <field>Is_Special_Instructions__c</field>
+        <literalValue>1</literalValue>
+        <name>SpecialinsBusinessRules</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Alias</fullName>
+        <description>This Field Update will be used to update Alias field with BR Name.</description>
+        <field>Alias__c</field>
+        <formula>Name</formula>
+        <name>Update_Alias</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Business Rule Expiration</fullName>
+        <active>true</active>
+        <description>Inactivate the Business Rule Once End Date has Passed or End Date Entered is in the Past</description>
+        <formula>AND(Active__c, End_Date__c &gt;=TODAY())</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Deactivate_Business_Rule</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Business_Rule__c.End_Date__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>BusinessRuleWorkFlowChannelReq</fullName>
+        <actions>
+            <name>ChannelReqInBusinessRule</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT( ISBLANK(Channel_Req__c))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>BusinessRuleWorkFlowSpecailInstructions</fullName>
+        <actions>
+            <name>SpecialinsBusinessRules</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT( ISBLANK(Special_Ins__c))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>End Date in Past</fullName>
+        <actions>
+            <name>Deactivate_Business_Rule</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>End_Date__c&lt;TODAY()</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_Alias_BusinessRuleName</fullName>
+        <actions>
+            <name>Update_Alias</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>This WF will be used to update the Alias Field when left blank</description>
+        <formula>OR(AND(ISCLONE(), ISNEW()),ISBLANK(Alias__c))&amp;&amp; $User.Bypass_Validation__c = False</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

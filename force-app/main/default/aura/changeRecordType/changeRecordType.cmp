@@ -1,0 +1,102 @@
+<aura:component controller="changeRecordTypeController"
+                implements="force:hasRecordId,flexipage:availableForAllPageTypes,force:lightningQuickAction">
+    
+    <aura:attribute name="recordTypes" type="RecordType[]" />
+    <aura:attribute name="selectedItem" type="String" />
+	<aura:attribute name="itemDescription" type="String" />
+    <aura:attribute name="newRecordTypeId" type="String" />
+    <!--<aura:registerEvent name="RefreshEvent" type="c:RefreshEvent"/>-->
+	<aura:registerEvent name="SingleTabRefreshEvent" type="c:SingleTabComponentRefresh"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+     <aura:attribute name="recordTypeId" type="String"/>
+     <aura:attribute name="showErrorSNP" type="Boolean" default="false" />
+     <aura:attribute name="showUpdateAssetButton" type="Boolean" default="false" />
+    <aura:attribute name="caseType" type="String"/>
+    <aura:attribute name="caseSubType" type="String"/>
+    <aura:attribute name="caseMessage" type="String"/>
+    <aura:attribute name="errorMsg" type="String" />
+    <aura:attribute name="caseRec" type="object" />
+    <aura:attribute name="showForm" type="Boolean" default="false"/>
+	<aura:attribute name="errorCombination" type="Boolean" default="false" />
+        <aura:attribute name="reloadForm" type="boolean" default="true" />
+     
+    
+    <div>
+        <lightning:card title="Record Type Selector">
+            <lightning:layout horizontalAlign="spread">
+                <lightning:layoutItem class="layoutSelector" size="4" padding="around-small">
+                    <lightning:verticalNavigation compact="true" 
+                                                  selectedItem="{!v.selectedItem}" 
+                                                  onselect="{!c.handleSelect}"
+                                                  shaded="true">
+                        <lightning:verticalNavigationSection label="Available Record Types" />
+                        <aura:iteration items="{!v.recordTypes}" var="item" >
+                            <aura:if isTrue="{!item.Name != 'Integration Case'}">
+                                <lightning:verticalNavigationItem label="{!item.Name}" name="{!item.Name}" />
+                            </aura:if>
+                        </aura:iteration>
+                    </lightning:verticalNavigation>
+                </lightning:layoutItem>
+               
+                <lightning:layoutItem size="8" padding="around-small">
+                    <div class="slds-align_absolute-center" style="height:5rem">
+                    <lightning:button variant="success" label="Pickup" title="Success" onclick="{! c.handleClick }"/>
+					<lightning:button variant="success" label="New Service" title="Success" onclick="{! c.handleClick }"/>
+					<!-- commented as part of SDT 32772 -->
+                    <!-- Changes added for bug SDT-24986 -->
+                    <!--<aura:if isTrue="{!v.showUpdateAssetButton}">
+                        <lightning:button variant="success" label="Update Asset" title="Success" onclick="{! c.handleClick }"/>
+                    </aura:if>-->
+                    <!-- END -->
+					<lightning:button variant="success" label="SNP" title="Success" onclick="{! c.handleClick }"/>
+					<lightning:button variant="success" label="ETA" title="Success" onclick="{! c.handleClick }"/>
+					</div>
+                 
+                    <br/>
+                   <aura:if isTrue="{!v.showForm}">
+                    <p> You've selected: <b>{!v.selectedItem}</b> </p>
+                    <br/>
+                    <p> {!v.itemDescription} </p>
+                            <!--  <lightning:button label="Confirm Change" 
+                              iconName="action:change_record_type" 
+                              iconPosition="left" 
+                              onclick="{!c.handleButtonClick}"
+                              /> -->
+                    <br/>
+                  
+                    <lightning:recordEditForm aura:id="recordViewForm"
+                                              recordId="{!v.recordId}"
+                                              recordTypeId="{!v.newRecordTypeId}"
+                                              onsuccess="{!c.handleSuccess}"
+											  onerror="{!c.handleError}"
+                                              onsubmit="{!c.handleSubmit}"
+                                              objectApiName="Case"
+                                              >
+                        <!-- <lightning:messages aura:id="CaseMessage" /> -->
+                        <aura:if isTrue="{!v.showError}">
+                            <ui:message title="" severity="error" closable="true">
+                                {!v.caseMessage}
+                            </ui:message>
+                        </aura:if>
+						<aura:if isTrue="{!v.errorCombination}">
+                            <!-- Show the message to ui -->
+                            <div>
+                                <p class="requiredField">{!v.errorMsg}</p>
+                            </div>
+                        </aura:if>
+						 <aura:if isTrue="{!v.reloadForm}">
+                        <lightning:inputField  aura:id="casetype" value="{!v.caseRec.caseType}" fieldName="Case_Type__c" />
+                        <lightning:inputField  aura:id="casesubtype" value="{!v.caseRec.caseSubType}" fieldName="Case_Sub_Type__c" />
+                        <lightning:inputField aura:id="caseReason" value="{!v.caseRec.caseReason}" fieldName="Case_Reason__c" />
+                        <lightning:button aura:id="submit" type="submit" label="Confirm Change" class="slds-m-top_medium slds-align_absolute-center" />
+                    	<aura:set attribute="else">
+                                Saving...
+                            </aura:set>
+                        </aura:if>
+                        </lightning:recordEditForm>
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:card>
+	</div>	
+</aura:component>

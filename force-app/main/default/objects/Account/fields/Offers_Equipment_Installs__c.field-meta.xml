@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Offers_Equipment_Installs__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This denotes whether or not the vendor offers compactor installation</description>
+    <externalId>false</externalId>
+    <label>Offers Equipment Installs</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

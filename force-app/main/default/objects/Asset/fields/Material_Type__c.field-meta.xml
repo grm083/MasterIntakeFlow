@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Material_Type__c</fullName>
+    <description>Container Material</description>
+    <externalId>false</externalId>
+    <label>Material Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Trash</fullName>
+                <default>false</default>
+                <label>Trash</label>
+            </value>
+            <value>
+                <fullName>Cardboard</fullName>
+                <default>false</default>
+                <label>Cardboard</label>
+            </value>
+            <value>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+                <label>Not Applicable</label>
+            </value>
+            <value>
+                <fullName>Metal</fullName>
+                <default>false</default>
+                <label>Metal</label>
+            </value>
+            <value>
+                <fullName>Co-Mingle</fullName>
+                <default>false</default>
+                <label>Co-Mingle</label>
+            </value>
+            <value>
+                <fullName>ABS Parts</fullName>
+                <default>false</default>
+                <label>ABS Parts</label>
+            </value>
+            <value>
+                <fullName>ABS Sheets</fullName>
+                <default>false</default>
+                <label>ABS Sheets</label>
+            </value>
+            <value>
+                <fullName>Agricultural Waste</fullName>
+                <default>false</default>
+                <label>Agricultural Waste</label>
+            </value>
+            <value>
+                <fullName>Aluminum</fullName>
+                <default>false</default>
+                <label>Aluminum</label>
+            </value>
+            <value>
+                <fullName>Appliance</fullName>
+                <default>false</default>
+                <label>Appliance</label>
+            </value>
+            <value>
+                <fullName>Architectural Glass</fullName>
+                <default>false</default>
+                <label>Architectural Glass</label>
+            </value>
+            <value>
+                <fullName>Asbestos</fullName>
+                <default>false</default>
+                <label>Asbestos</label>
+            </value>
+            <value>
+                <fullName>Ash - Bottom Ash</fullName>
+                <default>false</default>
+                <label>Ash - Bottom Ash</label>
+            </value>
+            <value>
+                <fullName>Ash - Fly Ash</fullName>
+                <default>false</default>
+                <label>Ash - Fly Ash</label>
+            </value>
+            <value>
+                <fullName>Asphalt</fullName>
+                <default>false</default>
+                <label>Asphalt</label>
+            </value>
+            <value>
+                <fullName>Bag in Box</fullName>
+                <default>false</default>
+                <label>Bag in Box</label>
+            </value>
+            <value>
+                <fullName>Bags for Mixed Recyclables</fullName>
+                <default>false</default>
+                <label>Bags for Mixed Recyclables</label>
+            </value>
+            <value>
+                <fullName>Bags for Shredded Cans</fullName>
+                <default>false</default>
+                <label>Bags for Shredded Cans</label>
+            </value>
+            <value>
+                <fullName>Bags for Shredded Plastic</fullName>
+                <default>false</default>
+                <label>Bags for Shredded Plastic</label>
+            </value>
+            <value>
+                <fullName>Bale Wire</fullName>
+                <default>false</default>
+                <label>Bale Wire</label>
+            </value>
+            <value>
+                <fullName>Ballast</fullName>
+                <default>false</default>
+                <label>Ballast</label>
+            </value>
+            <value>
+                <fullName>Batteries</fullName>
+                <default>false</default>
+                <label>Batteries</label>
+            </value>
+            <value>
+                <fullName>Biodegradable Food Utensils</fullName>
+                <default>false</default>
+                <label>Biodegradable Food Utensils</label>
+            </value>
+            <value>
+                <fullName>Bottles/Cans</fullName>
+                <default>false</default>
+                <label>Bottles/Cans</label>
+            </value>
+            <value>
+                <fullName>Boxboard Cuttings</fullName>
+                <default>false</default>
+                <label>Boxboard Cuttings</label>
+            </value>
+            <value>
+                <fullName>Brick</fullName>
+                <default>false</default>
+                <label>Brick</label>
+            </value>
+            <value>
+                <fullName>Bulk Material</fullName>
+                <default>false</default>
+                <label>Bulk Material</label>
+            </value>
+            <value>
+                <fullName>Cans</fullName>
+                <default>false</default>
+                <label>Cans</label>
+            </value>
+            <value>
+                <fullName>Cans and Plastic Bottles</fullName>
+                <default>false</default>
+                <label>Cans and Plastic Bottles</label>
+            </value>
+            <value>
+                <fullName>Carbon</fullName>
+                <default>false</default>
+                <label>Carbon</label>
+            </value>
+            <value>
+                <fullName>Carpet</fullName>
+                <default>false</default>
+                <label>Carpet</label>
+            </value>
+            <value>
+                <fullName>Ceiling Tiles</fullName>
+                <default>false</default>
+                <label>Ceiling Tiles</label>
+            </value>
+            <value>
+                <fullName>Ceramic</fullName>
+                <default>false</default>
+                <label>Ceramic</label>
+            </value>
+            <value>
+                <fullName>Compact Flourescent Lights</fullName>
+                <default>false</default>
+                <label>Compact Flourescent Lights</label>
+            </value>
+            <value>
+                <fullName>Compost</fullName>
+                <default>false</default>
+                <label>Compost</label>
+            </value>
+            <value>
+                <fullName>Computers</fullName>
+                <default>false</default>
+                <label>Computers</label>
+            </value>
+            <value>
+                <fullName>Concrete</fullName>
+                <default>false</default>
+                <label>Concrete</label>
+            </value>
+            <value>
+                <fullName>Concrete Slurry</fullName>
+                <default>false</default>
+                <label>Concrete Slurry</label>
+            </value>
+            <value>
+                <fullName>Concrete Washout</fullName>
+                <default>false</default>
+                <label>Concrete Washout</label>
+            </value>
+            <value>
+                <fullName>Construction / Demolition</fullName>
+                <default>false</default>
+                <label>Construction / Demolition</label>
+            </value>
+            <value>
+                <fullName>Contaminated (Paper, C, ETC)</fullName>
+                <default>false</default>
+                <label>Contaminated (Paper, C, ETC)</label>
+            </value>
+            <value>
+                <fullName>Cooking Oil</fullName>
+                <default>false</default>
+                <label>Cooking Oil</label>
+            </value>
+            <value>
+                <fullName>Copper</fullName>
+                <default>false</default>
+                <label>Copper</label>
+            </value>
+            <value>
+                <fullName>Debris</fullName>
+                <default>false</default>
+                <label>Debris</label>
+            </value>
+            <value>
+                <fullName>Dental</fullName>
+                <default>false</default>
+                <label>Dental</label>
+            </value>
+            <value>
+                <fullName>Dirt</fullName>
+                <default>false</default>
+                <label>Dirt</label>
+            </value>
+            <value>
+                <fullName>Drywall Byproduct</fullName>
+                <default>false</default>
+                <label>Drywall Byproduct</label>
+            </value>
+            <value>
+                <fullName>Dry Waste</fullName>
+                <default>false</default>
+                <label>Dry Waste</label>
+            </value>
+            <value>
+                <fullName>Dust</fullName>
+                <default>false</default>
+                <label>Dust</label>
+            </value>
+            <value>
+                <fullName>Electronic Recycling</fullName>
+                <default>false</default>
+                <label>Electronic Recycling</label>
+            </value>
+            <value>
+                <fullName>E-Waste</fullName>
+                <default>false</default>
+                <label>E-Waste</label>
+            </value>
+            <value>
+                <fullName>Fiber Cores</fullName>
+                <default>false</default>
+                <label>Fiber Cores</label>
+            </value>
+            <value>
+                <fullName>Fiberglass</fullName>
+                <default>false</default>
+                <label>Fiberglass</label>
+            </value>
+            <value>
+                <fullName>Filter Cake</fullName>
+                <default>false</default>
+                <label>Filter Cake</label>
+            </value>
+            <value>
+                <fullName>Flourescent Lights</fullName>
+                <default>false</default>
+                <label>Flourescent Lights</label>
+            </value>
+            <value>
+                <fullName>Foam</fullName>
+                <default>false</default>
+                <label>Foam</label>
+            </value>
+            <value>
+                <fullName>Food Waste</fullName>
+                <default>false</default>
+                <label>Food Waste</label>
+            </value>
+            <value>
+                <fullName>Glass Bottles</fullName>
+                <default>false</default>
+                <label>Glass Bottles</label>
+            </value>
+            <value>
+                <fullName>Glass Veil</fullName>
+                <default>false</default>
+                <label>Glass Veil</label>
+            </value>
+            <value>
+                <fullName>GPPS (general purpose polystyrene)</fullName>
+                <default>false</default>
+                <label>GPPS (general purpose polystyrene)</label>
+            </value>
+            <value>
+                <fullName>Grease</fullName>
+                <default>false</default>
+                <label>Grease</label>
+            </value>
+            <value>
+                <fullName>Grease Trap</fullName>
+                <default>false</default>
+                <label>Grease Trap</label>
+            </value>
+            <value>
+                <fullName>Green Waste</fullName>
+                <default>false</default>
+                <label>Green Waste</label>
+            </value>
+            <value>
+                <fullName>Grit</fullName>
+                <default>false</default>
+                <label>Grit</label>
+            </value>
+            <value>
+                <fullName>Gypsum</fullName>
+                <default>false</default>
+                <label>Gypsum</label>
+            </value>
+            <value>
+                <fullName>HDPE</fullName>
+                <default>false</default>
+                <label>HDPE</label>
+            </value>
+            <value>
+                <fullName>HDPE Drums</fullName>
+                <default>false</default>
+                <label>HDPE Drums</label>
+            </value>
+            <value>
+                <fullName>HDPE Jugs</fullName>
+                <default>false</default>
+                <label>HDPE Jugs</label>
+            </value>
+            <value>
+                <fullName>HDPE Shells</fullName>
+                <default>false</default>
+                <label>HDPE Shells</label>
+            </value>
+            <value>
+                <fullName>Insulation</fullName>
+                <default>false</default>
+                <label>Insulation</label>
+            </value>
+            <value>
+                <fullName>LDPE Closures</fullName>
+                <default>false</default>
+                <label>LDPE Closures</label>
+            </value>
+            <value>
+                <fullName>LDPE Film</fullName>
+                <default>false</default>
+                <label>LDPE Film</label>
+            </value>
+            <value>
+                <fullName>LDPE Stretch/Shrink Film loose</fullName>
+                <default>false</default>
+                <label>LDPE Stretch/Shrink Film loose</label>
+            </value>
+            <value>
+                <fullName>Lead Batteries</fullName>
+                <default>false</default>
+                <label>Lead Batteries</label>
+            </value>
+            <value>
+                <fullName>Liners</fullName>
+                <default>false</default>
+                <label>Liners</label>
+            </value>
+            <value>
+                <fullName>Liquid Waste</fullName>
+                <default>false</default>
+                <label>Liquid Waste</label>
+            </value>
+            <value>
+                <fullName>Loose Glass</fullName>
+                <default>false</default>
+                <label>Loose Glass</label>
+            </value>
+            <value>
+                <fullName>Lot Sweepings</fullName>
+                <default>false</default>
+                <label>Lot Sweepings</label>
+            </value>
+            <value>
+                <fullName>Magazines</fullName>
+                <default>false</default>
+                <label>Magazines</label>
+            </value>
+            <value>
+                <fullName>MATTRESSES</fullName>
+                <default>false</default>
+                <label>MATTRESSES</label>
+            </value>
+            <value>
+                <fullName>Medical</fullName>
+                <default>false</default>
+                <label>Medical</label>
+            </value>
+            <value>
+                <fullName>Mixed Metals</fullName>
+                <default>false</default>
+                <label>Mixed Metals</label>
+            </value>
+            <value>
+                <fullName>Mixed Plastics</fullName>
+                <default>false</default>
+                <label>Mixed Plastics</label>
+            </value>
+            <value>
+                <fullName>Mixed Recyclables</fullName>
+                <default>false</default>
+                <label>Mixed Recyclables</label>
+            </value>
+            <value>
+                <fullName>Municipal Solid Waste</fullName>
+                <default>false</default>
+                <label>Municipal Solid Waste</label>
+            </value>
+            <value>
+                <fullName>Newspaper</fullName>
+                <default>false</default>
+                <label>Newspaper</label>
+            </value>
+            <value>
+                <fullName>Non Hazardous Solvent</fullName>
+                <default>false</default>
+                <label>Non Hazardous Solvent</label>
+            </value>
+            <value>
+                <fullName>Non-Haz Class3</fullName>
+                <default>false</default>
+                <label>Non-Haz Class3</label>
+            </value>
+            <value>
+                <fullName>Office Paper</fullName>
+                <default>false</default>
+                <label>Office Paper</label>
+            </value>
+            <value>
+                <fullName>Office Paper - Mixed</fullName>
+                <default>false</default>
+                <label>Office Paper - Mixed</label>
+            </value>
+            <value>
+                <fullName>Office Paper - Shredded</fullName>
+                <default>false</default>
+                <label>Office Paper - Shredded</label>
+            </value>
+            <value>
+                <fullName>Office Paper - White</fullName>
+                <default>false</default>
+                <label>Office Paper - White</label>
+            </value>
+            <value>
+                <fullName>Oily Water</fullName>
+                <default>false</default>
+                <label>Oily Water</label>
+            </value>
+            <value>
+                <fullName>Organic Waste</fullName>
+                <default>false</default>
+                <label>Organic Waste</label>
+            </value>
+            <value>
+                <fullName>Pallets</fullName>
+                <default>false</default>
+                <label>Pallets</label>
+            </value>
+            <value>
+                <fullName>Paper - General</fullName>
+                <default>false</default>
+                <label>Paper - General</label>
+            </value>
+            <value>
+                <fullName>Paper Mill - Sludge</fullName>
+                <default>false</default>
+                <label>Paper Mill - Sludge</label>
+            </value>
+            <value>
+                <fullName>PC (Polycarbonate)</fullName>
+                <default>false</default>
+                <label>PC (Polycarbonate)</label>
+            </value>
+            <value>
+                <fullName>PET Clear (Beverage containers only)</fullName>
+                <default>false</default>
+                <label>PET Clear (Beverage containers only)</label>
+            </value>
+            <value>
+                <fullName>PET Clear and Green</fullName>
+                <default>false</default>
+                <label>PET Clear and Green</label>
+            </value>
+            <value>
+                <fullName>PET Green (Beverage containers only)</fullName>
+                <default>false</default>
+                <label>PET Green (Beverage containers only)</label>
+            </value>
+            <value>
+                <fullName>PET Mixed Bottles Compacted</fullName>
+                <default>false</default>
+                <label>PET Mixed Bottles Compacted</label>
+            </value>
+            <value>
+                <fullName>PET Mixed Bottles Loose</fullName>
+                <default>false</default>
+                <label>PET Mixed Bottles Loose</label>
+            </value>
+            <value>
+                <fullName>PET Strapping</fullName>
+                <default>false</default>
+                <label>PET Strapping</label>
+            </value>
+            <value>
+                <fullName>Plastic</fullName>
+                <default>false</default>
+                <label>Plastic</label>
+            </value>
+            <value>
+                <fullName>Pole</fullName>
+                <default>false</default>
+                <label>Pole</label>
+            </value>
+            <value>
+                <fullName>PP Film</fullName>
+                <default>false</default>
+                <label>PP Film</label>
+            </value>
+            <value>
+                <fullName>PP Parts</fullName>
+                <default>false</default>
+                <label>PP Parts</label>
+            </value>
+            <value>
+                <fullName>PP Strapping</fullName>
+                <default>false</default>
+                <label>PP Strapping</label>
+            </value>
+            <value>
+                <fullName>Printed Material</fullName>
+                <default>false</default>
+                <label>Printed Material</label>
+            </value>
+            <value>
+                <fullName>Printer Cartridges</fullName>
+                <default>false</default>
+                <label>Printer Cartridges</label>
+            </value>
+            <value>
+                <fullName>Process Waste</fullName>
+                <default>false</default>
+                <label>Process Waste</label>
+            </value>
+            <value>
+                <fullName>Profiled Waste</fullName>
+                <default>false</default>
+                <label>Profiled Waste</label>
+            </value>
+            <value>
+                <fullName>Recovered Materials</fullName>
+                <default>false</default>
+                <label>Recovered Materials</label>
+            </value>
+            <value>
+                <fullName>Refractory Brick</fullName>
+                <default>false</default>
+                <label>Refractory Brick</label>
+            </value>
+            <value>
+                <fullName>Rejected Product</fullName>
+                <default>false</default>
+                <label>Rejected Product</label>
+            </value>
+            <value>
+                <fullName>Rendering</fullName>
+                <default>false</default>
+                <label>Rendering</label>
+            </value>
+            <value>
+                <fullName>Roofing</fullName>
+                <default>false</default>
+                <label>Roofing</label>
+            </value>
+            <value>
+                <fullName>Rubber</fullName>
+                <default>false</default>
+                <label>Rubber</label>
+            </value>
+            <value>
+                <fullName>Sand Blast Grit</fullName>
+                <default>false</default>
+                <label>Sand Blast Grit</label>
+            </value>
+            <value>
+                <fullName>Sediment</fullName>
+                <default>false</default>
+                <label>Sediment</label>
+            </value>
+            <value>
+                <fullName>Septage</fullName>
+                <default>false</default>
+                <label>Septage</label>
+            </value>
+            <value>
+                <fullName>Shingles</fullName>
+                <default>false</default>
+                <label>Shingles</label>
+            </value>
+            <value>
+                <fullName>Shot &amp; Rag Waste</fullName>
+                <default>false</default>
+                <label>Shot &amp; Rag Waste</label>
+            </value>
+            <value>
+                <fullName>Shrink Wrap Film</fullName>
+                <default>false</default>
+                <label>Shrink Wrap Film</label>
+            </value>
+            <value>
+                <fullName>Single Stream Recycling</fullName>
+                <default>false</default>
+                <label>Single Stream Recycling</label>
+            </value>
+            <value>
+                <fullName>Sludge</fullName>
+                <default>false</default>
+                <label>Sludge</label>
+            </value>
+            <value>
+                <fullName>Soft Mixed Paper</fullName>
+                <default>false</default>
+                <label>Soft Mixed Paper</label>
+            </value>
+            <value>
+                <fullName>Solid Bleached Sulfate</fullName>
+                <default>false</default>
+                <label>Solid Bleached Sulfate</label>
+            </value>
+            <value>
+                <fullName>Special Waste</fullName>
+                <default>false</default>
+                <label>Special Waste</label>
+            </value>
+            <value>
+                <fullName>Stainless Steel</fullName>
+                <default>false</default>
+                <label>Stainless Steel</label>
+            </value>
+            <value>
+                <fullName>Steel</fullName>
+                <default>false</default>
+                <label>Steel</label>
+            </value>
+            <value>
+                <fullName>Storage</fullName>
+                <default>false</default>
+                <label>Storage</label>
+            </value>
+            <value>
+                <fullName>Tires</fullName>
+                <default>false</default>
+                <label>Tires</label>
+            </value>
+            <value>
+                <fullName>Totes</fullName>
+                <default>false</default>
+                <label>Totes</label>
+            </value>
+            <value>
+                <fullName>Treated Wood</fullName>
+                <default>false</default>
+                <label>Treated Wood</label>
+            </value>
+            <value>
+                <fullName>Universal Waste</fullName>
+                <default>false</default>
+                <label>Universal Waste</label>
+            </value>
+            <value>
+                <fullName>Used Brown Kraft</fullName>
+                <default>false</default>
+                <label>Used Brown Kraft</label>
+            </value>
+            <value>
+                <fullName>VCT Tile</fullName>
+                <default>false</default>
+                <label>VCT Tile</label>
+            </value>
+            <value>
+                <fullName>Wallboard</fullName>
+                <default>false</default>
+                <label>Wallboard</label>
+            </value>
+            <value>
+                <fullName>Water</fullName>
+                <default>false</default>
+                <label>Water</label>
+            </value>
+            <value>
+                <fullName>Water Treatment Sludge</fullName>
+                <default>false</default>
+                <label>Water Treatment Sludge</label>
+            </value>
+            <value>
+                <fullName>Wood</fullName>
+                <default>false</default>
+                <label>Wood</label>
+            </value>
+            <value>
+                <fullName>Wood Block</fullName>
+                <default>false</default>
+                <label>Wood Block</label>
+            </value>
+            <value>
+                <fullName>Yard Waste</fullName>
+                <default>false</default>
+                <label>Yard Waste</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <outboundMessages>
+        <fullName>Genesys_Reporting_outbound</fullName>
+        <apiVersion>50.0</apiVersion>
+        <endpointUrl>https://invalid.qa.sf.wmsbs.wm.com/salesforceoutboundmessage/services/GenesysCaseReportService.svc</endpointUrl>
+        <fields>Id</fields>
+        <fields>SFDCAcctID__c</fields>
+        <fields>SFDCAcctLocation__c</fields>
+        <fields>SFDCAcctSegment__c</fields>
+        <fields>SFDCCaseNumber__c</fields>
+        <fields>SFDCCaseSubType__c</fields>
+        <fields>SFDCCaseType__c</fields>
+        <fields>SFDCObjRecord_Id__c</fields>
+        <fields>cti_SFDCCaseRefNo__c</fields>
+        <includeSessionId>true</includeSessionId>
+        <integrationUser>api.user@wm.com</integrationUser>
+        <name>Genesys Reporting outbound</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>true</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Send to Genesys Reporting</fullName>
+        <actions>
+            <name>Genesys_Reporting_outbound</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Genesys_Reporting__c.CreatedDate</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

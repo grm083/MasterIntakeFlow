@@ -1,0 +1,36 @@
+<messaging:emailTemplate subject="Approbation requise: {!relatedTo.Case_Type__c}- {!relatedTo.Case_Subtype_Email_Format__c} - {!relatedTo.Location_Code__c} - Ref. #: {!relatedTo.Reference_Number__c}" recipientType="Contact" relatedToType="Case">
+<messaging:htmlEmailBody >
+        <div style="align=right">
+        <apex:variable value="{!LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260))}" var="hostUrl"/>
+        <apex:variable value="servlet/servlet.ImageServer?id=" var="staticUrl_1"/>
+        <apex:variable value="&oid=" var="staticUrl_2"/>
+        <apex:variable value="{!$Organization.Id}" var="orgId"/>
+        </div> 
+        <html>
+            <style type="text/css">
+            body {font-size: 11pt;}
+            </style>
+        <body>
+          <br><apex:image height="30" width="100" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.DocumentId__c}{!staticUrl_2}{!orgId}"/></br>   
+          <br><apex:outputText style="font-family:Arial;" value="Bonjour,"/></br>
+          <br><apex:outputText style="font-family:Arial;" value="Il me fera Plaisir de vous aider avec votre demande aujourd’hui."/></br>
+          <br><apex:outputText style="font-family:Arial;" value="Votre autorisation est requise les services suivants demandés par {!relatedTo.Contact_Name__c}. Veuillez vérifier les détails et approuver ou refuser en cliquant sur les liens ci-dessous." /></br>
+          <apex:outputText style="font-family:Arial;" value="Si vous acceptez et refusez des services, veuillez cliquer sur le bouton Approuver/Refuser et indiquer les Cas à approuver et ceux à Refuser dans votre e-mail de réponse." /><br/>
+          <br><apex:outputText style="font-family:Arial;" value="Votre numéro de référence pour tous les cas est: "/><b><apex:outputText style="font-family:Arial;" value="{!relatedTo.Reference_Number__c}"/></b></br>
+          <br>
+          <b><apex:outputText style="text-align: center;font-family:Arial;font-size:11pt;" value="Détails des services"/></b></br><br/>
+          <c:GetChildCaseDetailsFr parentcase="{!relatedTo}" /><br/>
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Approved:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Tout approuver</apex:outputlink>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Rejected:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Refuser tout</apex:outputlink>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Mixed:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Approuver/Refuser</apex:outputlink><br/>
+          <br><apex:outputText style="text-align: center;font-family:Arial;" value="Merci,"/></br>
+          <c:LoggedInUserDetailsCanadaFr />
+        </body> 
+        </html>
+           
+</messaging:htmlEmailBody>    
+
+</messaging:emailTemplate>

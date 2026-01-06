@@ -1,0 +1,62 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller = "GetCaseInformation">
+    <aura:attribute name="showForm" type="Boolean" default="true"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+	<aura:attribute name="caseType" type="String"/>
+    <aura:attribute name="caseSubType" type="String"/>
+    <aura:attribute name="caseMessage" type="String"/>
+    <aura:attribute name="showErrorSNP" type="Boolean" default="false" />
+    <aura:attribute name="errorMsg" type="String" />
+	
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <aura:if isTrue="{!v.showForm}">
+        <div class="slds-modal slds-fade-in-open" style="position:fixed !important;padding-top:10rem;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"
+                                          onclick="{!c.closeModel }"/>
+                    <h2 class="slds-text-heading_medium">Fill in Sub-Type</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium">
+                      <lightning:messages aura:id="ErrorMessage" style="width: 100%;height: 25px;" />
+                    
+                    
+                    <aura:if isTrue="{!v.showErrorSNP}">
+                        <!-- Show the message to ui -->
+                        <div>
+                            <p class="requiredField">{!v.errorMsg}</p>
+                        </div>
+                    </aura:if>
+                    <lightning:recordEditForm aura:id="recordViewForm"
+                                              recordId="{!v.recordId}"
+                                              recordTypeId="{!v.recordTypeId}"
+                                              onsuccess="{!c.handleSuccess}"
+											  onerror="{!c.handleError}"
+                                              onsubmit="{!c.handleSubmit}"
+                                              objectApiName="Case"
+                                              >
+                        <!-- <lightning:messages aura:id="CaseMessage" /> -->
+                        <aura:if isTrue="{!v.showError}">
+                            <ui:message title="" severity="error" closable="true">
+                                {!v.caseMessage}
+                            </ui:message>
+                        </aura:if>
+						
+						
+                        <lightning:inputField  aura:id="casetype" value="{!v.caseType}" fieldName="Case_Type__c" />
+                        <lightning:inputField  aura:id="casesubtype" value="{!v.caseSubType}" fieldName="Case_Sub_Type__c" />
+                        <lightning:inputField fieldName="Case_Reason__c" class="{! v.showErrorSNP ? 'slds-form-element slds-has-error' : '' }" />
+                        <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium slds-align_absolute-center" />
+                    </lightning:recordEditForm>
+                </div>
+                
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
+</aura:component>

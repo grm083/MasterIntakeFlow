@@ -1,0 +1,46 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="AssetHeadersForCaseController" access="global" >
+<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <!--aura:handler event="force:refreshView" action="{!c.doInit}" /-->
+    <aura:attribute name="CaseDetails" type="Case" access="global"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}" 
+                      layoutType="FULL"
+                      targetRecord="{!v.case}"
+                      targetFields="{!v.caseRecord}"
+                      fields="Id,CaseNumber,AssetId,Case_Type__c,Case_Sub_Type__c,Client__c,Location__c,ContactId,Status,Case_Sub_Status__c,Reference_Number__c,Service_Date__c,Acorn_Work_order__c,Tracking_Number__c" 
+                      mode="VIEW"
+                      recordUpdated="{!c.recordUpdated}"
+                      />
+
+    
+    <div class="slds-m-top--none slds-m-bottom--none"> 
+     <table class="slds-table slds-table--bordered slds-table--striped">
+        	<thead>
+                <tr class="slds-table slds-table--bordered slds-table--striped">
+                    <!-- <th scope="col" class="head slds-size_1-of-7"><span class="slds-truncate">Location Name</span></th> -->                  
+                    <th scope="col" class="head slds-size_1-of-7"><span class="slds-truncate">Reference Number</span></th>
+                    <th scope="col" class="head slds-size_1-of-7"><span class="slds-truncate">SLA Date</span></th>
+                    <th scope="col" class="head slds-size_1-of-7"><span class="slds-truncate">Service Date</span></th>
+                     <th scope="col" class="head slds-size_1-of-7"><span class="slds-truncate">Case Record Type</span></th>
+                    <th scope="col" class="head slds-size_1-of-7"><span class="slds-truncate">WorkOrder</span></th>
+                    <th scope="col" class="head slds-size_1-of-7"><span class="slds-truncate">Acorn WorkOrder</span></th>
+                    <th scope="col" class="head slds-size_1-of-7"><span class="slds-truncate">Tracking Number</span></th>
+                    
+                </tr>
+        	</thead>  
+        	<tbody>
+                	<tr>
+                        <!-- <td class="slds-size_1-of-7"><a data-value="{!v.CaseDetails.Location__c}" onclick="{!c.handleClick}" >{!v.CaseDetails.Location__r.Name}</a></td>  -->                        
+                        <td class="slds-size_1-of-7"><b>{!v.CaseDetails.Reference_Number__c}</b></td>
+                        <td class="slds-size_1-of-7"><b>{!v.CaseDetails.SLA_Service_DateTime__c}</b></td>
+                        <td class="slds-size_1-of-7"><b>{!v.CaseDetails.Service_Date_Text__c}</b></td>
+                        <td class="slds-size_1-of-7"><b>{!v.CaseDetails.Case_Record_Type__c}</b></td>
+                        <td class="slds-size_1-of-7"><a data-value="{!v.CaseDetails.Work_Order__c}" onclick="{!c.handleClick}" >{!v.CaseDetails.Work_Order__r.WorkOrderNumber}</a></td>
+                        <td class="slds-size_1-of-7">{!v.CaseDetails.Acorn_Work_order__c}</td>
+                        <td class="slds-size_1-of-7">{!v.CaseDetails.Tracking_Number__c}</td>
+                    </tr>
+            </tbody> 
+        </table> 
+    </div>
+</aura:component>

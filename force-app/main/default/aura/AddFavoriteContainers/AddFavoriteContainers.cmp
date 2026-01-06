@@ -1,0 +1,99 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="QuoteProcurementController">
+	
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <aura:registerEvent name="CloseModalEvent" type="c:QuoteProductsCloseModal"/>
+    <aura:attribute name="showForm" type="Boolean"/>
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="quoteId" type="String" default=" "/>
+    <aura:attribute name="getAddProductId" type="String"/>
+    <aura:attribute name="favroiteId" type="String"/>
+    <!--<aura:attribute name="haveContainer" type="Boolean" default="false"/>-->
+    <!--<aura:attribute name="FavList" type="List" default="[]"/>-->
+    <aura:attribute name="QuotesWrapper" type="Object" />
+    <aura:attribute name="selectedProduct" type="String" default="Please Select Any Product"/>
+    <aura:attribute name="containerDetailsList" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="quoteScreen" type="Boolean" default="false"/>
+    <aura:attribute name="parent" type="Aura.Component"/>
+    <aura:attribute name="productId" type="String"/>
+    
+    <aura:if isTrue="{!v.showForm}">
+        <div class="slds-m-around_xx-large slds-is-relative">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                            onclick="{! c.closeFavoriteContanerModal }"
+                                            alternativeText="close"
+                                            variant="bare"
+                                            class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Common Products</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-grid slds-gutters" style="border: 1px solid #e0dedd;" >
+                            <!--<aura:if isTrue="haveContainer">-->
+                                <div class="slds-col slds-size_1-of-2 padding-0px border-1px" >
+                                    <aura:iteration items="{!v.QuotesWrapper.ContainerList}" var="item">
+                                    <!--<aura:iteration items="1,2,3,4,5" var="item">-->
+                                        <div>
+                                            <lightning:button variant="Neutral" label="{!item.productName}" class="slds-button_stretch border-radius " title="{!item.productName}" value="{!item}" onclick="{!c.selectProduct}" />
+                                            <!--<lightning:button variant="Neutral" label="Open Top" class="slds-button_stretch border-radius " title="Open Top" onclick="" />-->
+                                        </div>
+                                    </aura:iteration>  
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 padding-0px border-1px">
+                                    <aura:if isTrue="{!v.selectedProduct == 'Please Select Any Product'}">
+                                        <div class="productContainerRecords padding-2">{!v.selectedProduct}</div>
+                                        <aura:set attribute="else">
+                                            <div class="productContainerRecords padding-2">{!v.selectedProduct} Records</div>
+                                            <lightning:datatable
+                                                                 columns="{!v.columns}"
+                                                                 data="{!v.containerDetailsList}"
+                                                                 keyField="id"
+                                                                 maxRowSelection="1"
+                                                                 onrowselection="{!c.handleSelect}"/>
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            <!--</aura:if>-->
+                        </div>
+                            <!--
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:button name="input1" label="Open Top" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:input name="input1" label="Enter some text" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:input name="input1" label="Enter some text" />
+                                </div> -->																
+                        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                    </div>
+                    <footer class="slds-modal__footer">
+                        
+                        <div class="mybtn slds-grid">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-float_left">
+                                    <lightning:button class="slds-button" variant="destructive" 
+                                            label="Product Not Listed"
+                                            title="Product Not Listed"
+                                            onclick="{! c.addProductNotListed }"/>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:button class="slds-button" variant="success" 
+                                            label="Select Product"
+                                            title="Select Product"
+                                            onclick="{! c.addFavoriteProductToQuote}"/>
+                            </div>
+                        </div>
+                    </footer>
+                    
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+
+</aura:component>

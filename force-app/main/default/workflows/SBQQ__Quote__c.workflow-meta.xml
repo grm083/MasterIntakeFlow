@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_DoResyncOutBoundcall_False</fullName>
+        <description>Updating DoResyncOutBoundcall field is false, while clicking on the Quote Resync button.</description>
+        <field>DoResyncOutBoundcall__c</field>
+        <literalValue>0</literalValue>
+        <name>Update DoResyncOutBoundcall False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <outboundMessages>
+        <fullName>Send_Quote_to_Acorn</fullName>
+        <apiVersion>51.0</apiVersion>
+        <endpointUrl>https://qa.sf.wmsbs.wm.com/SalesforceOutboundmessage/Services/CreateNewAssetService.svc</endpointUrl>
+        <fields>Acorn_Last_Modified_SUser_ID__c</fields>
+        <fields>Acorn_Owner_SUser_ID__c</fields>
+        <fields>Id</fields>
+        <fields>Name</fields>
+        <fields>Resubmit_Flag__c</fields>
+        <includeSessionId>true</includeSessionId>
+        <integrationUser>api.user@wm.com</integrationUser>
+        <name>Send Quote to Acorn</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Send Quote to API Hub</fullName>
+        <actions>
+            <name>Update_DoResyncOutBoundcall_False</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Send_Quote_to_Acorn</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>true</active>
+        <formula>OR(AND(DoResyncOutBoundcall__c,Resubmit_Flag__c) ,AND(  ISCHANGED(SBQQ__Status__c),  ISPICKVAL(SBQQ__Status__c,&quot;Approved&quot;), Acorn_integration_required__c  ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

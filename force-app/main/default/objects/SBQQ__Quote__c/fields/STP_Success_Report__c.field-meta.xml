@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>STP_Success_Report__c</fullName>
+    <description>Field to identify stp flow</description>
+    <externalId>false</externalId>
+    <label>STP Success Report</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>true</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Full STP</fullName>
+                <default>false</default>
+                <label>Full STP</label>
+            </value>
+            <value>
+                <fullName>Partial STP</fullName>
+                <default>false</default>
+                <label>Partial STP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

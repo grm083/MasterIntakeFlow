@@ -1,0 +1,37 @@
+<aura:component  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global"  >
+<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="showForm" type="Boolean" default="true"/>
+    <aura:attribute name="CaseDetails" type="Case" access="global"/>  
+    <aura:attribute name="recordTypeId" type="String"/>
+    
+     <aura:if isTrue="{!v.showForm}">
+        <div class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"
+                                          onclick="{!c.closeModel }"/>
+                    <h2 class="slds-text-heading_medium">Reassign Case</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium">
+                   <lightning:recordEditForm aura:id="recordLoader"
+                                                         recordId="{!v.recordId}"
+                                                         recordTypeId="{!v.recordTypeId}"
+                                                         objectApiName="Case"
+                                             			onsuccess="{!c.handleSuccess}">
+                            <lightning:inputField fieldName="Team_Name__c" />
+                            <lightning:inputField fieldName="Team_Queue__c" />
+                            <lightning:inputField fieldName="User_Name__c" /> 
+                            
+                             <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium slds-align_absolute-center" />
+                        </lightning:recordEditForm>
+                </div>                
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
+                
+</aura:component>

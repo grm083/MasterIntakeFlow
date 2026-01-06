@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vendor3P_not_null_and_All_checked</fullName>
+    <active>true</active>
+    <description>Third Party Vendor should not be blank in case All is Unchecked</description>
+    <errorConditionFormula>AND( All_3rd_Party_Vendor__c = true,  Parent_Non_Parent_VID_s__c  != null,  RecordType.Name = &apos;STP Eligibility&apos;)</errorConditionFormula>
+    <errorMessage>If All Third Party Vendors is checked, then Listed 3rd Party Vendors must be blank.</errorMessage>
+</ValidationRule>

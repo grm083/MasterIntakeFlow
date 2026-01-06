@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Includes opportunity license</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>CPQ Extended License</label>
+    <permissionSets>Pricing_Access</permissionSets>
+    <permissionSets>QuoteOrdersUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

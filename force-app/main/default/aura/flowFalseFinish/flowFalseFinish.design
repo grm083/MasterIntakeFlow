@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="caseRecord" label="Case Id" description="Case Id to be updated" />
+    <design:attribute name="FinalOutcome" label= "Final Outcome Id" description="The ID of the final outcome" />
+    <design:attribute name="comment" label="Comment" description="Comment to be inserted" />
+</design:component>

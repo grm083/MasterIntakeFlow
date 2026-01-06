@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RunFlowName__c</fullName>
+    <externalId>false</externalId>
+    <label>RunFlowName</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Create Task FrameWork Process</fullName>
+                <default>false</default>
+                <label>Create Task FrameWork Process</label>
+            </value>
+            <value>
+                <fullName>Task delay SLA process</fullName>
+                <default>false</default>
+                <label>Task delay SLA process</label>
+            </value>
+            <value>
+                <fullName>Process of Non Pickup Task framework</fullName>
+                <default>false</default>
+                <label>Process of Non Pickup Task framework</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

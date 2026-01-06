@@ -1,0 +1,194 @@
+<aura:component implements="flexipage:availableForAllPageTypes"
+                controller="QuoteProcurementController">
+    
+    <aura:attribute name="productHeader" type="object" />
+    <aura:attribute name="detailColumns" type="List" default="[]" />
+    <aura:attribute name="canCost" type="boolean" default="true" />
+    <aura:attribute name="canPrice" type="boolean" default="true" />
+    <aura:attribute name="canVendor" type="boolean" default="true" />
+    <aura:attribute name="canMAS" type="boolean" default="false" />
+    <aura:attribute name="showSIDModal" type="boolean" default="false" />
+    <aura:attribute name="componentType" type="string" default="" />
+    <aura:attribute name="disabled" type="boolean" default="false" /> <!-- 31110 -->
+    <!-- 48563 shajiya added : controls expand / collapse of Bundle Error section -->
+    <aura:attribute name="showBundleErrors" type="Boolean" default="false" />
+    <aura:attribute name="lineErrorList" type="List" default="[]" />
+    <!-- 48563 shajiya added : controls expand / collapse of Bundle Error section -->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <aura:handler name="CloseSIDModalEvent" event="c:QuoteProductsDetailsCloseModal" action="{!c.closeModal}" />
+    
+    <aura:registerEvent name="CloseModalEvent" type="c:QuoteProductsCloseModal" />
+    
+    <lightning:layout multipleRows="true"
+                      horizontalAlign="spread"
+                      verticalAlign="stretch">
+        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+            <div class="slds-align_absolute-center slds-text-heading_medium">
+                Centralized Product Configuration
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="12">
+            <div class="slds-text-title_caps slds-align_absolute-center slds-box slds-p-bottom_xx-small">Product Actions</div>
+            <lightning:layout multipleRows="true" horizontalAlign="spread">
+                <!--<lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="6">
+                	<lightning:button name="SchedulerComponent"
+                                      variant="brand"
+                                      label="Set Schedule"
+                                      title="View Line Item Details"
+                                      onclick="{!c.SIDDetails}" 
+                                      value="{!v.productHeader}"
+                                      class="slds-align_absolute-center slds-button_stretch" />
+                </lightning:layoutItem>-->
+                <!-- <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="3">
+                	<lightning:button name="CompanyCategoryComponent"
+                                      variant="brand"
+                                      label="Company Category"
+                                      title="View Line Item Details"
+                                      onclick="{!c.SIDDetails}" 
+                                      value="{!v.productHeader}"
+                                      class="slds-align_absolute-center slds-button_stretch"/>
+                </lightning:layoutItem> -->
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="3">
+                	 <!-- 31110 -->
+                    <lightning:button name="VendorLookupComponent"
+                                      variant="brand"
+                                      label="Set Vendor"
+                                      title="View Line Item Details"
+                                      onclick="{!c.SIDDetails}" 
+                                      value="{!v.productHeader}"
+                                      disabled= "{!v.disabled}"
+                                      class="slds-align_absolute-center slds-button_stretch"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="3">
+                	<lightning:button name="MASLookupComponent"
+                                      variant="brand"
+                                      label="Set MAS Details"
+                                      title="View Line Item Details"
+                                      onclick="{!c.SIDDetails}" 
+                                      value="{!v.productHeader}"
+                                      disabled= "{!v.disabled}"
+                                      class="slds-align_absolute-center slds-button_stretch"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="3">
+                	 <!-- 31110 -->
+                    <lightning:button name="serviceSchedulerComponent"
+                                      variant="brand"
+                                      label="Set Service Scheduler Details"
+                                      title="View Set Service Scheduler Details"
+                                      onclick="{!c.serviceScheduler}" 
+                                      value="Set Service Scheduler Details"
+                                      disabled= "{!v.disabled}"
+                                      class="slds-align_absolute-center slds-button_stretch"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <!--- 48563-->
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="12">
+            <div class="slds-text-title_caps slds-align_absolute-center slds-box slds-p-bottom_xx-small"
+                onclick="{!c.toggleBundleErrors}"
+                style="cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                <lightning:icon iconName="{!v.showBundleErrors ? 'utility:chevronup' : 'utility:chevrondown'}"
+                    size="x-small" class="slds-m-right_xx-small" />
+                Please review below Bundle Error
+            </div>
+            <aura:if isTrue="{!v.showBundleErrors}">
+                <lightning:layout multipleRows="true" verticalAlign="center">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Quote Line Name">Quote Line Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Error Message">Error Message</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.lineErrorList}" var="line">
+                                <aura:if isTrue="{! not(empty(line.QLErrorsList)) }">
+                                    <tr>
+                                        <td>
+                                            <div class="slds-truncate">{!line.QLName}</div>
+                                        </td>
+                                        <td>
+                                            <!-- Inner iteration: loops through the QLErrorsList array inside the object -->
+                                            <aura:iteration items="{!line.QLErrorsList}" var="msg">
+                                                <div>
+                                                    {!IF(msg == 'All validations passed for all quote lines', msg, '• ' + msg)}
+                                                </div>
+                                            </aura:iteration>
+                                        </td>
+                                    </tr>
+                                </aura:if>
+                            </aura:iteration>
+                            
+                        </tbody>
+                    </table>
+                </lightning:layout>
+
+            </aura:if>
+
+        </lightning:layoutItem>  
+         <!--- 48563-->
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="12">
+            <div class="slds-text-title_caps slds-align_absolute-center slds-box slds-p-bottom_xx-small">Current Product Lines</div>
+            <lightning:layout multipleRows="true" verticalAlign="center">
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:datatable
+                                         columns="{!v.detailColumns}"
+                                         data="{!v.productHeader.details}"
+                                         keyField="id"
+                                         maxRowSelection = "0" 
+                                         onrowaction="{!c.handleRowAction}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="12">
+        	<div class="slds-clearfix">
+            	<div class="slds-float_right">
+                	<lightning:button label="Close" variant="brand" name="CloseDetails" title="Close the Details Popup"
+                                      onclick="{!c.closeDetail}" />
+                </div>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <aura:if isTrue="{!v.showSIDModal}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{!c.closeModal }"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Product Configuration</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">                        
+                    <aura:if isTrue="{!v.componentType == 'MASLookupComponent'}">
+                        <c:MASLookupComponent productWrapper="{!v.productHeader}" />
+                    </aura:if>
+                    <aura:if isTrue="{!v.componentType == 'VendorLookupComponent'}">
+                        <c:VendorLookupComponent productWrapper="{!v.productHeader}" />
+                    </aura:if>
+                    <aura:if isTrue="{!v.componentType == 'CompanyCategoryComponent'}">
+                        <c:CompanyCategoryComponent productWrapper="{!v.productHeader}" />
+                    </aura:if>
+                    <aura:if isTrue="{!v.componentType == 'serviceSchedulerComponent'}">
+                        <c:ServiceScheduler showSIDModal="{!v.showSIDModal}" 
+                                            quoteId="{!v.productHeader.quoteID}"
+                                            parentId="{!v.productHeader.parentId}"/>
+                    </aura:if>
+                </div>
+                <footer class="slds-modal__footer">
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        
+    </aura:if>
+    
+</aura:component>

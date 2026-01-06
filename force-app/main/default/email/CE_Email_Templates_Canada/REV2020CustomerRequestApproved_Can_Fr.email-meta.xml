@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Répondre au client lorsque sa demande a été approuvée.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>French Customer: Request Approved Canada Templates</name>
+    <style>freeForm</style>
+    <subject>Demande approuvée: {!Case.Case_Type__c} - {!Case.Location_Code__c} -  REF # {!Case.Reference_Number__c}</subject>
+    <textOnly>Hi Customer,
+We received your request for a pickup on your 8 yard dumpster. Details are below.
+
+Request Details
+Reference #: 9898890
+Location ID: ABC2345
+Location: 124 Bridge St, Mainetance, MA 03099
+Requested Service Date: 7/12/2020
+Container: 8 Yards - Compactor, Trash; Position: Default
+
+Thank you,
+AGENT NAME
+Role
+Email
+
+Address</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

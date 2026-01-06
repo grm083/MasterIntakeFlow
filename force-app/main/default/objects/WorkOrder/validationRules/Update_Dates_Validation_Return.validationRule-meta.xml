@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Dates_Validation_Return</fullName>
+    <active>true</active>
+    <description>SDT 4113 story. Update date validation criteria.</description>
+    <errorConditionFormula>AND(Return_DateTime__c &lt; Pickup_DateTime__c,
+NOT($User.Bypass_Validation__c))</errorConditionFormula>
+    <errorDisplayField>Return_DateTime__c</errorDisplayField>
+    <errorMessage>Return Date/Time must be &gt;= Pickup Date/Time</errorMessage>
+</ValidationRule>

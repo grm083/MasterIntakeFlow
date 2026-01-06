@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateDoNotCreateMASTicketMASRemoval</fullName>
+    <active>true</active>
+    <description>SDT-40056-To show validation error when DoNotCreateMASTicket__c and MASRemoval__c are both set to TRUE</description>
+    <errorConditionFormula>DoNotCreateMASTicket__c &amp;&amp;  MASRemoval__c</errorConditionFormula>
+    <errorDisplayField>MASRemoval__c</errorDisplayField>
+    <errorMessage>Error: Please select either Do Not Create MAS Ticket or MAS Removal option in MAS Tickets section.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,83 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes,force:appHostable" controller="AcornController">	
+    
+    <aura:attribute name="url" type="String"/>
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="intervalId" type="Integer"/>
+    <aura:attribute name="refresh" type="boolean" default="true"/>
+    
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="lightning:tabFocused" action="{! c.onTabFocus }"/>
+    <aura:handler event="lightning:tabClosed" action="{! c.onTabClosed }"/>
+
+    <!-- DataTable attributes -->
+    <aura:attribute name="notes" type="Comment__c[]"/>
+    <aura:attribute name="columns" type="List"/>
+    
+    <force:recordData aura:id="recordLoader"
+    recordId="{!v.recordId}"
+    fields="Portal_Messages_URL__c"
+    targetFields="{!v.url}"
+    targetError="{!v.recordLoadError}" />
+
+
+    <div class="slds-float--right">
+        <lightning:button variant="brand" label="View Messages In Portal" title="View Messages In Portal" onclick="{!c.handleClick}" />
+    </div>
+    <br/><br/>
+    <!--
+    <div id="acorn-notes" style="height: 600px; overflow:auto"> -->
+        <!-- <lightning:datatable keyField="Id" data="{!v.notes}" columns="{!v.columns}" onrowselection="{!c.getComment}" isLoading="false" maxRowSelection="1" /> -->
+        <!--
+        <lightning:datatable keyField="Id" data="{!v.notes}" columns="{!v.columns}" hideCheckboxColumn="true" />
+    </div>-->
+
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer" >
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col" style="padding-left: 5px!important;">
+                    <div class="slds-truncate" title="Action">Action</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="User/Team">User/Team</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Date">Date</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate"  title="Comments">Comments</div>
+                </th>
+                <th scope="col" style="padding-right: 0px!important;">
+                    <div class="slds-truncate" title="Source">Source</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+         <aura:iteration items="{!v.notes}" var="note">
+                <tr>
+                    <td data-label="Action">
+                        <div class="slds-truncate" title="">{!note.Workflow_Action__c}</div>
+                    </td>
+                    <td data-label="User/Team">
+                        <div class="slds-truncate" title="">{!note.Workflow_TeamUser__c}</div>
+                    </td>
+                    <td data-label="Date">
+                        <div class="slds-truncate" title="">
+                                <lightning:formattedDateTime value="{!note.CreatedDate}" year="numeric" day="2-digit" month="long" hour="2-digit" minute="2-digit"/>
+                        </div>
+                    </td>
+                    <td data-label="Comments">
+                        <div class="slds-truncate" style="word-break: break-all;" title="">
+                            <ui:outputRichText aura:id="outputRT" value="{!note.Comment__c}" />
+                        </div>
+                    </td>
+                    <td data-label="Source">
+                        <div class="slds-truncate" title="">{!note.Communication_Log_Type_Name__c}</div>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+    
+</aura:component>

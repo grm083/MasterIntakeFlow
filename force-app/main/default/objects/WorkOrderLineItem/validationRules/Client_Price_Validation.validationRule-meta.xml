@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Price_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT($User.Bypass_Validation__c),ISCHANGED(New_Client_Price__c), NOT(ISPICKVAL(WorkOrder.Status, &apos;Pending/Draft&apos;)), NOT(ISPICKVAL(WorkOrder.Status, &apos;Issued&apos;)), NOT(ISPICKVAL(WorkOrder.Status, &apos;Sent&apos;)))</errorConditionFormula>
+    <errorMessage>You can update client price only when WO is in Pending/Draft or Issued or Sent</errorMessage>
+</ValidationRule>

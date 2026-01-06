@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Demande d&apos;approbation de l&apos;équipe PM ou du client concernant les services qui ne sont pas un changement de service ou un e/r, xpu, dnr ou un ramassage sur appel.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>French Customer or Internal: Service Change Approval</name>
+    <style>freeForm</style>
+    <subject>Approbation requise: {!Case.Case_Type__c }- {!Case.Case_Subtype_Email_Format__c} - {!Case.Location_Code__c} - Ref# {!Case.Reference_Number__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

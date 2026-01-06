@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vendor__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The payable entity related to this quote line</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The payable vendor related to this quote line.</inlineHelpText>
+    <label>Vendor</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordType.Name</field>
+            <operation>equals</operation>
+            <value>Vendor</value>
+        </filterItems>
+        <filterItems>
+            <field>Account.Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Quote Lines</relationshipLabel>
+    <relationshipName>Quote_Lines</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Lookup</type>
+</CustomField>

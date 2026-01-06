@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Column Name</label>
+    <protected>false</protected>
+    <values>
+        <field>Value__c</field>
+        <value xsi:type="xsd:string">Task Link, Case Number, Asset Name,Case Type, Case SubType, Proposed Service Date, Outcome, Due Date/Time, Company Category, Position, MAS Account Number, Contact Email, Contact Number, Contact Title, Contact Method, Account Name, Account Number, Acorn WO Number, Status, Parent Vendor, Location, Location Address, Location City, Location State, Location ZipCode, Market Area, Vendor BU, WM Vendor, Vendor Account Number, Equipment Size, Material Type, Comments, Assigned To, Task Type, Attempt</value>
+    </values>
+</CustomMetadata>

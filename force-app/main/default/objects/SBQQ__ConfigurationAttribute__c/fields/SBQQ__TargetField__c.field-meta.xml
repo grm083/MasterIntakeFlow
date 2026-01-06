@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SBQQ__TargetField__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Field on the Product Option that sources remaining metadata and holds the value.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Specify field on Product Option that will hold this attribute&apos;s value.</inlineHelpText>
+    <label>Target Field</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Unit Price</fullName>
+                <default>false</default>
+                <label>Unit Price</label>
+            </value>
+            <value>
+                <fullName>Discount (Amt)</fullName>
+                <default>false</default>
+                <label>Discount (Amt)</label>
+            </value>
+            <value>
+                <fullName>Discount (%)</fullName>
+                <default>false</default>
+                <label>Discount (%)</label>
+            </value>
+            <value>
+                <fullName>Ownership__c</fullName>
+                <default>false</default>
+                <label>Ownership__c</label>
+            </value>
+            <value>
+                <fullName>Duration__c</fullName>
+                <default>false</default>
+                <label>Duration__c</label>
+            </value>
+            <value>
+                <fullName>Description_of_Waste__c</fullName>
+                <default>false</default>
+                <label>Description_of_Waste__c</label>
+            </value>
+            <value>
+                <fullName>Certificate_of_Disposal__c</fullName>
+                <default>false</default>
+                <label>Certificate_of_Disposal__c</label>
+            </value>
+            <value>
+                <fullName>Equipment_Style__c</fullName>
+                <default>false</default>
+                <label>Equipment_Style__c</label>
+            </value>
+            <value>
+                <fullName>Service_Style__c</fullName>
+                <default>false</default>
+                <label>Service_Style__c</label>
+            </value>
+            <value>
+                <fullName>Vendor__c</fullName>
+                <default>false</default>
+                <label>Vendor__c</label>
+            </value>
+            <value>
+                <fullName>Compactor_Type__c</fullName>
+                <default>false</default>
+                <label>Compactor_Type__c</label>
+            </value>
+            <value>
+                <fullName>Certificate_of_Destruction__c</fullName>
+                <default>false</default>
+                <label>Certificate_of_Destruction__c</label>
+            </value>
+            <value>
+                <fullName>Equipment_Schedule_Type__c</fullName>
+                <default>false</default>
+                <label>Equipment_Schedule_Type__c</label>
+            </value>
+            <value>
+                <fullName>Equipment_Size__c</fullName>
+                <default>false</default>
+                <label>Equipment_Size__c</label>
+            </value>
+            <value>
+                <fullName>Compactor_Size__c</fullName>
+                <default>false</default>
+                <label>Compactor_Size__c</label>
+            </value>
+            <value>
+                <fullName>Profile_Number__c</fullName>
+                <default>false</default>
+                <label>Profile_Number__c</label>
+            </value>
+            <value>
+                <fullName>Equipment_Side_Doors__c</fullName>
+                <default>false</default>
+                <label>Equipment_Side_Doors__c</label>
+            </value>
+            <value>
+                <fullName>Understructure__c</fullName>
+                <default>false</default>
+                <label>Understructure__c</label>
+            </value>
+            <value>
+                <fullName>Occurrence_Type__c</fullName>
+                <default>false</default>
+                <label>Occurrence_Type__c</label>
+            </value>
+            <value>
+                <fullName>Schedule_Frequency__c</fullName>
+                <default>false</default>
+                <label>Schedule_Frequency__c</label>
+            </value>
+            <value>
+                <fullName>Type_of_Lid__c</fullName>
+                <default>false</default>
+                <label>Type_of_Lid__c</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

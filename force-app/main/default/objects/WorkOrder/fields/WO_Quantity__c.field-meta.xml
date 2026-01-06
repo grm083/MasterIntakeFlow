@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WO_Quantity__c</fullName>
+    <description>Rollup Quantity</description>
+    <externalId>false</externalId>
+    <label>Work Order Quantity</label>
+    <summarizedField>WorkOrderLineItem.Quantity__c</summarizedField>
+    <summaryFilterItems>
+        <field>WorkOrderLineItem.Asset_Service_Type__c</field>
+        <operation>equals</operation>
+        <value>Disposal</value>
+    </summaryFilterItems>
+    <summaryForeignKey>WorkOrderLineItem.WorkOrderId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

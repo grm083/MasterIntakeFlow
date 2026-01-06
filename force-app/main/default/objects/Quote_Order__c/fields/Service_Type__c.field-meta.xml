@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Service Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Delivery</fullName>
+                <default>false</default>
+                <label>Delivery</label>
+            </value>
+            <value>
+                <fullName>Pickup</fullName>
+                <default>false</default>
+                <label>Pickup</label>
+            </value>
+            <value>
+                <fullName>Removal</fullName>
+                <default>false</default>
+                <label>Removal</label>
+            </value>
+            <value>
+                <fullName>Rental Charge</fullName>
+                <default>false</default>
+                <label>Rental Charge</label>
+            </value>
+            <value>
+                <fullName>Lock Delivery</fullName>
+                <default>false</default>
+                <label>Lock Delivery</label>
+            </value>
+            <value>
+                <fullName>Power Wash</fullName>
+                <default>false</default>
+                <label>Power Wash</label>
+            </value>
+            <value>
+                <fullName>Onsite Relocation</fullName>
+                <default>false</default>
+                <label>Onsite Relocation</label>
+            </value>
+            <value>
+                <fullName>Container Exchange</fullName>
+                <default>false</default>
+                <label>Container Exchange</label>
+            </value>
+            <value>
+                <fullName>Contaminated Pickup</fullName>
+                <default>false</default>
+                <label>Contaminated Pickup</label>
+            </value>
+            <value>
+                <fullName>Dig Out Service</fullName>
+                <default>false</default>
+                <label>Dig Out Service</label>
+            </value>
+            <value>
+                <fullName>Dry Run</fullName>
+                <default>false</default>
+                <label>Dry Run</label>
+            </value>
+            <value>
+                <fullName>Product Order</fullName>
+                <default>false</default>
+                <label>Product Order</label>
+            </value>
+            <value>
+                <fullName>Site Survey</fullName>
+                <default>false</default>
+                <label>Site Survey</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

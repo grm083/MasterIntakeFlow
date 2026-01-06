@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Mentioned Product Rules will be excluded from ProductRulesExecutor class(Custom Validations Controller).</description>
+    <label>ProductRulesToExclude</label>
+    <pluralLabel>ProductRulesToExclude</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

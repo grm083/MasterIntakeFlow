@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Task_Notification_On_Location</fullName>
+    <active>true</active>
+    <description>Task Notification record should not be created from Location.</description>
+    <errorConditionFormula>AND(RecordType.Name == &quot;Task Notification&quot;, NOT(ISBLANK( LocationId__c )) )</errorConditionFormula>
+    <errorDisplayField>AccountId__c</errorDisplayField>
+    <errorMessage>Please use Client Account to create Task Notification Rule.</errorMessage>
+</ValidationRule>

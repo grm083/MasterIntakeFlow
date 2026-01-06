@@ -1,0 +1,18 @@
+<!--
+	 * SDT-19653
+	 * This component is used for Resync Quote
+	 * @owner: Arvind Kumar
+-->
+<!-- Removed Last_Submitted_Modified_User__c from fields for Story 23394 -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >
+    <aura:attribute name="recordQuote" type="SBQQ__Quote__c" />
+    
+    <force:recordData aura:id="recordEditor" 
+                      fields="Resubmit_Flag__c,ErrorComments__c,Integration_Status__c"
+                      recordId="{!v.recordId}"
+                      targetFields="{!v.recordQuote}"
+                      recordUpdated="{!c.handleSaveRecord}" 
+                      mode="EDIT" />
+	
+</aura:component>

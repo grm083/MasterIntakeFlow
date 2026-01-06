@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Vertical</fullName>
+        <default>false</default>
+        <label>Vertical</label>
+    </customValue>
+    <customValue>
+        <fullName>Horizontal</fullName>
+        <default>false</default>
+        <label>Horizontal</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-Crusher</fullName>
+        <default>false</default>
+        <label>Pre-Crusher</label>
+    </customValue>
+    <customValue>
+        <fullName>Apartment Style</fullName>
+        <default>false</default>
+        <label>Apartment Style</label>
+    </customValue>
+    <masterLabel>Compactor Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

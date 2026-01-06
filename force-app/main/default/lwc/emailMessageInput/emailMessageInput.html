@@ -1,0 +1,17 @@
+<template>
+    <div class="">
+        <div class="input-field">
+          <lightning-input type="text" id="emailinput" class="email-input slds-size_1-of-2" name="typeRecipients" placeholder="Enter the email address and press enter." value={typedValue} onkeypress={checkEnter}></lightning-input>
+        </div>
+      </div>
+      <div class="slds-form-element slds-form-element_horizontal">
+        <label class="slds-form-element__label"></label>
+         <div class="input-field"  >
+          <div style="display: inline-block;">
+            <template for:each={typedValues} for:item="val">
+              <lightning-pill key={val} name={val} label={val} onremove={handleRemoveForTextBox}></lightning-pill>
+            </template>
+          </div>
+        </div> 
+      </div> 
+</template>

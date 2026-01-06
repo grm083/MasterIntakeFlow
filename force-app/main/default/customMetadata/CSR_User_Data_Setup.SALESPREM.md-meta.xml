@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SALESPREM</label>
+    <protected>false</protected>
+    <values>
+        <field>Team_Acess__c</field>
+        <value xsi:type="xsd:string">Sales Home Depot Projects;Sales Home Depot Team;Sales Dollar Tree/Family Dollar Team;Sales Amazon Team;Sales M&amp;I Team;Sales Greystar Team;Sales Broker Team</value>
+    </values>
+    </CustomMetadata>

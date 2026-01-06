@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Input_Values_for_Picklist</fullName>
+    <active>true</active>
+    <description>Restricts the use of input values when the input type is not picklist.</description>
+    <errorConditionFormula>AND( NOT(ISBLANK(Input_Values__c)),NOT(ISPICKVAL( Input_Type__c , &apos;Picklist&apos;)))</errorConditionFormula>
+    <errorMessage>You may not provide a list of values when the input type is not a picklist.</errorMessage>
+</ValidationRule>

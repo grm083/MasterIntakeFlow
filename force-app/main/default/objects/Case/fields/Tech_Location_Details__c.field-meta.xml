@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tech_Location_Details__c</fullName>
+    <description>This field is used to fetch Location details wherein will be used in Email Templates</description>
+    <externalId>false</externalId>
+    <formula>IF(AND(NOT(ISBLANK(Location__r.Location_Code__c)), NOT(ISBLANK(Location__r.Location_Code__c)), Location__r.Name == Location__r.Location_Code__c),&quot;&quot;,
+Location__r.Location_Code__c+&quot;,&quot;+ BR()) +
+Location__r.ShippingStreet+ BR() +
+Location__r.ShippingCity+&quot;, &quot;+Location__r.ShippingState + BR() +
+Location__r.ShippingPostalCode+&quot;, &quot;+Location__r.ShippingCountry</formula>
+    <label>Location Details</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

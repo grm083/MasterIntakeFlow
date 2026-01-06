@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Minimum_Quantity_only_for_Disposal</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+    AND(
+        NOT(
+            ISBLANK(CostMinQuantity__c)
+        ), 
+        SBQQ__ProductCode__c &lt;&gt; &quot;DSP&quot;
+    ), 
+    AND(
+        NOT(
+            ISBLANK(PriceMinQuantity__c)
+        ),  
+        SBQQ__ProductCode__c &lt;&gt; &quot;DSP&quot;
+    )
+)</errorConditionFormula>
+    <errorMessage>Minimum quantities can only be specified for Disposal quote lines</errorMessage>
+</ValidationRule>

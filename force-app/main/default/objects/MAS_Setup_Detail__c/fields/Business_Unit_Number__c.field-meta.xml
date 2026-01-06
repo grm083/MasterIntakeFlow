@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Unit_Number__c</fullName>
+    <description>The business unit number associated to the vendor account.  This value is listed as a string due to the existing field on the account.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Business Unit number associated with the Vendor Id.  Business units are used to derive library and company codes.</inlineHelpText>
+    <label>Business Unit Number</label>
+    <length>5</length>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

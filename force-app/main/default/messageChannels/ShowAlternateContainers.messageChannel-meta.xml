@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Lightning Message Channel communicate between Aura and LWC</description>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>Flag value to show and hide Alternate Containers/Available Products</description>
+        <fieldName>showAlternateContainers</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Parent Quote Line data</description>
+        <fieldName>currentProduct</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Updated Parent Quote Line data</description>
+        <fieldName>updatedProduct</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Active tab name/Id</description>
+        <fieldName>activeTabId</fieldName>
+    </lightningMessageFields>
+    <masterLabel>ShowAlternateContainers</masterLabel>
+</LightningMessageChannel>

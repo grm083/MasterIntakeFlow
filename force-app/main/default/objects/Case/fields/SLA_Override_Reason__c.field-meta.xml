@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SLA_Override_Reason__c</fullName>
+    <description>The field provide SLA Override reason in the case when the Service Date is not equal to the SLA Date.</description>
+    <externalId>false</externalId>
+    <label>SLA Override Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Repairs</fullName>
+                <default>false</default>
+                <label>Repairs</label>
+            </value>
+            <value>
+                <fullName>Corporate Visit/Walkthrough</fullName>
+                <default>false</default>
+                <label>Corporate Visit/Walkthrough</label>
+            </value>
+            <value>
+                <fullName>Power Outage</fullName>
+                <default>false</default>
+                <label>Power Outage</label>
+            </value>
+            <value>
+                <fullName>Potential Violation</fullName>
+                <default>false</default>
+                <label>Potential Violation</label>
+            </value>
+            <value>
+                <fullName>Weather/Natural Disaster</fullName>
+                <default>false</default>
+                <label>Weather/Natural Disaster</label>
+            </value>
+            <value>
+                <fullName>Internal Error</fullName>
+                <default>false</default>
+                <label>Internal Error</label>
+            </value>
+            <value>
+                <fullName>Vendor Error</fullName>
+                <default>false</default>
+                <label>Vendor Error</label>
+            </value>
+            <value>
+                <fullName>Vendor not able to meet SLA</fullName>
+                <default>false</default>
+                <label>Vendor not able to meet SLA</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

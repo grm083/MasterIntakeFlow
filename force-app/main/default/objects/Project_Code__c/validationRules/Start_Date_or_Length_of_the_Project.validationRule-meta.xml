@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_Date_or_Length_of_the_Project</fullName>
+    <active>false</active>
+    <description>An user should enter either Start Date or Length of the Project. Cannot enter both.</description>
+    <errorConditionFormula>AND(  NOT(ISBLANK( Effective_Date__c )),
+NOT( ISBLANK(Length_of_Project_Days__c ) ) )</errorConditionFormula>
+    <errorDisplayField>Client_Account__c</errorDisplayField>
+    <errorMessage>Please enter either Start date or Length of the Project</errorMessage>
+</ValidationRule>

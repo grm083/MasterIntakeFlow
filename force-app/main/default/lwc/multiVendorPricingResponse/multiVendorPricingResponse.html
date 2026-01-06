@@ -1,0 +1,539 @@
+<template>
+    <div class="slds-truncate" style="height: fit-content;">
+        <div if:true={showSpinner}>
+            <lightning-spinner variant="base" size="medium"></lightning-spinner>
+        </div>
+    <template if:true={selectAlertMessage}>
+        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <p>Please Select a Vendor these bundles :<span
+                    style="background-color:#e8f5e6;padding: 4px; color: black;">{unSelectedBundle}</span></p>
+        </div>
+    </template>
+
+    <!-- multi vendor prcing response-->
+    <div class="setHeight slds-truncate slds-col">
+        <div class="page-section page-header">
+            <p style="text-align:center;font-size: 20px; margin-bottom: 1px;"><b>Pricing Response</b> </p>
+        </div>
+            <lightning-accordion onsectiontoggle={handleAccordionActive}>
+                
+                <template if:true={isWrapperList}>
+                    <b>Please wait for the cost/price information to load, then refresh the page.</b>
+                </template>
+                <template if:false={isWrapperList}>
+                <template for:each={wrapperPRList} for:item="bundle">
+                    <div key={bundle.id} class="slds-box">
+                        <lightning-accordion-section name={bundle.BundleId} label={bundle.ProductName} class="accSection">
+                            <div>
+                            <div class="slds-clearfix">
+                                <template if:false={isDefaultVendor}>
+                                    <lightning-button variant="brand" data-name={bundle.ProductName} label="Show All Responses" title="Show All Responses" onclick={showMultiVendors} disabled={bundle.checkShowVendor} class="slds-float_right showButton">
+                                    </lightning-button>
+                                    <!-- <template lwc:if={bundle.displayShowVendor}>
+                                        
+                                    </template>
+                                    <template lwc:else>
+                                        <template lwc:if={isShowVendorButton}>
+                                            <lightning-button variant="brand" data-name={bundle.ProductName} label="Show All Responses" title="Show All Responses" onclick={showMultiVendors} disabled={bundle.checkShowVendor} class="slds-float_right showButton">
+                                            </lightning-button>
+                                        </template>
+                                        <template lwc:else>
+                                            <div style="text-align: center;color:#92D050">
+                                                <p><b><u>The pricing has been successfully changed and updated for the product.</u></b></p>
+                                            </div>
+                                        </template>
+                                    </template> -->
+                                </template>
+                                <template if:true={isDefaultVendor}>
+                                    <lightning-button variant="brand" label="Hide Responses" title="Hide Responses" onclick={closeMultiVendors} class="slds-float_right showButton">
+                                    </lightning-button>
+                                </template>
+                            </div>
+                            <template if:true={bundle.isProbelmMsg}>
+                                <div class="middleDiv">
+                                    <p style="color: brown; width:90%;">Real Time Pricing could not be determined for
+                                        this quote.
+                                    </p>
+                                    <br>
+                                    <table style="table-layout:fixed;width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="slds-truncate"><label>BundleID :</label></td>
+                                                <td class="slds-truncate"><a data-id={bundle.BundleLink}
+                                                        onclick={navigateQLObject}> {bundle.BundleID}</a>
+                                                </td>
+                                                
+                                                <td class="slds-truncate"><label>PricingReqId :</label>
+                                                </td>
+                                                <td class="slds-truncate"><a data-id={bundle.PricingRequestLink}
+                                                        onclick={navigatePRObject}>
+                                                        {bundle.PricingReqId}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="slds-truncate">
+                                                    <label>Problem
+                                                        :</label>
+                                                </td>
+                                                <td style="color: red;">
+                                                    {bundle.problemMessage}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </template>
+                            <template if:true={isVendorMismatchError}>
+                                <p style="text-align:left;color:#FF9033;font-size: 16px; margin-bottom: 1px;">
+                                    <b><lightning-textarea value={label.Vendor_Mismatch}></lightning-textarea></b>
+                                </p>
+                                <hr />
+                            </template>
+                            <template if:true={isProcurementErrorMessage}>
+                                <p style="text-align:left;color:#FF9033;font-size: 16px; margin-bottom: 1px;">
+                                    <!-- <b><lightning-textarea value={bundle.ProcurementErrorMessage} aria-readonly="true" placeholder="Procurement Error Message is empty"></lightning-textarea></b> -->
+                                    <b><label>{bundle.ProcurementErrorMessage}</label></b>
+                                </p>
+                            </template>
+
+                            <template if:true={isCostOnlyMessage}>
+                                <div class="page-section page-header">
+                                    <p style="text-align:left;color:#FF9033;font-size: 16px; margin-bottom: 1px;">
+                                        <!-- <b><lightning-textarea value={costOnlyMessage}></lightning-textarea></b> -->
+                                        <b><label>{costOnlyMessage}</label></b>
+                                    </p>
+                                </div>
+                            </template>
+                            
+                            
+                                <!--<template if:false={isProblemErrorMessage}>-->
+                                    <div>
+                                        <template for:each={bundle.ProductDetailsList} for:item="pr">
+                                            <template if:true={pr.isGreenPage}>
+                                                <div key={pr.id}>
+                                                    <template if:true={isgrpPagination}>
+                                                        <div class="sequenceDiv">
+                                                            <table style="width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="text-align:left;">
+                                                                                <lightning-input label="Select Pricing Response"
+                                                                                    class="slds-p-left_xx-large" type="checkbox"
+                                                                                    name={bundle.ProductName}
+                                                                                    value={pr.sequence}
+                                                                                    checked={pr.IsPriceSelected}
+                                                                                    onchange={handleSelectVendor}>
+                                                                                </lightning-input>
+                                                                        </td>
+                                                                        <td style="text-align: right;">
+                                                                            <template for:each={bundle.ProductDetailsList}
+                                                                                for:item="prd">
+                                                                                <div key={prd.id} class="pagination"
+                                                                                    style="text-align: right;">
+                                                                                    <!--<lightning-tabset active-tab-value="1">
+                                                                                        <lightning-tab label={prd.sequence} data-name={bundle.ProductName} value={prd.sequence} onclick={handlevendors}>>
+                                                                                            One Content {prd.sequence} ::: {bundle.ProductName}
+                                                                                        </lightning-tab>
+                                                                                    </lightning-tabset>-->
+                                                                                    <a data-value={prd.sequence}
+                                                                                        data-name={bundle.ProductName}
+                                                                                        href="javascript:void(0)"
+                                                                                        onclick={handlevendors}>{prd.sequence}</a>
+                                                                                </div>
+                                                                            </template>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </template>
+                                                    <template for:each={pr.GreenPages} for:item="grp">
+                                                        <div key={grp.id}>
+                                                            <table style="table-layout:fixed;width: 100%;">
+                                                                <tbody>
+                                                                    <tr >
+                                                                        <td><p><b>{grp.GPLabelName}</b></p></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;"><label>Market: </label></td>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;" title={grp.Market}>{grp.Market}</td>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;"><label>Message :</label></td>
+                                                                        <td class="slds-truncate wraptext" style="padding:1px;height:40px;" title={grp.Message}> {grp.Message}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;"><label>Zone Name: </label></td>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;" title={grp.ZoneName}>{grp.ZoneName}</td>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;"><label>Zone Description: </label></td>
+                                                                        <td class="slds-truncate wraptext" style="padding:1px;height:40px;" title={grp.ZoneDescription}>{grp.ZoneDescription}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;"><label>GPLabelLink :</label></td>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;" title={grp.GPLabelLink}>
+                                                                            <a href={grp.GPLabelLink} target="_blank">{grp.GPLabelLink}</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;"><label>Notes: </label></td>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;" title={grp.ZoneNote}>{grp.ZoneNote}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                                
+                                            </template>
+                                            
+                                            <template if:false={pr.isGreenPage}>
+                                            <template if:true={pr.IsPaginated}>
+                                                <div key={pr.id} class="vendorDiv">
+                                                <template if:true={isDefaultVendor}>
+                                                    <div class="sequenceDiv">
+                                                        <table style="width: 100%;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="text-align:left;">
+                                                                            <lightning-input label="Select Pricing Response"
+                                                                                class="slds-p-left_xx-large" type="checkbox"
+                                                                                name={bundle.ProductName}
+                                                                                value={pr.sequence}
+                                                                                checked={pr.IsPriceSelected}
+                                                                                onchange={handleSelectVendor}>
+                                                                            </lightning-input>
+                                                                    </td>
+                                                                    <td style="text-align: right;">
+                                                                        <template for:each={bundle.ProductDetailsList}
+                                                                            for:item="prd">
+                                                                            <div key={prd.id} class="pagination"
+                                                                                style="text-align: right;">
+                                                                                <!--<lightning-tabset active-tab-value="1">
+                                                                                    <lightning-tab label={prd.sequence} data-name={bundle.ProductName} value={prd.sequence} onclick={handlevendors}>>
+                                                                                        One Content {prd.sequence} ::: {bundle.ProductName}
+                                                                                    </lightning-tab>
+                                                                                </lightning-tabset>-->
+                                                                                <a data-value={prd.sequence}
+                                                                                    data-name={bundle.ProductName}
+                                                                                    href="javascript:void(0)"
+                                                                                    onclick={handlevendors}>{prd.sequence}</a>
+                                                                            </div>
+                                                                        </template>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </template>
+                                                    <br />
+                                                    <template if:false={pr.isProblemErrorMessage}>
+                                                    <div>
+                                                        <table style="table-layout:fixed;width: 100%;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">BundleID:</td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;;">
+                                                                        <a data-id={bundle.BundleLink} href="javascript:void(0)" onclick={navigateQLObject}>{bundle.BundleID}</a>
+                                                                    </td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;;">PricingReqId :</td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">
+                                                                        <a onclick={navigatePRObject} data-id={bundle.PricingRequestLink}>{bundle.PricingReqId}</a>
+                                                                    </td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">SourceCode :</td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.SourceCode}>{pr.SourceCode}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">MAS
+                                                                        Unique Id :</td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.MASUniqueId}>
+                                                                        {pr.MASUniqueId}</td>
+
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">Start
+                                                                        Date :</td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.StartDate}>
+                                                                        {pr.StartDate}</td>
+
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">End Date
+                                                                        :</td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.EndDate}>
+                                                                        {pr.EndDate}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">Vendor :
+                                                                    </td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.Vendor}>
+                                                                        {pr.Vendor}</td>
+                                                                    <template if:true={isRollOff}>
+                                                                        <td class="slds-truncate"><label>RateTypeDisposal
+                                                                                :</label></td>
+                                                                        <td class="slds-truncate" title={pr.RateTypeDisposal}>{pr.RateTypeDisposal}</td>
+
+                                                                        <td class="slds-truncate"><label>RateTypeHaul
+                                                                                :</label></td>
+                                                                        <td class="slds-truncate" title={pr.RateTypeHaul}>{pr.RateTypeHaul}</td>
+                                                                    </template>
+                                                                    <template if:false={isRollOff}>
+                                                                        <td class="slds-truncate"><label>RateTypePickup
+                                                                                :</label></td>
+                                                                        <td class="slds-truncate" title={pr.RateTypePickup}>{pr.RateTypePickup}</td>
+
+                                                                        <td class="slds-truncate">&nbsp;</td>
+                                                                        <td class="slds-truncate">&nbsp;</td>
+                                                                    </template>
+                                                                </tr>
+                                                                <tr>
+                                                                    <template if:true={pr.isFacilityId}>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;">
+                                                                            Facility Id :</td>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.FacilityId}>
+                                                                            {pr.FacilityId}</td>
+                                                                    </template>
+                                                                    <template if:true={pr.IsPriceChangeRequest}>
+                                                                        <td class="slds-truncate"><label>Baseline Id
+                                                                                :</label></td>
+                                                                        <td class="slds-truncate" title={pr.BaselineId}>{pr.BaselineId}</td>
+                                                                    </template>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">Comments
+                                                                        :</td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.VendorComments}>
+                                                                        {pr.VendorComments}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;">Rank
+                                                                        :</td>
+                                                                    <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.VendorRank}>
+                                                                        {pr.VendorRank}</td>
+                                                                </tr>
+                                                                <template if:true={pr.IsProjectRequest}>
+                                                                
+                                                                    <tr>
+                                                                        <td class="slds-truncate" style="padding:1px;height:40px;"><label>Customer Price
+                                                                                Type :</label></td>
+                                                                        <td class="slds-truncate" title={pr.CustomerPriceType} style="padding:1px;height:40px;">{pr.CustomerPriceType}</td>
+                                                                        <template if:true={isRollOff}>
+                                                                            <td class="slds-truncate" style="padding:1px;height:40px;"><label>Haul Record Id
+                                                                                    :</label></td>
+                                                                            <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.HaulRecordId}>{pr.HaulRecordId}</td>
+
+                                                                            <td class="slds-truncate" style="padding:1px;height:40px;"><label>Disposal
+                                                                                    Record Id :</label></td>
+                                                                            <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.DisposalRecordId}>{pr.DisposalRecordId}
+                                                                            </td>
+                                                                        </template>
+                                                                        <template if:false={isRollOff}>
+                                                                            <td class="slds-truncate" style="padding:1px;height:40px;"><label>Pickup Record
+                                                                                    Id :</label></td>
+                                                                            <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.PickupRecordId}>{pr.PickupRecordId}
+                                                                            </td>
+
+                                                                            <td class="slds-truncate" style="padding:1px;height:40px;"><label>Extra Pickup
+                                                                                    Record Id :</label></td>
+                                                                            <td class="slds-truncate" style="padding:1px;height:40px;" title={pr.ExtraPickupRecordId}>
+                                                                                {pr.ExtraPickupRecordId}</td>
+                                                                        </template>
+                                                                    </tr>
+                                                                </template>
+                                                            </tbody>
+                                                        </table>
+                                                    
+                                                    <br />
+                                                    <hr />
+                                                    
+                                                        <table class="slds-table slds-table--bordered"
+                                                            style="table-layout:fixed">
+                                                            <thead style="width: 100%">
+                                                                <tr>
+                                                                    <th scope="col" style="width: 15%;">
+                                                                        <div class="slds-truncate">
+                                                                            <p>
+                                                                                <b>ServiceName</b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="col" style="width: 15%;">
+                                                                        <div class="slds-truncate">
+                                                                            <p>
+                                                                                <b>Cost Steps</b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="col" style="width: 15%;">
+                                                                        <div class="slds-truncate">
+                                                                            <p>
+                                                                                <b>CostUOM</b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="col" style="width: 5%;">
+                                                                        <div class="slds-truncate">
+                                                                            <p>
+                                                                                <b></b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="col" style="width: 10%;">
+                                                                        <div class="slds-truncate">
+                                                                            <p>
+                                                                                <b>Cost</b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="col" style="width: 15%;">
+                                                                        <div class="slds-truncate ">
+                                                                            <p>
+                                                                                <b>Price Steps</b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="col" style="width: 10%;">
+                                                                        <div class="slds-truncate">
+                                                                            <p>
+                                                                                <b>PriceUOM</b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="col" style="width: 5%;">
+                                                                        <div class="slds-truncate">
+                                                                            <p>
+                                                                                <b></b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="col" style="width: 10%;">
+                                                                        <div class="slds-truncate">
+                                                                            <p>
+                                                                                <b>Price</b>
+                                                                            </p>
+                                                                        </div>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <template for:each={pr.ServiceCharges} for:item="sc">
+                                                                <tbody key={sc.id}>
+                                                                    <template if:false={sc.IsSteppedRate}>
+                                                                        <tr>
+                                                                            <td class="slds-truncate">{sc.ServiceName}</td>
+                                                                            <td class="slds-truncate"></td>
+                                                                            <td class="slds-truncate">{sc.CostUOM}</td>
+                                                                            <td style="text-align: left;">
+                                                                                {sc.CostValueSymbol}</td>
+                                                                            <td style="text-align: left;" class="slds-truncate">{sc.Cost}
+                                                                                {sc.CostValuePercent}</td>
+                                                                            <td class="slds-truncate"></td>
+                                                                            <td class="slds-truncate">{sc.PriceUOM}</td>
+                                                                            <td style="text-align: left;" class="slds-truncate">
+                                                                                {sc.PriceValueSymbol}</td>
+                                                                            <td style="text-align: left;" class="slds-truncate">{sc.Price}
+                                                                                {sc.PriceValuePercent}</td>
+                                                                        </tr>
+                                                                    </template>
+                                                    
+                                                                    <template if:true={sc.IsSteppedRate}>
+                                                                        <template for:each={sc.StepRates} for:item="sr">
+                                                                            <tr key={sr.id}>
+                                                                                <td class="slds-truncate" title={sc.ServiceName}>{sc.ServiceName}</td>
+                                                                                <td style="text-align: left;" class="slds-truncate" title={sr.StepCostRange}>{sr.StepCostRange}</td>
+                                                                                <template lwc:if={isStepCost}>
+                                                                                    <td style="text-align: left;" class="slds-truncate" title={sr.CostUOM}>{sr.CostUOM}</td>
+                                                                                    <td style="text-align: left;" class="slds-truncate" title={sr.CostValueSymbol}>{sr.CostValueSymbol}</td>
+                                                                                    <td class="slds-truncate" title={sr.StepCost}>{sr.StepCost} {sc.CostValuePercent}</td>
+                                                                                </template>
+                                                                                <template lwc:else>
+                                                                                    <td style="text-align: left;" class="slds-truncate"></td>
+                                                                                    <td style="text-align: left;" class="slds-truncate"></td>
+                                                                                    <td style="text-align: left;" class="slds-truncate"></td>
+                                                                                </template>
+                                                                                <td class="slds-truncate" title={sr.StepPriceRange}>{sr.StepPriceRange}</td>
+                                                                                <template lwc:if={isStepPrice}>
+                                                                                    <td style="text-align: left;" class="slds-truncate" title={sc.PriceUOM}>{sc.PriceUOM}</td>
+                                                                                    <td style="text-align: left;" class="slds-truncate" title={sr.PriceValueSymbol}>
+                                                                                        {sr.PriceValueSymbol}
+                                                                                    </td>
+                                                                                    <td class="slds-truncate" title={sr.StepPrice}>
+                                                                                        {sr.StepPrice} {sc.PriceValuePercent}
+                                                                                    </td>
+                                                                                </template>
+                                                                                <template lwc:else>
+                                                                                    <td style="text-align: left;" class="slds-truncate"></td>
+                                                                                    <td style="text-align: left;" class="slds-truncate"></td>
+                                                                                    <td style="text-align: left;" class="slds-truncate"></td>
+                                                                                </template>                                                                            </tr>
+                                                                        </template>
+
+                                                                    </template>
+                                                                </tbody>
+                                                            </template>
+                                                        </table>
+                                                    </div>
+                                                </template>
+
+                                                <template if:true={pr.isProblemErrorMessage}>
+                                                    <div class="middleDiv">
+                                                    <p style="color: brown; width:90%;">Real Time Pricing could not be determined for
+                                                        this quote.
+                                                    </p>
+                                                    <br>
+                                                    <table style="table-layout:fixed;width: 100%;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="slds-truncate"><label>BundleID :</label></td>
+                                                                <td class="slds-truncate"><a data-id={bundle.BundleLink}
+                                                                        onclick={navigateQLObject}> {bundle.BundleID}</a>
+                                                                </td>
+                                                                
+                                                                <td class="slds-truncate"><label>PricingReqId :</label>
+                                                                </td>
+                                                                <td class="slds-truncate"><a data-id={bundle.PricingRequestLink}
+                                                                        onclick={navigatePRObject}>
+                                                                        {bundle.PricingReqId}</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="slds-truncate">
+                                                                    <label>Problem
+                                                                        :</label>
+                                                                </td>
+                                                                <td class="wraptext" style="color: red;">
+                                                                    {pr.vendorErrorMessage}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                </template>
+                                                </div>
+                                            </template> 
+                            </template>
+                                        </template>
+                                    </div>
+                                <!--</template>-->
+                            <br />
+                            <template if:true={isDefaultVendor}>
+                                <!-- <template if:false={isProblemErrorMessage}> -->
+                                <div class="slds-clearfix">
+                                    <lightning-button data-name={bundle.ProductName} variant="brand" label="Save" title="Save" onclick={handleVendorSave}
+                                        class="slds-align_absolute-center"></lightning-button>
+                                </div>
+                                <!-- </template> -->
+                            </template>  
+                        </div>
+                        </lightning-accordion-section>
+                    </div>
+                </template>
+                </template>
+            </lightning-accordion>
+        <!--<template if:true={isProductDetails}>
+            <lightning-accordion class="example-accordion" active-section-name="B">
+                <template if:true={listAssetError}>
+                    <template for:each={wrapperPRList} for:item="pr">
+                        <lightning-accordion-section name={pr.BundleId} label={pr.ProductName} key={pr.id}>
+                            <p style="text-align:left;color:#FF9033;font-size: 16px; margin-bottom: 1px;">
+                                <b><lightning-textarea value={pr.ProcurementErrorMessage}></lightning-textarea></b>
+                            </p>
+                        </lightning-accordion-section>
+                    </template>
+                </template>
+            </lightning-accordion>
+        </template>-->
+    </div>
+
+    </div>
+</template>

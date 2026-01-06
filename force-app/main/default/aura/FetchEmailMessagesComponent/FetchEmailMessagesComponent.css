@@ -1,0 +1,24 @@
+.THIS .fontwhite>label {
+    color : white !important;
+    
+}
+.THIS .fontwhiteDate>lightning-datepicker>div>label {
+    color : white !important;
+    
+}
+
+.THIS .customButton {
+   background-color: #fecb00;
+   color: black;
+}
+
+.THIS .slds-button_icon-bare{
+    display: none;
+}
+
+.THIS .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}

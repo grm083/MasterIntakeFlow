@@ -1,0 +1,10 @@
+<apex:component controller="GetChildCase" access="global">
+    <apex:outputText style="text-align: center;font-family:Arial;" value="Thank you,"/><br/>
+    <br/><b><apex:outputText style="text-align: center;color:green;font-family:Arial;" value="{!user.FirstName + ' ' + user.LastName}"/></b><br/>
+     <br/><apex:outputText style="text-align: center;font-family:Arial;" value="Customer Service Representative"/>
+     <br/><apex:outputlink style="text-align:center;font-family:Arial;" value="mailto:{!user.Department_Email__c}">{!user.Department_Email__c}</apex:outputlink><br/>
+     <apex:outputText style="text-align: center;font-family:Arial;" value="WM National Accounts"/><br/>
+    <apex:outputText style="text-align: center;font-family:Arial;" value="1 Griffin Road N"/><br/>
+    <apex:outputText style="text-align: center;font-family:Arial;" value="Suite 4C"/><br/>
+    <apex:outputText style="text-align: center;font-family:Arial;" value="Windsor, CT 06095"/><br/>
+</apex:component>

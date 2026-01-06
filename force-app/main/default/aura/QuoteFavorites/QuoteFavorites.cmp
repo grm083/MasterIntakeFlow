@@ -1,0 +1,177 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+    controller="QuoteFavoritesController">
+    <!--Attributes for handing product details between screen transitions-->
+    <aura:attribute name="productId" type="string" default="" />
+    <aura:attribute name="productSize" type="string" default="" />
+    <aura:attribute name="wasteCategory" type="string" default="" />
+    <aura:attribute name="wasteStream" type="string" default="" />
+    <!--Attributes from queries to display details in the component-->
+    <aura:attribute name="productList" type="Product2[]" />
+    <aura:attribute name="wasteCategoryList" type="SBQQ__ProductOption__c[]" />
+    <aura:attribute name="wasteStreamList" type="SBQQ__ProductOption__c[]" />
+    <aura:attribute name="eligibleSizes" type="Object" />
+    <!--UI/UX Components, unrelated to functionality but provides guidance-->
+    <aura:attribute name='currentStage' type='string' default='1' />
+    <!--Datatable selections made by user-->
+    <aura:attribute name='selectedProduct' type='Object' default='[]' />
+    <aura:attribute name="selectedMaterial" type="String" default="" />
+    <aura:attribute name="selectedStream" type="String" default="" />
+    <aura:attribute name="productFavorite" type="Object" />
+
+    <aura:attribute name="createdProduct" type="string" default="" />
+
+    <aura:attribute name="showSpinner" type="boolean" default="false" />
+    <aura:attribute name="showFavorites" type="boolean" default="false" />
+    <aura:attribute name="selectedProductId" type="string"/>
+    <aura:attribute name="selectedProductEquipmentSize" type="string" default=""/>
+    <aura:attribute name="selectedProductMaterialType" type="string" default=""/>
+    <!--The purpose of this component is to simplify the container selection protocol.
+    This leverages information derived from the product catalog as defined by its controller.
+    It follows the path - Select Container, Select Waste Stream, Select Size.
+    This is entirely embedded in a card to ensure its portability amongst components and viability
+    as a standalone component.
+    Logic to display this component is determined by the CE AM Wrapper Component-->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:registerEvent name="UpdateWrapperState" type="c:UpdateWrapperStateEvent" />
+    <aura:registerEvent name="refreshConfiguredProducts" type="c:RefreshConfiguredProducts" />
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" alternativeText="Loading Configuration" class="slds-hide" />
+    <lightning:card>
+        <lightning:layout multipleRows="true" verticalAlign="stretch">
+            <lightning:layoutItem size="12" class="slds-box slds-align_absolute-center slds-text-title_caps slds-p-around_xx-small">
+                <b>WMSBS Configuration Wizard</b>
+            </lightning:layoutItem> 
+            <!--Product Selection broken into three parts-->
+            <lightning:layoutItem size="6" flexibility="auto" class="slds-p-around_xx-small" >
+                <!--Product Selection-->
+                <aura:if isTrue="{!v.currentStage == '1'}">
+                    <lightning:layout multipleRows="true" verticalAlign="stretch" horizontalAlign="spread">
+                        <lightning:layoutItem size="12" class="slds-box greenBox slds-align_absolute-center slds-text-title_caps">
+                            Product Selection
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xx-small">
+                            <div onkeyup="{!c.searchProductTable}" class="slds-p-around_xx-small">
+                                <lightning:input aura:id="searchProducts" name="searchProducts" label="Product Search" placeholder="Search for your product here..." />
+                            </div>
+                        </lightning:layoutItem>
+                        <div class="slds-p-around_xx-small maxHeight slds-scrollable">
+                            <aura:iteration items="{!v.productList}" var="product">
+                                <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xx-small">
+                                    <lightning:button name="{!product.Name}" value="{!product}"
+                                                        label="{!product.Name}" variant="brand-outline"
+                                                        class="slds-size_12-of-12 slds-button_stretch"
+                                                        onclick="{!c.selectProduct}" />
+                                </lightning:layoutItem>
+                            </aura:iteration>
+                        </div>
+                    </lightning:layout>
+                </aura:if>
+            </lightning:layoutItem>
+
+            <!--Showing information about the selected product-->
+            <lightning:layoutItem size="6" flexibility="auto" alignmentBump="right" class="slds-p-around_xx-small">
+                <aura:if isTrue="{!v.selectedProduct != '[]'}">
+                    <lightning:layout multipleRows="true" verticalAlign="stretch" horizontalAlign="spread">
+                        <aura:if isTrue="{!v.showSpinner}">
+                            <lightning:layoutItem size="12" class="slds-box greenBox slds-align_absolute-center slds-text-title_caps">
+                                Loading Configuration
+                            </lightning:layoutItem>
+                            <!-- <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xx-small">
+                                <lightning:spinner alternativeText="Loading Configuration" size="medium" />
+                            </lightning:layoutItem> -->
+                            <aura:set attribute="else">
+                                <lightning:layoutItem size="12" class="slds-box greenBox slds-align_absolute-center slds-text-title_caps">
+                                    <b>Selected Product:</b>&ensp; {!v.selectedProduct.Name}
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xx-small">
+                                    <b>Product Code:</b>&ensp; {!v.selectedProduct.ProductCode}
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xx-small">
+                                    <b>Description:</b>&ensp; {!v.selectedProduct.Description}
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" class="slds-box greenBox slds-align_absolute-center slds-text-title_caps">
+                                    Most Common Configurations
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xx-small favHeight slds-scrollable">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Action">Action</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Equipment Size">Equipment Size</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Material Type">Material Type</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Container Type">Container Type</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <aura:iteration items="{!v.productFavorite}" var="item">
+                                                <tr class="slds-hint-parent">
+                                                    <th data-label="Action" scope="row">
+                                                        <div class="slds-truncate" title="{!item.favoriteId}">
+                                                            <lightning:buttonIcon iconName="utility:add" variant="bare" value="{!item.favoriteId}" onclick="{!c.addFavorite}" />
+                                                        </div>
+                                                    </th>
+                                                    <td data-label="Equipment Size">
+                                                        <div class="slds-truncate">{!item.equipmentSize}</div>
+                                                    </td>
+                                                    <td data-label="Material Type">
+                                                        <div class="slds-truncate">{!item.materialType}</div>
+                                                    </td>
+                                                    <td data-label="Container Type">
+                                                        <div class="slds-truncate">{!item.containerType}</div>
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </tbody>
+                                    </table>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" class="slds-box greenBox slds-align_absolute-center slds-text-title_caps">
+                                    Manual Configuration
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xxx-small">
+                                    <lightning:select name="wasteStream" label="Select Waste Stream" required="true" aura:id="wasteList" value="{!v.selectedProductMaterialType}">
+                                        <aura:iteration items="{!v.wasteCategoryList}" var="item">
+                                            <option value="{!item.Id}">{!item.SBQQ__OptionalSKU__r.Name}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xxx-small">
+                                    <lightning:select name="size" label="Select Size" required="true" aura:id="sizeList" value="{!v.selectedProductEquipmentSize}">
+                                        <aura:iteration items="{!v.eligibleSizes}" var="item" indexVar="key">
+                                            <option value="{!item.key}">{!item.value}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                                    <lightning:button label="Back"  onclick="{!c.back}" class="slds-float_left" />
+                                    <lightning:button label="Next" variant="brand" onclick="{!c.saveValues}" class="slds-float_right" />
+                                </lightning:layoutItem>
+                            </aura:set>
+                        </aura:if>
+                    </lightning:layout>
+                </aura:if>
+            </lightning:layoutItem>
+            <!--<lightning:layoutItem size="12" flexibility="auto" alignmentBump="right" class="slds-p-around_xx-small" >
+                Navigation items for this selection component
+                <aura:if isTrue="{!v.currentStage != '1'}" >
+                    <lightning:button label="Previous" variant="brand" name="navBack" onclick="{!c.navClick}" class="fancyButton" />
+                </aura:if>
+                <aura:if isTrue="{!v.currentStage != '4'}" >
+                    <lightning:button label="Next" variant="brand" name="navNext" onclick="{!c.navClick}" class="fancyButton" />
+                </aura:if>
+                <aura:if isTrue="{!v.currentStage == '4'}" >
+                    <lightning:button label="Finish" variant="brand" name="navFinish" onclick="{!c.navClick}" class="fancyButton" />
+                </aura:if>
+            </lightning:layoutItem>-->
+            
+        </lightning:layout>
+    </lightning:card>
+
+</aura:component>

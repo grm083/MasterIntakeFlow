@@ -1,0 +1,35 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+                controller="QuoteProcurementController">
+    
+    <aura:attribute name="productWrapper" type="object" />
+    <aura:attribute name="companyCategories" type="List" />
+    <aura:attribute name="configured" type="boolean" default="true" />
+    <aura:attribute name="selectedValue" type="string" default="" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <aura:registerEvent name="CloseSIDModalEvent" type="c:QuoteProductsDetailsCloseModal" />
+    
+    <lightning:layout multipleRows="true"
+                      horizontalAlign="spread"
+                      verticalAlign="stretch">
+        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+            <div class="slds-align_absolute-center slds-text-heading_medium">
+                Company Categories
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="12">
+            <lightning:select aura:id="ccPicklist" label="Acorn Company Category" value="{!v.selectedValue}" >
+                <option value="" text="-None-" />
+            	<aura:iteration items="{!v.companyCategories}" var="item">
+                    <option value="{!item.key}" text="{!item.value}" />
+                </aura:iteration>
+            </lightning:select>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="right-align slds-p-around_xx-small " alignmentBump="right" size="12">
+            <lightning:button label="Save"
+                              variant="brand"
+                              onclick="{!c.saveCC}" />
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+</aura:component>

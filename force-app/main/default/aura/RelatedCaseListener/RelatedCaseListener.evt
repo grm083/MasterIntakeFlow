@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="triggeringCase" type="String"/>
+    <aura:attribute name="relatedCases" type="List"/>
+</aura:event>

@@ -1,0 +1,9 @@
+<design:component label="Custom Case Template">
+    <flexipage:template >
+            <flexipage:region name="region_header"      defaultWidth="LARGE" />
+            <flexipage:region name="region_header2"      defaultWidth="LARGE" />
+            <flexipage:region name="left"        defaultWidth="SMALL" />
+            <flexipage:region name="middle"        defaultWidth="LARGE" />
+            <flexipage:region name="right"       defaultWidth="SMALL" />
+	</flexipage:template>
+</design:component>

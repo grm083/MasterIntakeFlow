@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CPQ_Material__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is created as part of SDT-24212. field will be used to lookup material product2 table with Asset.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The field will be used to lookup material product2 table with Asset.</inlineHelpText>
+    <label>CPQ Material</label>
+    <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Assets (CPQ Material)</relationshipLabel>
+    <relationshipName>Assets2</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

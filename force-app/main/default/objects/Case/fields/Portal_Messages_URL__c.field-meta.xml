@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Portal_Messages_URL__c</fullName>
+    <externalId>false</externalId>
+    <formula>if(FIND(&quot;-&quot;,Tracking_Number__c) &gt; 0,$CustomMetadata.Integration_Request_URLs__mdt.Portal_Message.End_Point__c&amp;&quot;/Acorn/Controls/CustomereBusinessPortalMessages.aspx?&quot;&amp;&quot;IssueTrackingNumber=&quot; &amp; left(Tracking_Number__c,FIND(&quot;-&quot;, Tracking_Number__c)-1),$CustomMetadata.Integration_Request_URLs__mdt.Portal_Message.End_Point__c&amp;&quot;/Acorn/Controls/CustomereBusinessPortalMessages.aspx?&quot;&amp;&quot;IssueTrackingNumber=&quot; &amp; Tracking_Number__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Portal Messages URL</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

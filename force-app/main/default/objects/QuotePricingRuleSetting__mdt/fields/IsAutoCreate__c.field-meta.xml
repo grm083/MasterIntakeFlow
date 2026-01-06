@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsAutoCreate__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IsAutoCreate	If this flag is true then Create Quote Line even if Quote Option line do not exists.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>IsAutoCreate</label>
+    <type>Checkbox</type>
+</CustomField>

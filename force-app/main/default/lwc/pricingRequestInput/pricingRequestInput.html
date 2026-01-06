@@ -1,0 +1,518 @@
+<template>
+    <template if:true={loadingSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <template if:true={mappingError}>
+        <div class=" slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <p>{error}</p>
+        </div>
+    </template>
+    <lightning-record-edit-form object-api-name="Pricing_Request__c" density="comfy" record-id={recordId} 
+        onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError} onload={handleonload} >
+        <lightning-messages></lightning-messages>
+
+        <!-- Changes done for SDT-27720 by Ali/Jatan -->
+        <lightning-card>
+            <template if:false={buttonDisabled}>
+                <lightning-input data-id="toggle1" type="toggle" label="Select Pricing Type" message-toggle-active="New Price Request" message-toggle-inactive="Change Price Request"  onchange={changeToggle} checked={pricingToggleChecked}>
+                </lightning-input>
+            </template>
+            <template if:true={buttonDisabled}>
+                <!--Changes related to SDT-33633-->
+                <lightning-button variant="brand" label="New/Change Pricing Request" slot="actions" onclick={createNewRequest} disabled={isbuttonDisabled}>
+                </lightning-button>                
+            </template>
+            <!-- <template if:true={buttonDisabled}>
+                <template if:true={isPriceChangeRequest}>
+                    <lightning-button variant="brand" label="Change Pricing Request" slot="actions" style="margin-left: 5px;" onclick={changePriceRequest}>
+                    </lightning-button>
+                </template>
+            </template> -->
+            <template if:true={buttonCloneEnable}>
+                <!--Changes related to SDT-33633-->
+                <lightning-button variant="brand" label="Clone" slot="actions" style="margin-left: 5px;" onclick={clonePricingInput} disabled={isbuttonDisabled} >
+                </lightning-button>
+            </template>
+        </lightning-card>
+        <!-- END -->
+        <template if:true={pricingToggleChecked}> <!-- added toggle -->
+            <lightning-card title="Service Address">
+                <table>
+                    <!-- <tr>
+                        <td colspan="2">
+                            <lightning-input-field field-name='Name'></lightning-input-field>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <td colspan="2">
+                            <lightning-input-field field-name="Case__c" value={caseId} disabled={buttonInfoDisabled}
+                                onchange={handleCaseChange}></lightning-input-field>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field class="clsAccount" data-formfield="address" field-name="Account__c" value={accountId} disabled={buttonDisabled}
+                                onchange={handleIndClas}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Location__c" value={locationId} disabled={buttonDisabled}
+                                onchange={handleLocationChange}></lightning-input-field>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td colspan="2" style="padding-left: 5px;">
+                            <lightning-input class=".slds-checkbox__label"  type="checkbox" data-id="checkbox" label="Pricing Eligible" checked={isPricingEligible} disabled ></lightning-input>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <td>
+                            <lightning-input-field data-formfield="address" field-name="Service_Street_Address__c" value={streetadd}
+                                disabled={addressLock}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field data-formfield="address" field-name="Service_City__c" value={cityadd} disabled={addressLock}>
+                            </lightning-input-field>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field data-formfield="address" field-name="Service_State__c" value={stateadd} disabled={addressLock}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field data-formfield="address" field-name="Service_Country__c" value={countryadd}
+                                disabled={addressLock}></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field data-formfield="address" field-name="Service_Postal_Code__c" value={postaladd}
+                                disabled={addressLock}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Industry_Classification__c" value={naicsCode}
+                                disabled={buttonDisabled}></lightning-input-field>
+                        </td>
+                    </tr>
+                </table>
+            </lightning-card>
+            <lightning-card title="Container Details">
+                <table>
+                    <tr>
+                        
+                        <td>
+                            <lightning-input-field field-name="Line_of_Business__c" value={txtLOB} disabled={buttonDisabled}
+                                onchange={handleLOBChange}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Container_Type__c" value={containertype} disabled={buttonDisabled}
+                            > </lightning-input-field>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Container_Size__c" value={containersize} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Material_Code__c" value={materialtype} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Service_Type__c" value={servicetype} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Customer_Owned__c" class="txtCustomerOwned"
+                                value={customerowned} disabled={buttonDisabledCustomerOwned}></lightning-input-field>
+                        </td>
+                    </tr>
+                </table>
+            </lightning-card>
+            <lightning-card title="Service Details">
+                <table>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Quantity__c" value={quantity} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Schedule_or_On_Call__c" value={Schedule_or_OnCall} disabled={buttonDisabled}
+                            onchange={handleSOCChange}>
+                            </lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <template if:true={isRollOff}>
+                        <td>
+                            <lightning-input-field field-name="Hauls_Month__c" disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        </template>
+                        <template if:true={isCommercial}>
+                            <template if:true={isCommercial_SCH}>    
+                                <td>
+                                    <lightning-input-field field-name="Frequency_Type__c" value={frequencytype} disabled={buttonDisabled} required="true">
+                                    </lightning-input-field>
+                                </td>
+                                <td>
+                                    <lightning-input-field field-name="Frequency_Count__c" value={frequencycount} disabled={buttonDisabled} required="true">
+                                    </lightning-input-field>
+                                </td>
+                            </template>
+                        </template>
+                    </tr>                    
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Project_Request__c" class="chkProjectRequest" value={projectrequest} 
+                                onchange={handleProjectRequestChange} disabled={buttonDisabled}></lightning-input-field>
+                        </td>
+                        <template if:true={showProject}>
+                        <td>
+                            <lightning-input-field field-name="Project_Code__c" value={project} disabled={buttonDisabled}  ></lightning-input-field>                            
+
+                        </td>
+                        </template>
+                    </tr>          
+                </table>
+            </lightning-card>        
+        </template>
+
+        <template if:false={pricingToggleChecked}> <!-- added toggle -->
+        <lightning-card>
+            <lightning-input name="Baseline-Search" label="Enter Baseline" type="search"  value={serviceBaselineId} onchange={handleBaselineChange} disabled={buttonDisabled}>        
+            </lightning-input>
+            <div style="margin-top: 10px;">
+                <lightning-button variant="brand" label="Search" title="Search" onclick={handleSearchClick} class="slds-m-left_x-small" disabled={buttonDisabled}></lightning-button>
+            </div>
+        </lightning-card>
+        <!-- <lightning-card>
+            <lightning-button variant="brand" label="Search" title="Search" onclick={handleSearchClick} class="slds-m-left_x-small" disabled={buttonDisabled}></lightning-button>
+        </lightning-card> -->
+        <!-- Account details section -->
+        <template if:true={baselineResult}> 
+            <lightning-card  variant="Narrow"  title="Account" icon-name="standard:account">
+                <b style="margin-left: 45px; font-size:large;">{baselineResult.Account.Name}</b>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <!-- <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-left" title="expand">ADDRESS</div>
+                            </th> 
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Equipment Type">PRIMARY SEGMENT</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Equipment Size">LOCATION CUSTOMER NAME</div>
+                            </th>
+                        </tr>
+                    </thead> -->
+                    <tbody>       
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-left" title="">
+                                {baselineResult.Account.ShippingStreet}, {baselineResult.Account.ShippingCity}, {baselineResult.Account.ShippingState}, {baselineResult.Account.ShippingPostalCode}, {baselineResult.Account.ShippingCountry}
+                            </div>
+                        </td>
+                        <!-- <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Account.Primary_Segment__c}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Account.Customer_Location_Code__c}</div>
+                        </td> -->
+                    </tbody>
+                </table>
+            </lightning-card>
+        
+            <!-- Service detail section -->
+            <lightning-card  variant="Narrow"  title="Service Details" icon-name="standard:account"> 
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="expand">ASSET NAME</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Vendor Alerts">MATERIAL TYPE</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Equipment Type">SERVICE TYPE</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Equipment Size">DURATION</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Material">OCCURENCE TYPE</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Duration">SCHEDULE</div>
+                            </th>                            
+                        </tr>
+                    </thead>
+                    <tbody>       
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Name}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" style="white-space: pre-wrap;" title="">{baselineResult.Material_Type__c}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Service_Type__c}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Duration__c}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Occurrence_Type__c}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Schedule__c}</div>
+                        </td>                        
+                    </tbody>
+                </table>
+                <br>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Duration">Quantity</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Duration">Cost</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Duration">Price</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Quantity__c}</div>
+                        </td>
+                        <td data-label="Address">                            
+                            <div class="slds-truncate slds-align_absolute-center" title=""><lightning-formatted-number value={baselineResult.Cost__c} format-style="currency" currency-code={baselineResult.CurrencyIsoCode} currency-display-as="code"></lightning-formatted-number></div>                            
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title=""><lightning-formatted-number value={baselineResult.Price__c} format-style="currency" currency-code={baselineResult.CurrencyIsoCode} currency-display-as="code"></lightning-formatted-number></div>
+                        </td>
+                    </tbody>
+                </table>
+                <br>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="expand">VENDOR NAME</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Vendor Alerts">VENDOR ID</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Equipment Type">MAS CO # - ACCT #</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Material">MAS UNIQUE #</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate slds-align_absolute-center" title="Duration">MAS LIBRARY</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>       
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" style="white-space: pre-wrap;" title="">{baselineResult.Supplier__r.Name}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.Vendor_ID__c}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.MAS_Company_Account_Number__c}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.MAS_Customer_Unique_Id__c}</div>
+                        </td>
+                        <td data-label="Address">
+                            <div class="slds-truncate slds-align_absolute-center" title="">{baselineResult.MAS_Library__c}</div>
+                        </td>
+                    </tbody>
+                </table>
+            </lightning-card>
+        
+            <lightning-card title="Container Details">
+                <table>
+                    <tr>
+                        <td>
+                            <lightning-input-field class="clsAccount slds-hide" data-formfield="address" field-name="Account__c" value={accountId} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field class="slds-hide" field-name="Location__c" value={locationId} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field class="slds-hide" data-formfield="address" field-name="Service_Street_Address__c" value={streetadd}
+                                disabled={addressLock}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field class="slds-hide" data-formfield="address" field-name="Service_City__c" value={cityadd} disabled={addressLock}>
+                            </lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field class="slds-hide" data-formfield="address" field-name="Service_State__c" value={stateadd} disabled={addressLock}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field class="slds-hide" data-formfield="address" field-name="Service_Country__c" value={countryadd}
+                                disabled={addressLock}></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field class="slds-hide" data-formfield="address" field-name="Service_Postal_Code__c" value={postaladd}
+                                disabled={addressLock}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field class="slds-hide" field-name="Industry_Classification__c" value={naicsCode}
+                                disabled={buttonDisabled}></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        
+                        <td>
+                            <lightning-input-field class="slds-hide" field-name="Line_of_Business__c" value={txtLOB} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field class="slds-hide" field-name="Container_Type__c" value={containertype} disabled={buttonDisabled}
+                            > </lightning-input-field>
+                        </td>                    
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field class="slds-hide" field-name="Material_Code__c" value={materialtype} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field class="slds-hide" field-name="Schedule_or_On_Call__c" value={Schedule_or_OnCall} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Container_Size__c" value={containersize} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Frequency_Type__c" value={frequencytype} disabled={buttonDisabled} required="true">
+                            </lightning-input-field>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Service_Type__c" value={servicetype} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Frequency_Count__c" value={frequencycount} disabled={buttonDisabled} required="true">
+                            </lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Quantity__c" value={quantity} disabled={buttonDisabled}>
+                            </lightning-input-field>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Project_Request__c" class="chkProjectRequest" value={projectrequest} 
+                                onchange={handleProjectRequestChange} disabled={buttonDisabled}></lightning-input-field>
+                        </td>
+                        <template if:true={showProject}>
+                        <td>
+                            <lightning-input-field field-name="Project_Code__c" value={project} disabled={buttonDisabled}  ></lightning-input-field>                            
+
+                        </td>
+                        </template>
+                    </tr>                    
+                </table>
+            </lightning-card>
+        </template>
+        </template>
+        <div style="display: none;">
+            <lightning-card>
+                <table>
+                    <tr style="visibility: collapse;">
+                        <td>
+                            <lightning-input-field field-name="IsCaseError__c" value={isCaseError}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Case_Error_Message__c" value={caseErrorMessage}></lightning-input-field>
+                        </td>
+                        
+                    </tr>
+                    <tr style="visibility: collapse;">
+                        <td>
+                            <lightning-input-field field-name="Original_Case_Number__c" value={originalCaseNumber}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Parent_Pricing_Request__c" value={parentPricingRequest}></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr style="visibility: collapse;">
+                        <td>
+                            <lightning-input-field field-name="Acorn_Issue_Id__c" value={acornIssueId}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Tracking_Number__c" value={acornTrackingNumber}></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr style="visibility: collapse;">
+                        <td>
+                            <lightning-input-field field-name="Case_Number__c" value={caseNumber}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="Pricing_Type__c" value={pricingType}></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr style="visibility: collapse;">
+                        <td>
+                            <lightning-input-field field-name="Service_Baseline_ID__c" value={serviceBaselineId}></lightning-input-field>
+                        </td>
+                        <td>
+                            <lightning-input-field field-name="IsPriceChangeRequest__c" value={isPriceChangeRequest}></lightning-input-field>
+                        </td>
+                    </tr>
+                </table>
+            </lightning-card>            
+        </div>
+        <div>
+            <template if:false={isPriceChangeRequest}>
+            <lightning-card class="slds-text-align_center">
+                <lightning-button variant="brand" type="submit" name="save" disabled={buttonInfoDisabled}
+                    label="Get Information">
+                </lightning-button>
+            </lightning-card>
+            </template>
+            <template if:true={isPriceChangeRequest}>
+                <template if:true={baselineResult}>
+                    <lightning-card class="slds-text-align_center">
+                        <lightning-button variant="brand" type="submit" name="save" disabled={buttonInfoDisabled}
+                            label="Get Information">
+                        </lightning-button>
+                    </lightning-card>
+                </template>
+            </template>
+        </div>
+    </lightning-record-edit-form>
+</template>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PO_is_Mandatory</fullName>
+    <active>true</active>
+    <description>Customer PO is mandatory when Outcome of Obtain Customer Info is marked as &quot;Information Obtained&quot;</description>
+    <errorConditionFormula>AND(OR(ISPICKVAL(Process__c , &apos;Escalation Obtain Customer Info&apos;),ISPICKVAL(Process__c , &apos;Obtain Customer Info&apos;)),ISPICKVAL( Outcome__c , &apos;Information Obtained&apos;),OR(AND(ISBLANK(PurchaseOrder_Number__c), CONTAINS(Description__c, &apos;PO&apos;)),AND(ISBLANK(Profile_Number__c), CONTAINS(Description__c, &apos;Profile&apos;))))</errorConditionFormula>
+    <errorMessage>Please provide Required Case Information.</errorMessage>
+</ValidationRule>

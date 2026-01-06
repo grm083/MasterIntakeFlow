@@ -1,0 +1,15 @@
+.THIS .wrapText{
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.THIS .rowenddateTrue
+{
+    background-color:#FECB00;
+}
+.THIS .currentRow
+{
+    background-color:#0000FF;
+}

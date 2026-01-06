@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Case Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Service__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Case_Reason</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Service Not Performed</controllingFieldValue>
+            <valueName>Customer Reported</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Not Performed</controllingFieldValue>
+            <valueName>Hauler Reported</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Location</controllingFieldValue>
+            <valueName>Closed/Closing Location</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Location</controllingFieldValue>
+            <valueName>Location Sold-New Owner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Location</controllingFieldValue>
+            <valueName>LOW/NOW</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Location</controllingFieldValue>
+            <controllingFieldValue>Location Record</controllingFieldValue>
+            <controllingFieldValue>Client Record</controllingFieldValue>
+            <controllingFieldValue>Vendor Record</controllingFieldValue>
+            <controllingFieldValue>Vendor</controllingFieldValue>
+            <controllingFieldValue>Vendor Account</controllingFieldValue>
+            <valueName>Address/Remit To</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Location</controllingFieldValue>
+            <controllingFieldValue>Location Record</controllingFieldValue>
+            <controllingFieldValue>Client Record</controllingFieldValue>
+            <controllingFieldValue>Vendor Record</controllingFieldValue>
+            <controllingFieldValue>Vendor</controllingFieldValue>
+            <controllingFieldValue>Vendor Account</controllingFieldValue>
+            <valueName>Phone/Fax Number</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Location</controllingFieldValue>
+            <controllingFieldValue>Location Record</controllingFieldValue>
+            <controllingFieldValue>Client Record</controllingFieldValue>
+            <controllingFieldValue>Vendor Record</controllingFieldValue>
+            <controllingFieldValue>Vendor</controllingFieldValue>
+            <controllingFieldValue>Vendor Account</controllingFieldValue>
+            <valueName>Email Address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Location</controllingFieldValue>
+            <controllingFieldValue>Location Record</controllingFieldValue>
+            <controllingFieldValue>Client Record</controllingFieldValue>
+            <controllingFieldValue>Vendor Record</controllingFieldValue>
+            <controllingFieldValue>Vendor</controllingFieldValue>
+            <controllingFieldValue>Vendor Account</controllingFieldValue>
+            <valueName>Contact</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Services</controllingFieldValue>
+            <valueName>Exchange Container</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Services</controllingFieldValue>
+            <valueName>Missing Component</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Services</controllingFieldValue>
+            <valueName>Missing Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Services</controllingFieldValue>
+            <valueName>NOW/LOW</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Services</controllingFieldValue>
+            <valueName>Power Wash</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Services</controllingFieldValue>
+            <valueName>Relocate Container</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Client</controllingFieldValue>
+            <controllingFieldValue>New Location</controllingFieldValue>
+            <valueName>New Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Vendor</controllingFieldValue>
+            <valueName>Award Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor</controllingFieldValue>
+            <valueName>WMSSC Wrong Hauler</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Question</controllingFieldValue>
+            <valueName>Billing Discrepancies</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Question</controllingFieldValue>
+            <valueName>Cancelled Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Question</controllingFieldValue>
+            <valueName>Fees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Question</controllingFieldValue>
+            <valueName>General Billing Inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Question</controllingFieldValue>
+            <valueName>Question on Charges</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Question</controllingFieldValue>
+            <valueName>Question on Charges (Default)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Question</controllingFieldValue>
+            <valueName>Question on Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Question</controllingFieldValue>
+            <valueName>Service Not Requested</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Account Update</controllingFieldValue>
+            <valueName>Communication Channel Changes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Account Update</controllingFieldValue>
+            <valueName>New Portal User</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Account Update</controllingFieldValue>
+            <valueName>Other Vendor Account Updates</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Account Update</controllingFieldValue>
+            <valueName>Other Vendor Profile Updates</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Account Update</controllingFieldValue>
+            <valueName>Reset Portal Password</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Account Update</controllingFieldValue>
+            <valueName>Update Address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Account Update</controllingFieldValue>
+            <valueName>Vendor Sold</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Question</controllingFieldValue>
+            <valueName>Other Vendor Billing Inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>eBusiness Portal Question</controllingFieldValue>
+            <valueName>Customer Portal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>eBusiness Portal Question</controllingFieldValue>
+            <valueName>Supplier Portal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Empty and Do NOT Return</controllingFieldValue>
+            <controllingFieldValue>Empty and Return</controllingFieldValue>
+            <controllingFieldValue>On Call</controllingFieldValue>
+            <valueName>Contaminated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Empty and Do NOT Return</controllingFieldValue>
+            <controllingFieldValue>Empty and Return</controllingFieldValue>
+            <valueName>Disposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Empty and Do NOT Return</controllingFieldValue>
+            <controllingFieldValue>Empty and Return</controllingFieldValue>
+            <valueName>Recycling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Equipment</controllingFieldValue>
+            <valueName>Compactor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Equipment</controllingFieldValue>
+            <valueName>Compactor Accessories</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deactivate Client</controllingFieldValue>
+            <valueName>Cancellation Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deactivate Location</controllingFieldValue>
+            <valueName>Cancellation Location</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accessories</controllingFieldValue>
+            <valueName>Additional Keys</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accessories</controllingFieldValue>
+            <valueName>Bale Wire</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accessories</controllingFieldValue>
+            <valueName>Keys</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accessories</controllingFieldValue>
+            <valueName>Lids</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accessories</controllingFieldValue>
+            <valueName>Locks</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accessories</controllingFieldValue>
+            <valueName>Monitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accessories</controllingFieldValue>
+            <valueName>Wheels</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deactivate Vendor</controllingFieldValue>
+            <valueName>Cancellation Vendor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Asset</controllingFieldValue>
+            <valueName>Legacy- Spec Needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Asset</controllingFieldValue>
+            <valueName>National- Spec Needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Asset</controllingFieldValue>
+            <valueName>WMSSC Spec needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hauler</controllingFieldValue>
+            <valueName>National- Hauler needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>National- Spec Amount needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Date</controllingFieldValue>
+            <valueName>Legacy- Service Date needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Date</controllingFieldValue>
+            <valueName>National- Service Date needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Date</controllingFieldValue>
+            <valueName>WMSSC Spec Date needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Date</controllingFieldValue>
+            <valueName>National- Spec Qty/Unit Needs to be updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor or Client Identification</controllingFieldValue>
+            <valueName>Cannot identify Location or Vendor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Charge Dispute</controllingFieldValue>
+            <valueName>Customer Short Pay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Change/Correction</controllingFieldValue>
+            <valueName>Cost/Price</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Change/Correction</controllingFieldValue>
+            <valueName>Days of Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Change/Correction</controllingFieldValue>
+            <valueName>Remove End Dates</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Change/Correction</controllingFieldValue>
+            <valueName>Service Correction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Decrease</controllingFieldValue>
+            <valueName>Cancel Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Decrease</controllingFieldValue>
+            <controllingFieldValue>Increase</controllingFieldValue>
+            <controllingFieldValue>Increase/Decrease</controllingFieldValue>
+            <valueName>Frequency</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Decrease</controllingFieldValue>
+            <controllingFieldValue>Increase</controllingFieldValue>
+            <valueName>Quantity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Decrease</controllingFieldValue>
+            <controllingFieldValue>Increase</controllingFieldValue>
+            <controllingFieldValue>Increase/Decrease</controllingFieldValue>
+            <valueName>Seasonal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Decrease</controllingFieldValue>
+            <controllingFieldValue>Increase</controllingFieldValue>
+            <controllingFieldValue>Increase/Decrease</controllingFieldValue>
+            <valueName>Size</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Permanent</controllingFieldValue>
+            <valueName>Existing Location</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Permanent</controllingFieldValue>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Location Opening</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Permanent</controllingFieldValue>
+            <valueName>Location Relocation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Baler Repair</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Clean Up External</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Clean Up Internal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Compactor Repair</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Construction and Demolition</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Fixture Updates</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Location Closing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Power Outage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Relocation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Remodel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Temp Upload</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporary</controllingFieldValue>
+            <valueName>Weather</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fee(s)</controllingFieldValue>
+            <valueName>Dig-Out</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fee(s)</controllingFieldValue>
+            <valueName>General Fees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fee(s)</controllingFieldValue>
+            <valueName>Overloaded Container</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fee(s)</controllingFieldValue>
+            <valueName>Snapshot</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Cost Increase</controllingFieldValue>
+            <valueName>Ancillary/Regulatory</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Cost Increase</controllingFieldValue>
+            <valueName>Annual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Cost Increase</controllingFieldValue>
+            <valueName>Landfill</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>All Other Inquiries</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Equipment Questions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Service Days Unkown</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Who is my hauler?</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Electronic Recycling (Computers, Laptops, etc.)</controllingFieldValue>
+            <controllingFieldValue>Universal Waste (Lamps, Batteries, etc.)</controllingFieldValue>
+            <valueName>Mailback Box</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Electronic Recycling (Computers, Laptops, etc.)</controllingFieldValue>
+            <controllingFieldValue>Universal Waste (Lamps, Batteries, etc.)</controllingFieldValue>
+            <valueName>Onsite Pickup</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Electronic Recycling (Computers, Laptops, etc.)</controllingFieldValue>
+            <valueName>Electronic Recycling Collection</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Universal Waste (Lamps, Batteries, etc.)</controllingFieldValue>
+            <valueName>Universal Waste Collection</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Schedule A</controllingFieldValue>
+            <controllingFieldValue>Hauler of Record</controllingFieldValue>
+            <valueName>Service Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <valueName>Compactor/Baler/Vertical CMP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <valueName>Dumpster/Toter/Port-o-let</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <valueName>Open Top</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hauler of Record</controllingFieldValue>
+            <valueName>New Client Launch</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,30 @@
+public class ConstantClass {
+	public static final string Profile_CustomerService = 'Customer Service';
+    public static final string PermissionSet_ViewSortableDataGridsCustomPS = 'View_Sortable_Data_Grids_CustomPS';
+    public static final string PermissionSet_PricingAccess = 'Pricing_Access';
+    public static final string Role_ProjectServiceRepresenative = 'Project Service Represenative';
+    public static final string RecordType_Client = 'Client';
+    public static final string RecordType_Vendor = 'Vendor';
+    public static final string FieldStatus_Active = 'Active';
+   	public static final string FieldStatus_Draft = 'Draft';
+    public static final string RecordType_NewServiceCase = 'New Service Case';
+    public static final string RecordType_PickUpCase = 'Pickup Case';
+    public static final string FieldType_NewService = 'New Service';
+    public static final string FieldSubType_Permanent = 'Permanent';
+    public static final string FieldSubType_Temporary = 'Temporary';
+    public static final string FieldStageName_Proposal = 'Proposal';
+    public static final string FieldFamily_Equipment = 'Equipment';
+    public static final string FieldProductCode_OT = 'OT';
+    public static final string FieldFamily_Services = 'Services';
+    public static final string FieldProductCode_H = 'H';
+    public static final string RecordType_Approval = 'Approval';
+    public static final string RecordType_Contact = 'Contact';
+    public static final string RecordType_Email = 'Email';
+    public static final string RecordType_Department = 'Department';
+    public static final string RecordType_Title = 'Title';
+    public static final string RecordType_User = 'User';
+    public static final string FieldStatus_PriceConfigured = 'Price Configured';
+    public static final string FieldStatus_CostConfigured = 'Cost Configured';
+    public static final string FieldStatus_ProductConfigured = 'Product Configured';
+    public static final string FieldStatus_Approved = 'Approved';
+}

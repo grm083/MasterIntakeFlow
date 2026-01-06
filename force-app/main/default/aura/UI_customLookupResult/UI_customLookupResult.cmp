@@ -1,0 +1,23 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="oRecord" type="sObject" />
+        <aura:attribute name="IconName" type="string"/> 
+  <!--Register the component level event-->
+    <aura:registerEvent name="oSelectedRecordEvent" type="c:UI_selectedsObjectRecordEvent"/>
+    <li role="presentation" class="slds-listbox__item" onclick="{!c.selectRecord}">
+        <span id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+              <span class="slds-media__figure">
+                  <span class="slds-icon_container" title="Description of icon when needed">
+                    <lightning:icon iconName="{!v.IconName}" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                    <span class="slds-assistive-text">Description of icon</span>
+                  </span>
+              </span>    
+              <span class="slds-media__body">  
+                <!--Changes related to SDT-36177 style="overflow: hidden;"--> 
+               <div class="slds-listbox__option-text slds-grid slds-listbox__option-text_entity slds-wrap wrapped-content">
+                <div class="slds-size_1-of-2">{!v.oRecord.Name}</div>
+                <div class="slds-size_1-of-2 slds-text-color_error">{!v.oRecord.Email}</div>
+               </div>
+              </span>
+        </span>
+    </li>
+</aura:component>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Repairs</fullName>
+        <default>false</default>
+        <label>Repairs</label>
+    </customValue>
+    <customValue>
+        <fullName>NAM/PM</fullName>
+        <default>false</default>
+        <label>NAM/PM</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate Visit/Walkthrough</fullName>
+        <default>false</default>
+        <label>Corporate Visit/Walkthrough</label>
+    </customValue>
+    <customValue>
+        <fullName>Power Outage</fullName>
+        <default>false</default>
+        <label>Power Outage</label>
+    </customValue>
+    <customValue>
+        <fullName>Potential Violation</fullName>
+        <default>false</default>
+        <label>Potential Violation</label>
+    </customValue>
+    <customValue>
+        <fullName>Weather/Natural Disaster</fullName>
+        <default>false</default>
+        <label>Weather/Natural Disaster</label>
+    </customValue>
+    <customValue>
+        <fullName>Internal Error</fullName>
+        <default>false</default>
+        <label>Internal Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Error</fullName>
+        <default>false</default>
+        <label>Vendor Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor not able to meet SLA</fullName>
+        <default>false</default>
+        <label>Vendor not able to meet SLA</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <description>List values are required reason for Asset/product&apos;s unentitled delivery date.</description>
+    <masterLabel>SLA Override Reason</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

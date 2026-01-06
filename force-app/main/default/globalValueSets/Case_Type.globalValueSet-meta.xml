@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Add</fullName>
+        <default>false</default>
+        <label>Add</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing</fullName>
+        <default>false</default>
+        <label>Billing</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellation</fullName>
+        <default>false</default>
+        <label>Cancellation</label>
+    </customValue>
+    <customValue>
+        <fullName>Activate</fullName>
+        <default>false</default>
+        <label>Activate</label>
+    </customValue>
+    <customValue>
+        <fullName>Modify</fullName>
+        <default>false</default>
+        <label>Modify</label>
+    </customValue>
+    <customValue>
+        <fullName>Deactivate</fullName>
+        <default>false</default>
+        <label>Deactivate</label>
+    </customValue>
+    <customValue>
+        <fullName>Change Service</fullName>
+        <default>false</default>
+        <label>Change Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Discrepencies</fullName>
+        <default>false</default>
+        <label>Discrepencies</label>
+    </customValue>
+    <customValue>
+        <fullName>FAST Issue</fullName>
+        <default>false</default>
+        <label>FAST Issue</label>
+    </customValue>
+    <customValue>
+        <fullName>General</fullName>
+        <default>false</default>
+        <label>General</label>
+    </customValue>
+    <customValue>
+        <fullName>Hauler Damage</fullName>
+        <default>false</default>
+        <label>Hauler Damage</label>
+    </customValue>
+    <customValue>
+        <fullName>Inoperable</fullName>
+        <default>false</default>
+        <label>Inoperable</label>
+    </customValue>
+    <customValue>
+        <fullName>Interruption</fullName>
+        <default>false</default>
+        <label>Interruption</label>
+    </customValue>
+    <customValue>
+        <fullName>New Service</fullName>
+        <default>false</default>
+        <label>New Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Operable</fullName>
+        <default>false</default>
+        <label>Operable</label>
+    </customValue>
+    <customValue>
+        <fullName>Payment Inquiries</fullName>
+        <default>false</default>
+        <label>Payment Inquiries</label>
+    </customValue>
+    <customValue>
+        <fullName>Pickup</fullName>
+        <default>false</default>
+        <label>Pickup</label>
+    </customValue>
+    <customValue>
+        <fullName>Portal Declines</fullName>
+        <default>false</default>
+        <label>Portal Declines</label>
+    </customValue>
+    <customValue>
+        <fullName>Procurement</fullName>
+        <default>false</default>
+        <label>Procurement</label>
+    </customValue>
+    <customValue>
+        <fullName>Replace</fullName>
+        <default>false</default>
+        <label>Replace</label>
+    </customValue>
+    <customValue>
+        <fullName>Site Survey</fullName>
+        <default>false</default>
+        <label>Site Survey</label>
+    </customValue>
+    <customValue>
+        <fullName>Special Request</fullName>
+        <default>false</default>
+        <label>Special Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Status</fullName>
+        <default>false</default>
+        <label>Status</label>
+    </customValue>
+    <customValue>
+        <fullName>Supplies</fullName>
+        <default>false</default>
+        <label>Supplies</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Confirmation</fullName>
+        <default>false</default>
+        <label>Vendor Confirmation</label>
+    </customValue>
+    <customValue>
+        <fullName>Change Vendor</fullName>
+        <default>false</default>
+        <label>Change Vendor</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Changes</fullName>
+        <default>false</default>
+        <label>Service Changes</label>
+    </customValue>
+    <customValue>
+        <fullName>Adding Services</fullName>
+        <default>false</default>
+        <label>Adding Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellations</fullName>
+        <default>false</default>
+        <label>Cancellations</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Reconciliation (Step 2)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Billing Reconciliation (Step 2)</label>
+    </customValue>
+    <customValue>
+        <fullName>Increase</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Increase</label>
+    </customValue>
+    <customValue>
+        <fullName>Decrease</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Decrease</label>
+    </customValue>
+    <customValue>
+        <fullName>Empty &amp; Return</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Empty &amp; Return</label>
+    </customValue>
+    <customValue>
+        <fullName>Discrepancies</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Discrepancies</label>
+    </customValue>
+    <customValue>
+        <fullName>Repair</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Repair</label>
+    </customValue>
+    <customValue>
+        <fullName>Add/Change</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Add/Change</label>
+    </customValue>
+    <customValue>
+        <fullName>Standard</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Standard</label>
+    </customValue>
+    <customValue>
+        <fullName>Add Service</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Add Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Order Supplies</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Order Supplies</label>
+    </customValue>
+    <customValue>
+        <fullName>Status Inquiry</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Status Inquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Inquiry</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Billing Inquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>General Inquiry</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>General Inquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Correction (Step 3)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Billing Correction (Step 3)</label>
+    </customValue>
+    <masterLabel>Case Type</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

@@ -1,0 +1,61 @@
+h3{
+    background-color: #E3F0E3;
+}
+.week_days_theme{
+    margin-left: 45px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+}
+.week_day_box-greyed{
+    border-radius: 7px;
+    background-color: #bfbdbd;
+    width: 30px;
+    margin: 1px 1px;
+    display: inline-block;
+}
+.week_day_box-focused{
+    border-radius: 7px;
+    background-color: #4075e4;
+    width: 30px;
+    margin: 1px 1px;
+    display: inline-block;
+
+}
+.warning-text-list{
+    list-style-type: disc;
+    margin-left: 1.5em;
+}
+.warning-text-single{
+    list-style-type: none;
+    margin-left: 1em;
+    margin-right: 2em;
+}
+/* .warning-text{
+    text-align: center;
+    color: #ec1212;
+    font-weight: 550;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+} */
+.warning-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2%;
+    width: 100%;
+    padding: 0.5%;
+  }
+  .warning-text{
+    color: rgb(221, 2, 2);
+    border: 2px solid black;
+    font-size: 12px;
+    background: rgb(252 225 0);
+    padding: 0.5%;
+    letter-spacing: 0.25px;
+    font-weight: 500;
+    line-height: 1.5;
+    border-radius: 5px;
+    width: auto;
+  }

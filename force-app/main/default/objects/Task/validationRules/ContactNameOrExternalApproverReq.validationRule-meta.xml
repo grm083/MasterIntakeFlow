@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContactNameOrExternalApproverReq</fullName>
+    <active>true</active>
+    <description>Approver Name or Contact Email or Contact Name is Mandatory for Approval Task</description>
+    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Approvals&apos;, OR(ISPICKVAL(Outcome__c ,&apos;Approved&apos;),
+ISPICKVAL(Outcome__c ,&apos;Rejected&apos;),ISPICKVAL(Outcome__c ,&apos;Validate Task&apos;)),
+ISBLANK( WhoId ),
+ISBLANK( Approver_Name__c ),
+ISBLANK( ContactEmail__c))</errorConditionFormula>
+    <errorMessage>Please provide either Name or Contact Email or External Approver.</errorMessage>
+</ValidationRule>

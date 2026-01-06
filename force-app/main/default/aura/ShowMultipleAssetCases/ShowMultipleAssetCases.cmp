@@ -1,0 +1,60 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" controller="AssetHeadersForCaseController" access="global" >
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <!-- commented as part of SDT-8434 <aura:handler event="force:refreshView" action="{!c.doInit}" /> -->
+    <aura:attribute name="multipleAssetCases" type="Cases[]" access="global"/>
+    <aura:attribute name="nextCaseEnabled" type="Boolean" access="global" default="false"/>
+    <aura:handler event="c:RelatedCaseListener" action="{!c.handleRelatedCaseListenerEvent}"/>
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}" 
+                      layoutType="FULL"
+                      targetRecord="{!v.case}"
+                      targetFields="{!v.caseRecord}"
+                      fields="Id,CaseNumber,AssetId,Case_Type__c,Case_Sub_Type__c,Client__c,Location__c,ContactId,Status,Case_Sub_Status__c,Override_PO_Create_Task__c,Override_Profile_Number_Task__c,PSI_Override_Reason__c,PurchaseOrder_Number__c,Profile_Number__c,PSI__c" 
+                      mode="VIEW"
+                      recordUpdated="{!c.recordUpdated}"/>
+    <div class="slds-scrollable">
+        <div class="slds-m-top--none slds-m-bottom--none"> 
+    <table class="slds-table slds-table--bordered slds-table--striped">
+            <lightning:accordion aura:id="accordion">
+        	<lightning:accordionSection name="multipleAssetCases" label="Multiple Asset Cases">
+        	<thead>
+                <tr class="slds-table slds-table--bordered slds-table--striped">
+                    <th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>Status</b></span></th>
+                    <th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>Sub-Status</b></span></th>
+                    <th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>W/O #</b></span></th>
+                    <th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>Service Date</b></span></th>
+                    <th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>Asset</b></span></th>
+                    <th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>Material</b></span></th>
+                    <th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>SID</b></span></th>
+                    <th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>Case #</b></span></th>
+               <!--	<th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>Reference Number</b></span></th>
+               		<th scope="col" class="head slds-size_1-of-12"><span class="slds-truncate"><b>SLA Service Date</b></span></th>  -->
+                </tr>
+        	</thead>  
+        	<tbody>
+                <aura:iteration items="{!v.multipleAssetCases}" var="CaseList" indexVar="idx">
+                	<tr>
+                        
+                        <td class="slds-size_1-of-12">{!CaseList.Status}</td>
+                        <td class="slds-size_1-of-12">{!CaseList.Case_Sub_Status__c}</td>
+                        <td class="slds-size_1-of-12">{!CaseList.Work_Order__r.WorkOrderNumber}</td>
+                        <td class="slds-size_1-of-12">{!CaseList.Service_Date_Text__c}</td>
+                        <td class="slds-size_1-of-12">{!CaseList.Asset.Name}</td>
+                        <td class="slds-size_1-of-12">{!CaseList.Asset_Material__c}</td>
+                        <td class="slds-size_1-of-12">{!CaseList.Asset.Acorn_SID__c}</td>
+                        <td class="slds-size_1-of-12"><a data-caseid="{!CaseList.Id}" onclick="{!c.handleClick}" >{!CaseList.CaseNumber}</a></td>
+                   <!-- <td class="slds-size_1-of-12">{!CaseList.Reference_Number__c}</td>
+                    <td class="slds-size_1-of-8">{!CaseList.SLA_Service_DateTime__c}</td>   -->
+                        
+                    </tr>
+                </aura:iteration>
+            </tbody>
+                  </lightning:accordionSection>
+                <div class="slds-m-vertical_xx-small" align="Center" draggable="false">
+                    <lightning:button variant="brand" disabled="{!v.nextCaseEnabled}" label="NextCase" aura:id="nextButton" onclick="{!c.moveToNextCase}" />
+            	</div>
+    		</lightning:accordion>
+        </table>   
+     	</div>	
+        </div>
+</aura:component>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pending_Information_Case_Task_Due_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( AND( ISCHANGED( Outcome__c ), OR(Subject ==&apos;Pending Information&apos;,Subject ==&apos;Service Follow up&apos;,Subject ==&apos;Resolve Service Issue&apos;) , ISPICKVAL(Outcome__c ,&apos;Information Not Obtained&apos;),   ISNULL(Next_Task_Due_Date_Time__c)  ) ,true,false)</errorConditionFormula>
+    <errorDisplayField>Next_Task_Due_Date_Time__c</errorDisplayField>
+    <errorMessage>Next Task Due Date Time is Required</errorMessage>
+</ValidationRule>

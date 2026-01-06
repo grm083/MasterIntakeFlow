@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Universal_Questions</fullName>
+    <columns>RECORDTYPE</columns>
+    <columns>NAME</columns>
+    <columns>Presentation_Order__c</columns>
+    <columns>Case_Type__c</columns>
+    <columns>Case_Sub_Type__c</columns>
+    <columns>Question__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Intake_Process__c.Universal_Questions</value>
+    </filters>
+    <label>Universal Questions</label>
+    <sharedTo>
+        <roleAndSubordinatesInternal>Customer_Experience_Director</roleAndSubordinatesInternal>
+    </sharedTo>
+</ListView>

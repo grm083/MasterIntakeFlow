@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tracking_Number_Validation</fullName>
+    <active>true</active>
+    <description>Preventing sending of reassign ticket api when tracking number is null</description>
+    <errorConditionFormula>OR(
+	AND( 
+		NOT($User.Bypass_Validation__c),
+		NOT(ISPICKVAL(Case_Type__c, &quot;New Service&quot;)),
+		OR(
+			ISNULL( Tracking_Number__c ) , 
+			ISBLANK( Tracking_Number__c )
+		),
+		OR(
+			ISCHANGED( Team_Queue__c ), 
+			ISCHANGED( Team_Name__c ), 
+			ISCHANGED( User_Name__c )
+		), 
+		NOT(ISPICKVAL(Status, &quot;New&quot;)),
+		NOT(ISPICKVAL(PRIORVALUE(Status), &quot;New&quot;))
+	),
+	AND(
+		ISPICKVAL(Case_Type__c, &quot;New Service&quot;),
+		ISPICKVAL(Source_System__c, &quot;Salesforce&quot;),
+		ISPICKVAL(Status, &quot;Open&quot;),
+		NOT(ISCHANGED(Status)),
+		OR(
+			ISNULL( Tracking_Number__c ) , 
+			ISBLANK( Tracking_Number__c )
+		),
+		OR(
+			ISCHANGED( Team_Queue__c ), 
+			ISCHANGED( Team_Name__c ), 
+			ISCHANGED( User_Name__c )
+		)
+	)
+)</errorConditionFormula>
+    <errorMessage>The Tracking Number needs to be present in order to reassign this ticket.  Please wait until the Tracking Number appears on the record before reassigning.</errorMessage>
+</ValidationRule>

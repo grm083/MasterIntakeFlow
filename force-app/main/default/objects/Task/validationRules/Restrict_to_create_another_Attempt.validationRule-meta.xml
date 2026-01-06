@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_to_create_another_Attempt</fullName>
+    <active>true</active>
+    <description>This rule will not allow a user to save a record if he is selecting Outcome=&quot;Future Date Request&quot; and not filling any data in &quot;Next Task Due Date Time Field&quot;.</description>
+    <errorConditionFormula>AND( ISPICKVAL( Outcome__c , &quot;Future Date Request&quot;), ISBLANK(Next_Task_Due_Date_Time__c) )</errorConditionFormula>
+    <errorMessage>Next Task Due Date Time is required when Outcome is Future Date Request</errorMessage>
+</ValidationRule>

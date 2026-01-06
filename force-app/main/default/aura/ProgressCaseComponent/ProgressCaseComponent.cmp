@@ -1,0 +1,76 @@
+<aura:component controller="ProgressCaseComponentController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="enableProgress" type="boolean" default="true"/>
+    <aura:attribute name="isNotPickup" type="boolean" default="true"/>
+    <aura:attribute name="case" type="Object"/>
+    <aura:attribute name="caseRecord" type="Object"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="approvalInfoMsg" type="Boolean" default="false"/>
+    <aura:attribute name="displayOccurrence" type="Boolean" default="false" access="global"/>	
+    <aura:attribute name="approvalInfo" type="String" access="global"/>
+    <aura:attribute name="occurrenceLimit" type="String" default="0" access="global"/>
+    <aura:attribute name="subTypeBtn" type="boolean" default="false"/>
+    <aura:attribute name="isShowAssignCase" type="Boolean" default="true"/>
+    
+    <aura:if isTrue="{!v.isNotPickup}">
+        <div class="slds-grid">
+            <div class="setHeight slds-truncate slds-col slds-scrollable" >
+                
+                
+                <lightning:card class=" slds-scrollable" aura:id="actionReqCard">
+               
+                    <ul class="slds-list--inline">
+                        <li><div class="slds-m-left_small"><lightning:icon aura:id="actionIcon" iconName="action:new_task" alternativeText="Action Required" size="xx-small" class="{!v.actionReqRed ? 'redicon' : 'greenicon'}"/></div></li>
+                        <li><div class="slds-text-heading_medium slds-m-left_small">Action Required</div></li>
+                	</ul>
+                    <ul class="slds-list--inline slds-float_right">
+                    	<li>
+                            <!-- <div class="slds-m-right_small">
+                                <aura:if isTrue="{!v.isShowAssignCase}"> 
+                           		 <lightning:button label="Assign Case"
+                                          variant="brand"
+                                          onclick="{!c.showCaseAssignment}" >
+                       			 </lightning:button>
+                                </aura:if>
+                            </div> -->
+                        </li>
+                        <li class="slds-m-right_small"><lightning:button label='Progress Case' variant="brand" onclick="{!c.handleClick}" disabled="{!v.enableProgress}" /></li>
+                    </ul>
+                </lightning:card>
+                
+            </div>
+            
+           <!-- <aura:if isTrue ="{!v.approvalInfoMsg}">
+                <div class="slds-col slds-scrollable">
+                    <lightning:card class="setHeight">
+                        <ul class="slds-list_horizontal">
+                            <li><div class="slds-m-left_small"> <lightning:icon iconName="action:submit_for_approval" alternativeText="Service Approver" size="xx-small"/></div></li>
+                            <li><div class="slds-text-heading_medium slds-m-left_small">Service Approver</div></li>
+                        </ul>
+                        
+                        <p class="slds-p-around_small slds-m-left_medium">
+                            <div class="newline"><aura:unescapedHtml value="{!v.approvalInfo}" /></div>
+                            <aura:if isTrue="{!v.displayOccurrence}">
+                                <div class="newline">Occurrence Limit = {!v.occurrenceLimit}</div>
+                            </aura:if>		   
+                        </p>   		
+                    </lightning:card>
+                </div>
+            </aura:if>       -->          
+        </div>             
+    </aura:if>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}" 
+                      layoutType="FULL"
+                      targetRecord="{!v.case}"
+                      targetFields="{!v.caseRecord}"
+                      fields="Id, CaseNumber,AssetId,Case_Type__c,Case_Sub_Type__c,Client__c,Location__c,ContactId,Status" 
+                      mode="VIEW"
+                      recordUpdated="{!c.initAction}"
+                      />
+    
+    
+    <div aura:id="subTypeComp"></div>
+    <div aura:id = "showModal"></div>
+    <div aura:id="CaseAssignmentComp"></div>
+</aura:component>

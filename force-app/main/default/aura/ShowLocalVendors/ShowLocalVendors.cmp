@@ -1,0 +1,213 @@
+<!--
+	* Story: SDT-20786
+	* Sprint: AM Sprint6
+	* FC: Rahul Rana Singh
+	* Dev: Rishiraj Singh
+-->
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                controller="getLocalVendorController">
+    
+    <aura:attribute name="mapValues" type="Map" />
+    <aura:attribute name="picklist" type="List" />
+    <aura:attribute name="vendorList" type="List" />
+    <aura:attribute name="masList" type="List" />
+    <aura:attribute name="showSpinner" type="boolean" />
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler event="lightning:tabFocused" action="{!c.onTabFocus}" />
+    <aura:handler event="force:refreshView" action="{!c.init}" />
+    <lightning:card title="Local Coverage" iconName="utility:groups">
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner alternativeText="Loading Local Coverage" size="medium" />
+        </aura:if>
+        <aura:set attribute="actions">
+            <!--<div class="slds-grid slds-gutters">
+                <div class="slds-col">-->
+                    <!--<div style="width: 50%;">-->
+                        
+                    <!--</div>-->
+                <!--</div>
+                <div class="slds-col">--> 
+                    <lightning:buttonIcon iconName="utility:sync" variant="brand" onclick="{!c.onTabFocus}" />
+                <!--</div>
+            </div> -->       
+        </aura:set>
+        <div style="width: 50%;margin-left: auto; margin-right: 0;">
+            <c:wasteStreamComp aura:id="wasteStreamDropdown" wasteStreamValues="{!v.picklist}" onselectedwastestreamevent="{!c.selectWSHandler}"/>
+        </div>
+        <div class="slds-truncate slds-col slds-scrollable">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="12" padding="around-small">
+                    <p class="slds-text-title_caps">Vendors Providing Services in the Postal Code</p>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12">
+                    <aura:if isTrue="{!not(empty(v.vendorList))}">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Vendor Name">Vendor Name</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Vendor Id">Vendor Id</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Business Unit">Business Unit</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="VRM Ranking">VRM Ranking</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="VRM Ranking">Waste Streams</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.vendorList}" var="var">
+                                    <tr class="slds-hint-parent">
+                                        <td data-label="Vendor Name">
+                                            <div class="slds-truncate">{!var.Name}</div>
+                                        </td>
+                                        <td data-label="Vendor Id">
+                                            <div class="slds-truncate">{!var.AccountNumber}</div>
+                                        </td>
+                                        <td data-label="Business Unit">
+                                            <div class="slds-truncate">{!var.Vendor_Business_Unit__c}</div>
+                                        </td>
+                                        <td data-label="VRM Ranking">
+                                            <div class="slds-truncate">{!var.Legacy_Ranking__c}</div>
+                                        </td>
+                                        <td data-label="Materials">
+                                            <div class="slds-truncate">{!var.Materials}</div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                        <aura:set attribute="else">
+                            <p>No Vendor Found.</p>
+                        </aura:set>
+                    </aura:if>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" padding="around-small">
+                    <p class="slds-text-title_caps">MAS Libraries/Company Codes</p>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12">
+                    <aura:if isTrue="{!not(empty(v.masList))}">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Vendor Name">MAS Library</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Vendor Id">Company Code</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.masList}" var="MAS">
+                                    <tr class="slds-hint-parent">
+                                        <td data-label="Vendor Name">
+                                            <div class="slds-truncate">{!MAS.MAS_Library__c}</div>
+                                        </td>
+                                        <td data-label="Vendor Id">
+                                            <div class="slds-truncate">{!MAS.MAS_Company_Code__c}</div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                        <aura:set attribute="else">
+                            <p>MAS Details Not Found.</p>
+                        </aura:set>
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </lightning:card>    
+</aura:component>
+<!--<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                controller="getLocalVendorController">
+    
+    <aura:attribute name="Vendors" type="Account[]" />
+    <aura:attribute name="MASDetails" type="Asset[]" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <lightning:card title="Local Coverage" iconName="utility:groups">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" padding="around-small">
+                <p class="slds-text-title_caps">Vendors Providing Service in the Postal Code</p>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Vendor Name">Vendor Name</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Vendor Id">Vendor Id</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Business Unit">Business Unit</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="VRM Ranking">VRM Ranking</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.Vendors}" var="var">
+                            <tr class="slds-hint-parent">
+                                <td data-label="Vendor Name">
+                                    <div class="slds-truncate">{!var.Name}</div>
+                                </td>
+                                <td data-label="Vendor Id">
+                                    <div class="slds-truncate">{!var.AccountNumber}</div>
+                                </td>
+                                <td data-label="Business Unit">
+                                    <div class="slds-truncate">{!var.Vendor_Business_Unit__c}</div>
+                                </td>
+                                <td data-label="VRM Ranking">
+                                    <div class="slds-truncate">{!var.Legacy_Ranking__c}</div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" padding="around-small">
+                <p class="slds-text-title_caps">MAS Libraries/Company Codes</p>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Vendor Name">MAS Library</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Vendor Id">Company Code</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.MASDetails}" var="MAS">
+                            <tr class="slds-hint-parent">
+                                <td data-label="Vendor Name">
+                                    <div class="slds-truncate">{!MAS.MAS_Library__c}</div>
+                                </td>
+                                <td data-label="Vendor Id">
+                                    <div class="slds-truncate">{!MAS.MAS_Company_Code__c}</div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+    
+</aura:component>-->

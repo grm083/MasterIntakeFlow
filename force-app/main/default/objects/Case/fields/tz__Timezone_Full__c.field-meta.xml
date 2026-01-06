@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>tz__Timezone_Full__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Full timezone name of the Contact/Account associated with the Case.</description>
+    <externalId>false</externalId>
+    <formula>IF(Contact.tz__Timezone_F__c != null, Contact.tz__Timezone_Full_F__c, Account.tz__Timezone_Full_F__c)</formula>
+    <inlineHelpText>Full timezone name of the Contact/Account associated with the Case.</inlineHelpText>
+    <label>Timezone (Full)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

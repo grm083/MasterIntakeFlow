@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_SLA_Date__c</fullName>
+    <description>field is created for storing SLA date in backend for reporting purpose</description>
+    <externalId>false</externalId>
+    <label>Customer Requested Service Date</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Date</type>
+</CustomField>

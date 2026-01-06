@@ -1,0 +1,48 @@
+.scroll-bar{
+  max-height: 9rem;
+  }
+  /* .scroll-bar-outer{
+    max-height: 13.2rem;
+  } */
+  .box {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 5px;
+    border: 1px solid darkgreen;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  .box:hover,
+  .box:hover .lower-section
+  {
+    background-color: #acd5ac;
+    opacity: 1;
+  }
+  .box:hover{
+      border: 1px solid #acd5ac;
+  }
+  .box:hover .top-section{
+      color: black;
+  }
+  .top-section {
+    font-weight: bold;
+    padding: 2px 6px;
+    color: darkgreen;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .lower-section {
+    letter-spacing: 0.5px;
+    padding: 1px;
+    font-size: 10px;
+    opacity: 0.8;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+  }
+  .lower-section_green{
+    background-color: #e9ffd9;
+  }
+  .lower-section_yellow{
+    background-color: #F8F55C;
+  }

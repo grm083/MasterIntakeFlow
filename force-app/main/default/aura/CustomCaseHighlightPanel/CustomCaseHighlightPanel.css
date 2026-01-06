@@ -1,0 +1,127 @@
+.THIS .slds-modal__container{
+    max-width: 80rem !important;
+    width:80% !important;
+}
+.THIS .m-container {
+    border: 2px solid green;
+    margin: 1px 1px 1px 1px;
+}
+.THIS .c-container {
+    margin: 0px 0px 0px 0px;
+}
+.THIS .c-container2 {
+    margin-top: -1.5%;
+    margin-bottom: -0.5%;
+}
+
+.THIS .custom-box {
+    text-align: left;
+    background-color: #ffffff;
+    padding: .4rem;
+    border: 0px solid #000000;
+    margin: 1px 0 0 0;
+    padding-left: 5px;
+}
+.THIS h3{
+    font-weight: bold;
+    font-size: .70rem;
+}
+.THIS p{
+    font-size: .85rem;
+    text-align: center;
+}
+
+.THIS table.assetTable,.THIS th.assetTable ,.THIS tr.assetTable ,.THIS td.assetTable{
+    /* border: 1px solid black; */
+    border-collapse: collapse;
+    text-align: center;
+    padding: 1px;
+
+  }
+.THIS .popOverHeader{
+    text-align: center;
+    font-weight: bold;
+}
+
+.THIS .fullCircle
+{
+  width: 20px;
+  height:20px;
+  bordeR: 1px solid;
+  border-radius: 50%;
+  border-color: transparent;
+  background-color: #f00;
+  padding: 0px;
+  box-shadow: 0px 0px 1px 2px black;
+  }
+  .THIS .actionColor{
+      color: green;
+  }
+  .THIS .blankColor{
+      color: red;
+  }
+  .THIS .capacityColor{
+    color: red;
+}
+  .THIS .txtHover:hover{
+     color: green;
+     font-weight: bold;
+     font-size: .70rem;
+  }
+  .THIS .hrStyle1{
+    border: 2px solid #dddbda;
+    /* border-radius: 5px; */
+    background-color: #dddbda;
+}
+.THIS #hr1{
+    margin-bottom: -1%;
+    margin-top: 0%;
+}
+.THIS #hr2{
+    margin-top: -1%;
+    margin-bottom: -0.5%;
+}
+.THIS .underline-on-hover:hover {
+    text-decoration: underline;
+}
+ .THIS .stickySection {
+	position: fixed;
+    top:0;    
+}
+.THIS .classWidth{
+    width:100%;
+}
+.THIS .tdColor{
+    color: red;
+    font-weight: bold;
+}
+.THIS .locationhover{
+    position: fixed; 
+    width: 34rem;  
+    padding-top: 20px; 
+    padding-left: 20px; 
+    padding-right: 20px; 
+    padding-bottom:  20px;
+}
+.THIS .assethover{
+    position: fixed;
+    width: 46rem;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+.THIS .contacthover{
+    position: fixed;
+    width: 30rem;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+.THIS .queueDisabled{
+    pointer-events: none;
+}
+.THIS .wrapTextCls{
+    white-space: normal !important;
+}

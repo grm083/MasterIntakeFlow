@@ -1,0 +1,61 @@
+<!--
+  @description       : 
+  @author            : Adil Aleem
+  @group             : 
+  @last modified on  : 09-19-2023
+  @last modified by  : Adil Aleem
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+<!-- START : TEST FOR 30949 -->
+      <lightning-accordion class="example-accordion accordionClass" allow-multiple-sections-open>
+        <lightning-accordion-section name= "Business Notification" label="Business Notification">
+        <template for:each={brWrapperList} for:item="br" for:index="index">
+           <p key={br.brCount} class="linkTextWeight">
+                    <lightning-button variant="base" style="--lwc-brandAccessible: rgb(0 100 220); --lwc-brandAccessibleActive:  rgb(0 100 220); margin: auto;" 
+                                                    label={br.formattedalias} title={br.formattedalias} data-br={br.brId} location-id ={locationId} onclick={openBusinessNotification} class="slds-m-left_x-small">
+                                                </lightning-button>
+            </p>
+        </template>
+        </lightning-accordion-section>
+    </lightning-accordion>
+    <c-business-notification-cmp  business-id={businessId} location-id ={locationId} if:true={showBusinessNotification}></c-business-notification-cmp>
+
+    <!-- END -->
+    <lightning-accordion class="example-accordion accordionClass" allow-multiple-sections-open>
+<lightning-accordion-section name= "Approval Rules" label="Approval Rules">
+        <template for:each={allRules} for:item="ar" for:index="index">
+           <p key={ar.caseRecordType}>
+                <lightning-accordion-section name={ar.caseRecordType} label={ar.caseRecordType}>
+                    <template if:true={ar.approvalNeeded}>
+                        <template for:each={ar.caseTypes} for:item="ct" for:index="ctIndex">
+                            <p key={ct.caseType} >
+                                <template for:each={ct.caseSubTypes} for:item="cst" for:index="cstIndex">
+                                    <p key={cst.caseSubType} >                                    
+                                        <template for:each={cst.caseReasons} for:item="cr" for:index="crIndex">
+                                            <p key={cr}  class="linkTextWeight"> 
+                                                <!--added data-ishaulaway as aprt of SDT-46918-->
+                                                <lightning-button variant="base" style="--lwc-brandAccessible: rgb(0 100 220); --lwc-brandAccessibleActive:  rgb(0 100 220); margin: auto;" 
+                                                    label={cr.caseTypeSubTypeReasonStr} title={cr.caseReason} data-cr={cr.caseReason} data-cst={cst.caseSubType} data-ct={ct.caseType} data-ishaulaway={cr.isHaulAwayContainer} onclick={openBusinessRule} class="slds-m-left_x-small">
+                                                </lightning-button>
+                                            </p>
+                                        </template>       
+                                    </p>
+                                </template>        
+                            </p>
+                        </template>    
+                    </template> 
+                    <template if:false={ar.approvalNeeded}>
+                        <p style="margin-left: 48px !important; color: red !important;">
+                            No Approval Needed
+                        </p>          
+                    </template>        
+                </lightning-accordion-section>
+            </p>
+        </template>
+</lightning-accordion-section>
+    </lightning-accordion>
+    <c-case-rules-modal all-rule-type case-type={caseType} location-id={locationId} case-sub-type={caseSubType} case-reason={caseReason} is-haul-away-container={isHaulAwayContainer} if:true={showBusinessRule} ></c-case-rules-modal>
+</template>

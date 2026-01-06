@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Container_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Container Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>Product_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Dumpster</fullName>
+                <default>false</default>
+                <label>Dumpster</label>
+            </value>
+            <value>
+                <fullName>Compactor</fullName>
+                <default>false</default>
+                <label>Compactor</label>
+            </value>
+            <value>
+                <fullName>Open Top</fullName>
+                <default>false</default>
+                <label>Open Top</label>
+            </value>
+            <value>
+                <fullName>Toter</fullName>
+                <default>false</default>
+                <label>Toter</label>
+            </value>
+            <value>
+                <fullName>Portalets</fullName>
+                <default>false</default>
+                <label>Portalets</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Roll-Off</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <controllingFieldValue>Both</controllingFieldValue>
+            <valueName>Dumpster</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Roll-Off</controllingFieldValue>
+            <controllingFieldValue>Both</controllingFieldValue>
+            <valueName>Compactor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Roll-Off</controllingFieldValue>
+            <controllingFieldValue>Both</controllingFieldValue>
+            <valueName>Open Top</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <controllingFieldValue>Both</controllingFieldValue>
+            <valueName>Toter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <controllingFieldValue>Both</controllingFieldValue>
+            <valueName>Portalets</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

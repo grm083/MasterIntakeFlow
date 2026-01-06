@@ -1,0 +1,50 @@
+.green_box span {
+  background-color: lightgreen;
+}
+/* .slds-datepicker{
+  display: none !important;
+} */
+.green_box:hover span {
+  background-color: lightgreen;
+}
+.yellow_box span {
+  background-color: rgb(247, 252, 97);
+}
+.yellow_box:hover span {
+  background-color: rgb(247, 252, 97);
+}
+.container {
+  display: flex;
+}
+.info_box {
+  width: 330px;
+  left: 100%;
+  padding: 20px;
+}
+.info_text {
+  display: flex;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.yellow_bg {
+  background-color: rgb(247, 252, 97);
+}
+.green_bg {
+  background-color: lightgreen;
+}
+
+.input-like {
+  text-align: left;
+  padding-right: 0px;
+}
+.icon-align{
+  float: right;
+  padding: 7px;
+}

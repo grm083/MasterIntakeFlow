@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Compactor_can_only_have_PSI</fullName>
+    <active>true</active>
+    <description>Only compactor container can have PSI Number as &quot;Required&quot;</description>
+    <errorConditionFormula>IF(AND( RecordType.DeveloperName == &apos;Required_Information&apos;, NOT(OR(ISPICKVAL( Container__c , &apos;Compactor&apos;),ISPICKVAL(  AssetId__r.Product2.ProductTypeSelected__c , &apos;Compactor&apos;))),NOT( ISBLANK(Required_Information__c) ),INCLUDES( Required_Information__c , &apos;PSI&apos;)) , true, false)</errorConditionFormula>
+    <errorDisplayField>Container__c</errorDisplayField>
+    <errorMessage>Only compactor container can have PSI Number as &quot;Required&quot;</errorMessage>
+</ValidationRule>

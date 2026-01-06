@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lower_Case_Asset_Details__c</fullName>
+    <description>Concatenating asset info for usage in email templates</description>
+    <externalId>false</externalId>
+    <formula>LOWER(TEXT( Product2.Container_Size__c ) + &quot; &quot; + TEXT( Material_Type__c ) + &quot; &quot; + TEXT(Product2.Equipment_Type__c))</formula>
+    <label>Lower case Asset details</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

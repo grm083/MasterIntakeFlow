@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_User_Name__c</fullName>
+    <description>User name of for salesforce Team User</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>User name of for salesforce Team User</inlineHelpText>
+    <label>Team User Name</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Customer Service Team</fullName>
+                <default>true</default>
+                <label>Customer Service Team</label>
+            </value>
+            <value>
+                <fullName>CS Service Resolution Team</fullName>
+                <default>false</default>
+                <label>CS Service Resolution Team</label>
+            </value>
+            <value>
+                <fullName>CS Locks Team</fullName>
+                <default>false</default>
+                <label>CS Locks Team</label>
+            </value>
+            <value>
+                <fullName>CS Repairs Team</fullName>
+                <default>false</default>
+                <label>CS Repairs Team</label>
+            </value>
+            <value>
+                <fullName>Sales Home Depot Projects</fullName>
+                <default>false</default>
+                <label>Sales Home Depot Projects</label>
+            </value>
+            <value>
+                <fullName>Sales Home Depot Team</fullName>
+                <default>false</default>
+                <label>Sales Home Depot Team</label>
+            </value>
+            <value>
+                <fullName>Sales Dollar Tree/Family Dollar Team</fullName>
+                <default>false</default>
+                <label>Sales Dollar Tree/Family Dollar Team</label>
+            </value>
+            <value>
+                <fullName>Sales Amazon Team</fullName>
+                <default>false</default>
+                <label>Sales Amazon Team</label>
+            </value>
+            <value>
+                <fullName>CS Dollar Tree Resolution Team</fullName>
+                <default>false</default>
+                <label>CS Dollar Tree Resolution Team</label>
+            </value>
+            <value>
+                <fullName>Sales M&amp;I Team</fullName>
+                <default>false</default>
+                <label>Sales M&amp;I Team</label>
+            </value>
+            <value>
+                <fullName>Compliance Team</fullName>
+                <default>false</default>
+                <label>Compliance Team</label>
+            </value>
+            <value>
+                <fullName>Internal Spec Correction Team</fullName>
+                <default>false</default>
+                <label>Internal Spec Correction Team</label>
+            </value>
+            <value>
+                <fullName>New Stores - Quote Only/Container on Site</fullName>
+                <default>false</default>
+                <label>New Stores - Quote Only/Container on Site</label>
+            </value>
+            <value>
+                <fullName>CS Hauler Damage</fullName>
+                <default>false</default>
+                <label>CS Hauler Damage</label>
+            </value>
+            <value>
+                <fullName>CS Canada Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>CS Canada Team</label>
+            </value>
+            <value>
+                <fullName>CS Service Channel</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>CS Service Channel</label>
+            </value>
+            <value>
+                <fullName>Canada VRM Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Canada VRM Team</label>
+            </value>
+            <value>
+                <fullName>Internal Spec Correction</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Internal Spec Correction</label>
+            </value>
+            <value>
+                <fullName>New Stores Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>New Stores Team</label>
+            </value>
+            <value>
+                <fullName>Project Services Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Project Services Team</label>
+            </value>
+            <value>
+                <fullName>SSM Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SSM Team</label>
+            </value>
+            <value>
+                <fullName>Sales Broker Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sales Broker Team</label>
+            </value>
+            <value>
+                <fullName>Sales Greystar Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sales Greystar Team</label>
+            </value>
+            <value>
+                <fullName>Service Fulfillment - New Service</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Service Fulfillment - New Service</label>
+            </value>
+            <value>
+                <fullName>Service Fulfillment - Service Change</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Service Fulfillment - Service Change</label>
+            </value>
+            <value>
+                <fullName>Vendor Operations Maintenance</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Vendor Operations Maintenance</label>
+            </value>
+            <value>
+                <fullName>WM Compactor Solutions Team</fullName>
+                <default>false</default>
+                <label>WM Compactor Solutions Team</label>
+            </value>
+            <value>
+                <fullName>Vendor Operations Resolution</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Vendor Operations Resolution</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

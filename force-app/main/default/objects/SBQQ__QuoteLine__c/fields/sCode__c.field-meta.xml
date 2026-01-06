@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>sCode__c</fullName>
+    <externalId>false</externalId>
+    <label>sCode</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CAM</fullName>
+                <default>false</default>
+                <label>CAM</label>
+            </value>
+            <value>
+                <fullName>CTY</fullName>
+                <default>false</default>
+                <label>City</label>
+            </value>
+            <value>
+                <fullName>FRCH</fullName>
+                <default>false</default>
+                <label>Franchise</label>
+            </value>
+            <value>
+                <fullName>UTL</fullName>
+                <default>false</default>
+                <label>Utility</label>
+            </value>
+            <value>
+                <fullName>LL</fullName>
+                <default>false</default>
+                <label>Landlord</label>
+            </value>
+            <value>
+                <fullName>OGIT</fullName>
+                <default>false</default>
+				<isActive>false</isActive>
+                <label>OGIT</label>
+            </value>
+            <value>
+                <fullName>RCPT</fullName>
+                <default>false</default>
+                <label>Reciprocity</label>
+            </value>
+            <value>
+                <fullName>EXCT</fullName>
+                <default>false</default>
+                <label>Existing Contract</label>
+            </value>
+            <value>
+                <fullName>SPL</fullName>
+                <default>false</default>
+                <label>Split</label>
+            </value>
+            <value>
+                <fullName>BROKOP</fullName>
+                <default>false</default>
+                <label>Open Market Broker</label>
+            </value>
+            <value>
+                <fullName>BROKFR</fullName>
+                <default>false</default>
+                <label>Franchise Market Broker</label>
+            </value>
+            <value>
+                <fullName>BROKCT</fullName>
+                <default>false</default>
+                <label>Local Contract Broker</label>
+            </value>
+            <value>
+                <fullName>Enter values</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Enter values</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

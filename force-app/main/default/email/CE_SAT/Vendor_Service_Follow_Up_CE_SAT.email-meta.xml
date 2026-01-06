@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Reach out to a vendor to confirm completion of service</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>ML_Letterhead</letterhead>
+    <name>Vendor: Service Follow Up_CESAT-3rd Party</name>
+    <style>freeForm</style>
+    <subject>Service Confirmation Request: {!Case.Case_Type__c} &amp; {!Case.Case_Subtype_Email_Format__c} - {!Case.Location_Code__c} - Ref# {!Case.Reference_Number__c}</subject>
+    <textOnly>Dear {!Case.Client__c},
+
+We are requesting that you confirm that the below service was completed as planned:
+
+Please review the below request summary and, using the links available at the bottom of this email, advise if this service was completed:
+
+Request Details
+ 
+Service Requested:                      {!Case.Case_Type__c} - {!Case.Case_Sub_Type__c}
+
+Requested By:                              {!Case.Contact}, {!Account_Title__c.Name}
+
+Asset:                                            {!Asset.Equipment_Size__c} {!Asset.Material_Type__c} {!Asset.Equipment_Type__c}
+
+Asset Position:                              {!Asset.Container_Position__c}
+
+Location Details:                           {!Account.Location_Code__c}
+                                                      {!Account.Name}  
+                                                      {!Account.ShippingStreet} 
+                                                      {!Account.ShippingCity}, {!Account.ShippingState} 
+                                                      {!Account.ShippingPostalCode}
+                                                      {!Account.ShippingCountry}
+
+
+Requested Service Date:              {!WorkOrder.Original_Expected_Date__c}
+
+Reference Number:                      {!Case.Reference_Number__c}
+
+Comments:                                   N/A
+
+ 
+Using the below options, please advise if this service had occurred as you had requested:
+
+Thank you.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

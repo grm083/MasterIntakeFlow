@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Custom_Setting_Fields</fullName>
+    <columns>NAME</columns>
+    <columns>Number_of_Days_of_Alerts__c</columns>
+    <columns>Allow_Filtering_by_Equipment_Type__c</columns>
+    <columns>Allow_Filtering_by_LOB__c</columns>
+    <columns>Allow_Filtering_by_Material__c</columns>
+    <columns>Records_Shown__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Custom Setting Fields</label>
+</ListView>

@@ -1,0 +1,21 @@
+<aura:component controller="CreateCaseHistory" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="dataList" type="Object"/>
+    <aura:attribute name="isShowPopup" type="Boolean" default="true"/>
+    <aura:attribute name="isHide" type="Boolean" default="false"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <lightning:empApi aura:id="empApi" />
+    
+    <aura:if isTrue="{!v.isHide}">
+    <div class="slds-is-relative">
+        <lightning:button onclick="{!c.refreshComp}" class="slds-align_absolute-center" label="Refresh"/>
+        <lightning:spinner alternativeText="Loading" size="medium" aura:id="spinner" class="slds-hide"/>
+        <div>
+            <aura:iteration items="{!v.dataList}" var="itemDetail">
+               <c:CustomTimeline item="{!itemDetail}" objectType="{!itemDetail.Related_Object__c}"/> 
+            </aura:iteration>
+        </div>
+    </div>
+    </aura:if>    
+    <div aura:id="casePopupHolder"></div> 
+</aura:component>

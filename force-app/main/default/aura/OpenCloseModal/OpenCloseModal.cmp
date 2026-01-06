@@ -1,0 +1,29 @@
+<aura:component controller="ProgressCaseComponentController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="showButtons" type="boolean" default="true"/>
+    <aura:attribute name="disableOpen" type="boolean" default="false"/>
+    <aura:attribute name="caseRecordId" type="String" />
+    <aura:attribute name="caseStatus" type="String"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> 
+    <aura:if isTrue="{!v.showButtons}">
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{!c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <span><b>Change case status to</b></span>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-align_absolute-center">
+                        <lightning:button label='Open' onclick="{!c.openAction}" disabled="{!v.disableOpen}"/>
+                        <lightning:button label='Closed' onclick="{!c.closeAction}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
+</aura:component>

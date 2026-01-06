@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Genesys_User__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Created by CI Team Hot fix SDT-25285</description>
+    <externalId>false</externalId>
+    <label>Is Genesys User</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

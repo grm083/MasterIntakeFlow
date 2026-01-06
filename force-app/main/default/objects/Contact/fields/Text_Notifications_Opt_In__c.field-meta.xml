@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Text_Notifications_Opt_In__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checkbox for capturing text notification opt in.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicates if contact has or has not granted permission for WM to send text notifications to their mobile phone number.</inlineHelpText>
+    <label>Text Notifications Opt-In</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

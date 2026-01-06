@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Project_Code_Combination_Not_Allowed</fullName>
+    <active>false</active>
+    <description>Project Code with Container, Material, Schedule Type, or Asset fields cannot be combined together. ,
+        NOT(ISBLANK( AssetId__c ))</description>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(  Project_Code__c  )), 
+    OR(
+        NOT(ISPICKVAL(Container__c, &quot;&quot;)),   
+        NOT(ISPICKVAL(Material__c, &quot;&quot;)),  
+        NOT(ISPICKVAL( Schedule_Type__c , &quot;&quot;))
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Project_Code__c</errorDisplayField>
+    <errorMessage>Project Code with Container, Material, Schedule Type cannot be combined together.</errorMessage>
+</ValidationRule>

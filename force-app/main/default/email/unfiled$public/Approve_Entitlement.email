@@ -1,0 +1,11 @@
+<messaging:emailTemplate subject="Entitlement is Approved : {!relatedTo.name}" recipientType="User" relatedToType="Entitlement">
+<messaging:htmlEmailBody >
+<html>
+<body>
+<p>Hi {!recipient.name},</p>
+<p>Your Entitlement has been Approved.Please find the Link below </p>
+<apex:outputlink value="{!LEFT($Api.Partner_Server_URL_140,FIND('.com',$Api.Partner_Server_URL_140)+4)+relatedTo.Id}">{!relatedTo.Name}</apex:outputlink>
+</body>
+</html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Task_Type__c</fullName>
+    <description>Task Genesys Routing Control</description>
+    <externalId>false</externalId>
+    <label>Task Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Obtain Vendor Update</fullName>
+                <default>false</default>
+                <label>Obtain Vendor Update</label>
+            </value>
+            <value>
+                <fullName>Confirm Service Completion</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Confirm Service Completion</label>
+            </value>
+            <value>
+                <fullName>Confirm Service Completion with Location</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Confirm Service Completion with Location</label>
+            </value>
+            <value>
+                <fullName>Obtain Schedule Confirmation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Obtain Schedule Confirmation</label>
+            </value>
+            <value>
+                <fullName>Resolve Service Issue</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Resolve Service Issue</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>A list of various MAA project settings to control &quot;switches&quot; based on business feedback</description>
+    <enableFeeds>false</enableFeeds>
+    <label>Market Area Alerts Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

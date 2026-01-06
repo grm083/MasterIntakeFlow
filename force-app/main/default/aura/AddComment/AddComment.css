@@ -1,0 +1,20 @@
+.THIS .slds-form-element__label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: auto;
+    margin-top: auto;
+    max-width: 50%;
+}
+
+.THIS .custom-textarea {
+    --sds-c-textarea-sizing-min-height:150px;
+    }
+    
+    .THIS .vertical-align-container {
+        align-items: center;
+    }
+    
+    .THIS .move-right {
+        width: 200px;
+        margin-left: 50px;
+    }

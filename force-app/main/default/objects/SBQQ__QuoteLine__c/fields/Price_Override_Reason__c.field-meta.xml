@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_Override_Reason__c</fullName>
+    <description>This field is created as a part of SDT-26002 from Sprint 20</description>
+    <externalId>false</externalId>
+    <label>Price Override Reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Vendor changed - modelled rate</fullName>
+                <default>false</default>
+                <label>Vendor changed - modelled rate</label>
+            </value>
+            <value>
+                <fullName>Vendor changed - selected vendor could not perform the service</fullName>
+                <default>false</default>
+                <label>Vendor changed - selected vendor could not perform the service</label>
+            </value>
+            <value>
+                <fullName>Vendor changed - selected vendor was not the incumbent</fullName>
+                <default>false</default>
+                <label>Vendor changed - selected vendor was not the incumbent</label>
+            </value>
+            <value>
+                <fullName>Vendor changed - selected vendor could not provide Escalated service.</fullName>
+                <default>false</default>
+                <label>Vendor changed - selected vendor could not provide Escalated service.</label>
+            </value>
+            <value>
+                <fullName>Vendor changed - selected vendor did not accept the rates</fullName>
+                <default>false</default>
+                <label>Vendor changed - selected vendor did not accept the rates</label>
+            </value>
+            <value>
+                <fullName>Vendor changed - vendor cost exceeded client NTE</fullName>
+                <default>false</default>
+                <label>Vendor changed - vendor cost exceeded client NTE</label>
+            </value>
+            <value>
+                <fullName>Vendor changed - API returned 3P, client requires WM</fullName>
+                <default>false</default>
+                <label>Vendor changed - API returned 3P, client requires WM</label>
+            </value>
+            <value>
+                <fullName>Vendor provided different rates</fullName>
+                <default>false</default>
+                <label>Vendor provided different rates</label>
+            </value>
+            <value>
+                <fullName>Per Sales</fullName>
+                <default>false</default>
+                <label>Per Sales</label>
+            </value>
+            <value>
+                <fullName>Service requested is part of closed market</fullName>
+                <default>false</default>
+                <label>Service requested is part of closed market</label>
+            </value>
+            <value>
+                <fullName>Core Service Amount incorrect</fullName>
+                <default>false</default>
+                <label>Core Service Amount incorrect</label>
+            </value>
+            <value>
+                <fullName>Ancillary amount was incorrect per PFE/CMT action and value</fullName>
+                <default>false</default>
+                <label>Ancillary amount was incorrect per PFE/CMT action and value</label>
+            </value>
+            <value>
+                <fullName>Ancillary amount was incorrect per PFE/CMT comment</fullName>
+                <default>false</default>
+                <label>Ancillary amount was incorrect per PFE/CMT comment</label>
+            </value>
+            <value>
+                <fullName>Amount updated per Business Rule</fullName>
+                <default>false</default>
+                <label>Amount updated per Business Rule</label>
+            </value>
+            <value>
+                <fullName>Schedule changed</fullName>
+                <default>false</default>
+                <label>Schedule changed</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

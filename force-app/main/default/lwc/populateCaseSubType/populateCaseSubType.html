@@ -1,0 +1,120 @@
+<template>
+
+    <!-- modal start -->        
+<template if:true={bShowModal}>
+<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header">
+            <!--changes related to SDT-41639-->
+            <button class="slds-button slds-button_icon slds-modal__close  " title="Close" onclick={closeModal}>
+            <lightning-icon icon-name="utility:close"
+                alternative-text="close"
+                variant="bare"
+                size="small" ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{title}</h2>
+        </header>
+        <!-- modal body start -->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <template if:true={validationmessage}>
+                <div class="errormsg">
+                    {validationmessage}
+                </div>
+            </template>
+            <lightning-record-edit-form
+                    object-api-name={objectApiName}
+                    record-id={recid}
+                    onsubmit={handleSubmit}
+                    onsuccess={handleSuccess}
+                    record-type-id={recordTypeId}
+                    layout-type="Compact">
+                    <lightning-messages></lightning-messages>
+                    <template if:true={caseSubType}>
+                        <lightning-input-field
+                            field-name="Case_Type__c">
+                        </lightning-input-field>
+                        <lightning-input-field data-formfield="subType" class="subType"
+                            field-name="Case_Sub_Type__c">
+                        </lightning-input-field>
+                        <lightning-input-field
+                            field-name="Case_Reason__c">
+                        </lightning-input-field>
+                    </template>
+                    <template if:true={reqInfo}>
+                        <lightning-layout multiple-rows="true">
+                         
+                            <lightning-layout-Item padding="around-small" size="6">
+                        <lightning-input-field 
+                        field-name="PurchaseOrder_Number__c" >
+                        </lightning-input-field>
+                            </lightning-layout-Item>
+                          
+                            <lightning-layout-Item padding="around-small" size="6">
+                        <lightning-input-field 
+                        field-name="Override_PO_Create_Task__c" >
+                        </lightning-input-field>
+                            </lightning-layout-Item>
+                      
+                            <lightning-layout-Item padding="around-small" size="6">
+                        <lightning-input-field 
+                        field-name="Chargeable__c" >
+                        </lightning-input-field>
+                            </lightning-layout-Item>
+                                    
+                            <!--<lightning-layout-Item padding="around-small" size="6">
+                                <lightning-input-field 
+                                    field-name="Override_Profile_Number_Task__c" >
+                                </lightning-input-field>
+                            </lightning-layout-Item>  -->
+                                      
+                            <lightning-layout-Item padding="around-small" size="6">    
+                                <lightning-input-field 
+                                    field-name="PSI__c" >
+                                </lightning-input-field>
+                            </lightning-layout-Item>
+                            
+                             <lightning-layout-Item padding="around-small" size="6">   
+                                <lightning-input-field 
+                                    field-name="PSI_Override_Reason__c" >
+                                </lightning-input-field>
+                             </lightning-layout-Item>
+                            
+                             <lightning-layout-Item padding="around-small" size="6">    
+                                <lightning-input-field 
+                                    field-name="PSI_Comments__c" >
+                                </lightning-input-field>
+                             </lightning-layout-Item>    
+                                 
+                            </lightning-layout>
+                    </template>
+                    <template if:true={serviceDate}>
+                        <lightning-input-field field-name="SLA_Service_DateTime__c" ></lightning-input-field>
+                        <lightning-input-field field-name="Service_Date__c" ></lightning-input-field>
+                        <lightning-input-field field-name="SLA_Override_Reason__c" ></lightning-input-field>
+                        <lightning-input-field field-name="SLA_Override_Comment__c" ></lightning-input-field>
+                    </template>
+                    <template if:true={closeCase}>
+                        <lightning-input-field field-name="Close_Irrelevant_Case__c" ></lightning-input-field>
+                 		<lightning-input-field data-formfield="closeReason" field-name="Case_Close_Reason__c" ></lightning-input-field>
+                    </template>
+                    <div class="slds-m-top_medium">
+                        <lightning-button 
+                            aura:id="submit"
+                            name="save"
+                            variant="brand"
+                            type="submit"
+                            label="Save"
+                            class="slds-m-top_medium slds-align_absolute-center">
+                        </lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            
+        </div>
+    </div>
+</section>
+<div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+</template>
+
+</template>

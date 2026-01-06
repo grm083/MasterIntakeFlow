@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Rejected Work Order</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">The vendor has rejected this work order electronically. Please review applicable comments to identify why it has been rejected. If no notes or other information is available, please contact the vendor to identify the root cause of the rejection</value>
+    </values>
+</CustomMetadata>

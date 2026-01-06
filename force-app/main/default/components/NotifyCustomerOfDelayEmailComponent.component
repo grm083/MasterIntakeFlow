@@ -1,0 +1,212 @@
+<apex:component controller="NotifyCustomerOfDelayEmailController" access="global">
+
+<apex:attribute name="caseDetail" type="Case" description="Case from which Email is invoked" assignTo="{!objCase}"/>
+   <html>
+    <head>
+    <apex:slds />
+
+        <style>
+               .notification-card {
+                   background: #fff;
+                   <!--border-radius: 0.25rem;-->
+                   border-bottom: none;
+                   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                   padding: 1rem;
+                   margin-bottom: 1rem;
+                   font-family: sans-serif;
+                   background-color: #FBFAF5;
+                   
+               }
+               <!--#parent-id .logo{
+                           position: absolute !important;
+                            bottom: 0rem !important;
+                            right: 5rem !important;
+                            width: 37px !important;
+                            height: 165px !important;
+                   }-->
+              
+               .notification-header {
+                   font-size: 2.7rem;
+                   color: #1E5631; /* Green color */
+                   <!--font-weight: 700;-->
+                   margin-bottom: 1rem;
+                   font-family: sans-serif;
+                   font-weight: 800;
+                }
+               .notification-section {
+                border-bottom: none;
+                   margin-bottom: 1rem;
+                   font-family: sans-serif;
+                   background-color: #FBFAF5;
+                   height: 392px;
+               }
+               .notification-footer {
+                  <!-- border-top: 1px solid #d8dde6;-->
+                  border-top: none;
+                   text-align: left;
+                   padding-top: 1rem;
+                   font-family: sans-serif;
+                   font-weight: 600;
+                   background-color: #FBFAF5;
+                   height: 145px;
+                   
+                   padding-top:0.5rem;
+    
+                }
+               .cke_show_borders table.cke_show_border{
+                border: none
+                }            
+                .info-table {
+                       width: 100%;
+                       border-collapse: collapse;
+                       border: none;
+                       font-family: sans-serif;
+                   }
+                   .info-table td {
+                       padding: 8px; /* Adjust padding as needed */
+                       font-family: sans-serif;
+                       
+                       
+                       border: none;
+                   }
+                   .info-table .left-column {
+                       width: 50%;
+                       font-family: sans-serif;
+                       font-size: 13px;
+                   }
+                   
+                   body{
+                       background-color: #FBFAF5;
+                   }
+        </style>
+    </head>
+    
+    <body>
+        <div class="notification-card">
+            <div Style= "font-size: 2.7rem;color: #1E5631; margin-bottom: 1rem;font-family: sans-serif;font-weight: 800;">
+                Your service date has changed.
+            </div>
+            
+            <div class="notification-section">
+                <p>Hi {!CaseFields.Contact_Name__c},</p>
+                <p>The service date for your {!CaseFields.Asset.Name} for {!CaseFields.Asset.Material_Type__c} has changed to <strong><apex:outputText value="{!newServiceString}"/></strong>.</p>
+                
+               
+                
+                
+                <div style="background-color: #1E5631; color: white; padding: 0.2rem; margin-bottom: 1rem;">
+                    <div style="margin-left: 0.4rem">
+                        <p><strong>New Service Date:  </strong><apex:outputText value="{!newServiceString}"/></p>
+                    	<p><strong>Previous Service Date:  </strong><apex:outputText value="{!oldServiceString}"/></p> 
+                    </div>
+                </div>
+                
+                <h2 class="slds-text-heading--small">Request Details</h2>
+                
+                <table class="info-table cke_show_borders table.cke_show_border">
+                    <tr>
+                        <td class="left-column">
+                        <strong>Location ID</strong>
+                        <br>
+                            {!CaseFields.Location_Code__c}
+                        </br>
+                        </td>
+                        
+                        <td class="left-column">
+                        <strong>Service Address</strong>
+                           <!-- <br>  {!CaseFields.Account.ShippingStreet} {!CaseFields.Account.ShippingCity} {!CaseFields.Account.ShippingState} {!CaseFields.Account.ShippingPostalCode} {!CaseFields.Account.ShippingCountry}</br>-->
+                        <br>  {!CaseFields.Location__r.ShippingStreet}, {!CaseFields.Location__r.ShippingCity}, {!CaseFields.Location__r.ShippingState}, {!CaseFields.Location__r.ShippingPostalCode} </br>
+                        
+                </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="left-column">
+                        <strong>Requested by</strong>
+                        <br>{!CaseFields.Contact_Name__c}</br>
+                        </td>
+                        
+                        <td class="left-column">
+                        <strong>Reference #</strong>
+                         <br>{!CaseFields.Reference_Number__c}</br>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="left-column">
+                        <strong>Container</strong>
+                        <br>{!CaseFields.Asset.Name} for {!CaseFields.Asset.Material_Type__c}</br>
+						Position: {!CaseFields.Asset.Container_Position__c}
+                        </td>
+                    
+                        <td class="left-column">
+                        <strong>Schedule</strong>
+                            <br><apex:outputText value="{!assetFrequencyWeeklyVar}"/><apex:outputText value="{!occurenceDaysVar}"/></br>   
+                         
+                        </td>
+                    </tr> 
+					<tr>
+                        <td class="left-column">
+                        <strong>Service</strong>
+                        <br>{!CaseFields.Case_Type__c}, {!CaseFields.Case_Sub_Type__c}<apex:outputText value="{!caseReasonVal}"/></br>
+                        </td>
+                    
+                        
+                    </tr> 
+                </table>
+               
+              
+                
+            </div>
+                <div  Style="font-size:14px; font-weight:bold;" class="notification-footer">
+                    <p>No action is required. If you have any questions or concerns, contact WM via phone or Chat.</p>
+                    
+                    <table class="cke_show_borders table.cke_show_border">
+                        <tr>
+                            <td class="left-column">
+                                <apex:image url="{!wmQRCodeURL}" width="100" height="100"/>
+                            </td>
+                        
+                    
+                        <td style="line-height:1.2rem; left:-120px" class="left-column">
+                            <p>Chat: Scan the code or click here:</p>
+                            <p><a href="https://chatnow.wmsbs.wm.com/">https://chatnow.wmsbs.wm.com/</a></p>
+                            <p>Phone: 888-625-5323</p>
+                        </td>
+                    </tr>
+                    </table>
+                    
+                   
+                </div>
+        </div>
+        
+        <div style="font-family: sans-serif;line-height: 1rem; font-size: 0.9rem;">
+            <table>
+                <tr>
+                    <td width= "90%">
+                        <p> This message was sent by WM National Accounts, </p>
+                        <p>1 Griffin Rd N, Ste. 4C, Windsor, CT 06095</p>
+                        <p><a href="https://www.wm.com/us/en/privacy">Privacy Policy</a></p>
+                    </td>
+                    
+                    <td align="right">
+                        <div style = "position: absolute !important;right: 0rem !important;"><!--bottom: 0rem !important;right: 0rem !important; width: 100px !important; height: 100px !important;-->
+                        
+                        <apex:image url="{!wmLogoURL}" width="150" height="50"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+             
+        
+         
+        </div>
+        
+        
+    </body>
+    </html>
+
+
+
+
+</apex:component>

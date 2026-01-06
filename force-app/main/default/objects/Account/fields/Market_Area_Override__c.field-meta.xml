@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Market_Area_Override__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Work awarded to 3rd Party regardless if WM is in the service area</description>
+    <externalId>false</externalId>
+    <inlineHelpText>When checked indicates that this 3rd party supplier takes precedence over WM suppliers during supplier selection</inlineHelpText>
+    <label>Market Area Override</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

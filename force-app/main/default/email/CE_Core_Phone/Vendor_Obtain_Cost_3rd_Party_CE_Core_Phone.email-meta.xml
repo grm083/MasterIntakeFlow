@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Request rates from 3P vendor</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Vendor: Obtain Cost - 3rd Party_CECorePhone</name>
+    <style>freeForm</style>
+    <subject>Cost Request: {!Case.Case_Type__c} &amp; {!Case.Case_Subtype_Email_Format__c} - {!Case.Location_Code__c} - Ref# {!Case.Reference_Number__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

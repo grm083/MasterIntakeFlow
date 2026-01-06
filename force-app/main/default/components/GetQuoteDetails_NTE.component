@@ -1,0 +1,159 @@
+<apex:component controller="GetDetails" access="global">
+    
+    <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!objQuote}"/>
+    <apex:outputText style="color:black;font-family:Arial;" value="Your approval is required for new service requested by"/>&nbsp;<apex:outputText style="font-family:Arial;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Contact_Name__c}"/>
+    <apex:outputText style="color:black;font-family:Arial;" value=", the below Quote exceeds the maximum established pricing."/>
+    <apex:outputText style="color:black;font-family:Arial;" value=" Please review the proposed service details and either Approve or Decline as soon as possible so we can process the request."/>
+    <apex:outputText style="color:black;font-family:Arial;" value=" Your reference number for all cases is"/> <b>{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}</b><br/>
+    <br/>
+    <table width = "60%">
+       
+        <tr>
+            <td > 
+                <b>Location ID: </b>
+            </td>        
+            <td>
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Code__c}"/><br/>
+            </td>     
+        </tr>  
+        <tr >
+            <td >   
+                <b>Service Address:</b>
+            </td>
+            <td width = "100%">     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location__r.Customer_Location_Code__c}">  </apex:outputText>, <br/><apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" escape="false" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Tech_Location_Details__c}"></apex:outputText><br/>
+            </td>   
+        </tr>
+        
+         <tr >
+            <td >   
+                <b>Case Type:</b>
+            </td>
+            <td width = "100%">     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Case_Type__c}"/><br/>
+            </td>   
+        </tr>         
+        <tr >
+            <td >   
+                <b>Case SubType:</b>
+            </td>
+            <td width = "100%">     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Case_Sub_Type__c}"/> <br/>
+            </td>   
+        </tr>
+        <tr >
+            <td >   
+                <b>Case Reason:</b>
+            </td>
+            <td width = "100%">     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Case_Reason__c}"/> <br/>
+            </td>   
+        </tr>
+        <apex:repeat value="{!WrapperData}" var="fieldKey"><!-- Looping Keys-->
+       
+        <!--<tr>
+            <td width = "50%" colspan = "2"> 
+                <hr/>
+                <b>Request :   {!mapCount[fieldKey]} </b>                 
+            </td>        
+             
+        </tr> -->
+            
+            <tr>
+                <td width="100%">
+                    <b>Container:</b>   
+                </td>
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].SBQQ__Product__r.Name}"/>
+                </td>
+            </tr>
+             <tr>
+                <td width="100%">
+                    <b>Duration:</b>   
+                </td>
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].Duration__c}"/>
+                </td>
+            </tr>
+            <tr>    
+                <td>
+                    <b>Size:</b>
+                </td>
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].Equipment_Size__c}"/>
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <b>Material:</b>
+                </td>
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLIMaterialCode[fieldKey]}"/> 
+                </td>
+            </tr>
+            <tr>  
+                <td>
+                    <b>Service Type:</b> 
+                </td>
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].Occurrence_Type__c} {!mQLI[fieldKey].Schedule_Frequency__c}"/>
+                </td>
+                
+            </tr>
+            <tr>
+                <td width="100%"><b>Requested Start Date:</b> </td>
+                <td><apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{0,Date, MM/dd/yyyy}"> 
+                    <apex:param value="{!mQLI[fieldKey].SBQQ__EffectiveStartDate__c}"/>
+                 
+                    </apex:outputText>    
+                </td>
+            </tr>
+             <tr>
+                 <td width="100%"><b>Requested Removal Date:</b> </td>
+                <td><apex:outputText value="{0,Date, MM/dd/yyyy}"> 
+                    <apex:param value="{!mQLI[fieldKey].SBQQ__EndDate__c}"/>
+                 
+                    </apex:outputText>    
+                </td>
+            </tr>
+      
+               <table>
+            <tr>
+                <td colspan= "2">
+                        <b> <apex:outputText value="Service Charges:"/> </b>
+                        
+                
+                </td>
+            </tr>  
+            </table> 
+             
+            <apex:dataTable value="{!quoteLineMap[fieldKey]}" var="QuoteLine" border="1" width="100%">
+           
+            <apex:column >
+                <apex:facet name="header">Name      </apex:facet>
+                <apex:outputText style="color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteLine.SBQQ__Product__r.Name}"/>
+            </apex:column>
+            
+            <apex:column >
+                <apex:facet name="header">List Price      </apex:facet>
+                <apex:outputText style="color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteLine.SBQQ__ListPrice__c}"/>
+            </apex:column>
+            
+            <apex:column >
+                <apex:facet name="header">NTE amount   </apex:facet>
+                <apex:outputText style="color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteLine.NTE_amount_on_SR__c}"/>
+            </apex:column>
+            
+            <apex:column >
+                <apex:facet name="header">Unit       </apex:facet>
+                <apex:outputText style="color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteLine.PriceUOM__c}"/>
+            </apex:column>
+            </apex:dataTable>        
+            
+        </apex:repeat>
+      
+    </table>    
+    <br/>
+    <br/>
+    
+</apex:component>

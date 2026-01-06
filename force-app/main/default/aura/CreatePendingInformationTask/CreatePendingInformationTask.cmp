@@ -1,0 +1,199 @@
+<aura:component  controller ="CreatePendingInformationTask" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:hasRecordId" access="global" >
+    <aura:attribute name="showTaskCreatePopUpPI" type="boolean" default="false"/>
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="showTaskButtons" type="boolean" default="false"/>
+    <aura:attribute name="showPendingInfoTask" type="boolean" default="false"/>
+    <aura:attribute name="loggedInUserId" type="User" />
+    <aura:attribute name="caseRecObj" type="Case" />
+    <aura:attribute name="showInternalResponseTask" type="boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="disabledTeamQ" type="boolean" default="true"/>
+    <aura:attribute name="disabledTeamUser" type="boolean" default="true"/>
+    <aura:attribute name="disabledAcornTeam" type="boolean" default="true"/>
+    <aura:attribute name="requiredField" type="boolean" default="false"/>
+    <aura:attribute name="teamNameQueMap" type="Map" />
+    <aura:attribute name="caseId" type="string"/>
+    <aura:attribute name="toastMessage" type="string"/>
+    <aura:attribute name="headerMessage" type="string"/>
+    <aura:attribute name="task" type="Task" default="{'sobjectType':'Task', 
+                                                     'Id' :'',
+                                                     'Subject': 'Pending Information Case',
+                                                     'Description' : '',
+                                                     'Due_Date_Time__c': '',
+                                                     'Outcome__c' : 'null',
+                                                     'Follow_Up_Reasons__c':'',
+                                                     'Next_Task_Due_Date_Time__c':''
+                                                     }"/>
+    <aura:attribute name="OutcomeValues" type="String[]" default="Information Obtained,Information Not Obtained,Escalation Needed"/>
+    <aura:attribute name="followUpReasons" type="String[]" default="Customer,Vendor,Internal WM"/>
+    <aura:attribute name="taskTypes" type="String[]"/>
+    <aura:attribute name="dueDateTime" type="DateTime" />
+    <aura:attribute name="teamName" type="String[]" default=""/>
+    <aura:attribute name="teamQueValues" type="String[]" default=""/>
+    <aura:attribute name="salesforceTeamUserList" type="String[]" default=""/>
+    <aura:attribute name="salesforceTeamUserValue" type="String" default=""/>
+    <aura:attribute name="isValid" type="boolean" default="false"/>
+    <aura:attribute name="caseTrackingNumber" type="boolean" default="false"/>
+    <aura:attribute name="disabledSfdcTeam" type="boolean" default="false"/>
+    <aura:attribute name="sfdcteamNameList" type="String[]" default=""/>
+    <aura:attribute name="sfdcTeamValue" type="String" default=""/>
+    <aura:attribute name="sfdcTeamUserNameMap" type="Map" />
+	<aura:attribute name="isTaskUser" type="boolean" default="true"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="oSelectedRecordEvent" event="c:UI_selectedsObjectRecordEvent" action="{!c.handleComponentEvent}"/>
+    <aura:handler name="removeRecord" event="c:User_RecordRemoveEvent" action="{!c.handleRecordRemove}"/>
+    <aura:if isTrue="{!v.showTaskButtons}">
+        <lightning:button label="Pending Information" variant="brand"
+                          onclick="{!c.handlePendingInfoTask}"
+                          >
+        </lightning:button>
+        <lightning:button label="Initiate Task" variant="brand"
+                          onclick="{!c.handleInitateTask}"
+                          >
+        </lightning:button>
+    </aura:if>
+    
+    <!-- Modal Starts Here -->
+    <aura:if isTrue="{!v.showTaskCreatePopUpPI}">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+            <div class="slds-modal__container slds-m-top_x-large ">
+                <!--Modal/Popup Box Body Starts here-->    
+                <div class="slds-modal__header  slds-m-top_x-large">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModal }"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!v.headerMessage}</h1> 
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <!-- Add modal Body/Content Inside -->
+                    <aura:if isTrue="{!v.showSpinner}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.showPendingInfoTask}">
+                        <!--       @@@@@  Pending Info Task Layout   @@@@@@@          -->
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_12-of-12  slds-m-around_xxx-small">
+                                <span>
+                                    <!--lightning:input name="S" type="text" label="Subject" value="{!v.task.Subject}" disabled ="true"  onchange ="{!c.subjectChange}" /-->
+                                    <lightning:select aura:id ="requiredFiled"  label="Task Type" required ="true" value="{!v.task.Subject}"  onchange="{!c.taskTypeChange}"> 
+                                        <option value="">-- None --</option>
+                                        <aura:iteration items="{!v.taskTypes}" var="taskType">
+                                            <option value="{!taskType}" text="{!taskType}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </span>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 "> 
+                                <lightning:input aura:id ="requiredFiled" type="datetime" name="dueDateTime" label="Due Date Time" value = "{!v.task.Due_Date_Time__c}" required="true" onchange ="{!c.changeDueDate}" />
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-left_medium slds-p-top_medium"> 
+                                <lightning:select aura:id ="requiredFiled"  name="followUpReasons" label="Follow Up Reasons" required ="true" value="{!v.task.Follow_Up_Reasons__c}"  onchange="{!c.changeOutcome}"> 
+                                    <option value="">-- None --</option>
+                                    <aura:iteration items="{!v.followUpReasons}" var="followupReason">
+                                        <option value="{!followupReason}" text="{!followupReason}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 ">
+                                <span> <lightning:textarea aura:id ="requiredFiled"  name="Comment" label="Comment" required ="true" value="{!v.task.Description}" />
+                                </span>
+                                
+                            </div>
+                        </div>
+                        <div style="margin-top: 240px;">
+                        </div>
+                        <!--       @@@@@  Pending Info Task Layout Ends Here   @@@@@@@          -->  
+                    </aura:if>
+                    <aura:if isTrue="{!v.showInternalResponseTask}">
+                        <!--  @@@@@  Obtain Internal Response Layout    @@@@@@@          -->  
+                        
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_12-of-12  slds-m-around_xxx-small">
+                                <!--span>
+                                    <lightning:input name="Subject" type="text" label="Subject" value="{!v.task.Subject}" disabled ="true"  onchange ="{!c.subjectChange}" />
+                                </span-->
+                                <span>
+                                    <!--lightning:input name="S" type="text" label="Subject" value="{!v.task.Subject}" disabled ="true"  onchange ="{!c.subjectChange}" /-->
+                                    <lightning:select name="taskType" aura:id ="taskType" label="Task Type" required ="true" value="{!v.task.Subject}"  onchange="{!c.taskTypeChange}"> 
+                                        <option value="">-- None --</option>
+                                        <aura:iteration items="{!v.taskTypes}" var="taskType">
+                                            <option value="{!taskType}" text="{!taskType}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </span>
+                            </div>
+                            
+                            <div class="slds-col slds-size_6-of-12 " aura:id="userLookUp">
+                                <c:UI_customLookup objectAPIName="User" IconName="standard:avatar" selectedRecord="{!v.selectedLookUpRecord}" caseId ="{!v.caseId}" label="Assigned To"/>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name="salesforceTeam" aura:id="salesforceTeam" label="Sfdc Team" value="{!v.sfdcTeamValue}"  onchange="{!c.sfdcTeamValueChange}" disabled="{!v.disabledSfdcTeam}" > 
+                                    <option value="">-- None --</option>
+                                    <aura:iteration items="{!v.sfdcteamNameList}" var="sfdcTeam">
+                                        <option value="{!sfdcTeam}" text="{!sfdcTeam}"></option>
+                                    </aura:iteration>
+                                </lightning:select>          
+                                
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                
+                                <lightning:select name="sfdcTeam" aura:id="sfdcTeam" label="Sfdc Team User" value="{!v.salesforceTeamUserValue}"  onchange="{!c.sfdcTeamUserChange}" disabled="{!v.disabledTeamUser}"> 
+                                    <option value="">-- None --</option>
+                                    <aura:iteration items="{!v.salesforceTeamUserList}" var="sfTeam">
+                                        <option value="{!sfTeam}" text="{!sfTeam}"></option>
+                                    </aura:iteration>
+                                </lightning:select>          
+                                
+                            </div>
+                            <aura:if isTrue="{!v.caseTrackingNumber}">
+                                <div class="slds-col slds-size_6-of-12 " aura:id="acronTeamName" >
+                                    <lightning:select name="teamName" aura:id="acornteamName" label=" Acorn Team" value="{!v.task.Task_Team_Name__c}"  onchange="{!c.onAcornTeamchange}" disabled ="{!v.disabledAcornTeam}"> 
+                                        <option value="">-- None --</option>
+                                        <aura:iteration items="{!v.teamName}" var="tname">
+                                            <option value="{!tname}" text="{!tname}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>          
+                                </div>   
+                                <div class="slds-col slds-size_6-of-12  " >
+                                    <lightning:select name="teamQueue" label="Acorn Team Queue" value="{!v.task.Task_Team_Queue__c}" disabled="{!v.disabledTeamQ}"> 
+                                        <option value="">-- None --</option>
+                                        <aura:iteration items="{!v.teamQueValues}" var="tQue">
+                                            <option value="{!tQue}" text="{!tQue}"></option>
+                                        </aura:iteration>
+                                    </lightning:select> 
+                                </div>
+                            </aura:if>
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:textarea name="Comment" aura:id="commentRequired" label="Comment" required ="true" value="{!v.task.Description}" />
+                            </div>
+                            <div style="margin-top: 500px;">
+                            </div>
+                        </div>
+                        <!--  @@@@@  Obtain Internal Response Layout Ends Here   @@@@@@@          -->  
+                    </aura:if>
+                    
+                    <!-- Modal body ends Here -->      
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close"  onclick="{!c.closeModal}">Cancel</button>
+                    <button class="slds-button slds-button_brand"  onclick="{!c.saveTask}">Save</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+    <!-- Modal Ends Here -->
+    
+</aura:component>

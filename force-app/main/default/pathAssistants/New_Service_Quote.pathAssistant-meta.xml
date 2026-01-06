@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>SBQQ__Quote__c</entityName>
+    <fieldName>SBQQ__Status__c</fieldName>
+    <masterLabel>New Service Quote</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Acorn_Integration_Status__c</fieldNames>
+        <fieldNames>ErrorComments__c</fieldNames>
+        <fieldNames>Alternate_Service_Provided__c</fieldNames>
+        <fieldNames>Alternate_Description__c</fieldNames>
+        <info>&lt;p&gt;&lt;b&gt;Your Quote is Approved.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;A request has been sent to Acorn to create specs and work orders, which will create Assets in Salesforce.  If there is an error and this quote has been assigned to you, please review the error and attempt to correct it.&lt;/p&gt;</info>
+        <picklistValueName>Approved</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Assigned_To__c</fieldNames>
+        <fieldNames>Next_Action_Due_Date__c</fieldNames>
+        <fieldNames>Acorn_CMT_Link__c</fieldNames>
+        <fieldNames>Alternate_Service_Provided__c</fieldNames>
+        <fieldNames>Alternate_Description__c</fieldNames>
+        <info>&lt;p&gt;&lt;b&gt;Your Quote is in Configure Price.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Check each quote line to determine if a price has been provided. If not, manually calculate the price and append it to each quote line.  If pricing is not available through Acorn CMT nor the Pricing Request, please escalate to the Customer Account Team by using the &amp;quot;Escalate&amp;quot; button.&lt;/p&gt;</info>
+        <picklistValueName>Cost Configured</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Alternate_Service_Provided__c</fieldNames>
+        <fieldNames>Alternate_Description__c</fieldNames>
+        <info>&lt;p&gt;&lt;b&gt;Your Quote is Declined.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Please follow up with the original requestor to inform them of the declined quote.&lt;/p&gt;</info>
+        <picklistValueName>Declined</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Project_Services_Request__c</fieldNames>
+        <fieldNames>Assigned_To__c</fieldNames>
+        <fieldNames>Quote_Only__c</fieldNames>
+        <fieldNames>Alternate_Service_Provided__c</fieldNames>
+        <fieldNames>Alternate_Description__c</fieldNames>
+        <info>&lt;p&gt;&lt;b&gt;Your Quote is in a Draft Status.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;You have a new quote that has not yet been submitted for procurement, pricing, and approval. Please ensure that the following steps are completed prior to moving forward:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;A product is configured for the request&lt;/li&gt;&lt;li&gt;If a delivery line was selected by default or manually, please ensure that you create a delivery order for those services&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If the customer is unable to or has not provided all of the necessary information and you must call back later, press &amp;quot;Pending Information&amp;quot;.&lt;/p&gt;</info>
+        <picklistValueName>Draft</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Assigned_To__c</fieldNames>
+        <fieldNames>Next_Action_Due_Date__c</fieldNames>
+        <fieldNames>Action_Type__c</fieldNames>
+        <fieldNames>Alternate_Service_Provided__c</fieldNames>
+        <fieldNames>Alternate_Description__c</fieldNames>
+        <info>&lt;p&gt;&lt;strong&gt;Your Quote is in Submit for Approval.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;A request has been sent to the customer to approve this request. If this quote has been assigned to you it is because the customer has not yet responded to the email. Please follow up with this customer to obtain approval.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If you have sent an email, please press &amp;quot;Pending Information&amp;quot; to allow the customer time to respond. If the customer has not responded after multiple attempts, escalate to the Customer Account Team by pressing &amp;quot;Escalate&amp;quot;.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 9.5pt;&quot;&gt;The Approved/Declined/Cancelled buttons are currently disabled for this quote because it has been approved and submitted to the SSM team to complete as it is an amendment quote. If you need to cancel or change anything you will need to use, Take Action to send a note to the SSM Team.&lt;/span&gt;&lt;/p&gt;</info>
+        <picklistValueName>Price Configured</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Assigned_To__c</fieldNames>
+        <fieldNames>Next_Action_Due_Date__c</fieldNames>
+        <fieldNames>Alternate_Service_Provided__c</fieldNames>
+        <fieldNames>Alternate_Description__c</fieldNames>
+        <info>&lt;p&gt;&lt;b&gt;Your Quote is in Procure Service.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Check the result of the Pricing Request while in this status to determine if pre-procured rates are available.  If so, set the following:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Vendor information and MAS details when appropriate&lt;/li&gt;&lt;li&gt;Service Schedules for scheduled services if not already set (CSC, Pickup, etc.)&lt;/li&gt;&lt;li&gt;Validate Unit of Measurements are present&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If rates were not provided through the pricing request, manually procure the service and populate the quote line details through standard procurement process.&lt;/p&gt;</info>
+        <picklistValueName>Product Configured</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>New_Service</recordTypeName>
+</PathAssistant>

@@ -1,0 +1,132 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="QuoteProcurementController">
+    
+    <aura:attribute name="productWrapper" type="object" />
+    <aura:attribute name="showFinancialDetails" type="boolean"/>
+    <!-- <aura:attribute name="showSpinner" type="boolean" /> -->
+    <aura:attribute name="companyCategories" type="List" />
+    <aura:attribute name="selectedValue" type="string" default="" />
+    <aura:attribute name="GeneralLedgerNumber" type="string" default="" />
+    <aura:attribute name="CustomerCostCenter" type="string" default="" />
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+
+    <aura:attribute name="options" type="List" default="[]"/>
+    <aura:attribute name="value" type="String" default=""/>
+    <aura:attribute name="label" type="String" default=""/>
+    <aura:attribute name="selectedLabel" type="String" default=""/>
+    <aura:attribute name="isReqQuoteCC" type="boolean" default="false"/>
+  <!-- Body -->
+  <!-- <aura:if isTrue="{!v.showSpinner}">
+    <lightning:spinner alternativeText="Loading Financial Details" size="medium" />
+</aura:if> -->
+    <lightning:card>
+        <!--Quote Only Section-->
+        <div class="slds-p-around_small" >
+            <div class="slds-box slds-theme_success">
+                <div class="slds-align_absolute-center" >
+                    <p>Supplemental Details</p>
+                </div>
+            </div>
+            <div class="slds-p-around_small">
+                <div class="slds-p-top_small">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" style="margin-right: 0.5rem;">Does this customer require a quote prior to setup and fulfillment?</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning:input type="checkbox" 
+                                             label="Quote only" 
+                                             name="Quoteonly"
+                                             variant="label-hidden"
+                                             checked="{!v.productWrapper.quoteOnly}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Company Category Section-->
+        <div class="slds-p-around_small">
+            <div class="slds-box slds-theme_success">
+                <div class="slds-align_absolute-center" >
+                    <p>Customer Invoice Details</p>
+                </div>
+            </div>
+            <!-- <div class="slds-p-top_small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label" style="margin-right: 0.5rem; padding-top: 20px;"><span style="color: red;">*</span> Company Category</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                    
+                        <lightning:select aura:id="ccPicklist"  value="{!v.selectedValue}" >
+                            <option value="" text="-None-" />
+                            <aura:iteration items="{!v.companyCategories}" var="item">
+                                <option value="{!item.key}" text="{!item.value}" />
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Changes for SDT-26217 -->
+            <div class="slds-p-top_small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <aura:if isTrue="{!v.isReqQuoteCC}">
+                           <label class="slds-form-element__label" style="margin-right: 0.5rem; padding-top: 20px;"><span style="color: red;">*</span> Company Category</label>
+                            <aura:set attribute="else">
+                                <label class="slds-form-element__label" style="margin-right: 0.5rem; padding-top: 20px;">Company Category</label>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                    
+                        <aura:if isTrue="{! not(empty(v.options))}">
+                            <c:reusableCustomDropdownWithSearchLwc options="{! v.options }" value="{! v.value }" label="{! v.label }" onchange="{! c.handleOnChange }"/>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+            
+
+    <!-- end code -->
+
+            <div class="slds-p-top_small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label" style="margin-right: 0.5rem;">General Ledger Number</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning:input type="text"
+                                         name="GeneralLedgerNumber"
+                                         label="General Ledger Number"
+                                         variant="label-hidden"
+                                         value="{!v.GeneralLedgerNumber}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-top_small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label" style="margin-right: 0.5rem;">Customer Cost Center</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning:input type="text"
+                                         name="CustomerCostCenter"
+                                         label="Customer Cost Center"
+                                         variant="label-hidden"
+                                         value="{!v.CustomerCostCenter}"/>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="slds-align_absolute-center" >
+            <lightning:button class="slds-theme_success" label="Save"
+                              variant="brand"
+                              onclick="{!c.updateQLines}" />
+            
+            <lightning:button label="Cancel"
+                              onclick="{!c.cancelSupplement}" />
+        </div>
+    </lightning:card>
+</aura:component>

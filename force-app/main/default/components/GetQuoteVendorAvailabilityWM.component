@@ -1,0 +1,117 @@
+<apex:component controller="GetDetails" access="global">
+    
+    <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!objQuote}"/>
+    <apex:repeat value="{!WrapperData}" var="fieldKey1">
+        <apex:outputText style="color:black;font-family:Arial;" value="The location listed below is requesting"/>&nbsp;
+        <apex:outputText value="{0, number, ###}">
+            <apex:param value="{!mQLI[fieldKey1].SBQQ__Quantity__c}" />
+        </apex:outputText>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value=" {!mQLI[fieldKey1].SBQQ__Product__r.Name}"/>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value=" {!mQLI[fieldKey1].Equipment_Size__c}"/>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value=" {!mQLIMaterialCode[fieldKey1]}"/>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value="for"/>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value="{0,Date, MM/dd/yyyy}">
+            <apex:param value="{!QuoteFields.SBQQ__StartDate__c}"/>
+         </apex:outputText>
+    </apex:repeat>
+    <br/><br/>
+    
+    <b>Please confirm if you are available to deliver on this date.</b><br/>
+    <br/>
+    <b>SERVICE DETAILS</b>
+    <br/><br/>
+    <table width = "60%">
+        <tr>
+            <td > 
+                <b>Vendor: </b>
+            </td>        
+            <td>
+                <apex:repeat value="{!WrapperData}" var="fieldKey2">
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey2].Vendor__r.Name}"/><br/>
+                </apex:repeat>
+                </td>     
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr >
+            <td >   
+                <b>Reference #:</b>
+            </td>
+            <td width = "100%">     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}">  </apex:outputText><br/>
+            </td>   
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr >
+            <td >   
+                <b>Location ID:</b>
+            </td>
+            <td width = "100%">     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Code__c}"/><br/>
+            </td>   
+        </tr> 
+		<tr>
+            <td colspan="2"><br/></td>
+        </tr>        
+        <tr >
+            <td >   
+                <b>Location Name:</b>
+            </td>
+            <td width = "100%">     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location__r.Customer_Location_Code__c}"/> <br/>
+            </td>   
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr >
+            <td >   
+                <b>Service Address:</b>
+            </td>
+            <td width = "100%">     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Name_Email_Temp__c}"/>  <br/><apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" escape="false" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Tech_Location_Details__c}"></apex:outputText> <br/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td width="100%">
+                <b>Service:</b>   
+            </td>
+            <td>
+                <apex:repeat value="{!WrapperData}" var="fieldKey2">
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey2].SBQQ__ProductFamily__c}"/>
+                </apex:repeat>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td width="100%">
+                <b>Container:</b>   
+            </td>
+            <td>
+                <apex:repeat value="{!WrapperData}" var="fieldKey1">
+                    <apex:outputText value="{0, number, ###}">
+                       <apex:param value="{!mQLI[fieldKey1].SBQQ__Quantity__c}" />
+                   </apex:outputText><br/>
+                    <apex:outputText style="color:black;font-family:Arial;" value=" {!mQLI[fieldKey1].SBQQ__Product__r.Name} "/><br/>
+       				 <apex:outputText style="color:black;font-family:Arial;" value=" {!mQLI[fieldKey1].Equipment_Size__c} "/><br/>
+       				 <apex:outputText style="color:black;font-family:Arial;" value=" {!mQLIMaterialCode[fieldKey1]}"/>
+                </apex:repeat>
+                </td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+    </table> 
+    <br/><br/>
+    
+ 
+    
+</apex:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template should be used for WM correspondence when the other templates available do not work for the type of request/email response you are sending.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Vendor: Standard WM (CE Email Templates)</name>
+    <style>freeForm</style>
+    <subject>MAS: {!Asset.MAS_Company_Account_Number__c} - {!Case.Case_Type__c}- {!Case.Case_Subtype_Email_Format__c} - Ref. #: {!Case.Reference_Number__c} - {!Case.Location_Code__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notify customer of a service delay</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Customer:  Delayed Service(Core Phone)</name>
+    <style>freeForm</style>
+    <subject>WM Service Change Notification: {!Case.Case_Type__c} at {!Case.Location_Code__c}, Ref. #: {!Case.Reference_Number__c}</subject>
+    <textOnly>Dear {!Contact.Name},
+
+There has been a change in service date for the service you requested:
+
+Request Details
+ 
+
+Service Requested:                {!Case.Case_Type__c} - {!Case.Case_Sub_Type__c}
+
+Asset:                                      {!Asset.Equipment_Size__c} {!Asset.Material_Type__c} {!Asset.Equipment_Type__c}
+
+Asset Position:                         {!Asset.Container_Position__c}
+
+Requested By:                         {!Case.Contact}, {!Account_Title__c.Name}
+
+Location Details:                      {!Account.Location_Code__c} 
+                                                 {!Account.Name} 
+                                                 {!Account.ShippingStreet} 
+                                                 {!Account.ShippingCity}, {!Account.ShippingState} 
+                                                 {!Account.ShippingPostalCode}
+                                                 {!Account.ShippingCountry}
+
+
+Original Service Date:              {!WorkOrder.Original_Expected_Date__c}
+
+New Service Date:                   {!Case.Service_Date__c}
+
+Reference Number:                 {!Case.Reference_Number__c}
+
+Comments:                              N/A
+
+ 
+If you have any questions, please respond to this email and we will respond shortly. 
+
+Thank you.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

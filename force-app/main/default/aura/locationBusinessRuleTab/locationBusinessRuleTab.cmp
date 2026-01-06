@@ -1,0 +1,14 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    
+    <aura:attribute name="recordId" type="String" />
+    <lightning:workspaceAPI aura:id="myworkspace"/>
+    <lightning:tabset selectedTabId="AllRules">
+        <lightning:tab label="All Rules" id="AllRules"  onactive="{!c.refreshAllRule}">
+            <c:allRulesModal recordId="{!v.recordId}" objectApiName="Account" aura:id="allRuleCmp"/>
+        </lightning:tab>
+        <lightning:tab label="ACORN Authorization Notes" id="AuthNotes">
+            <c:renderRedNotes recordId="{!v.recordId}" />
+        </lightning:tab>   
+
+    </lightning:tabset>
+</aura:component>

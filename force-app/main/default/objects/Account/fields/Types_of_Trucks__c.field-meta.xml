@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Types_of_Trucks__c</fullName>
+    <externalId>false</externalId>
+    <label>Types of Trucks</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Front Load</fullName>
+                <default>false</default>
+                <label>Front Load</label>
+            </value>
+            <value>
+                <fullName>Rear Load</fullName>
+                <default>false</default>
+                <label>Rear Load</label>
+            </value>
+            <value>
+                <fullName>Side Load</fullName>
+                <default>false</default>
+                <label>Side Load</label>
+            </value>
+            <value>
+                <fullName>Rolloff Cable Lift</fullName>
+                <default>false</default>
+                <label>Rolloff Cable Lift</label>
+            </value>
+            <value>
+                <fullName>Rolloff Hook/Dead Lift</fullName>
+                <default>false</default>
+                <label>Rolloff Hook/Dead Lift</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

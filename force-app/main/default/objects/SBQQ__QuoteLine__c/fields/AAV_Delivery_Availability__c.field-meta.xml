@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AAV_Delivery_Availability__c</fullName>
+    <description>Field will be used to identify if delivery/start date is selected from the available dates fetched from asset availability API.</description>
+    <externalId>false</externalId>
+    <label>Delivery Availability</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Selected Delivery is as per WM Availability, selected date is within SLA days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is as per WM Availability, selected date is within SLA days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is as per WM Availability, selected date is beyond SLA days but within 30 days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is as per WM Availability, selected date is beyond SLA days but within 30 days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is NOT as per WM Availability, selected date is within SLA days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is NOT as per WM Availability, selected date is within SLA days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is NOT as per WM Availability, selected date is beyond SLA days but within 30 days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is NOT as per WM Availability, selected date is beyond SLA days but within 30 days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is NOT as per WM Availability, selected date is beyond 30 days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is NOT as per WM Availability, selected date is beyond 30 days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is NOT as per WM Availability, as this is a back dated order</fullName>
+                <default>false</default>
+                <label>Selected Delivery is NOT as per WM Availability, as this is a back dated order</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Deliver in the area, selected date is within SLA days</fullName>
+                <default>false</default>
+                <label>WM NOT available to Deliver in the area, selected date is within SLA days</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Deliver in the area, selected date is beyond SLA days but within 30 days</fullName>
+                <default>false</default>
+                <label>WM NOT available to Deliver in the area, selected date is beyond SLA days but within 30 days</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Deliver in the area, selected date is beyond 30 days</fullName>
+                <default>false</default>
+                <label>WM NOT available to Deliver in the area, selected date is beyond 30 days</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Deliver in the area, as this is a back dated order</fullName>
+                <default>false</default>
+                <label>WM NOT available to Deliver in the area, as this is a back dated order</label>
+            </value>
+            <value>
+                <fullName>Availability could not be confirmed as there is no response from the API</fullName>
+                <default>false</default>
+                <label>Availability could not be confirmed as there is no response from the API</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

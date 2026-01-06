@@ -1,0 +1,15 @@
+<aura:component implements="lightning:availableForFlowScreens,force:hasRecordId">
+	<aura:attribute name="picklistValues" type="String[]" />
+    <aura:attribute name="formattedValues" type="List" default="[]" />
+    <aura:attribute name="selectedValue" type="String" />
+    <aura:attribute name="picklistName" type="String" />
+    
+    <aura:handler name='init' value='{!this}' action='{!c.doinit}' />
+    
+    <lightning:combobox name='dynamicPicklist'
+                        aura:id='inputDynamicPicklist'
+                        value='{!v.selectedValue}'
+                        options='{!v.formattedValues}'
+                        label='{!v.picklistName}' />
+
+</aura:component>

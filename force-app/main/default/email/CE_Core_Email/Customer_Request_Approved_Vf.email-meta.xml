@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <available>false</available>
+    <description>Respond to customer when their request has been approved.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Customer: Request Approved_VF</name>
+    <style>none</style>
+    <subject>Waste Management Request Approved:  at , Ref. #:</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

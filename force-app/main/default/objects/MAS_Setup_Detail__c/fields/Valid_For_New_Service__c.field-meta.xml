@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_For_New_Service__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field created for Story 29645</description>
+    <externalId>false</externalId>
+    <label>Valid For New Service</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

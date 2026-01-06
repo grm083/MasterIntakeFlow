@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Quantity_Validation</fullName>
+    <active>false</active>
+    <description>End user cannot increase the quantity.</description>
+    <errorConditionFormula>AND( NOT($User.Bypass_Validation__c),RecordType.Name = &quot;Pickup Case&quot;,  Asset.Equipment_Type__c &lt;&gt; &quot;Baler&quot;,OR(Quantity_Override__c&gt;   AssetDetail__r.Quantity__c ,Quantity_Override__c=0, Quantity_Override__c&lt;0))</errorConditionFormula>
+    <errorMessage>The Override Quantity cannot be greater than the quantity of the core Asset Detail and must not be equal to zero.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,96 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+                controller="QuoteProcurementController">
+    
+    <aura:attribute name="productWrapper" type="object" />
+    <aura:attribute name="origProductWrapper" type="object" />
+    <aura:attribute name="vendorInfo" type="Account[]" />
+    <aura:attribute name="selectedRecords" type="List" default="[]" />
+    <aura:attribute name="vendorFields" type="List" default="[
+                                                             {label: 'Name',  fieldName: 'Name', type: 'text'},
+                                                             {label: 'VID', fieldName: 'AccountNumber', type: 'text'},
+                                                             {label: 'Parent VID', fieldName: 'Parent_Vendor_ID__c', type: 'text'},
+                                                             {label: 'WM BU', fieldName: 'Vendor_Business_Unit__c', type: 'text'},
+                                                             {label: 'Facility code', fieldName: 'FacilityCode__c', type: 'text'},
+                                                             {label: 'City', fieldName: 'ShippingCity', type: 'text'},
+                                                             {label: 'State', fieldName: 'ShippingState', type: 'text'},
+                                                             {label: 'Status', fieldName: 'Status__c', type: 'text'}]"/> 
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    
+    <aura:registerEvent name="CloseSIDModalEvent" type="c:QuoteProductsDetailsCloseModal" />
+    
+    <lightning:tabset>
+        <lightning:tab label="Vendor Search" >
+            <lightning:layout multipleRows="true" verticalAlign="center">
+             
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:recordEditForm objectApiName="SBQQ__QuoteLine__c">
+                        <lightning:inputField fieldName="sCode__c" name = "sCode" value="{!v.productWrapper.sCode}" />
+                    </lightning:recordEditForm>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="6">
+                    <lightning:input aura:id="VenName" label="Vendor Name" 
+                                     name="vendorName" placeholder="Please make a selection from the left..."
+                                     disabled="true" value="{!v.productWrapper.vendorName}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="6">
+                    <lightning:input aura:id="VenId" label="Vendor Id" 
+                                     name="vendorId" placeholder="Please make a selection from the left..."
+                                     disabled="true" value="{!v.productWrapper.vendorNumber}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="6">
+                    <lightning:input aura:id="VenPar" label="Parent Vendor Id" 
+                                     name="parentVendorId"
+                                     disabled="true" value="{!v.productWrapper.parentVendorId}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="6">
+                    <lightning:input aura:id="VenBU" label="WM Business Unit" 
+                                     name="vendorBU"
+                                     disabled="true" value="{!v.productWrapper.vendorBU}" />
+                </lightning:layoutItem>
+                <!--SDT-29645 Start-->
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="6">
+                    <lightning:input aura:id="VenFc" label="Vendor Facility Code" 
+                                     name="FacilityCode"
+                                     disabled="true" value="{!v.productWrapper.vendorFacilityCode}" />
+                </lightning:layoutItem>
+                <!--SDT-29645 End-->
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="10">
+                    <div onkeyup="{!c.handleEnter}">
+                        <lightning:input aura:id="vendorSearch"
+                                         name="vendorSearch"
+                                         label="Search for your vendor below"
+                                         type="search" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="2">
+                    <lightning:button label="Search"
+                                      variant="brand"
+                                      onclick="{!c.handleClick}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:datatable aura:id="VendorDetails"
+                                         columns="{!v.vendorFields}"
+                                         data="{!v.vendorInfo}"
+                                         columnWidthsMode="auto"
+                                         selectedRows="{!v.selectedRecords}"
+                                         resizeColumnDisabled="true"
+                                         keyField="id"
+                                         maxRowSelection="1"
+                                         onrowselection="{!c.pushValues}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:button label="Save" variant="brand" onclick="{!c.saveVendor}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:tab>
+        <lightning:tab label="Local Coverage">
+            <lightning:layout multipleRows="true" verticalAlign="center">
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <c:ShowLocalVendors recordId="{!v.productWrapper.quoteID}" />
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:tab>
+    </lightning:tabset>
+    
+</aura:component>

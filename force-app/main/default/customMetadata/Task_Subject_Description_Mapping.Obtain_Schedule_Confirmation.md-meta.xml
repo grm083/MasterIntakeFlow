@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Obtain Schedule Confirmation</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">We have not received confirmation from the vendor that the work order has been received and is scheduled.  Please contact the vendor to confirm that service is scheduled and will be provided on the customer&apos;s requested service date.</value>
+    </values>
+</CustomMetadata>

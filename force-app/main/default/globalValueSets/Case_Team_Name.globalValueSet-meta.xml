@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Account Management</fullName>
+        <default>false</default>
+        <label>Account Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing</fullName>
+        <default>false</default>
+        <label>Billing</label>
+    </customValue>
+    <customValue>
+        <fullName>WM Compactor Solutions</fullName>
+        <default>false</default>
+        <label>WM Compactor Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Solutions</fullName>
+        <default>false</default>
+        <label>Client Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate Services</fullName>
+        <default>false</default>
+        <label>Corporate Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Family Dollar/Dollar Tree Customer Service</fullName>
+        <default>false</default>
+        <label>Family Dollar/Dollar Tree Customer Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Greenleaf</fullName>
+        <default>false</default>
+        <label>Greenleaf</label>
+        <isActive>false</isActive>
+    </customValue>
+    <customValue>
+        <fullName>Launch</fullName>
+        <default>false</default>
+        <label>Launch</label>
+    </customValue>
+    <customValue>
+        <fullName>M&amp;I Customer Service</fullName>
+        <default>false</default>
+        <label>M&amp;I Customer Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Mall Customer Service</fullName>
+        <default>false</default>
+        <label>Mall Customer Service</label>
+    </customValue>
+    <customValue>
+        <fullName>New Stores</fullName>
+        <default>false</default>
+        <label>New Stores</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Resolution Team</fullName>
+        <default>false</default>
+        <label>Service Resolution Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Setup &amp; Maintenance</fullName>
+        <default>false</default>
+        <label>Service Setup &amp; Maintenance</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Management</fullName>
+        <default>false</default>
+        <label>Vendor Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Relations Management</fullName>
+        <default>false</default>
+        <label>Vendor Relations Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Wasteless</fullName>
+        <default>false</default>
+        <label>Wasteless</label>
+    </customValue>
+    <customValue>
+        <fullName>WMRA</fullName>
+        <default>false</default>
+        <label>WMRA</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Operations</fullName>
+        <default>false</default>
+        <label>Vendor Operations</label>
+    </customValue>
+    <customValue>
+        <fullName>New, Add and Change Service</fullName>
+        <default>false</default>
+        <label>New, Add and Change Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Core Customer Service</fullName>
+        <default>false</default>
+        <label>Core Customer Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Finance</fullName>
+        <default>false</default>
+        <label>Finance</label>
+    </customValue>
+    <customValue>
+        <fullName>Recycling Services</fullName>
+        <default>false</default>
+        <label>Recycling Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Compliance</fullName>
+        <default>false</default>
+        <label>Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>Project Services</fullName>
+        <default>false</default>
+        <label>Project Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Procurement</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Procurement</label>
+    </customValue>
+    <description>Acorn Team name</description>
+    <masterLabel>Case Team Name</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

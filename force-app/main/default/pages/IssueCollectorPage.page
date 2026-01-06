@@ -1,0 +1,40 @@
+<apex:page lightningStylesheets="true">
+
+    <script type="text/javascript" src="https://wastemanagement.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-t2cp2p/b/11/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=ea53ac8e"></script>
+
+        <!-- We pasted the generated code from the Issue Collector here, after choosing a custom trigger -->
+    
+        <!-- This is the script for the issue collector feedback form -->
+    
+     
+        <!-- This is the script for specifying the custom trigger.  We've replaced 'myCustomTrigger' with 'feedback-button' -->
+    
+        <style type="text/css">
+        #wrapper {
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        </style>
+        <script type="text/javascript">
+            window.ATL_JQ_PAGE_PROPS =  {
+                "triggerFunction": function(showCollectorDialog) {
+                    //Requries that jQuery is available! 
+                    jQuery("#feedback-button").click(function(e) {
+                        e.preventDefault();
+                        showCollectorDialog();
+                    });
+                }
+            };
+        </script>
+        <div id="wrapper">
+            <h3>Click the button to report a Salesforce bug</h3>
+            <button  id="feedback-button" class="slds-button slds-button_brand" style="size:100px;">Report Bug</button>
+        </div>
+
+
+</apex:page>

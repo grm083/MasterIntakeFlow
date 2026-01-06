@@ -1,0 +1,13 @@
+<design:component label="Custom App Page Template">
+    <flexipage:template >
+        <flexipage:region name="cmp1" defaultWidth="Xlarge" />
+        <flexipage:region name="cmp2" defaultWidth="Xlarge" />
+        <flexipage:region name="cmp3" defaultWidth="Xlarge" />
+        <flexipage:region name="cmp4" defaultWidth="Xlarge" />
+        <flexipage:region name="cmp5" defaultWidth="Xlarge" />
+        <flexipage:region name="cmp6" defaultWidth="Xlarge" />
+        <flexipage:region name="cmp7" defaultWidth="Xlarge" />
+        <flexipage:region name="cmp8" defaultWidth="Xlarge" />
+        <flexipage:region name="cmp9" defaultWidth="Xlarge" />
+    </flexipage:template>
+</design:component>

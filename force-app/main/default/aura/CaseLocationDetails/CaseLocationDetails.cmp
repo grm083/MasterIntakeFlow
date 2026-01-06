@@ -1,0 +1,36 @@
+<aura:component controller="dynamicCardController"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="fields" type="String[]" default="['Location_Code__c',
+                      'ParentId',
+                      'ShippingAddress',
+                      'Customer_Location_Code__c',
+                      'Phone',
+                      'Primary_Segment__c',
+                      'Status__c',
+                      'tz__Local_Time_Short__c'
+                      ]" />
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:attribute name="icon" type="String" />
+    <aura:attribute name="locationId" type="String" />
+    <aura:attribute name="typeOfRecord" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler event="c:RefreshEvent" action="{!c.init}"/>
+	
+    <aura:if isTrue="{!not(v.locationId == null)}">
+        <lightning:card title="Location Details" 
+                        iconName="standard:account"
+                        class="slds-var-p-around_medium">
+            <lightning:recordForm recordId="{!v.locationId}"
+                                  fields="{!v.fields}"
+                                  objectApiName="Account"
+                                  columns="2"
+                                  density="comfy"
+                                  mode="readonly" 
+                                  class="slds-var-p-around_medium"/>
+        </lightning:card>
+        <aura:set attribute="else">
+        	Please select your location using the "Location Search" tab
+        </aura:set>
+    </aura:if>
+</aura:component>

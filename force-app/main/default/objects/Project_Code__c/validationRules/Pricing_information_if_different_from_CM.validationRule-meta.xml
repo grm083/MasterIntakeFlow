@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pricing_information_if_different_from_CM</fullName>
+    <active>true</active>
+    <description>If Pricing information if different from CMT checkbox is not checked and if any text is entered in Pricing information if different from CMT Long text area, then the validation is thrown.</description>
+    <errorConditionFormula>AND( Pricing_information_if_different_from_CM__c , NOT( ISBLANK(Pricing_information_if_diff_from_CM__c) ))</errorConditionFormula>
+    <errorMessage>Pricing information if different from CMT can only be provided if the &apos;Use CMT pricing?&apos; Checkbox is unchecked</errorMessage>
+</ValidationRule>

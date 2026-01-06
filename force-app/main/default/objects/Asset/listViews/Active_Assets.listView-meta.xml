@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_Assets</fullName>
+    <columns>ASSET.NAME</columns>
+    <columns>PRODUCT2.FAMILY_ENUM</columns>
+    <columns>End_Date__c</columns>
+    <columns>Duration__c</columns>
+    <columns>Occurrence_Type__c</columns>
+    <columns>Has_Extra_Pickup__c</columns>
+    <columns>Service_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PRODUCT2.FAMILY_ENUM</field>
+        <operation>equals</operation>
+        <value>Commercial</value>
+    </filters>
+    <filters>
+        <field>Occurrence_Type__c</field>
+        <operation>equals</operation>
+        <value>Scheduled</value>
+    </filters>
+    <filters>
+        <field>Occurs__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Frequency__c</field>
+        <operation>equals</operation>
+        <value>Weekly</value>
+    </filters>
+    <filters>
+        <field>Weekly_Frequency__c</field>
+        <operation>equals</operation>
+        <value>6</value>
+    </filters>
+    <filters>
+        <field>Quantity__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Active Assets</label>
+</ListView>

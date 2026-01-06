@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Officetrax_Field_Lock</fullName>
+    <active>true</active>
+    <description>Validation preventing edit of certain fields for Ebusiness and officetrax cases.</description>
+    <errorConditionFormula>AND(
+NOT($Profile.Name = &apos;System Administrator&apos;),
+NOT($User.Bypass_Validation__c),
+OR(
+ISPICKVAL(Origin,&apos;E-Business&apos;),
+ISCHANGED(Origin)
+),
+NOT(ISBLANK(PRIORVALUE(Origin))),
+OR(
+AND(
+NOT(ISBLANK(PRIORVALUE(Location__c))),
+ISCHANGED(Location__c)
+),
+AND(
+NOT(ISBLANK(PRIORVALUE(Client__c))),
+ISCHANGED(Client__c)
+), 
+
+AND(
+NOT(ISBLANK(PRIORVALUE(Case_Type__c))),
+ISCHANGED(Case_Type__c)
+), 
+
+AND(
+NOT(ISBLANK(PRIORVALUE(Case_Reason__c))),
+ISCHANGED(Case_Reason__c)
+),
+AND(
+ISCHANGED(Origin),
+OR(
+ISPICKVAL(PRIORVALUE(Origin),&apos;E-Business&apos;)))
+)
+)</errorConditionFormula>
+    <errorMessage>The Client, Location, Asset, and Case Types cannot be edited on Officetrax and E-Business cases.</errorMessage>
+</ValidationRule>

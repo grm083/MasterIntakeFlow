@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Acorn_Team_Queue__c</fullName>
+    <description>Default Team Queue for salesforce Team User</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Default Team Queue for salesforce Team User</inlineHelpText>
+    <label>Acorn Team Queue</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CS Portal Requests</fullName>
+                <default>true</default>
+                <label>CS Portal Requests</label>
+            </value>
+             <value>
+                <fullName>CS Hauler Damage</fullName>
+                <default>false</default>
+                <label>CS Hauler Damage</label>
+            </value>
+            <value>
+                <fullName>SST Resolution</fullName>
+                <default>false</default>
+                <label>SST Resolution</label>
+            </value>
+            <value>
+                <fullName>SST Locks</fullName>
+                <default>false</default>
+                <label>SST Locks</label>
+            </value>
+            <value>
+                <fullName>Service Resolution Team</fullName>
+                <default>false</default>
+                <label>Service Resolution Team</label>
+            </value>
+            <value>
+                <fullName>Home Depot Team</fullName>
+                <default>false</default>
+                <label>Home Depot Team</label>
+            </value>
+            <value>
+                <fullName>Team Amazon</fullName>
+                <default>false</default>
+                <label>Team Amazon</label>
+            </value>
+            <value>
+                <fullName>WMSSC Cust Svc Incomplete</fullName>
+                <default>false</default>
+                <label>WMSSC Cust Svc Incomplete</label>
+            </value>
+            <value>
+                <fullName>Dollar Tree - Family Dollar Team</fullName>
+                <default>false</default>
+                <label>Dollar Tree - Family Dollar Team</label>
+            </value>
+            <value>
+                <fullName>CS FAM/DLL Resolution</fullName>
+                <default>false</default>
+                <label>CS FAM/DLL Resolution</label>
+            </value>
+            <value>
+                <fullName>PM Sidmore, H</fullName>
+                <default>false</default>
+                <label>PM Sidmore, H</label>
+            </value>
+            <value>
+                <fullName>Home Depot Projects</fullName>
+                <default>false</default>
+                <label>Home Depot Project</label>
+            </value>
+            <value>
+                <fullName>Manufacturing &amp; Industrial Team</fullName>
+                <default>false</default>
+                <label>Manufacturing &amp; Industrial Team</label>
+            </value>
+            <value>
+                <fullName>Compliance Audit</fullName>
+                <default>false</default>
+                <label>Compliance Audit</label>
+            </value>
+            <value>
+                <fullName>Service Fulfillment – Service Change SF</fullName>
+                <default>false</default>
+                <label>Service Fulfillment – Service Change SF</label>
+            </value>
+            <value>
+                <fullName>Internal Spec Correction SF</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Internal Spec Correction SF</label>
+            </value>
+            <value>
+                <fullName>National Broker Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>National Broker Team</label>
+            </value>
+            <value>
+                <fullName>New Stores Team SF</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>New Stores Team SF</label>
+            </value>
+            <value>
+                <fullName>SSM Team SF</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SSM Team SF</label>
+            </value>
+            <value>
+                <fullName>SSM-Vendor Set Up</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SSM-Vendor Set Up</label>
+            </value>
+            <value>
+                <fullName>Team Greystar</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Team Greystar</label>
+            </value>
+            <value>
+                <fullName>Tier 2 3</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tier 2 3</label>
+            </value>
+            <value>
+                <fullName>VRM Canada SF</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>VRM Canada SF</label>
+            </value>
+            <value>
+                <fullName>Vendor Operations Resolution</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Vendor Operations Resolution</label>
+            </value>
+            <value>
+                <fullName>WMSSC Customer Service</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WMSSC Customer Service</label>
+            </value>
+            <value>
+                <fullName>Wasteless</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Wasteless</label>
+            </value>
+            <value>
+                <fullName>Repairs Group</fullName>
+                <default>false</default>
+                <label>Repairs Group</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

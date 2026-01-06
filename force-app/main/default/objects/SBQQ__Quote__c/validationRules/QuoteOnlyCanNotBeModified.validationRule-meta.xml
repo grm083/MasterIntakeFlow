@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QuoteOnlyCanNotBeModified</fullName>
+    <active>true</active>
+    <description>SDT 33101, QuoteOnly should be readonly for Product Configured,Cost Configured,Price Configured</description>
+    <errorConditionFormula>AND(ISCHANGED( Quote_Only__c ), OR(ISPICKVAL(SBQQ__Status__c, &quot;Product Configured&quot;),ISPICKVAL(SBQQ__Status__c, &quot;Cost Configured&quot;),ISPICKVAL(SBQQ__Status__c, &quot;Price Configured&quot;)))</errorConditionFormula>
+    <errorDisplayField>Quote_Only__c</errorDisplayField>
+    <errorMessage>Quote only can not be changed in below statuses - Procure Service, Configure Price, Submit for approval</errorMessage>
+</ValidationRule>

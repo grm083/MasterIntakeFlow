@@ -1,0 +1,8 @@
+<apex:page id="MainPage"
+           showHeader="false" 
+           cache="true"
+           contentType="application/x-pdf#ChatTranscript.pdf">
+
+    <!-- Here comes ChatTranscriptPdf with a content to be converted to PDF -->
+    <apex:include pageName="ChatTranscriptPdf"/>
+</apex:page>

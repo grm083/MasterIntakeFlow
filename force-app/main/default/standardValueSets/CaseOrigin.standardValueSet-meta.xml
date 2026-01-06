@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Phone</fullName>
+        <default>false</default>
+        <label>Phone</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Monitor</fullName>
+        <default>false</default>
+        <label>Monitor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-Business</fullName>
+        <default>false</default>
+        <label>E-Business</label>
+    </standardValue>
+    <standardValue>
+        <fullName>MAS Service Setup</fullName>
+        <default>false</default>
+        <label>MAS Service Setup</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Mobile Application</fullName>
+        <default>false</default>
+        <label>Mobile Application</label>
+    </standardValue>
+    <standardValue>
+        <fullName>The Wire</fullName>
+        <default>false</default>
+        <label>The Wire</label>
+    </standardValue>
+    <standardValue>
+        <fullName>External System</fullName>
+        <default>false</default>
+        <label>External System</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IVR Phone</fullName>
+        <default>false</default>
+        <label>IVR Phone</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Client Portal</fullName>
+        <default>false</default>
+        <label>Client Portal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Migration</fullName>
+        <default>false</default>
+        <label>Migration</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Auto Closed</fullName>
+        <default>false</default>
+        <label>Auto Closed</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Officetrax</fullName>
+        <default>false</default>
+        <label>Officetrax</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Service Channel</fullName>
+        <default>false</default>
+        <label>Service Channel</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IVR Email</fullName>
+        <default>false</default>
+        <label>IVR Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Chat Now</fullName>
+        <default>false</default>
+        <label>Chat Now</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CMS Monitor</fullName>
+        <default>false</default>
+        <label>CMS Monitor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Acorn Default</fullName>
+        <default>false</default>
+        <label>Acorn Default</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Upload</fullName>
+        <default>false</default>
+        <label>Upload</label>
+    </standardValue>
+    <standardValue>
+        <fullName>AutoRecon</fullName>
+        <default>false</default>
+        <label>AutoRecon</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SFDC Default</fullName>
+        <default>false</default>
+        <label>SFDC Default</label>
+    </standardValue>
+</StandardValueSet>

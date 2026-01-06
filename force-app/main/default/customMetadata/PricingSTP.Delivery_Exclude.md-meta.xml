@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Delivery Exclude</label>
+    <protected>false</protected>
+    <values>
+        <field>APIServiceChargeCode__c</field>
+        <value xsi:type="xsd:string">D</value>
+    </values>
+    <values>
+        <field>AcitonName__c</field>
+        <value xsi:type="xsd:string">Exclude</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">This is required when it&apos;s allowed or adjust.  If a line does not exist, we should create one and add the cost/price.  If a line does exist, we should update the cost/price.  If a line does exist but it is excluded, we should update to a 0 cost/price to the line.</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsCreateAcornBaseline__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsCreateQuoteLine__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsDeleteQuoteLine__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>ServiceChargeCode__c</field>
+        <value xsi:type="xsd:string">DLV</value>
+    </values>
+    <values>
+        <field>ServiceChargeName__c</field>
+        <value xsi:type="xsd:string">Delivery</value>
+    </values>
+</CustomMetadata>

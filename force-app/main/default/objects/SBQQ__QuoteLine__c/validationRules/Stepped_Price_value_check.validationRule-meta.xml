@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stepped_Price_value_check</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( OR(AND(PriceUpTo2__c &gt;0,PriceUpTo2__c &lt;= PriceUpTo1__c),
+AND(PriceUpTo3__c &gt;0,PriceUpTo3__c &lt;= PriceUpTo2__c),
+AND(PriceUpTo4__c &gt;0,PriceUpTo4__c &lt;= PriceUpTo3__c)))</errorConditionFormula>
+    <errorMessage>Price UPTO value should be greater than the previous row.</errorMessage>
+</ValidationRule>

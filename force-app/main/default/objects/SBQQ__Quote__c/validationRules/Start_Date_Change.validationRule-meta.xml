@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_Date_Change</fullName>
+    <active>false</active>
+    <description>Start date cannot be modified for Quote status other then Draft. SDT-24178, deactivated this rule to allow start date to be modified per SDT-23801.</description>
+    <errorConditionFormula>AND(ISCHANGED(SBQQ__StartDate__c), NOT(ISPICKVAL(SBQQ__Status__c, &quot;Draft&quot;)), $Profile.Name == &quot;Customer Service&quot;)</errorConditionFormula>
+    <errorDisplayField>SBQQ__StartDate__c</errorDisplayField>
+    <errorMessage>Start Date cannot be modified for the Quote Status.</errorMessage>
+</ValidationRule>

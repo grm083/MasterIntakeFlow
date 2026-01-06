@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email Template for Obtaining Service Approval</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>WM_Letter_Head</letterhead>
+    <name>Obtain Service Approval</name>
+    <style>freeForm</style>
+    <subject>WM: Your Approval Required ({!Case.Case_Sub_Type__c})</subject>
+    <textOnly>Dear {!User.Name}, 
+
+Your approval is required. {!Case.Contact} requested service- {!Case.Case_Sub_Type__c} at {!Case.Location__c}. Can you please review the details, and either approve or reject? If you require additional information please let us know so we can process this as quickly as possible. 
+
+Request Details 
+
+Service Requested {!Case.Case_Sub_Type__c} 
+{!Case.Asset} 
+Requested By {!Contact.Name} – {!Account_Title__c.Name} 
+Location {!Account.Location_Code__c} 
+{!Account.Name} 
+{!Account.ShippingStreet} 
+{!Account.ShippingCity}, {!Account.ShippingState} {!Account.ShippingPostalCode} 
+{!Account.ShippingCountry} 
+Requested Service Date {!Case.Service_Date__c} 
+Reference Number {!Case.Reference_Number__c} 
+Comments {!Case.Comments} 
+
+
+Your Approval Requirements</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

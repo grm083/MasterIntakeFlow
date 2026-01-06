@@ -1,0 +1,4 @@
+<aura:component controller ="ETAWindowController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> 
+    <aura:attribute name="srvcDateCheck" type="Boolean"/>
+</aura:component>

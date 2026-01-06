@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>TaskManagementSystemUser</label>
+    <protected>false</protected>
+    <values>
+        <field>Value__c</field>
+        <value xsi:type="xsd:string">system.user,Automated Process,bluewolf,peter.hughes,noreply,cprato,copado.deployment,report.user,Gearset Deployment,case.admin,gmarti18,Group User,group.user,api.user,integration,insightssecurity,test.csr,acorn.integration,genesys.integration,cgupta,test.cat,Test CPV,Supplier.Integration,Chatter Free,fridayfax.user,salesforce.integration,ebusiness.user,Upload.User,chatterfree</value>
+    </values>
+</CustomMetadata>

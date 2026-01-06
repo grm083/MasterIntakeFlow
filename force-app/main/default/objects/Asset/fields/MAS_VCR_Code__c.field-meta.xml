@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MAS_VCR_Code__c</fullName>
+    <externalId>false</externalId>
+    <label>MAS VCR Code</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Automatic Price Adjustment</fullName>
+                <default>false</default>
+                <label>Automatic Price Adjustment</label>
+            </value>
+            <value>
+                <fullName>Automatic Price Group</fullName>
+                <default>false</default>
+                <label>Automatic Price Group</label>
+            </value>
+            <value>
+                <fullName>Auto Price Group without messaging</fullName>
+                <default>false</default>
+                <label>Auto Price Group without messaging</label>
+            </value>
+            <value>
+                <fullName>Commission ID change</fullName>
+                <default>false</default>
+                <label>Commission ID change</label>
+            </value>
+            <value>
+                <fullName>Contract renewal change</fullName>
+                <default>false</default>
+                <label>Contract renewal change</label>
+            </value>
+            <value>
+                <fullName>Decrease in price due to recycling material offset</fullName>
+                <default>false</default>
+                <label>Decrease in price due to recycling material offset</label>
+            </value>
+            <value>
+                <fullName>Decrease in price due to roll back adjustment</fullName>
+                <default>false</default>
+                <label>Decrease in price due to roll back adjustment</label>
+            </value>
+            <value>
+                <fullName>Decrease in Seasonal Service</fullName>
+                <default>false</default>
+                <label>Decrease in Seasonal Service</label>
+            </value>
+            <value>
+                <fullName>Decrease in Service</fullName>
+                <default>false</default>
+                <label>Decrease in Service</label>
+            </value>
+            <value>
+                <fullName>Increase in Permanent or Temporary Service</fullName>
+                <default>false</default>
+                <label>Increase in Permanent or Temporary Service</label>
+            </value>
+            <value>
+                <fullName>Increase in price: individually secured price increase</fullName>
+                <default>false</default>
+                <label>Increase in price: individually secured price increase</label>
+            </value>
+            <value>
+                <fullName>Increase in price due to adjustment</fullName>
+                <default>false</default>
+                <label>Increase in price due to adjustment</label>
+            </value>
+            <value>
+                <fullName>Increase in price due to Business Improvement Process (BIP)/accelerated price increase</fullName>
+                <default>false</default>
+                <label>Increase in price due to Business Improvement Process (BIP)/accelerated price increase</label>
+            </value>
+            <value>
+                <fullName>Increase in price due to disposal pass through</fullName>
+                <default>false</default>
+                <label>Increase in price due to disposal pass through</label>
+            </value>
+            <value>
+                <fullName>Increase in price due to extra pickup</fullName>
+                <default>false</default>
+                <label>Increase in price due to extra pickup</label>
+            </value>
+            <value>
+                <fullName>Increase in price due to fuel, environmental (EVF), and/or Regulatory Cost Recovery (RCR).</fullName>
+                <default>false</default>
+                <label>Increase in price due to fuel, environmental (EVF), and/or Regulatory Cost Recovery (RCR).</label>
+            </value>
+            <value>
+                <fullName>Increase in price due to recycling material offset</fullName>
+                <default>false</default>
+                <label>Increase in price due to recycling material offset</label>
+            </value>
+            <value>
+                <fullName>Increase in price without automated price increase message</fullName>
+                <default>false</default>
+                <label>Increase in price without automated price increase message</label>
+            </value>
+            <value>
+                <fullName>Increase in Seasonal Service</fullName>
+                <default>false</default>
+                <label>Increase in Seasonal Service</label>
+            </value>
+            <value>
+                <fullName>Increase in Snapshot Service</fullName>
+                <default>false</default>
+                <label>Increase in Snapshot Service</label>
+            </value>
+            <value>
+                <fullName>Lost Bad Pay</fullName>
+                <default>false</default>
+                <label>Lost Bad Pay</label>
+            </value>
+            <value>
+                <fullName>Lost Business Cancellation</fullName>
+                <default>false</default>
+                <label>Lost Business Cancellation</label>
+            </value>
+            <value>
+                <fullName>Lost Business Competition</fullName>
+                <default>false</default>
+                <label>Lost Business Competition</label>
+            </value>
+            <value>
+                <fullName>Lost Business Divestiture</fullName>
+                <default>false</default>
+                <label>Lost Business Divestiture</label>
+            </value>
+            <value>
+                <fullName>Lost Business Temporary Service</fullName>
+                <default>false</default>
+                <label>Lost Business Temporary Service</label>
+            </value>
+            <value>
+                <fullName>Lost Business Waste Stream</fullName>
+                <default>false</default>
+                <label>Lost Business Waste Stream</label>
+            </value>
+            <value>
+                <fullName>Lost Closed Business</fullName>
+                <default>false</default>
+                <label>Lost Closed Business</label>
+            </value>
+            <value>
+                <fullName>Lost Due to Location Move</fullName>
+                <default>false</default>
+                <label>Lost Due to Location Move</label>
+            </value>
+            <value>
+                <fullName>Lost Ownership</fullName>
+                <default>false</default>
+                <label>Lost Ownership</label>
+            </value>
+            <value>
+                <fullName>Lost Service Type</fullName>
+                <default>false</default>
+                <label>Lost Service Type</label>
+            </value>
+            <value>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+                <label>Miscellaneous</label>
+            </value>
+            <value>
+                <fullName>New Business Acquisition</fullName>
+                <default>false</default>
+                <label>New Business Acquisition</label>
+            </value>
+            <value>
+                <fullName>New Business Competition</fullName>
+                <default>false</default>
+                <label>New Business Competition</label>
+            </value>
+            <value>
+                <fullName>New Business Greenfield</fullName>
+                <default>false</default>
+                <label>New Business Greenfield</label>
+            </value>
+            <value>
+                <fullName>New Business Location Move</fullName>
+                <default>false</default>
+                <label>New Business Location Move</label>
+            </value>
+            <value>
+                <fullName>New Business New Waste Stream</fullName>
+                <default>false</default>
+                <label>New Business New Waste Stream</label>
+            </value>
+            <value>
+                <fullName>New Business Reinstate</fullName>
+                <default>false</default>
+                <label>New Business Reinstate</label>
+            </value>
+            <value>
+                <fullName>New Business Temporary</fullName>
+                <default>false</default>
+                <label>New Business Temporary</label>
+            </value>
+            <value>
+                <fullName>New Ownership</fullName>
+                <default>false</default>
+                <label>New Ownership</label>
+            </value>
+            <value>
+                <fullName>New Service Type</fullName>
+                <default>false</default>
+                <label>New Service Type</label>
+            </value>
+            <value>
+                <fullName>Price decrease due to automated adjustment roll-back</fullName>
+                <default>false</default>
+                <label>Price decrease due to automated adjustment roll-back</label>
+            </value>
+            <value>
+                <fullName>Price decrease due to fuel, environmental (EVF), and/or Regulatory Cost Recovery (RCR).</fullName>
+                <default>false</default>
+                <label>Price decrease due to fuel, environmental (EVF), and/or Regulatory Cost Recovery (RCR).</label>
+            </value>
+            <value>
+                <fullName>Price decrease due to price increase roll back</fullName>
+                <default>false</default>
+                <label>Price decrease due to price increase roll back</label>
+            </value>
+            <value>
+                <fullName>Business Service Decrease</fullName>
+                <default>false</default>
+                <label>Business Service Decrease</label>
+            </value>
+            <value>
+                <fullName>Business Service Increase</fullName>
+                <default>false</default>
+                <label>Business Service Increase</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

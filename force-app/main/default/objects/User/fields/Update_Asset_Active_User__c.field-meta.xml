@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Asset_Active_User__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This will hide the record type of Update Asset Case.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check this box to create Update Asset Case.</inlineHelpText>
+    <label>Add change Update Asset Active User</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

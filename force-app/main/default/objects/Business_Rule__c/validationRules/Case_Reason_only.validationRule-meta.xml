@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Reason_only</fullName>
+    <active>false</active>
+    <description>If Case Reason is specified,no other information will be captured</description>
+    <errorConditionFormula>AND(
+	NOT(
+	ISBLANK(TEXT(Case_Reason__c))
+	),
+	OR(
+		NOT(ISBLANK(LocationId__c)),
+	       	NOT(ISBLANK(AssetId__c)),
+		NOT(ISBLANK(TEXT(Container__c))),
+		NOT(ISBLANK(TEXT(Schedule_Type__c))),
+		NOT(ISBLANK(TEXT(Material__c))),
+		NOT(ISBLANK(Project_Code__c)),
+                NOT(ISBLANK(TEXT(Category_Type__c))),
+                NOT(ISBLANK(Group__c))
+	)
+)</errorConditionFormula>
+    <errorMessage>When Case Reason is provided then other Business Rule criteria are not allowed to be entered.</errorMessage>
+</ValidationRule>

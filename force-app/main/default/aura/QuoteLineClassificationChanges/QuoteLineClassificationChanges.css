@@ -1,0 +1,42 @@
+.THIS table{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align:center;
+}
+.THIS th{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding:1%;
+}
+.THIS td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding:1%;
+    overflow-wrap: break-word;
+}
+.THIS wrapped-content{
+    overflow-wrap: break-word;
+}
+.THIS .slds-box{
+    border-color:black;
+    background-color:white;
+}
+/*TCS-SDT-31265-Added below class*/
+.THIS .comparisonTooltip {
+    position: absolute;
+    background-color: white;
+    top: -50%;
+    left: 25%;
+}
+
+.THIS .slds-popover__body
+{
+    color: black;
+    border: 2px solid black;
+}
+
+.THIS .costPriceHover:hover {
+    color: black !important;
+    background-color: #99CC33 !important;
+}
+/*TCS-SDT-31265-End*/

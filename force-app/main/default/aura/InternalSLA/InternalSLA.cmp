@@ -1,0 +1,15 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	
+    
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    <aura:attribute name="Id" type="String"  access="global" default = "Internal_SLA1" />
+	<wave:waveDashboard developerName="{!v.Id}" 
+        showTitle="false"
+        showSharing = "True"
+        showHeader="True"
+        height="800px" 
+        openLinksInNewWindow="false" 
+      />
+    
+</aura:component>

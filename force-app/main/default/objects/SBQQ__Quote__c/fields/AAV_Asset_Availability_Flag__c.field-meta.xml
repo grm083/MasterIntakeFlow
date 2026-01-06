@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AAV_Asset_Availability_Flag__c</fullName>
+    <description>Availability Status of the Quote</description>
+    <externalId>false</externalId>
+    <label>Asset Availability Flag</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Availability Confirmed</fullName>
+                <default>false</default>
+                <label>Availability Confirmed</label>
+            </value>
+            <value>
+                <fullName>Availability Assumed</fullName>
+                <default>false</default>
+                <label>Availability Assumed</label>
+            </value>
+            <value>
+                <fullName>Availability NOT Confirmed</fullName>
+                <default>false</default>
+                <label>Availability NOT Confirmed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

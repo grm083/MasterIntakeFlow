@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exclude_All_Validation</fullName>
+    <active>true</active>
+    <description>Prevent Records From Having to Exclude All Customers</description>
+    <errorConditionFormula>AND(Customer_All__c  = true,  Customer_Included__c  = false, Customer_All_Canada__c = true, Customer_Included_Canada__c = false, RecordType.Name = &apos;STP Eligibility&apos;)</errorConditionFormula>
+    <errorMessage>All US and all Canadian customers cannot be excluded.</errorMessage>
+</ValidationRule>

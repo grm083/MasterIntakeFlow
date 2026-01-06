@@ -1,0 +1,25 @@
+<aura:component implements="lightning:availableForFlowScreens" controller="IntakeProcessAuraHandler">
+	<lightning:workspaceAPI aura:id="workspace"/>
+    
+    <aura:attribute name="caseRecord" type="string" default="" />
+    <aura:attribute name="FinalOutcome" type="string" default="" />
+    <aura:attribute name="comment" type="string" default="" />
+    <aura:attribute name="CustomNotes" type="string" default=""/>
+    
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" padding="around-small" >
+        	<lightning:textarea value="{!v.CustomNotes}" 
+                                     placeholder="If additional notes should be added, please add them here"
+                                     label="Additional Comments/Instructions for Other Teams" />
+        </lightning:layoutItem>
+		 <!--
+        <lightning:layoutItem size="6" padding="around-small" >
+            <lightning:button variant="brand-outline" label="Back" onclick="{!c.back}" class="slds-float_right" />
+        </lightning:layoutItem>
+		 -->
+        <lightning:layoutItem size="6" padding="around-small" >
+            <lightning:button variant="brand" label="Finish" onclick="{!c.next}" class="slds-float_left" />
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+</aura:component>

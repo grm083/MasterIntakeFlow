@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>User_categorization__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>User categorization</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CS Agent</fullName>
+                <default>true</default>
+                <label>CS Agent</label>
+            </value>
+            <value>
+                <fullName>CS Leadership</fullName>
+                <default>false</default>
+                <label>CS Leadership</label>
+            </value>
+            <value>
+                <fullName>Sales Agent</fullName>
+                <default>false</default>
+                <label>Sales Agent</label>
+            </value>
+            <value>
+                <fullName>Canada CS Agent</fullName>
+                <default>false</default>
+                <label>Canada CS Agent</label>
+            </value>
+            <value>
+                <fullName>Canada CS Leadership</fullName>
+                <default>false</default>
+                <label>Canada CS Leadership</label>
+            </value>
+            <value>
+                <fullName>NS Agent</fullName>
+                <default>false</default>
+                <label>NS Agent</label>
+            </value>
+            <value>
+                <fullName>SSM Leadership</fullName>
+                <default>false</default>
+                <label>SSM Leadership</label>
+            </value>
+            <value>
+                <fullName>VR Agent</fullName>
+                <default>false</default>
+                <label>VR Agent</label>
+            </value>
+            <value>
+                <fullName>VR Leadership</fullName>
+                <default>false</default>
+                <label>VR Leadership</label>
+            </value>
+            <value>
+                <fullName>Sales Premier</fullName>
+                <default>false</default>
+                <label>Sales Premier</label>
+            </value>
+            <value>
+                <fullName>Compliance Team</fullName>
+                <default>false</default>
+                <label>Compliance Team</label>
+            </value>
+            <value>
+                <fullName>Spec Corrections Team</fullName>
+                <default>false</default>
+                <label>Spec Corrections Team</label>
+            </value>
+            <value>
+                <fullName>New Stores - Quote Only/Container on Site</fullName>
+                <default>false</default>
+                <label>New Stores - Quote Only/Container on Site</label>
+            </value>
+            <value>
+                <fullName>CS Service Channel</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>CS Service Channel</label>
+            </value>
+            <value>
+                <fullName>Project Services</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Project Services</label>
+            </value>
+            <value>
+                <fullName>SSM Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SSM Team</label>
+            </value>
+            <value>
+                <fullName>Service Fulfillment Change Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Service Fulfillment Change Team</label>
+            </value>
+            <value>
+                <fullName>Service Fulfillment Leadership</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Service Fulfillment Leadership</label>
+            </value>
+            <value>
+                <fullName>Service Fulfillment New Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Service Fulfillment New Team</label>
+            </value>
+            <value>
+                <fullName>VO Maintenance</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>VO Maintenance</label>
+            </value>
+            <value>
+                <fullName>VO Resolution</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>VO Resolution</label>
+            </value>
+            <value>
+                <fullName>VRM/Service Fulfillment Canada</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>VRM/Service Fulfillment Canada</label>
+            </value>
+            <value>
+                <fullName>WM Compactor Solutions</fullName>
+                <default>false</default>
+                <label>WM Compactor Solutions</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

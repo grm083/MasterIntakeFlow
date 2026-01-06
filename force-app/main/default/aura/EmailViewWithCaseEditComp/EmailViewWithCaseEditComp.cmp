@@ -1,0 +1,43 @@
+<aura:component controller="CaseDetailHelper" access="global" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,lightning:actionOverride,lightning:hasPageReference">
+    <aura:html tag="style">
+        .slds-modal__container {
+        width : 100% !important;
+        max-width : 100% !important;
+        height : 107% !important;
+        max-height : 110% !important;
+        margin-top:-30px;
+        }
+    </aura:html>
+    <aura:attribute name="recordId" type="string" default="02s0U000001iXBW"/>
+    <aura:attribute name="caseClone" type="Boolean" default="false"/>
+    <aura:attribute name="caseId" type="string" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="closeModalBoxEvent" event="c:closeModalBoxEvent" action="{!c.cancelButton}"/>
+    <div class="slds">
+        <div class="demo-only" aura:id="modalBox">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div aura:id="modalContainer" class="slds-modal__container">
+                                  
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        <div class="slds">
+                            <div class="slds-grid slds-wrap">
+                                
+                                <div class="slds-col slds-size_6-of-12">
+                                    <c:EmailDetailViewComponent recordId="{!v.recordId}"/>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <c:CaseEditComponent recordId="{!v.caseId}"/>
+                                    
+                                </div>
+                            </div>
+                            {!v.body}
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+        </div>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,25 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="BusinessRuleCtrl">
+    
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="caseId" type="string" default="" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:workspaceAPI aura:id="myworkspace"/>
+
+    <aura:if isTrue="{!v.caseId}">
+        <lightning:tabset selectedTabId="CaseRules">
+            <lightning:tab label="Case Rules" id="CaseRules" onactive="{!c.refreshCaseRule}">
+                <c:caseRulesModal recordId="{!v.caseId}"   aura:id="caseRuleCmp"/>
+            </lightning:tab>
+            <lightning:tab label="All Rules" id="AllRules"  onactive="{!c.refreshAllRule}">
+                <c:allRulesModal recordId="{!v.caseId}" objectApiName="Case" aura:id="allRuleCmp"/>
+            </lightning:tab>
+            <lightning:tab label="ACORN Authorization Notes" id="AuthNotes">
+                <c:renderRedNotes recordId="{!v.caseId}"/>
+            </lightning:tab>   
+
+        </lightning:tabset>
+    </aura:if>
+    
+</aura:component>

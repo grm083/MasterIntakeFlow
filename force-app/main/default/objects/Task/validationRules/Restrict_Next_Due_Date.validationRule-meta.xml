@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Next_Due_Date</fullName>
+    <active>true</active>
+    <description>this rule is created as apart of story SDT-38282</description>
+    <errorConditionFormula>AND(
+NOT(ISPICKVAL(Outcome__c, &quot;Future Date Request&quot;)), 
+ISCHANGED(Next_Task_Due_Date_Time__c),OR(Subject =&apos;Initiate Service Request&apos;,Subject = &apos;Obtain Internal Response&apos;,Subject = &apos;Service Escalation&apos;,Subject = &apos;Spec Processing&apos;)
+)</errorConditionFormula>
+    <errorMessage>Select outcome as &quot;Future Date Request&quot; to edit Next Task Due Date</errorMessage>
+</ValidationRule>

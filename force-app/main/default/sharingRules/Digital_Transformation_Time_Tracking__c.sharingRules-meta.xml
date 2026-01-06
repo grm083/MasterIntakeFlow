@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>DT_Project_Tracking_Management</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DT Project Tracking Management</label>
+        <sharedTo>
+            <group>DT_Project_Time_Tracking_Admins</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Project__c</field>
+            <operation>equals</operation>
+            <value>Digital Transformation</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

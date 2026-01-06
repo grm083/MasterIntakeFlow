@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,flexipage:availableForRecordHome,force:hasRecordId"
+controller="PricingRequestSTPProcess" access="global">
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+</aura:component>

@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Reason_Detail__c</fullName>
+    <description>Exception Reason Detail on Service in Acorn.</description>
+    <externalId>false</externalId>
+    <label>Exception Reason Detail</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CAM Billed</fullName>
+                <default>false</default>
+                <label>CAM Billed</label>
+            </value>
+            <value>
+                <fullName>Cancelled Service</fullName>
+                <default>false</default>
+                <label>Cancelled Service</label>
+            </value>
+            <value>
+                <fullName>Cancelled Service - Permanently End</fullName>
+                <default>false</default>
+                <label>Cancelled Service - Permanently End</label>
+            </value>
+            <value>
+                <fullName>Client/Location Launch</fullName>
+                <default>false</default>
+                <label>Client/Location Launch</label>
+            </value>
+            <value>
+                <fullName>Client Cancelled Request</fullName>
+                <default>false</default>
+                <label>Client Cancelled Request</label>
+            </value>
+            <value>
+                <fullName>Client CPI</fullName>
+                <default>false</default>
+                <label>Client CPI</label>
+            </value>
+            <value>
+                <fullName>Client Profitability Improvements</fullName>
+                <default>false</default>
+                <label>Client Profitability Improvements</label>
+            </value>
+            <value>
+                <fullName>Client Renewal</fullName>
+                <default>false</default>
+                <label>Client Renewal</label>
+            </value>
+            <value>
+                <fullName>Client Requested Change</fullName>
+                <default>false</default>
+                <label>Client Requested Change</label>
+            </value>
+            <value>
+                <fullName>Closing</fullName>
+                <default>false</default>
+                <label>Closing</label>
+            </value>
+            <value>
+                <fullName>Co-Mingle Service</fullName>
+                <default>false</default>
+                <label>Co-Mingle Service</label>
+            </value>
+            <value>
+                <fullName>Contract Renewal</fullName>
+                <default>false</default>
+                <label>Contract Renewal</label>
+            </value>
+            <value>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+                <label>Credit Card</label>
+            </value>
+            <value>
+                <fullName>Data Error Fix</fullName>
+                <default>false</default>
+                <label>Data Error Fix</label>
+            </value>
+            <value>
+                <fullName>Data Error Fix - Permanently End</fullName>
+                <default>false</default>
+                <label>Data Error Fix - Permanently End</label>
+            </value>
+            <value>
+                <fullName>Decrease</fullName>
+                <default>false</default>
+                <label>Decrease</label>
+            </value>
+            <value>
+                <fullName>Diversion</fullName>
+                <default>false</default>
+                <label>Diversion</label>
+            </value>
+            <value>
+                <fullName>Doesn&apos;t Alter Contractual Information</fullName>
+                <default>false</default>
+                <label>Doesn&apos;t Alter Contractual Information</label>
+            </value>
+            <value>
+                <fullName>Duplicate Payable</fullName>
+                <default>false</default>
+                <label>Duplicate Payable</label>
+            </value>
+            <value>
+                <fullName>Equipment Accessories</fullName>
+                <default>false</default>
+                <label>Equipment Accessories</label>
+            </value>
+            <value>
+                <fullName>Flat Rate Charged</fullName>
+                <default>false</default>
+                <label>Flat Rate Charged</label>
+            </value>
+            <value>
+                <fullName>Franchise/City Service Area</fullName>
+                <default>false</default>
+                <label>Franchise/City Service Area</label>
+            </value>
+            <value>
+                <fullName>Franchise/City Vendor</fullName>
+                <default>false</default>
+                <label>Franchise/City Vendor</label>
+            </value>
+            <value>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+                <label>Fuel</label>
+            </value>
+            <value>
+                <fullName>Hauler Charging Less</fullName>
+                <default>false</default>
+                <label>Hauler Charging Less</label>
+            </value>
+            <value>
+                <fullName>Inactive Spec Location or Client</fullName>
+                <default>false</default>
+                <label>Inactive Spec Location or Client</label>
+            </value>
+            <value>
+                <fullName>Inactive spec loc or client</fullName>
+                <default>false</default>
+                <label>Inactive spec loc or client</label>
+            </value>
+            <value>
+                <fullName>Incorrect Division</fullName>
+                <default>false</default>
+                <label>Incorrect Division</label>
+            </value>
+            <value>
+                <fullName>Incorrect Vendor</fullName>
+                <default>false</default>
+                <label>Incorrect Vendor</label>
+            </value>
+            <value>
+                <fullName>Increase</fullName>
+                <default>false</default>
+                <label>Increase</label>
+            </value>
+            <value>
+                <fullName>Land Fill</fullName>
+                <default>false</default>
+                <label>Land Fill</label>
+            </value>
+            <value>
+                <fullName>Landfill Decrease</fullName>
+                <default>false</default>
+                <label>Landfill Decrease</label>
+            </value>
+            <value>
+                <fullName>Landfill Increase</fullName>
+                <default>false</default>
+                <label>Landfill Increase</label>
+            </value>
+            <value>
+                <fullName>Lock(s) Added</fullName>
+                <default>false</default>
+                <label>Lock(s) Added</label>
+            </value>
+            <value>
+                <fullName>Mail/CAM</fullName>
+                <default>false</default>
+                <label>Mail/CAM</label>
+            </value>
+            <value>
+                <fullName>Mail/CAM Service Area</fullName>
+                <default>false</default>
+                <label>Mail/CAM Service Area</label>
+            </value>
+            <value>
+                <fullName>Merge/Acquisition</fullName>
+                <default>false</default>
+                <label>Merge/Acquisition</label>
+            </value>
+            <value>
+                <fullName>Missapplied Funds</fullName>
+                <default>false</default>
+                <label>Missapplied Funds</label>
+            </value>
+            <value>
+                <fullName>Missed Service</fullName>
+                <default>false</default>
+                <label>Missed Service</label>
+            </value>
+            <value>
+                <fullName>Missing Invoice</fullName>
+                <default>false</default>
+                <label>Missing Invoice</label>
+            </value>
+            <value>
+                <fullName>Missused Payable</fullName>
+                <default>false</default>
+                <label>Missused Payable</label>
+            </value>
+            <value>
+                <fullName>Misused Payable</fullName>
+                <default>false</default>
+                <label>Misused Payable</label>
+            </value>
+            <value>
+                <fullName>MSA/Adj</fullName>
+                <default>false</default>
+                <label>MSA/Adj</label>
+            </value>
+            <value>
+                <fullName>New Client</fullName>
+                <default>false</default>
+                <label>New Client</label>
+            </value>
+            <value>
+                <fullName>New Client RightSize</fullName>
+                <default>false</default>
+                <label>New Client RightSize</label>
+            </value>
+            <value>
+                <fullName>New Service</fullName>
+                <default>false</default>
+                <label>New Service</label>
+            </value>
+            <value>
+                <fullName>New Service -Existing Location</fullName>
+                <default>false</default>
+                <label>New Service -Existing Location</label>
+            </value>
+            <value>
+                <fullName>New Service - New Location</fullName>
+                <default>false</default>
+                <label>New Service - New Location</label>
+            </value>
+            <value>
+                <fullName>No Longer Needed</fullName>
+                <default>false</default>
+                <label>No Longer Needed</label>
+            </value>
+            <value>
+                <fullName>No Longer Needed - Permanently End</fullName>
+                <default>false</default>
+                <label>No Longer Needed - Permanently End</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Not CheckedAdded Tax, Schedule, Frequency</fullName>
+                <default>false</default>
+                <label>Not CheckedAdded Tax, Schedule, Frequency</label>
+            </value>
+            <value>
+                <fullName>Not CheckedBid Purpose</fullName>
+                <default>false</default>
+                <label>Not CheckedBid Purpose</label>
+            </value>
+            <value>
+                <fullName>Not CheckedBypass OAKLEAF</fullName>
+                <default>false</default>
+                <label>Not CheckedBypass OAKLEAF</label>
+            </value>
+            <value>
+                <fullName>Not CheckedCancel Other</fullName>
+                <default>false</default>
+                <label>Not CheckedCancel Other</label>
+            </value>
+            <value>
+                <fullName>Not CheckedCardboard Market</fullName>
+                <default>false</default>
+                <label>Not CheckedCardboard Market</label>
+            </value>
+            <value>
+                <fullName>Not CheckedCPI</fullName>
+                <default>false</default>
+                <label>Not CheckedCPI</label>
+            </value>
+            <value>
+                <fullName>Not CheckedEntry Error</fullName>
+                <default>false</default>
+                <label>Not CheckedEntry Error</label>
+            </value>
+            <value>
+                <fullName>Not CheckedExtra</fullName>
+                <default>false</default>
+                <label>Not CheckedExtra</label>
+            </value>
+            <value>
+                <fullName>Not CheckedFlow Through Account</fullName>
+                <default>false</default>
+                <label>Not CheckedFlow Through Account</label>
+            </value>
+            <value>
+                <fullName>Not CheckedFranchise City</fullName>
+                <default>false</default>
+                <label>Not CheckedFranchise City</label>
+            </value>
+            <value>
+                <fullName>Not CheckedNot CheckedFlat Rate</fullName>
+                <default>false</default>
+                <label>Not CheckedNot CheckedFlat Rate</label>
+            </value>
+            <value>
+                <fullName>Oakleaf project</fullName>
+                <default>false</default>
+                <label>Oakleaf project</label>
+            </value>
+            <value>
+                <fullName>Oakleaf Purposes</fullName>
+                <default>false</default>
+                <label>Oakleaf Purposes</label>
+            </value>
+            <value>
+                <fullName>Partial Component</fullName>
+                <default>false</default>
+                <label>Partial Component</label>
+            </value>
+            <value>
+                <fullName>Poor Service</fullName>
+                <default>false</default>
+                <label>Poor Service</label>
+            </value>
+            <value>
+                <fullName>Pre-Payment</fullName>
+                <default>false</default>
+                <label>Pre-Payment</label>
+            </value>
+            <value>
+                <fullName>Priority Check</fullName>
+                <default>false</default>
+                <label>Priority Check</label>
+            </value>
+            <value>
+                <fullName>Procurement</fullName>
+                <default>false</default>
+                <label>Procurement</label>
+            </value>
+            <value>
+                <fullName>Rate Decrease</fullName>
+                <default>false</default>
+                <label>Rate Decrease</label>
+            </value>
+            <value>
+                <fullName>Rate Increase</fullName>
+                <default>false</default>
+                <label>Rate Increase</label>
+            </value>
+            <value>
+                <fullName>Rebid</fullName>
+                <default>false</default>
+                <label>Rebid</label>
+            </value>
+            <value>
+                <fullName>Recycling–billing only</fullName>
+                <default>false</default>
+                <label>Recycling–billing only</label>
+            </value>
+            <value>
+                <fullName>Regulatory Fees</fullName>
+                <default>false</default>
+                <label>Regulatory Fees</label>
+            </value>
+            <value>
+                <fullName>Requested Size Not Available</fullName>
+                <default>false</default>
+                <label>Requested Size Not Available</label>
+            </value>
+            <value>
+                <fullName>Retired in Error</fullName>
+                <default>false</default>
+                <label>Retired in Error</label>
+            </value>
+            <value>
+                <fullName>Retire Other</fullName>
+                <default>false</default>
+                <label>Retire Other</label>
+            </value>
+            <value>
+                <fullName>RightSized</fullName>
+                <default>false</default>
+                <label>RightSized</label>
+            </value>
+            <value>
+                <fullName>Right Sizing</fullName>
+                <default>false</default>
+                <label>Right Sizing</label>
+            </value>
+            <value>
+                <fullName>Sales Tax Omitted in Error</fullName>
+                <default>false</default>
+                <label>Sales Tax Omitted in Error</label>
+            </value>
+            <value>
+                <fullName>Schedule Error</fullName>
+                <default>false</default>
+                <label>Schedule Error</label>
+            </value>
+            <value>
+                <fullName>Seasonal</fullName>
+                <default>false</default>
+                <label>Seasonal</label>
+            </value>
+            <value>
+                <fullName>Seasonal enacted</fullName>
+                <default>false</default>
+                <label>Seasonal enacted</label>
+            </value>
+            <value>
+                <fullName>Service Change (Freq, qty, size, sch)</fullName>
+                <default>false</default>
+                <label>Service Change (Freq, qty, size, sch)</label>
+            </value>
+            <value>
+                <fullName>Service Discontinuance No Longer Needed - Permanently End</fullName>
+                <default>false</default>
+                <label>Service Discontinuance No Longer Needed - Permanently End</label>
+            </value>
+            <value>
+                <fullName>Service Never Occured</fullName>
+                <default>false</default>
+                <label>Service Never Occured</label>
+            </value>
+            <value>
+                <fullName>Short Term Margin Recovery</fullName>
+                <default>false</default>
+                <label>Short Term Margin Recovery</label>
+            </value>
+            <value>
+                <fullName>Spec Wrong</fullName>
+                <default>false</default>
+                <label>Spec Wrong</label>
+            </value>
+            <value>
+                <fullName>TIER2&amp;3 Swap Out</fullName>
+                <default>false</default>
+                <label>TIER2&amp;3 Swap Out</label>
+            </value>
+            <value>
+                <fullName>Top Revenue Client</fullName>
+                <default>false</default>
+                <label>Top Revenue Client</label>
+            </value>
+            <value>
+                <fullName>Top Revenue Client - Phase 2</fullName>
+                <default>false</default>
+                <label>Top Revenue Client - Phase 2</label>
+            </value>
+            <value>
+                <fullName>Un-Retire Other</fullName>
+                <default>false</default>
+                <label>Un-Retire Other</label>
+            </value>
+            <value>
+                <fullName>Utility Billed</fullName>
+                <default>false</default>
+                <label>Utility Billed</label>
+            </value>
+            <value>
+                <fullName>Vendor/Client Contract Expired</fullName>
+                <default>false</default>
+                <label>Vendor/Client Contract Expired</label>
+            </value>
+            <value>
+                <fullName>Vendor/Client Contract Expired - Permanently End</fullName>
+                <default>false</default>
+                <label>Vendor/Client Contract Expired - Permanently End</label>
+            </value>
+            <value>
+                <fullName>Vendor Contract Existing</fullName>
+                <default>false</default>
+                <label>Vendor Contract Existing</label>
+            </value>
+            <value>
+                <fullName>Vendor Contract Expired</fullName>
+                <default>false</default>
+                <label>Vendor Contract Expired</label>
+            </value>
+            <value>
+                <fullName>Vendor did not charge</fullName>
+                <default>false</default>
+                <label>Vendor did not charge</label>
+            </value>
+            <value>
+                <fullName>Vendor Invoice Lower than Payable</fullName>
+                <default>false</default>
+                <label>Vendor Invoice Lower than Payable</label>
+            </value>
+            <value>
+                <fullName>Vendor Non Compliance</fullName>
+                <default>false</default>
+                <label>Vendor Non Compliance</label>
+            </value>
+            <value>
+                <fullName>Vendor Non Compliance - Permanently End</fullName>
+                <default>false</default>
+                <label>Vendor Non Compliance - Permanently End</label>
+            </value>
+            <value>
+                <fullName>VendorReplacement</fullName>
+                <default>false</default>
+                <label>VendorReplacement</label>
+            </value>
+            <value>
+                <fullName>Vendor Replacement</fullName>
+                <default>false</default>
+                <label>Vendor Replacement</label>
+            </value>
+            <value>
+                <fullName>Wrong service date</fullName>
+                <default>false</default>
+                <label>Wrong service date</label>
+            </value>
+            <value>
+                <fullName>Wrong service selected</fullName>
+                <default>false</default>
+                <label>Wrong service selected</label>
+            </value>
+            <value>
+                <fullName>Wrong Vendor</fullName>
+                <default>false</default>
+                <label>Wrong Vendor</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

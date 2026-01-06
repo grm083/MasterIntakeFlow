@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <available>true</available>
+    <description>Request Approval from Customer Regarding Haul Away Service</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Haul Away Service - Quote Approval Follow Up</name>
+    <packageVersions>
+        <majorNumber>258</majorNumber>
+        <minorNumber>0</minorNumber>
+        <namespace>SBQQ</namespace>
+    </packageVersions>
+    <style>none</style>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

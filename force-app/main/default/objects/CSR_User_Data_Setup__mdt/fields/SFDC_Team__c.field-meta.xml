@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SFDC_Team__c</fullName>
+    <description>Field used to store sales for Team to categorize sales for team users in Initiate task pop up UI</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Field used to store sales for Team to categorize sales for team users in Initiate task pop up UI</inlineHelpText>
+    <label>SFDC Team</label>
+    <required>false</required>
+    <type>TextArea</type>
+</CustomField>

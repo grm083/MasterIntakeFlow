@@ -1,0 +1,523 @@
+<aura:component controller="CaseDetailHelper"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,lightning:actionOverride,lightning:hasPageReference">
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="subject" type="string" />
+    <aura:attribute name="Message" type="Boolean" default="false" />
+    <aura:attribute name="emailMessageList" type="object" />
+    <aura:attribute name="attachmentList" type="object" />
+
+    <aura:attribute name="parentId" type="string" />
+    <aura:attribute name="caseRecord" type="Object" />
+    <aura:attribute name="isChildTable" type="Boolean" default="false" />
+    <aura:attribute name="isParentTable" type="Boolean" default="false" />
+    <aura:attribute name="isChildBool" type="Boolean" default="false" />
+    <aura:attribute name="parentButtonVariant" type="string" default="neutral" />
+    <aura:attribute name="childButtonVariant" type="string" default="neutral" />
+    <aura:attribute name="parentEmailList" type="object"/>
+    <aura:attribute name="parentMessage" type="Boolean" default="false"/>
+    <aura:attribute name="parentCaseNumber" type="String"/>
+
+    <!--
+    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" targetFields="{!v.caseRecord}"
+        fields="Id,ParentId" mode="VIEW" />
+    -->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:card>
+        <aura:set attribute="actions">
+            <aura:if isTrue="{!v.isChildBool}">
+                <div class="slds-text-body_small slds-text-align_left">
+                    Parent Case #: <ui:outputText value="{!v.parentCaseNumber}"/>
+                </div>
+                <lightning:button variant="{!v.parentButtonVariant}" label="Parent Case Emails"
+                    onclick="{!c.selectParent}" />
+                <lightning:button variant="{!v.childButtonVariant}" label="Current Case Emails" onclick="{!c.selectChild}" />
+                <lightning:button label="Refresh" onclick="{!c.doInit}" />
+                <aura:set attribute="else">
+                    <lightning:button label="Refresh" onclick="{!c.doInit}" />
+                </aura:set>
+            </aura:if>
+            <!--
+            <aura:if isTrue="{!v.Message}">
+                 <lightning:button label="Copy Email" onclick="{!c.CopyEmailComp}" disabled="true"/>
+            <aura:set attribute ="else">
+           			 <lightning:button label="Copy Email" onclick="{!c.CopyEmailComp}"/>
+             </aura:set>
+        	</aura:if>
+            -->
+        </aura:set>
+        <div class="slds slds-grid slds-wrap  ">
+            <div class="slds-size_1-of-1">
+                <aura:if isTrue="{!(v.isChildBool)==false}">
+                    <aura:if isTrue="{!v.Message}">
+                        <!-- <div class="slds-notify_container slds-is-relative">
+                    <div class="slds-notify__content slds-text-align_center">
+                        <h2 class="slds-text-heading_small" style="color:red">No Records Found...</h2>
+                    </div> 
+                    
+                </div>-->
+                        <div class="slds-text-heading_medium slds-text-color_error slds-text-align_center">No Records
+                            Found...
+                        </div>
+                        <aura:set attribute="else">
+
+                            <div class="slds-size_1-of-1">
+                                <ui:scrollerWrapper class="scrollerOuter">
+                                    <table
+                                        class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered "
+                                        role="grid" style="width:100%">
+                                        <thead>
+                                            <tr class="slds-text-title_caps">
+                                                <th>
+                                                    <div class="slds-wrap" title=""></div>
+                                                </th>
+                                                <th>
+                                                    <div class="slds-wrap" title="Subject">Subject</div>
+                                                </th>
+                                                <th>
+                                                    <div class="slds-wrap" title="From Address">From Address</div>
+                                                </th>
+                                                <th>
+                                                    <div class="slds-wrap" title="To Address">To Address</div>
+                                                </th>
+                                                <th>
+                                                    <div class="slds-wrap" title="Email Status">Email</div>
+                                                    <div class="slds-wrap" title="Email Status">Status</div>
+                                                </th>
+                                                <th>
+                                                    <div class="slds-truncate" title="Message Date">Message</div>
+                                                    <div class="slds-truncate" title="Date">Date</div>
+                                                </th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <aura:iteration items="{!v.emailMessageList}" var="messageVal"
+                                                indexVar="index">
+                                                <tr>
+                                                    <td class="slds-wrap" style="width:30px;margin-left:-30px">
+                                                        <div id="{!messageVal.MessageId + 'show'}"
+                                                            data-record="{!messageVal.MessageId}" data-index="{!index}"
+                                                            onclick="{!c.divClick}">
+                                                            <lightning:icon iconName="utility:chevronright"
+                                                                size="xx-small" alternativeText="sss" />
+                                                        </div>
+
+                                                        <div id="{!messageVal.MessageId + 'hide'}"
+                                                            data-record="{!messageVal.MessageId}" data-index="{!index}"
+                                                            onclick="{!c.divHide}" style="display:none;">
+                                                            <lightning:icon iconName="utility:chevrondown"
+                                                                size="xx-small" alternativeText="sss" />
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-wrap wrapText">
+                                                        <div class="slds-wrap">
+                                                            <!--a href="javascript:void(0)" onclick="{!c.openEmail}" data-index ="{!index}" data-id="{!messageVal.Id}">{!messageVal.Subject}</a> -->
+                                                            <lightning:formattedText value="{!messageVal.Subject}" />
+
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-wrap">
+                                                        <div class="slds-wrap wrapText">
+                                                            <lightning:formattedEmail
+                                                                value="{!messageVal.FromAddress}" />
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-wrap">
+                                                        <div class="slds-wrap wrapText">
+                                                            <lightning:formattedEmail value="{!messageVal.ToAddress}" />
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    <td class="slds-wrap">
+                                                        <div class="slds-wrap wrapText">
+                                                            <ui:outputText value="{!messageVal.Status}" />
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-wrap">
+                                                        <div class="slds-wrap wrapText">
+                                                            <ui:outputDateTime value="{!messageVal.MessageDate}" />
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td colspan="5" class="tdRoleStyle">
+                                                        <div id="{!messageVal.MessageId}" style="display:none;">
+
+                                                            <ui:scrollerWrapper class="scrollerSize">
+                                                                <div class="slds-form">
+                                                                    <div class="slds-form-element">
+                                                                        <div class="slds-wrap"><label
+                                                                                class="slds-form-element__label">Subject</label>
+                                                                            <div class="slds-form-element__control">
+                                                                                <a href="javascript:void(0)"
+                                                                                    onclick="{!c.openEmail}"
+                                                                                    data-index="{!index}"
+                                                                                    data-id="{!messageVal.Id}">
+                                                                                    <ui:outputText
+                                                                                        value="{!messageVal.Subject}" />
+                                                                                    </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="slds-form-element">
+                                                                        <div class="slds-wrap"><label
+                                                                                class="slds-form-element__label">Body</label>
+                                                                            <div class="slds-form-element__control"
+                                                                                width="80%">
+
+                                                                                <aura:if
+                                                                                    isTrue="{! !empty(messageVal.HtmlBody)}">
+
+                                                                                    <!-- <lightning:formattedRichText aura:id="outputRT" value="{!messageVal.HtmlBody}" class="wrapText  slds-text-body_small"></lightning:formattedRichText> -->
+                                                                                    <aura:unescapedHtml
+                                                                                        aura:id="outputRT"
+                                                                                        value="{!messageVal.HtmlBody}" />
+                                                                                    <aura:set attribute="else">
+
+                                                                                        <lightning:formattedRichText
+                                                                                            aura:id="outputRT"
+                                                                                            value="{!messageVal.TextBody}"
+                                                                                            class="wrapText  slds-text-body_small">
+                                                                                        </lightning:formattedRichText>
+
+                                                                                    </aura:set>
+                                                                                </aura:if>
+                                                                                <!-- <ui:outputRichText class="slds-text-wrap" aura:id="outputRT" value="{!messageVal.HtmlBody}"/> -->
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </ui:scrollerWrapper>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+
+                                        </tbody>
+                                    </table>
+
+
+                                </ui:scrollerWrapper>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+
+                    <aura:if isTrue ="{!and(v.isChildTable==false,v.isParentTable==false)}">
+                        <div class="slds-text-heading_small slds-text-color_error slds-text-align_center">Please select the appropriate tab to read Emails from the Parent case or current case.
+                        </div>
+                    </aura:if>
+
+                        
+
+                    <aura:if isTrue="{!v.isChildTable}">
+                        <aura:if isTrue="{!v.Message}">
+                            <div class="slds-text-heading_medium slds-text-color_error slds-text-align_center">No Records
+                                Found...
+                            </div>
+
+                        <aura:set attribute="else">
+                        <div class="slds-size_1-of-1">
+                            <ui:scrollerWrapper class="scrollerOuter">
+                                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered "
+                                    role="grid" style="width:100%">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            <th>
+                                                <div class="slds-wrap" title=""></div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-wrap" title="Subject">Subject</div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-wrap" title="From Address">From Address</div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-wrap" title="To Address">To Address</div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-wrap" title="Email">Email</div>
+                                                <div class="slds-wrap" title="Status">Status</div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-truncate" title="Message Date">Message</div>
+                                                <div class="slds-truncate" title="Date">Date</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                            <aura:iteration items="{!v.emailMessageList}" var="messageVal" indexVar="index">
+                                            <tr>
+                                                <td class="slds-wrap" style="width:30px;margin-left:-30px">
+                                                    <div id="{!messageVal.MessageId + 'show'}" data-record="{!messageVal.MessageId}"
+                                                        data-index="{!index}" onclick="{!c.divClick}">
+                                                        <lightning:icon iconName="utility:chevronright" size="xx-small"
+                                                            alternativeText="sss" />
+                                                    </div>
+
+                                                    <div id="{!messageVal.MessageId + 'hide'}" data-record="{!messageVal.MessageId}"
+                                                        data-index="{!index}" onclick="{!c.divHide}"
+                                                        style="display:none;">
+                                                        <lightning:icon iconName="utility:chevrondown" size="xx-small"
+                                                            alternativeText="sss" />
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap wrapText">
+                                                    <div class="slds-wrap">
+                                                        <!--a href="javascript:void(0)" onclick="{!c.openEmail}" data-index ="{!index}" data-id="{!messageVal.Id}">{!messageVal.Subject}</a> -->
+                                                        <lightning:formattedText value="{!messageVal.Subject}" />
+
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap">
+                                                    <div class="slds-wrap wrapText">
+                                                        <lightning:formattedEmail value="{!messageVal.FromAddress}" />
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap">
+                                                    <div class="slds-wrap wrapText">
+                                                        <lightning:formattedEmail value="{!messageVal.ToAddress}" />
+                                                    </div>
+                                                </td>
+                                                 <td class="slds-wrap">
+                                                    <div class="slds-wrap wrapText">
+                                                        <ui:outputText value="{!messageVal.Status}" />
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap">
+                                                    <div class="slds-wrap wrapText">
+                                                        <ui:outputDateTime value="{!messageVal.MessageDate}" />
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td colspan="5" class="tdRoleStyle">
+                                                    <div id="{!messageVal.MessageId}" style="display:none;">
+
+                                                        <ui:scrollerWrapper class="scrollerSize">
+                                                            <div class="slds-form">
+                                                                <div class="slds-form-element">
+                                                                    <div class="slds-wrap"><label
+                                                                            class="slds-form-element__label">Subject</label>
+                                                                        <div class="slds-form-element__control">
+                                                                            <a href="javascript:void(0)"
+                                                                                onclick="{!c.openEmail}"
+                                                                                data-index="{!index}"
+                                                                                data-id="{!messageVal.Id}">
+                                                                                <ui:outputText
+                                                                                    value="{!messageVal.Subject}" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <div class="slds-wrap"><label
+                                                                            class="slds-form-element__label">Body</label>
+                                                                        <div class="slds-form-element__control"
+                                                                            width="80%">
+
+                                                                            <aura:if
+                                                                                isTrue="{! !empty(messageVal.HtmlBody)}">
+
+                                                                                <!-- <lightning:formattedRichText aura:id="outputRT" value="{!messageVal.HtmlBody}" class="wrapText  slds-text-body_small"></lightning:formattedRichText> -->
+                                                                                <aura:unescapedHtml aura:id="outputRT"
+                                                                                    value="{!messageVal.HtmlBody}" />
+                                                                                <aura:set attribute="else">
+
+                                                                                    <lightning:formattedRichText
+                                                                                        aura:id="outputRT"
+                                                                                        value="{!messageVal.TextBody}"
+                                                                                        class="wrapText  slds-text-body_small">
+                                                                                    </lightning:formattedRichText>
+
+                                                                                </aura:set>
+                                                                            </aura:if>
+                                                                            <!-- <ui:outputRichText class="slds-text-wrap" aura:id="outputRT" value="{!messageVal.HtmlBody}"/> -->
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </ui:scrollerWrapper>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+
+                                    </tbody>
+                                </table>
+
+
+                            </ui:scrollerWrapper>
+                        </div>
+                    </aura:set>
+                    </aura:if>
+
+
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.isParentTable}">
+                        <aura:if isTrue="{!v.parentMessage}">
+                            <div class="slds-text-heading_medium slds-text-color_error slds-text-align_center">No Records
+                                Found...
+                            </div>
+
+                        <aura:set attribute="else">
+                        <div class="slds-size_1-of-1">
+                            <ui:scrollerWrapper class="scrollerOuter">
+                                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered "
+                                    role="grid" style="width:100%">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            <th>
+                                                <div class="slds-wrap" title=""></div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-wrap" title="Subject">Subject</div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-wrap" title="From Address">From Address</div>
+                                            </th>
+                                             <th>
+                                                <div class="slds-wrap" title="To Address">To Address</div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-wrap" title="Email">Email</div>
+                                                <div class="slds-wrap" title="Status">Status</div>
+                                            </th>
+                                            <th>
+                                                <div class="slds-truncate" title="Message Date">Message</div>
+                                                <div class="slds-truncate" title="Date">Date</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                            <aura:iteration items="{!v.parentEmailList}" var="parentmessageVal" indexVar="index">
+                                            <tr>
+                                                <td class="slds-wrap" style="width:30px;margin-left:-30px">
+                                                    <div id="{!parentmessageVal.MessageId + 'parentshow'}" data-record="{!parentmessageVal.MessageId}"
+                                                        data-index="{!index}" onclick="{!c.divClickParent}">
+                                                        <lightning:icon iconName="utility:chevronright" size="xx-small"
+                                                            alternativeText="sss" />
+                                                    </div>
+
+                                                    <div id="{!parentmessageVal.MessageId + 'parenthide'}" data-record="{!parentmessageVal.MessageId}"
+                                                        data-index="{!index}" onclick="{!c.divHideParent}"
+                                                        style="display:none;">
+                                                        <lightning:icon iconName="utility:chevrondown" size="xx-small"
+                                                            alternativeText="sss" />
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap wrapText">
+                                                    <div class="slds-wrap">
+                                                        <!--a href="javascript:void(0)" onclick="{!c.openEmail}" data-index ="{!index}" data-id="{!messageVal.Id}">{!messageVal.Subject}</a> -->
+                                                        <lightning:formattedText value="{!parentmessageVal.Subject}" />
+
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap">
+                                                    <div class="slds-wrap wrapText">
+                                                        <lightning:formattedEmail value="{!parentmessageVal.FromAddress}" />
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap">
+                                                    <div class="slds-wrap wrapText">
+                                                        <lightning:formattedEmail value="{!parentmessageVal.ToAddress}" />
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap">
+                                                    <div class="slds-wrap wrapText">
+                                                        <ui:outputText value="{!parentmessageVal.Status}" />
+                                                    </div>
+                                                </td>
+                                                <td class="slds-wrap">
+                                                    <div class="slds-wrap wrapText">
+                                                        <ui:outputDateTime value="{!parentmessageVal.MessageDate}" />
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td colspan="5" class="tdRoleStyle">
+                                                    <div id="{!parentmessageVal.MessageId + 'parent'}" style="display:none;">
+
+                                                        <ui:scrollerWrapper class="scrollerSize">
+                                                            <div class="slds-form">
+                                                                <div class="slds-form-element">
+                                                                    <div class="slds-wrap"><label
+                                                                            class="slds-form-element__label">Subject</label>
+                                                                        <div class="slds-form-element__control">
+                                                                                <ui:outputText
+                                                                                    value="{!parentmessageVal.Subject}" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <div class="slds-wrap"><label
+                                                                            class="slds-form-element__label">Body</label>
+                                                                        <div class="slds-form-element__control"
+                                                                            width="80%">
+
+                                                                            <aura:if
+                                                                                isTrue="{! !empty(parentmessageVal.HtmlBody)}">
+
+                                                                                <!-- <lightning:formattedRichText aura:id="outputRT" value="{!messageVal.HtmlBody}" class="wrapText  slds-text-body_small"></lightning:formattedRichText> -->
+                                                                                <aura:unescapedHtml aura:id="outputRT"
+                                                                                    value="{!parentmessageVal.HtmlBody}" />
+                                                                                <aura:set attribute="else">
+
+                                                                                    <lightning:formattedRichText
+                                                                                        aura:id="outputRT"
+                                                                                        value="{!parentmessageVal.TextBody}"
+                                                                                        class="wrapText  slds-text-body_small">
+                                                                                    </lightning:formattedRichText>
+
+                                                                                </aura:set>
+                                                                            </aura:if>
+                                                                            <!-- <ui:outputRichText class="slds-text-wrap" aura:id="outputRT" value="{!messageVal.HtmlBody}"/> -->
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </ui:scrollerWrapper>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+
+                                    </tbody>
+                                </table>
+
+
+                            </ui:scrollerWrapper>
+                        </div>
+
+                    </aura:set>
+                    </aura:if>
+                    </aura:if>
+
+
+                    </aura:set>
+                </aura:if>
+            </div>
+            {!v.body}
+        </div>
+    </lightning:card>
+    <div aura:id="CaseEmailCopyHolder"></div>
+</aura:component>

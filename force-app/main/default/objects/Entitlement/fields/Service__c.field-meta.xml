@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service__c</fullName>
+    <description>Holds Case Sub Type</description>
+    <externalId>false</externalId>
+    <label>Service</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Request_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Case_Sub_Type</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Vendor Confirmation</controllingFieldValue>
+            <controllingFieldValue>Pickup</controllingFieldValue>
+            <valueName>Empty and Return</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Confirmation</controllingFieldValue>
+            <controllingFieldValue>Pickup</controllingFieldValue>
+            <valueName>Empty and Do NOT Return</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Confirmation</controllingFieldValue>
+            <controllingFieldValue>Pickup</controllingFieldValue>
+            <valueName>Extra Pickup</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Confirmation</controllingFieldValue>
+            <controllingFieldValue>Pickup</controllingFieldValue>
+            <valueName>On Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Confirmation</controllingFieldValue>
+            <controllingFieldValue>Pickup</controllingFieldValue>
+            <valueName>Bulk/Got Junk/Junk King</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Confirmation</controllingFieldValue>
+            <controllingFieldValue>Pickup</controllingFieldValue>
+            <valueName>Bale(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Confirmation</controllingFieldValue>
+            <controllingFieldValue>Pickup</controllingFieldValue>
+            <valueName>Extra Loose Yards</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Service</controllingFieldValue>
+            <valueName>Permanent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Service</controllingFieldValue>
+            <valueName>Temporary</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

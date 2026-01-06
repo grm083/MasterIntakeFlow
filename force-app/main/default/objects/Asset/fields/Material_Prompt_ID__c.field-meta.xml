@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Material_Prompt_ID__c</fullName>
+    <description>This is used to store the material prompt id and pass to the IVR.</description>
+    <externalId>false</externalId>
+    <label>Material Prompt ID</label>
+    <length>50</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

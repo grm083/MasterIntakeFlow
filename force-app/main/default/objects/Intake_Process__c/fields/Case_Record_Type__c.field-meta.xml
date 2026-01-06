@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Record_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Case Record Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Interruption Case</fullName>
+                <default>false</default>
+                <label>Interruption Case</label>
+            </value>
+            <value>
+                <fullName>Modify Existing Service Case</fullName>
+                <default>false</default>
+                <label>Modify Existing Service Case</label>
+            </value>
+            <value>
+                <fullName>New Service Case</fullName>
+                <default>false</default>
+                <label>New Service Case</label>
+            </value>
+            <value>
+                <fullName>Pickup Case</fullName>
+                <default>false</default>
+                <label>Pickup Case</label>
+            </value>
+            <value>
+                <fullName>Repair Case</fullName>
+                <default>false</default>
+                <label>Repair Case</label>
+            </value>
+            <value>
+                <fullName>Service Request Case</fullName>
+                <default>false</default>
+                <label>Service Request Case</label>
+            </value>
+            <value>
+                <fullName>Standard Case</fullName>
+                <default>false</default>
+                <label>Standard Case</label>
+            </value>
+            <value>
+                <fullName>Status Case</fullName>
+                <default>false</default>
+                <label>Status Case</label>
+            </value>
+            <value>
+                <fullName>Vendor Case</fullName>
+                <default>false</default>
+                <label>Vendor Case</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

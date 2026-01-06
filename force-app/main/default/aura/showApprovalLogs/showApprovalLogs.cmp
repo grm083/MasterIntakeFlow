@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="GetServiceApprover">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="caseId" type="string"/>
+    <aura:attribute name="invoke" type="Boolean" default="false"/>
+    <aura:if isTrue ="{!v.invoke}">
+    <c:LightningTable sObjectName="Approval_Log__c" fieldSetName="approvallogfieldset" parentFieldName="CaseId__c" parentRecordId="{!v.caseId}"/>
+    </aura:if>
+</aura:component>

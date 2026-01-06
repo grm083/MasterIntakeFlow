@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SLA_Service_DateTime__c</fullName>
+    <description>SLA Date Time field value for UI purpose</description>
+    <externalId>false</externalId>
+    <formula>IF(OR(ISPICKVAL(Case_Type__c,&quot;Activate&quot;),ISPICKVAL(Case_Type__c,&quot;Modify&quot;),ISPICKVAL(Case_Type__c,&quot;Deactivate&quot;)), (IF(OR(ISBLANK(SLA_Service_Date_Time__c)),
+&quot;&quot;,
+MID( TEXT( SLA_Service_Date_Time__c + (7/24) ), 6, 2 ) &amp; &quot;/&quot; &amp;
+MID( TEXT( SLA_Service_Date_Time__c + (7/24) ), 9, 2 ) &amp; &quot;/&quot; &amp;
+LEFT( TEXT( SLA_Service_Date_Time__c + (7/24)), 4 ) &amp; &quot; &quot; &amp;
+TEXT(
+IF(
+OR(
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + (7/24) ), 12, 2 ) ) = 0,
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + (7/24) ), 12, 2 ) ) = 12
+),
+12,
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + (7/24) ), 12, 2 ) )
+-
+IF(
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + (7/24) ), 12, 2 ) ) &lt; 12,
+0,
+12
+)
+)
+)
+&amp;&quot;:&quot;&amp;
+MID( TEXT( SLA_Service_Date_Time__c + (7/24) ), 15, 2 )
+&amp;&quot; &quot;&amp;
+IF(
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + (7/24) ), 12, 2 ) ) &lt; 12,
+&quot;PM&quot;,
+&quot;&quot;
+)
+&amp; &quot; &quot; &amp;
+IF( $Setup.tz__lt_app_settings__c.tz__Abbreviation__c, &apos;EST&apos;,&quot;&quot;))) ,
+(IF(OR(ISBLANK( Location__r.tz__UTC_Offset_F__c ),ISBLANK(SLA_Service_Date_Time__c)),
+&quot;&quot;,
+MID( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 6, 2 ) &amp; &quot;/&quot; &amp;
+MID( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 9, 2 ) &amp; &quot;/&quot; &amp;
+LEFT( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 4 ) &amp; &quot; &quot; &amp;
+TEXT(
+IF(
+OR(
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 12, 2 ) ) = 0,
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 12, 2 ) ) = 12
+),
+12,
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 12, 2 ) )
+-
+IF(
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 12, 2 ) ) &lt; 12,
+0,
+12
+)
+)
+)
+&amp;&quot;:&quot;&amp;
+MID( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 15, 2 )
+&amp;&quot; &quot;&amp;
+IF(
+VALUE( MID( TEXT( SLA_Service_Date_Time__c + Location__r.tz__UTC_Offset_F__c /24 ), 12, 2 ) ) &lt; 12,
+&quot;AM&quot;,
+&quot;PM&quot;
+)
+&amp; &quot; &quot; &amp;
+IF( $Setup.tz__lt_app_settings__c.tz__Abbreviation__c, Location__r.tz__Timezone_F__c,&quot;&quot;)))
+
+)</formula>
+    <label>SLA Service Date/Time</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

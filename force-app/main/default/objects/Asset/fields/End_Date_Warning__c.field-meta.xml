@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_Date_Warning__c</fullName>
+    <description>End Date Passed</description>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(End_Date__c),&quot;&quot;, IF(End_Date__c &lt;  TODAY(),IMAGE(&quot;/resource/warning&quot;, &quot;End Date Passed&quot;,20,20),&quot; &quot;))</formula>
+    <inlineHelpText>End Date Passed</inlineHelpText>
+    <label>Is Ended</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

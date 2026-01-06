@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_Only_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Price Only Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NRR</fullName>
+                <default>false</default>
+                <label>No Rates Returned</label>
+            </value>
+            <value>
+                <fullName>MRP</fullName>
+                <default>false</default>
+                <label>Modeled Rates Provided</label>
+            </value>
+            <value>
+                <fullName>PVU</fullName>
+                <default>false</default>
+                <label>Pricing Vendor Unable to Provide Service</label>
+            </value>
+            <value>
+                <fullName>PVI</fullName>
+                <default>false</default>
+                <label>Pricing Vendor is not the Incumbent</label>
+            </value>
+            <value>
+                <fullName>PRI</fullName>
+                <default>false</default>
+                <label>Pricing Rates Were Incorrect</label>
+            </value>
+            <value>
+                <fullName>OTH</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

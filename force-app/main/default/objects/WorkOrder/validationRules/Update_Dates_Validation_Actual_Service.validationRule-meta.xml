@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Dates_Validation_Actual_Service</fullName>
+    <active>true</active>
+    <description>SDT 4113 story. Update date validation criteria.</description>
+    <errorConditionFormula>AND(DATEVALUE(Actual_Service_Date__c )&lt; Service_Date__c,
+NOT($User.Bypass_Validation__c))</errorConditionFormula>
+    <errorDisplayField>Actual_Service_Date__c</errorDisplayField>
+    <errorMessage>Actual Service Date/Time must be &gt;= Service Date</errorMessage>
+</ValidationRule>

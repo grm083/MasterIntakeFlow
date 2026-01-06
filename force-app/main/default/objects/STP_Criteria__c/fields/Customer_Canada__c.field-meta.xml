@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Canada__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>List client 3-character codes, separated by commas, with no spaces between them.</inlineHelpText>
+    <label>Canada Listed Customers</label>
+    <length>32768</length>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>4</visibleLines>
+</CustomField>

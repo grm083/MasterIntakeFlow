@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Availability_Flag__c</fullName>
+    <description>This field used in Assert Availability</description>
+    <externalId>false</externalId>
+    <label>Availability Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>WM Availability Confirmed</fullName>
+                <default>false</default>
+                <label>WM Availability Confirmed</label>
+            </value>
+            <value>
+                <fullName>WM Availability NOT Confirmed - Service, Delivery, Accessories</fullName>
+                <default>false</default>
+                <label>WM Availability NOT Confirmed - Service, Delivery, Accessories</label>
+            </value>
+            <value>
+                <fullName>WM Availability NOT Confirmed - Service, Delivery</fullName>
+                <default>false</default>
+                <label>WM Availability NOT Confirmed - Service, Delivery</label>
+            </value>
+            <value>
+                <fullName>WM Availability NOT Confirmed - Service, Accessories</fullName>
+                <default>false</default>
+                <label>WM Availability NOT Confirmed - Service, Accessories</label>
+            </value>
+            <value>
+                <fullName>WM Availability NOT Confirmed - Service</fullName>
+                <default>false</default>
+                <label>WM Availability NOT Confirmed - Service</label>
+            </value>
+            <value>
+                <fullName>WM Availability NOT Confirmed - Delivery, Accessories</fullName>
+                <default>false</default>
+                <label>WM Availability NOT Confirmed - Delivery, Accessories</label>
+            </value>
+            <value>
+                <fullName>WM Availability NOT Confirmed - Delivery</fullName>
+                <default>false</default>
+                <label>WM Availability NOT Confirmed - Delivery</label>
+            </value>
+            <value>
+                <fullName>WM Availability NOT Confirmed - Accessories</fullName>
+                <default>false</default>
+                <label>WM Availability NOT Confirmed - Accessories</label>
+            </value>
+            <value>
+                <fullName>WM Availability Assumed - Service, Delivery, Accessories</fullName>
+                <default>false</default>
+                <label>WM Availability Assumed - Service, Delivery, Accessories</label>
+            </value>
+            <value>
+                <fullName>WM Availability Assumed - Service, Delivery</fullName>
+                <default>false</default>
+                <label>WM Availability Assumed - Service, Delivery</label>
+            </value>
+            <value>
+                <fullName>WM Availability Assumed - Delivery, Accessories</fullName>
+                <default>false</default>
+                <label>WM Availability Assumed - Delivery, Accessories</label>
+            </value>
+            <value>
+                <fullName>WM Availability Assumed - Delivery</fullName>
+                <default>false</default>
+                <label>WM Availability Assumed - Delivery</label>
+            </value>
+            <value>
+                <fullName>NON WM Availability NOT Confirmed - Service, Delivery, Accessories</fullName>
+                <default>false</default>
+                <label>NON WM Availability NOT Confirmed - Service, Delivery, Accessories</label>
+            </value>
+            <value>
+                <fullName>NON WM Availability NOT Confirmed - Service, Delivery</fullName>
+                <default>false</default>
+                <label>NON WM Availability NOT Confirmed - Service, Delivery</label>
+            </value>
+            <value>
+                <fullName>NON WM Availability Assumed - Service, Delivery</fullName>
+                <default>false</default>
+                <label>NON WM Availability Assumed - Service, Delivery</label>
+            </value>
+            <value>
+                <fullName>Availability could not be confirmed as there is no response from the API</fullName>
+                <default>false</default>
+                <label>Availability could not be confirmed as there is no response from the API</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

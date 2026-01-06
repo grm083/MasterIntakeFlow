@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Case_Validation</fullName>
+    <active>false</active>
+    <description>Closed Case Validation</description>
+    <errorConditionFormula>AND(
+ ISPICKVAL( Process__c , &quot;Case Assignment&quot;) 
+)</errorConditionFormula>
+    <errorMessage>Case Assignment Task is not allowed for Closed Case.</errorMessage>
+</ValidationRule>

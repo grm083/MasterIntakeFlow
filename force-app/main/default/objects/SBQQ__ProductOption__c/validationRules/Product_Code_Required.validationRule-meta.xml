@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Code_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(SBQQ__OptionalSKU__r.ProductCode)</errorConditionFormula>
+    <errorMessage>Only product options with valid product codes should be used.</errorMessage>
+</ValidationRule>

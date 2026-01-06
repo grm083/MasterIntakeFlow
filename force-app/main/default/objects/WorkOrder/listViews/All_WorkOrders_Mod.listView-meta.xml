@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_WorkOrders_Mod</fullName>
+    <columns>Acorn_WO_No__c</columns>
+    <columns>Case_Subtype__c</columns>
+    <columns>AssetMaterial__c</columns>
+    <columns>Customer_Location__c</columns>
+    <columns>Container_Position__c</columns>
+    <columns>Vendor_Account_Id__c</columns>
+    <columns>Created_Date_Created_By__c</columns>
+    <columns>Service_Date__c</columns>
+    <columns>WO_Quantity__c</columns>
+    <columns>Status_Send_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Work Orders</label>
+    <language>en_US</language>
+</ListView>

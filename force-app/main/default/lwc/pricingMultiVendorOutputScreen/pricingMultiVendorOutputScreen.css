@@ -1,0 +1,10 @@
+.wraptext{
+	white-space: normal;
+	word-wrap: break-word;
+}
+.head {
+	font-size: 10px;
+  }
+.headBox{
+	position: relative;
+}

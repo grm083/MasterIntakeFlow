@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Standard Case</label>
+    <protected>false</protected>
+    <values>
+        <field>CaseTypes__c</field>
+        <value xsi:type="xsd:string">Billing,Discrepencies,FAST Issue,General,Payment Inquiries,Procurement,Site Survey,Vendor Confirmation</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">3.0</value>
+    </values>
+</CustomMetadata>

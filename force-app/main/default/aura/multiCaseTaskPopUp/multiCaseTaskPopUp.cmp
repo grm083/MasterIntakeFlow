@@ -1,0 +1,241 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller = "MultiCaseTaskPopuCntrl">
+    <aura:attribute name="showPopup" type="Boolean" default="false" />
+    <aura:attribute name="showEmail" type="Boolean" default="false" />
+    <aura:attribute name="wrapperlist" type="Object"/>
+    <aura:attribute name="emailMsg" type="Object"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="index" type="List"/>
+    <aura:attribute name="selectedOutcomes" type="Object[]" default="[]"/>
+    <aura:attribute name="profileoutput" type="Object[]" default="[]"/>
+    <aura:attribute name="pooutput" type="Object[]" default="[]"/>
+    <aura:attribute name="proDateoutput" type="Object[]" default="[]"/>
+    <aura:attribute name="process" type="String" default=""/>
+    <aura:registerEvent name="cmpEvent" type="c:updateMultiTaskTable"/>
+    <aura:attribute name="profile" type="String" default=""/>
+    <aura:attribute name="caseMap" type="Map" default="" />
+    <aura:attribute name="options" type="List" default="[{'label': 'No Response/Pending Response', 'value': 'No Response/Pending Response'},
+                                                        {'label': 'Request Approved', 'value': 'Approved'},
+                                                        {'label': 'Request Not Approved', 'value': 'Rejected'}]"/>
+    <!-- Modal visible on click of View Case Summary Button -->
+    <aura:if isTrue="{!and(v.showPopup, v.process == 'Approval')}">
+        <!--###### MODAL BOX Start From Here ######--> 
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <!--###### MODAL BOX HEADER Start From Here ######-->
+                <div class="slds-modal__header" style="width: 800px !important;">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Multi-Case Tasks</h2>
+                </div>
+                <!--###### MODAL BOX HEADER End From Here ######-->
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width: 800px !important;">
+                    <P>The Same approval is Required for the following Cases:</P><br/>
+                    <aura:If isTrue="{!v.wrapperlist[0].resultTask.Business_Rule__r.Occurrence_Limit__c >  0}">
+                        <p>Please make sure service occurrences have not crossed the monthly limit.</p><br/>
+                    </aura:If>
+                    <aura:if isTrue="{!v.showEmail}">
+                        <p>View Approval Response : <a href="{!'/' + v.emailMsg.Id}" target="_blank">Email Response</a></p><br/>
+                    </aura:if>
+                    <!-- the container element determine the height of the datatable -->
+                    <div class="slds-table--header-fixed_container" style="height:90%; max-height:450px !important;">
+                        <div class="slds-scrollable_y" style="height:100%; max-height:450px !important;">
+                            <table class="slds-table slds-table_bordered slds-table--header-fixed slds-table_cell-buffer">
+                                <thead >
+                                    <tr class="slds-text-title_caps">
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-cell-fixed slds-align_absolute-center" title="Service Name">Service Name</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-cell-fixed slds-m-left_medium slds-align_absolute-center" title="Business Rule No.">Business Rule No.</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-cell-fixed slds-m-left_x-large slds-align_absolute-center" title="Case Number">Case Number</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-cell-fixed slds-m-left_x-large slds-align_absolute-center" title="Service Date">Service Date</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-cell-fixed slds-align_absolute-center" title="Outcome" style= "width: 200px !important;">Outcome</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>                         
+                                    <aura:iteration items="{!v.wrapperlist}" var="tsk" indexVar="idx">
+                                        <tr>
+                                            <td data-label="Service Name">
+                                                <div class="slds-truncate slds-form-element__control slds-align_absolute-center" title="Cloudhub">
+                                                    <p class="slds-hyphenate">{!tsk.resultTask.Approval_Log__r.CaseId__r.Case_Sub_Type__c}</p>
+                                                </div>
+                                            </td>
+                                            <td data-label="Business Rule No.">
+                                                <div class="slds-truncate slds-form-element__control  slds-m-left_medium slds-align_absolute-center" title="Cloudhub">
+                                                    <a href="{!'/' + tsk.resultTask.Business_Rule__c}" target="_blank">{!tsk.resultTask.Business_Rule__r.Name}</a>
+                                                </div>
+                                            </td>
+                                            <td data-label="Case Number">
+                                                <div class="slds-truncate slds-form-element__control slds-m-left_x-large" title="Cloudhub">
+                                                    <a href="{!'/' + tsk.resultTask.Approval_Log__r.CaseId__c}" target="_blank">{!tsk.resultTask.Approval_Log__r.CaseId__r.CaseNumber}</a>
+                                                </div>
+                                            </td>
+                                            <td data-label="Service Date">
+                                                <div class="slds-truncate slds-form-element__control slds-m-left_x-large" title="Cloudhub">
+                                                    <p class="slds-hyphenate">{!tsk.resultTask.Approval_Log__r.CaseId__r.Service_Date__c}</p>
+                                                </div>
+                                            </td>
+                                            <td data-label="Outcome">	
+                                                <lightning:combobox class="slds-listbox" aura:id="Combobox" name="Combobox" label="{!tsk.resultTask.Id}" variant = "label-hidden" value="" options="{!v.options}" onchange="{!c.handleChange}"/>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--###### MODAL BOX BODY Part End######-->
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer" style="width: 800px !important;">
+                    <lightning:button variant="neutral" 
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand" label="Save" aura:id="workOrderButton" onclick="{!c.handleSave}" />
+                </footer>
+            </div>
+        </div>
+        <!--###### MODAL BOX FOOTER END Start ######-->
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+    </aura:if>
+    <aura:if isTrue="{!and(v.showPopup, v.process == 'CustomerInfo')}">
+        <!--###### MODAL BOX Start From Here ######--> 
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <!--###### MODAL BOX HEADER Start From Here ######-->
+                <div class="slds-modal__header" style="width: 815px !important;">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Multi-Case Tasks</h2>
+                </div>
+                <!--###### MODAL BOX HEADER End From Here ######-->
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width: 815px !important;">
+                    <P>The Same is Required for the following Cases:</P><br/>
+                    <!-- the container element determine the height of the datatable -->
+                    <div class="slds-table_edit_container slds-scrollable_x" style="height:90%; max-height:450px !important;">
+                        <div class="slds-scrollable_y" style="height:100%; max-height:450px !important;">
+                            <table class="slds-table slds-table_bordered slds-table--header-fixed slds-table_cell-buffer">
+                                <thead >
+                                    <tr class="slds-text-title_caps">
+                                        <th scope="col"><div class="slds-truncate" title="Case Number">Case Number</div></th>
+                                        <th scope="col"><div class="slds-truncate slds-align_absolute-center" title="Description">Description</div></th>
+                                        <th scope="col"><div class="slds-truncate" title="Customer PO #">Customer PO #</div></th>
+                                      <!--  <th scope="col"><div class="slds-truncate" title="Profile Number #">Profile Number #</div></th> -->
+                                        <th scope="col"><div class="slds-truncate slds-align_absolute-center" title="Outcome" style= "width: 200px !important;">Outcome</div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>                         
+                                    <aura:iteration items="{!v.wrapperlist}" var="tsk" indexVar="idx">
+                                        <tr>
+                                            <td scope="col"><div class="slds-truncate" title="{!tsk.caseDetail.CaseNumber}">
+                                                <a href="{!'/' + tsk.caseDetail.Id}" target="_blank">{!tsk.caseDetail.CaseNumber}</a>
+                                                </div></td>
+                                            <td scope="col"><div class="slds-truncate desBreak" title="{!tsk.resultTask.Description__c}">{!tsk.resultTask.Description__c}</div></td>
+                                            <td scope="col"><ui:inputText class = "{!tsk.resultTask.Id}" label="" aura:id = "po" value="{!tsk.resultTask.PurchaseOrder_Number__c}" change="{!c.poNumUpdate}" required= "true"/></td>
+					 <!--   <td scope="col"><ui:inputText class = "{!tsk.resultTask.Id}" label="" aura:id = "profile" value="{!tsk.resultTask.Profile_Number__c}" change="{!c.profileNumUpdate}" required= "true"/></td> -->
+                                            <td scope="col"><div><lightning:combobox aura:id="Combobox1" name="Combobox1" label="{!tsk.resultTask.Id}" variant = "label-hidden" value="" options="{!v.options}" onchange="{!c.handleChange}"/></div></td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--###### MODAL BOX BODY Part End######-->
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer" style="width: 815px !important;">
+                    <lightning:button variant="neutral" 
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand" label="Save" aura:id="workOrderButton" onclick="{!c.handleSave}" />
+                </footer>
+            </div>
+        </div>
+        <!--###### MODAL BOX FOOTER END Start ######-->
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+    </aura:if>
+    <aura:if isTrue="{!and(v.showPopup, v.process == 'VendorInfo')}">
+        <!--###### MODAL BOX Start From Here ######--> 
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <!--###### MODAL BOX HEADER Start From Here ######-->
+                <div class="slds-modal__header" style="width: 800px !important;">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Multi-Case Tasks</h2>
+                </div>
+                <!--###### MODAL BOX HEADER End From Here ######-->
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width: 800px !important;">
+                    <P>The Same is Required for the following Cases:</P><br/>
+                    <!-- the container element determine the height of the datatable -->
+                    <div class="slds-table_edit_container slds-scrollable_x" style="height:90%; max-height:450px !important;">
+                        <div class="slds-scrollable_y" style="height:100%; max-height:450px !important;">
+                            <table class="slds-table slds-table_bordered slds-table--header-fixed slds-table_cell-buffer">
+                                <thead >
+                                    <tr class="slds-text-title_caps">
+                                        <th scope="col"><div class="slds-truncate " title="Service Name">Service Name</div></th>
+                                        <th scope="col"><div class="slds-truncate slds-align_absolute-center" title="Case Number">Case Number</div></th>
+                                        <th scope="col"><div class="slds-truncate slds-align_absolute-center" title="Service Date">Service Date</div></th>
+                                        <th scope="col"><div class="slds-truncate slds-align_absolute-center" title="Proposed service Date">Proposed service Date</div></th>
+                                        <th scope="col"><div class="slds-truncate slds-align_absolute-center" title="Outcome" style= "width: 200px !important;">Outcome</div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>                         
+                                    <aura:iteration items="{!v.wrapperlist}" var="tsk" indexVar="idx">
+                                        <tr>
+											<td scope="col"><div class="slds-truncate" title="{!tsk.caseDetail.Case_Sub_Type__c}">{!tsk.caseDetail.Case_Sub_Type__c}</div></td>	
+                                            <td scope="col"><div class="slds-truncate" title="{!tsk.caseDetail.CaseNumber}">
+                                                <a href="{!'/' + tsk.caseDetail.Id}" target="_blank">{!tsk.caseDetail.CaseNumber}</a>
+                                                </div></td>
+                                            <td scope="col"><div class="slds-truncate" title="{!tsk.caseDetail.Service_Date__c}">{!tsk.caseDetail.Service_Date__c}</div></td>
+                                            <td scope="col"><ui:inputDate class = "{!tsk.resultTask.Id}" label="" aura:id = "prodate" value="" change="{!c.proDateUpdate}" displayDatePicker="true"/></td>
+                                            <td scope="col"><div><lightning:combobox aura:id="Combobox2" name="Combobox2" label="{!tsk.resultTask.Id}" variant = "label-hidden" value="" options="{!v.options}" onchange="{!c.handleChange}"/></div></td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--###### MODAL BOX BODY Part End######-->
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer" style="width: 800px !important;">
+                    <lightning:button variant="neutral" 
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand" label="Save" aura:id="workOrderButton" onclick="{!c.handleSave}" />
+                </footer>
+            </div>
+        </div>
+        <!--###### MODAL BOX FOOTER END Start ######-->
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+    </aura:if>
+</aura:component>

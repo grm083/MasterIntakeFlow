@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Availability__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Service Availability</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Selected Service is as per WM Availability</fullName>
+                <default>true</default>
+                <label>Selected Service is as per WM Availability</label>
+            </value>
+            <value>
+                <fullName>Selected Service is NOT as per WM Availability</fullName>
+                <default>false</default>
+                <label>Selected Service is NOT as per WM Availability</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Service in the area</fullName>
+                <default>false</default>
+                <label>WM NOT available to Service in the area</label>
+            </value>
+            <value>
+                <fullName>Availability API Errored out</fullName>
+                <default>false</default>
+                <label>Availability API Errored out</label>
+            </value>
+            <value>
+                <fullName>Availability could not be confirmed as there is no response from the API</fullName>
+                <default>false</default>
+                <label>Availability could not be confirmed as there is no response from the API</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

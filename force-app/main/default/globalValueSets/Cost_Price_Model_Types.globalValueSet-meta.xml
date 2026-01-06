@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>PER</fullName>
+        <default>true</default>
+        <label>Per-Unit</label>
+    </customValue>
+    <customValue>
+        <fullName>Stepped</fullName>
+        <default>false</default>
+        <label>Stepped</label>
+    </customValue>
+    <customValue>
+        <fullName>Rebate</fullName>
+        <default>false</default>
+        <label>Rebate</label>
+    </customValue>
+    <customValue>
+        <fullName>Margin</fullName>
+        <default>false</default>
+        <label>Margin</label>
+    </customValue>
+    <customValue>
+        <fullName>Margin Stepped</fullName>
+        <default>false</default>
+        <label>Margin Stepped</label>
+    </customValue>
+    <customValue>
+        <fullName>Zero Charge</fullName>
+        <default>false</default>
+        <label>Zero Charge</label>
+    </customValue>
+    <description>The cost and price model types to be used by Salesforce CPQ</description>
+    <masterLabel>Cost/Price Model Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

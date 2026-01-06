@@ -1,0 +1,188 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNoSpacing" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt"><span style="background-color: rgb(255, 255, 255); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px;">Rejected Work Order</span><span style="font-family: Arial, sans-serif; font-size: 12pt;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt"><span style="font-family:&quot;Arial&quot;,sans-serif">Escalation
+is requested for the following case task:<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt"><span style="font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></p>
+
+<h6 style="margin-top:0in;margin-right:27.0pt;margin-bottom:0in;margin-left:
+27.0pt;margin-bottom:.0001pt"><span style="font-size:14.0pt;mso-bidi-font-size:
+11.0pt;font-family:&quot;Arial&quot;,sans-serif">Case Details<o:p></o:p></span></h6>
+
+<p class="MsoNormal"><span style="font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></p>
+
+<table class="MsoTable15Plain4" border="1" cellspacing="0" cellpadding="0" width="546" style="width:409.5pt;margin-left:27.0pt;border-collapse:collapse;border:none;
+ mso-border-bottom-alt:solid windowtext .5pt;mso-yfti-tbllook:1696;mso-padding-alt:
+ 0in 5.4pt 0in 5.4pt">
+ <tbody><tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:5"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Service Requested:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt;mso-yfti-cnfc:1"><font face="Arial, sans-serif" style="font-size: 16px; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Case.Case_Type__c} -&nbsp;</span></font><font face="Arial, sans-serif" style="font-size: 16px; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Case.Case_Sub_Type__c}</span></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Escalation Type:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-family: Arial, sans-serif; font-size: 12pt;"><br></span></p><p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-family: Arial, sans-serif; font-size: 12pt;">Escalation
+  –&nbsp;</span><span style="font-size: 12pt;">Rejected Work Order</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Asset:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><font style="font-size: 12pt; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Asset.Equipment_Size__c}&nbsp;</span></font><font style="font-size: 12pt; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Asset.Material_Type__c}&nbsp;</span></font><font face="Arial, sans-serif" style="font-size: 16px; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Asset.Equipment_Type__c}</span></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Asset Position:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-family: Arial, sans-serif; font-size: 14.6667px; background-color: rgb(255, 255, 255);">{!Asset.Container_Position__c}</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Requested By:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-size: 12pt; background-color: rgb(255, 255, 255);">{!Case.Contact}</span><span style="font-size: 12pt; color: rgb(87, 88, 79); font-family: Arial, sans-serif; background-color: rgb(255, 255, 255);">,&nbsp;</span><span style="font-size: 12pt; background-color: rgb(255, 255, 255);">{!Case.Contact_Title__c}</span></p>
+  </td>
+ </tr>
+
+  <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Location Id:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt; line-height: normal;">{!Case.Location__c}</p><p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><br></p>
+  </td>
+ </tr>
+
+ <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Location Details:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-size: 16px; background-color: rgb(255, 255, 255);">{!Case.Tech_Location_Details__c}</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Service Date:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-size: 16px; background-color: rgb(255, 255, 255);">{!Case.Service_Date__c}</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Case Number<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-family: Arial, sans-serif; font-size: 16px; background-color: rgb(255, 255, 255);">{!Case.Reference_Number__c}</span></p>
+  </td>
+ </tr>
+
+  <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Acorn Ticket Number<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-family: Arial, sans-serif;">{!Case.Tracking_Number__c}</span></p>
+  </td>
+ </tr>
+ 
+ <tr>
+  <td width="270" valign="top" style="width:202.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:27.0pt;margin-bottom:.0001pt;mso-yfti-cnfc:4"><b><span style="font-family:&quot;Arial&quot;,sans-serif">Comments:<o:p></o:p></span></b></p>
+  </td>
+  <td width="276" valign="top" style="width:207.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+  <p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+  0in;margin-left:3.5pt;margin-bottom:.0001pt"><span style="font-family:&quot;Arial&quot;,sans-serif">N/A-RWO-sj<o:p></o:p></span></p>
+  </td>
+ </tr>
+</tbody></table>
+
+<p class="MsoNormal" style="margin-top:0in;margin-right:27.0pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt"><span style="font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></p>
+
+<span style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+Calibri;mso-fareast-theme-font:minor-latin;mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA">&nbsp; &nbsp; &nbsp; &nbsp; If you have any questions, please respond to
+this email and we will respond shortly</span><br><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">&nbsp; &nbsp; &nbsp; &nbsp;{!Case.Flow_URL__c}</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;Thank you.</span></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;"><br></span></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;"><br></span></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div>]]></td>
+</tr>
+</table>

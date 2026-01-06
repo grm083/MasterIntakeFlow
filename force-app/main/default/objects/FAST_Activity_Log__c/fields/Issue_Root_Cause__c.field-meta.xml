@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Issue_Root_Cause__c</fullName>
+    <description>Issue Root Cause</description>
+    <externalId>false</externalId>
+    <label>Issue Root Cause</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Launch</fullName>
+                <default>false</default>
+                <label>Launch</label>
+            </value>
+            <value>
+                <fullName>Launch Projects Team</fullName>
+                <default>false</default>
+                <label>Launch Projects Team</label>
+            </value>
+            <value>
+                <fullName>Launch FAST Response Team</fullName>
+                <default>false</default>
+                <label>Launch FAST Response Team</label>
+            </value>
+            <value>
+                <fullName>Customer</fullName>
+                <default>false</default>
+                <label>Customer</label>
+            </value>
+            <value>
+                <fullName>Program Management/Sales</fullName>
+                <default>false</default>
+                <label>Program Management/Sales</label>
+            </value>
+            <value>
+                <fullName>National Account Pricing</fullName>
+                <default>false</default>
+                <label>National Account Pricing</label>
+            </value>
+            <value>
+                <fullName>Customer&apos;s Previous Broker/Management Company</fullName>
+                <default>false</default>
+                <label>Customer&apos;s Previous Broker/Management Company</label>
+            </value>
+            <value>
+                <fullName>Incumbent/Old Hauler</fullName>
+                <default>false</default>
+                <label>Incumbent/Old Hauler</label>
+            </value>
+            <value>
+                <fullName>New Hauler</fullName>
+                <default>false</default>
+                <label>New Hauler</label>
+            </value>
+            <value>
+                <fullName>MAS Service Setup</fullName>
+                <default>false</default>
+                <label>MAS Service Setup</label>
+            </value>
+            <value>
+                <fullName>Vendor Relations</fullName>
+                <default>false</default>
+                <label>Vendor Relations</label>
+            </value>
+            <value>
+                <fullName>Vendor Management</fullName>
+                <default>false</default>
+                <label>Vendor Management</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

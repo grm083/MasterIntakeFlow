@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Liquid__c</fullName>
+    <description>answer from the repair flow</description>
+    <externalId>false</externalId>
+    <label>Type of Liquid</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Waste Juice</fullName>
+                <default>false</default>
+                <label>Waste Liquid</label>
+            </value>
+            <value>
+                <fullName>Hydraulic Fluid</fullName>
+                <default>false</default>
+                <label>Hydraulic Fluid</label>
+            </value>
+            <value>
+                <fullName>Unsure</fullName>
+                <default>false</default>
+                <label>Unsure</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

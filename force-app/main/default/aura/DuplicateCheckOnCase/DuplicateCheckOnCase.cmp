@@ -1,0 +1,145 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" controller="DuplicateCheckOnCaseController" access="global" >
+    <aura:attribute name="showList" type="Boolean" default="false"/>
+    <aura:attribute name="showBox" type="Boolean" default="false"/>
+    <aura:attribute name="ignore" type="Boolean" default="false"/>
+    <aura:attribute name="TotalNumberOfRecord" type="Integer"/>
+    <aura:attribute name="indexOf" type="Integer" default="0"/>
+    <aura:attribute name="comments" type="String"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="case" type="Object"/>
+    <aura:attribute name="caseRecord" type="Object"/>
+    <aura:attribute name="selectedCaseId" type="String[]"/>
+    <aura:attribute name="totalCaseIds" type="String[]"/>
+    <aura:attribute name="unSelectedCaseId" type="String[]"/>
+    <aura:attribute name="isMultiAssetCase" type="Boolean" default="false"/>
+    <aura:attribute name="currentCaseID" type="String" />
+    <aura:attribute name="MultiAssetWrapperList" type="DuplicateCheckOnCaseController.MultiAssetWrapper[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="CaseDuplicateCheckEvent" type="c:CaseDuplicateCheckEvent"/>
+    <aura:registerEvent name="DuplicateCheckClose" type="c:DuplicateCheckClose"/>
+    
+    <aura:if isTrue="{!v.showList}">
+        
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <label><b> Duplicate Work Orders Found </b></label>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <aura:if isTrue="{!v.isMultiAssetCase}">
+                        
+                        <div class="slds-align_absolute-center"><lightning:formattedText value="Select the Asset and click Continue if you wish to close the created cases with those assets. Duplicates will be ignored for the unselected assets." /></div>
+                        <br/>
+                        <aura:set attribute="else">
+                            <div class="slds-align_absolute-center"><lightning:formattedText value="Close the created case with comments if you wish to use any of the below existing, else Ignore" /></div>
+                            <br/>
+                        </aura:set>
+                    </aura:if>
+                    
+                    <aura:iteration items="{!v.MultiAssetWrapperList}" var="WrapperLst" indexVar="ind">
+                        
+                        <div class="background">
+                            <div class="slds-form-element__control slds-align_absolute-center slds-text-title_caps "  >
+                                
+                                <aura:if isTrue="{!v.isMultiAssetCase}">
+                                    
+                                    
+                                    <div aura:id="checkbox" onchange="{!c.checkBoxClick}" data-value="{!WrapperLst.caseID}" data-record="{!idx}">
+                                        <label class="slds-checkbox">    
+                                            <ui:inputCheckbox aura:id="multiSelect"/>
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label"></span>
+                                            <span class="slds-text-title_caps"><span class="text-color-white"> {!WrapperLst.AssetName}</span> </span> 
+                                        </label> </div>
+                                </aura:if>
+                            </div>  
+                        </div>
+                        <table class="slds-table slds-table_bordered" >
+                            <thead>
+                                <tr></tr>
+                                <tr class="slds-text-title_caps">
+                                    <th scope="col" >
+                                        <div class="slds-truncate" title="Action">
+                                        </div>
+                                    </th >  
+                                    <th scope="col" >
+                                        <label>WO NUMBER</label>
+                                    </th> 
+                                    <th scope="col">
+                                        <label>ASSET</label>
+                                    </th>
+                                    <th scope="col">
+                                        <label>ASSET MATERIAL</label>
+                                    </th>
+                                    <th scope="col">
+                                        <label>CASE TYPE</label>
+                                    </th>
+                                    <th scope="col">
+                                        <label>CASE SUB TYPE</label>
+                                    </th>
+                                    <th scope="col">
+                                        <label>SERVICE DATE</label>
+                                    </th>
+                                    <th scope="col">
+                                        <label>CREATED BY</label>
+                                    </th>
+                                </tr>
+                            </thead>    
+                            <tbody>
+                                
+                                <aura:iteration items="{!WrapperLst.WOList}" var="WOlst" indexVar="WOIndex">
+                                    <tr>
+                                        <td class="slds-truncate"><div class="wrapText"> </div></td>
+                                        <td><div class="wrapText"><lightning:formattedUrl label="{!WOlst.WorkOrderNumber}" value="{!'/lightning/r/' + WOlst.Id + '/view'}" target="_self"/></div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!WOlst.Asset.Name}</div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!WOlst.Asset_Material__c}</div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!WOlst.Case_Type__c}</div></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!WOlst.Case_Subtype__c}</div></td>                                                
+                                        <td><ui:outputDate format="MM/DD/YYYY" value="{!WOlst.Service_Date__c}"/></td>
+                                        <td class="slds-truncate"><div class="wrapText">{!WOlst.CreatedBy.Name}</div></td>
+                                    </tr>
+                                </aura:iteration>
+                                <br/>  
+                            </tbody>
+                        </table>
+                        
+                        
+                    </aura:iteration>
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <aura:if isTrue="{!v.isMultiAssetCase}">
+                        <lightning:button label="Continue" onclick="{!c.getSelectedData}"/>
+                        <aura:set attribute="else">
+                            <lightning:button label="Close Case" onclick="{!c.closeAction}"/>
+                            <lightning:button label="Ignore" onclick="{!c.ignoreAction}"/>
+                        </aura:set>
+                    </aura:if> 
+                </footer>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+        
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showBox}">
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <label><b>Insert Comments</b></label>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div aura:id="igReason" class="slds-hide"><label>Mention reason to ignore the duplicate cases</label></div>
+                    <div aura:id="clsComments" class="slds-hide"><label>On Save,Case will be closed with the comments</label></div>
+                    <lightning:input name="input1" label="Enter comments" value="{!v.comments}" required="true" onchange="{!c.nullCheck}"/>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button label="Save" onclick="{!c.saveAction}" disabled="true" aura:Id="saveButton"/>
+                </footer>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
+</aura:component>

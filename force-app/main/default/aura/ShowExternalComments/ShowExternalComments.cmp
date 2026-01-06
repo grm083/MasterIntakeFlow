@@ -1,0 +1,6 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+
+    <div class="slds-m-vertical_xx-small" align="Right" draggable="false">
+    <lightning:button variant="brand" label="View Comments" title="Show Comments" onclick="{!c.showComments}" />
+    </div>
+</aura:component>

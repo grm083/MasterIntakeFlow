@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Landfill</fullName>
+        <default>true</default>
+        <label>Landfill</label>
+    </customValue>
+    <customValue>
+        <fullName>Recycling Center (MRFs)</fullName>
+        <default>false</default>
+        <label>Recycling Center (MRFs)</label>
+    </customValue>
+    <customValue>
+        <fullName>Transfer Station</fullName>
+        <default>false</default>
+        <label>Transfer Station</label>
+    </customValue>
+    <customValue>
+        <fullName>Waste to Energy</fullName>
+        <default>false</default>
+        <label>Waste to Energy</label>
+    </customValue>
+    <customValue>
+        <fullName>Multiple Waste Facility</fullName>
+        <default>false</default>
+        <label>Multiple Waste Facility</label>
+    </customValue>
+    <customValue>
+        <fullName>Incinerator</fullName>
+        <default>false</default>
+        <label>Incinerator</label>
+    </customValue>
+    <customValue>
+        <fullName>Demolition Landfill</fullName>
+        <default>false</default>
+        <label>Demolition Landfill</label>
+    </customValue>
+    <customValue>
+        <fullName>Composting Facility</fullName>
+        <default>false</default>
+        <label>Composting Facility</label>
+    </customValue>
+    <customValue>
+        <fullName>RDF Facility</fullName>
+        <default>false</default>
+        <label>RDF Facility</label>
+    </customValue>
+    <customValue>
+        <fullName>Spec Fuel Facility</fullName>
+        <default>false</default>
+        <label>Spec Fuel Facility</label>
+    </customValue>
+    <description>Zone Disposition Facility Types</description>
+    <masterLabel>Zone Disposition Facility Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

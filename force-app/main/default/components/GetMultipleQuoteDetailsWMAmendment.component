@@ -1,0 +1,257 @@
+<apex:component controller="GetDetails" access="global">
+    <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!objQuote}"/>
+    <div class="redText" contenteditable="true">
+        <br/><br/>
+        <apex:outputText style="color:black;font-family:Arial;" value="Your approval is required for the below service change as requested by "/> <apex:outputText value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Contact_Name__c}"/> <br/>
+        <br/>
+        <apex:outputText style="color:black;font-family:Arial;" value="Please review the proposed service details and approve your preferred option by clicking the Approve link."/><br/>
+        <br/>
+        <b><apex:outputText style="color:b;ack;font-family:Arial;" value="IMPORTANT NOTE: You have the option to approve ONE of your configurations.  If you approve a quote in error, please call our customer service team for assistance (888-625-5323). "/></b><br/>
+        <br/>
+        <apex:outputText style="color:black;font-family:Arial;" value="Your reference number for all cases is: "/> <b>{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}</b><br/>
+        <br/> 
+        <table border="1" width = "50%" style="color:black;font-family:Arial;border-collapse:collapse;">
+            <tr>
+                <td ><b>Location ID: </b></td>        
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Code__c}"/><br/>
+                </td>     
+            </tr>
+            <tr>
+                <td ><b>Service Address: </b></td>        
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" escape="false" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Tech_Location_Details__c}"/><br/>
+                </td>     
+            </tr>
+            <tr>
+                <td ><b>Case Type: </b></td>        
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Case_Type__c}"/><br/>
+                </td>     
+            </tr>
+            <tr>
+                <td ><b>Case Subtype: </b></td>        
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Case_Sub_Type__c}"/><br/>
+                </td>     
+            </tr>
+            <tr>
+                <td ><b>Case Reason: </b></td>        
+                <td>
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Case_Reason__c}"/><br/>
+                </td>     
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <!--new start-->
+        <apex:repeat value="{!ConfigData}" var="fieldKey" rows="1">
+            <table border="1" width = "50%" style="color:black;font-family:Arial;border-collapse:collapse;">
+                <tr>
+                    <th style = "text-align: left;"><b>Current Configuration: </b></th>
+                </tr>
+                <tr>
+                    <td ><b>Container: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:left;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!configMap[fieldKey].ProductName}"/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Duration: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:left;color:black;font-family:Arial;text-align:center;font-size:11pt;" 	value="{!configMap[fieldKey].oldDuration}"/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Size: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:left;color:black;font-family:Arial;text-align:center;font-size:11pt;" 	value="{!configMap[fieldKey].oldEquipmentSize}"/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Quantity: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:left;color:black;font-family:Arial;text-align:center;font-size:11pt;" 	value="{!configMap[fieldKey].oldQuantity}"/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Material: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:left;color:black;font-family:Arial;text-align:center;font-size:11pt;" 	value="{!mQLIMaterialCode[fieldKey]}"/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Schedule: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:left;color:black;font-family:Arial;text-align:center;font-size:11pt;" 	value="{!configMap[fieldKey].oldScheduleFrequency}"/>
+                    </td>     
+                </tr>
+            </table>
+            <br/>
+            <table border="1" style="color:black;font-family:Arial;border-collapse:collapse;">
+                <tr>
+                    <th style = "text-align: left;">
+                        <b><apex:outputText style="color:black;font-family:Arial;" value="Current Price:"/></b>
+                    </th>
+                </tr>
+                <apex:repeat value="{!childConfigMap[fieldKey]}" var="childQlPrice">
+                    <apex:outputPanel rendered="{!childQlPrice.oldPriceUOM != null}">	<!--TCS-pkulkarn-SDT-46519-28-Feb-2025-Added check-->
+                        <tr style="text-align:left">
+                            <td ><b>{!childQlPrice.productName}</b></td>
+                            <apex:outputPanel rendered="{!childQlPrice.productName != 'Disposal'}">		<!--TCS-pkulkarn-SDT-42459-18-Nov-2024-Added ProductName check-->
+                                <td>
+                                    <apex:outputText style="color:black;font-family:Arial;" value="{0, number, currency}">
+                                        <apex:param value="{!childQlPrice.oldListUnitPrice}" />
+                                    </apex:outputText>
+                                    <apex:outputText style="color:black;font-family:Arial;" value=" Per {!childQlPrice.oldPriceUOM}" />
+                                </td>
+                            </apex:outputPanel>
+                            <!--TCS-pkulkarn-SDT-42459-18-Nov-2024-Added following block-->
+                            <apex:outputPanel rendered="{!childQlPrice.productName == 'Disposal'}">
+                                <td>
+                                    <apex:outputText style="color:black;font-family:Arial;" value="{0, number, currency}">
+                                        <apex:param value="{!childQlPrice.disposalNewPriceAsset}" />
+                                    </apex:outputText>
+                                    <apex:outputText style="color:black;font-family:Arial;" value=" Per {!childQlPrice.oldPriceUOM}" />
+                            </td>
+                            </apex:outputpanel> <!--TCS-pkulkarn-SDT-42536-18-Nov-2024-End-->
+                        </tr>   
+                    </apex:outputPanel>	<!--TCS-pkulkarn-SDT-46519-28-Feb-2025-Added check-->
+                </apex:repeat>
+            </table>
+        <br/>
+    <br/>
+    <apex:repeat value="{!childConfigMap[fieldKey]}" var="childQlPrice">
+        <apex:outputPanel rendered="{!IF(AND(childQlPrice.ProductFamily == 'Rolloff',childQlPrice.productName == 'Disposal'), TRUE, FALSE)}">
+          
+            <br/>
+            <br/>
+            <apex:outputPanel rendered="{!IF(AND(childQlPrice.oldpriceMinimumQuantity != null),TRUE, FALSE)}">
+                <apex:outputText style="color:black;font-family:Arial;" value=" Additional Pricing Information:"/>	
+                <apex:outputText style="color:black;font-family:Arial;" value="You will be charged a minimum of {!childQlPrice.oldpriceMinimumQuantity} tons per pick-up.The disposal charge will be minimum of $ {!childQlPrice.oldListUnitPrice}. For any additional tons, the charge will be $ {!childQlPrice.disposalNewPriceAsset} per ton (based on the listed unit price)."/><br/>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!IF(childQlPrice.oldcheckSTP == true, TRUE, FALSE)}">	
+                <apex:outputText style="color:black;font-family:Arial;" value="Tons will be charged at a stepped rate. You will be charged $ {!childQlPrice.oldsteppedPrice1} per ton for the first {!childQlPrice.oldstep1UptoTons} tons. You will be charged ${!childQlPrice.oldsteppedPrice2} per ton for the remaining tons."/><br/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:repeat>  
+    </apex:repeat>
+		<br/>
+        <!--new-->
+        <!--div style="overflow-x:auto;"-->
+        <table border ="1" width = "50%" style="color:black;font-family:Arial;border-collapse:collapse;">
+            <apex:repeat value="{!WrapperData}" var="fieldKey"><!-- Looping Keys-->
+                <tr>
+                    <th style = "text-align: left;">
+                        <b style="color:black;font-family:Arial;">Request: {!mapCount[fieldKey]}: </b>    
+                    </th>           
+                </tr> 
+                
+                <tr>
+                    <td ><b>Container: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].SBQQ__Product__r.Name}"/><br/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Duration: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].Duration__c}"/><br/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Size: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].Equipment_Size__c}"/><br/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Quantity: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{0, number}">
+                            <apex:param value="{!mQLI[fieldKey].SBQQ__Quantity__c}" />
+                        </apex:outputText>
+                        <!--apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].SBQQ__Quantity__c}"/><br/>-->
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Material: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLIMaterialCode[fieldKey]}"/><br/>
+                    </td>     
+                </tr>
+                <tr>
+                    <td ><b>Schedule: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLISchedule[fieldKey]}"/><br/>
+                    </td>         
+                </tr>
+                <tr>
+                    <td ><b>Requested Start Date: </b></td>        
+                    <td>
+                        <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{0,Date, MM/dd/yyyy}"> <apex:param value="{!mQLI[fieldKey].SBQQ__EffectiveStartDate__c}"/></apex:outputText>
+                    </td>     
+                </tr>
+
+                <tr>
+                    <td style = "text-align: left;"><b>Updated Service Price: </b></td> 
+                </tr>
+                <tr>
+                    <td>
+                        <apex:repeat value="{!priceDetailsMap[fieldKey]}" var="childQlPrice">
+                            <tr>
+                                <td >{!childQlPrice.productName}</td>
+                                <td width = "30%">
+                                    <apex:outputText value="{0, number, currency}">
+                                        <apex:param value="{!childQlPrice.price}" />
+                                    </apex:outputText>
+                                <apex:outputText value=" Per {!childQlPrice.UOM}" />
+                                </td>
+                            </tr> 
+                        </apex:repeat>
+                    </td>     
+                </tr>
+                <tr><td colspan="3"><br/></td></tr>
+                <tr>
+                    <td colspan="3">
+                        <apex:repeat value="{!priceDetailsMap[fieldKey]}" var="childQlPrice">
+                            <apex:outputpanel rendered="{!If(childQlPrice.disposalNewPrice!=null, TRUE, FALSE)}">
+                                <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value=" Additional Pricing Information:"/>
+                                <br/> 
+                                <apex:outputText style="font-family:Arial;" value="You will be charged a minimum of "/>{!childQlPrice.priceMinimumQty}<apex:outputText style="font-family:Arial;" value=" tons per pick-up. The disposal charge will be a minimum of $ {!childQlPrice.disposalNewPrice}. For any additional tons, the charge will be $ {!childQlPrice.newListUnitPrice} per ton (based on the listed unit price)."/>
+                                <br/>
+                            </apex:outputpanel>
+                            <apex:outputPanel rendered="{!IF(AND(childQlPrice.ProductName == 'Disposal', childQlPrice.pricingMethod == 'STP'), TRUE, FALSE)}">
+                                <apex:outputText value="Tons will be charged at a stepped rate. You will be charged $ {!childQlPrice.steppedPrice1} per ton for the first {!childQlPrice.step1UptoTons} tons. You will be charged $ {!childQlPrice.steppedPrice2} per ton for the remaining tons."/>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    </td>
+                </tr>
+                <br/> <br/>
+                <tr><td colspan="3"><br/></td></tr>
+            </apex:repeat>
+            <br/>
+        </table>
+        <!--/div-->
+        <br/>
+        
+        <br/>
+        <br/>
+        ----------------------------------------------------------
+        <br/>
+        <br/>
+        <apex:outputText style="color:black;font-family:Arial;" value=" Additional Fees may apply."/>
+        <br/>
+        <br/>
+        <apex:outputText style="color:black;font-family:Arial;" value=" Please select an option below. Please note that these links will expire after 30 days."/>
+        <br/>
+        <br/>
+        
+        <apex:repeat value="{!WrapperData}" var="fieldKey">
+            <a href="{!$Setup.QuoteApproval__c.QuoteApprovalRejectionLink__c}?subject=Approved:{!QuoteFields.Id}:{!fieldKey}&body={!QuoteFields.Quote_Thread_Id__c}">Approve Service Request {!mapCount[fieldKey]}:</a><br/>
+            -------------------------------------------------<br/>
+        </apex:repeat>
+        Please click on the Reject All link if none of the above options are suitable: <a href="{!$Setup.QuoteApproval__c.QuoteApprovalRejectionLink__c}?subject=Declined:{!QuoteFields.Id}&body=I am declining this request for the following reason(s): %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A {!QuoteFields.Quote_Thread_Id__c}">Reject All</a><br/> 
+        
+    </div>
+</apex:component>

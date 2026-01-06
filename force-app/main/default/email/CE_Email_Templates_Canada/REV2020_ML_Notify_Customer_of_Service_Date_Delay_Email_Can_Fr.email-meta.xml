@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Informer le client d&apos;un retard de service.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>French Customer:  Delayed Service Canada Templates</name>
+    <style>freeForm</style>
+    <subject>Notification de changement de service: {!Case.Case_Type__c} - {!Case.Location_Code__c} - Ref. #: {!Case.Reference_Number__c}</subject>
+    <textOnly>Hi {!Contact.FirstName},
+
+There has been a change in the service date for the {!Case.Case_Sub_Type__c} you requested. I apologize for any inconvenience.
+
+New Service Date: {!Case.WO_Service_Date__c}
+
+Previous Service Date: {!Case.WO_Original_Service_Date__c}
+
+SERVICE DETAILS
+
+Reference #:
+{!Case.Reference_Number__c}
+
+Location ID:
+{!Case.Location_Code__c}
+
+Service Address:
+{!Case.Location_Name_Email_Temp__c}, {!Case.Tech_Location_Details__c}
+
+Request:
+{!Case.Case_Type__c} - {!Case.Case_Sub_Type__c}
+
+Container:
+{!Asset.Name}, {!Asset.Material_Type__c}, {!Asset.Container_Position__c}
+
+Thank you,
+
+{!User.FirstName} {!User.LastName}
+Customer Service Representative
+{!User.Department_Email__c}
+
+WM of Canada Corporation
+4668 25 Street SE
+Calgary, AB T2B 3M2
+
+{!Case.Thread_Id} : {!Case.Reference_Number__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

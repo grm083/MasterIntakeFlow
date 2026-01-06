@@ -1,0 +1,506 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+                controller="QuoteProcurementController">
+    
+    <!--SDT 33101-->
+    <!--aura:attribute name="IsAmendmentQuote" type="boolean" default="false" / commenting for 33101 reverse-->
+    <aura:attribute name="IsAmendmentQuote" type="boolean" default="true" />
+    <aura:attribute name="DisplayApprovalButton" type="boolean" default="false" />
+    <!--SDT 42687-->
+    <aura:attribute name="IsAmendmentQuoteWithQuoteOnly" type="boolean" default="false" />
+    <!--SDT 33101 end-->
+    <!--TCS-pkulkarn-SDT-44675-27-Jan-2025-Added below attributes-->
+	<aura:attribute name="numRecords" type="Integer" default="0"/>
+    <aura:attribute name="quoteStatusForUI" type="String" default=""/>
+    <!--TCS-pkulkarn-SDT-44675-27-Jan-2025-End attributes-->
+    <aura:attribute name="serviceWrapper" type="object" />
+    <aura:attribute name="showMAS" type="boolean" default="false" />
+    <aura:attribute name="modalType" type="String" />
+    <aura:attribute name="showModal" type="Boolean" default="false" />
+    <aura:attribute name="ShowiconForNTW" type="Boolean" default="false" />
+    <aura:attribute name="selectedProduct" type="Object" />
+    <aura:attribute name="showLocationModal" type="Boolean" default="false" />
+    <aura:attribute name="showSupplementModal" type="Boolean" default="false" />
+    <aura:attribute name="showFinancialDetailsModal" type="Boolean" default="false" />
+    <aura:attribute name="showGetPrice" type="Boolean" default="false" />
+    <aura:attribute name="quoteRecordId" type="String" />
+    <aura:attribute name="getAddProductId" type="String" />
+    <aura:attribute name="showFavCompModal" type="Boolean" default="false" />
+    <aura:attribute name="showOrderModal" type="Boolean" default="false" />
+    <aura:attribute name="showConfigureProduct" type="Boolean" default="false" />    
+    <aura:attribute name="componentType" type="String" />
+    <aura:attribute name="QuoteID" type="String" />
+    <aura:attribute name="showSpinner" type="boolean" />
+    <aura:attribute name="quoteScreen" type="boolean" default="true"/>
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="quoteStatus" type="String" />
+    <aura:attribute name="servicePicklistValues" type="List"/>
+    <aura:attribute name="userInfo" type="user"/> 
+    <!-- yeshas code here -->
+    <aura:attribute name="parentQLineId" type="String" />
+    <aura:attribute name="loggedUser" type="object"/>
+    <!-- yeshas code here -->
+    <lightning:workspaceAPI aura:id="workspace" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <aura:handler name="CloseModalEvent" event="c:QuoteProductsCloseModal" action="{!c.closeModal}" />
+    <aura:handler name="closeLocationModal" event="c:QuoteProductsCloseModal" action="{!c.closeLocationModal}" />
+    <aura:handler name="closeGetPrice" event="c:QuoteProductsCloseModal" action="{!c.closeGetPrice}" />
+    <aura:handler event="lightning:tabFocused" action="{!c.onTabFocus}" />
+    <aura:handler event="force:refreshView" action="{!c.doinit}" />
+    <aura:handler name="change" value="{!v.showSupplementModal}" action="{!c.supplementChange}"/>
+    <aura:handler  event="c:RefreshConfiguredProducts" action="{!c.doinit}"/>
+    <aura:method name="callInit" action="{!c.doinit}"/>
+    <!-- classification Changes -->
+    <aura:attribute name="showClassificationChanges" type="Boolean" default="false" />
+    <aura:attribute name="ccObj" type="object"/>
+    <!-- show toast message in multiple lines-->
+    <!-- Changes for SDT-31110 -->
+    <aura:attribute name="isUpdateAssetCase" type="Boolean" default="false"/>
+    <aura:attribute name="NewServiceRecordType" type="String"/>
+    <aura:attribute name="isHaulAway" type="Boolean" default="false"/>
+    <aura:html tag="style">
+        .toastMessage.forceActionsText{
+        white-space : pre-line !important;
+        }
+    </aura:html>
+    <!-- classification Changes -->
+    <lightning:card iconName="utility:bundle_config" title="Configured Products">
+        <aura:set attribute="actions">
+            
+          <aura:if isTrue="{!v.showConfigureProduct}">  
+              <lightning:button label="Add More Products" variant="brand" onclick="{!c.addMore}"/>
+          </aura:if>
+            
+            <lightning:buttonIcon iconName="utility:sync" variant="brand" onclick="{!c.doinit}" />
+        </aura:set>
+        <lightning:layout multipleRows="true">
+            <aura:if isTrue="{!v.showSpinner}">
+                <lightning:spinner alternativeText="Loading Bundles" size="medium" />
+            </aura:if>
+            <aura:if isTrue="{!v.serviceWrapper}">
+                <lightning:layoutItem size="12">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="expand">Expand</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Vendor Alerts">Product Alerts</div>
+                                </th>
+                                
+                                <!--TCS-SDT-31265-Added following lines-->
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Quantity">Quantity</div>
+                                </th>
+                                <!--TCS-SDT-31265-End-->
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Equipment Type">Equipment Type</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Equipment Size">Equipment Size</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Material">Material</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Duration">Duration</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Schedule">Schedule</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Start Date">Start Date</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="End Date">End Date</div>
+                                </th>
+                                <!--SDT 33101 SDT 42687-->
+                                <!--aura:if isTrue="{!and(v.IsAmendmentQuote,v.IsAmendmentQuoteWithQuoteOnly)}" -->
+                                <!--TCS-pkulkarn-SDT-44675-27-Jan-2025-Commented above line and added below line-->
+                                <aura:if isTrue="{!or(and(v.IsAmendmentQuote,v.IsAmendmentQuoteWithQuoteOnly), and(v.IsAmendmentQuote, v.numRecords > 1, or(v.quoteStatusForUI == 'Approved',v.quoteStatusForUI == 'Declined')))}">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" title="Customer Approval">Customer Approval</div>
+                                    </th>
+                                </aura:if>
+                                <!--end SDT 33101-->
+                                <th class="" scope="col">
+                                    <div class="slds-truncate slds-align_absolute-center" title="Set Details">Line Details</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.serviceWrapper.configuredProducts}" var="prod" indexVar="indx">
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Expand">
+                                        <div class="slds-align_absolute-center">
+                                            <lightning:icon iconName="utility:chevrondown" 
+                                                            size="small" 
+                                                            title="{!indx}"
+                                                            onclick="{!c.togglecChanges}" 
+                                                            class="slds-p-around_xx-small"/>
+                                        </div>
+                                    </td>
+                                    <td data-label="Vendor Alerts">
+                                        <div class="slds-align_absolute-center">
+                                            <aura:if isTrue="{!prod.isCOD}">
+                                                <lightning:icon iconName="utility:page" 
+                                                                size="small" 
+                                                                variant="error" 
+                                                                title="COD Requested"
+                                                                class="slds-p-around_xx-small"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!prod.lineError}">
+                                                <lightning:icon iconName="utility:warning" 
+                                                                size="small" 
+                                                                variant="error" 
+                                                                title="Bundle contains error"
+                                                                class="slds-p-around_xx-small"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!prod.vendorPrepayment == 'Yes'}">
+                                                <lightning:icon iconName="utility:moneybag" 
+                                                                size="small" 
+                                                                variant="error" 
+                                                                title="Prepayment or Deposit Required"
+                                                                class="slds-p-around_xx-small"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!prod.vendorManualDispatch == 'Yes'}">
+                                                <lightning:icon iconName="utility:dialing" 
+                                                                size="small" 
+                                                                variant="error" 
+                                                                title="Contact Vendor Manually"
+                                                                class="slds-p-around_xx-small"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!not(empty(prod.procurementErrorMessage))}">
+                                                <lightning:icon iconName="utility:alert" 
+                                                                size="small" 
+                                                                variant="error" 
+                                                                title="{!prod.procurementErrorMessage}"
+                                                              	alternativeText="{!prod.nteWarnningMessage}"
+                                                                onclick="{!c.getErrorMessage}" 
+                                                                class="slds-p-around_xx-small"/>
+                                           
+                                            <aura:set attribute="else">
+                                              
+                                                <aura:if isTrue="{!prod.nteWarnning}">
+                                                    <!-- <aura:if isTrue="{!not(empty(prod.nteWarnningMessage))}"> -->
+                                                     <lightning:icon iconName="utility:alert" 
+                                                                size="small" 
+                                                                variant="error" 
+                                                                alternativeText="{!prod.nteWarnningMessage}"
+                                                                onclick="{!c.getErrorMessage}" 
+                                                                class="slds-p-around_xx-small"/>
+                                                </aura:if>
+                                            </aura:set>
+                                            </aura:if>
+                                            
+                                        </div>
+                                    </td>
+                                    <!--TCS-SDT-31265-Added following lines-->
+                                    
+                                    <td data-label="Quantity">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.quantity}">{!prod.quantity}</div>
+                                    </td>
+                                    <!--TCS-SDT-31265-End-->
+                                    <td data-label="Equipment Type">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.equipmentType}">{!prod.equipmentType}</div>
+                                    </td>
+                                    <td data-label="Equipment Size">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.equipmentSize}">{!prod.equipmentSize}</div>
+                                    </td>
+                                    <td data-label="Material">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.materialType}"><div>{!prod.materialType}</div>
+                                            <div style="margin-top: -3px;"><aura:if isTrue="{!not(empty(prod.wasteDescription))}">
+                                                <lightning:helptext content="{!prod.wasteDescription}"/>
+                                                </aura:if></div>
+                                        </div>
+                                    </td>
+                                    <td data-label="Duration">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.duration}">{!prod.duration}</div>
+                                    </td>
+                                    <td data-label="Schedule">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.monthlyScheduleDetails}"><!--SDT 41407-->{!prod.lineFrequency}</div>
+                                    </td>
+                                    <td data-label="Start Date">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.startDate}">{!prod.startDate}</div>
+                                    </td>
+                                    <td data-label="End Date">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.endDate}">{!prod.endDate}</div>
+                                    </td>
+                                    <!--SDT33101 SDT 42687-->
+                                    <!--aura:if isTrue="{!and(v.IsAmendmentQuote,v.IsAmendmentQuoteWithQuoteOnly)}"-->
+                                    <!--TCS-pkulkarn-SDT-44675-27-Jan-2025-Commented above line and added below line-->
+                                    <aura:if isTrue="{!or(and(v.IsAmendmentQuote,v.IsAmendmentQuoteWithQuoteOnly), and(v.IsAmendmentQuote, v.numRecords > 1, or(v.quoteStatusForUI == 'Approved',v.quoteStatusForUI == 'Declined')))}">
+                                        <td data-label="Customer Approval">
+                                            <div class="slds-truncate slds-align_absolute-center" title="{!prod.customerApproval}">{!prod.customerApproval}</div>
+                                        </td>
+                                    </aura:if>
+                                    <!--end SDT33101-->
+                                    <td data-label="Line Details">
+                                        <div class="slds-truncate slds-align_absolute-center" title="{!prod.parentId}">
+                                            <aura:if isTrue="{!and(prod.quoteStatus != 'Price Configured', prod.QuoteStatus != 'Approved', prod.QuoteStatus != 'Declined')}">
+                                                <div data-value="{!prod}">
+                                                    <!--<lightning:button name="CompanyCategoryComponent"
+                                                                  variant="brand"
+                                                                  label="Comp. Cat."
+                                                                  title="View Line Item Details"
+                                                                  disabled="{!prod.disableMAS}"
+                                                                  onclick="{!c.ViewDetails}" 
+                                                                  value="{!prod}" />
+                                                <lightning:button name="VendorLookupComponent"
+                                                                  variant="brand"
+                                                                  label="Vendor"
+                                                                  title="View Line Item Details"
+                                                                  disabled="{!prod.disableMAS}"
+                                                                  onclick="{!c.ViewDetails}" 
+                                                                  value="{!prod}" />
+                                                <lightning:button name="MASLookupComponent"
+                                                                  variant="brand"
+                                                                  label="MAS"
+                                                                  title="View Line Item Details"
+                                                                  disabled="{!prod.disableMAS}"
+                                                                  onclick="{!c.ViewDetails}" 
+                                                                  value="{!prod}" />-->
+                                                    <aura:if isTrue="{!not(or((prod.quoteStatus == 'Approved'), or ((prod.quoteStatus == 'Declined'), or((prod.quoteStatus == 'Cancelled')))))}">
+                                                        <lightning:buttonIcon iconName="utility:edit"
+                                                                              name="QuoteProductDetails"
+                                                                              title="Edit Product"
+                                                                              variant="brand"
+                                                                              onclick="{!c.ViewDetails}"
+                                                                              value="{!prod}"
+                                                                              /> 
+                                                                               
+                                                        <lightning:buttonIcon iconName="utility:location"
+                                                                              name="LocationPosition"
+                                                                              variant="brand"
+                                                                              title="Add/Modify Position"
+                                                                              onclick="{!c.ViewLocationDetails}"
+                                                                              value="{!prod}" />
+                                                        <lightning:buttonIcon iconName="utility:summarydetail"
+                                                                              name="SupplementInstruction"
+                                                                              variant="brand"
+                                                                              title="SupplementInstruction"
+                                                                              onclick="{!c.SupplementalInstructions}"
+                                                                              value="{!prod}" 
+                                                                              disabled="{!v.isUpdateAssetCase}"/>
+                                                        <aura:if isTrue="{!v.loggedUser.Profile.Name!='Customer Account Team'}">
+                                                            <!--SDT - 31298 Start -->
+                                                           <!-- <aura:if isTrue="{!or(prod.quoteStatus == 'Product Configured',prod.quoteStatus == 'Cost Configured')}"> -->   
+                                                                <aura:if isTrue="{!(prod.quoteStatus == 'Cost Configured')}">    
+                                                                    <!--SDT - 31298 End -->
+                                                                <lightning:buttonIcon name="GetPrice"
+                                                                                      variant="brand"
+                                                                                      iconName="utility:money"
+                                                                                      title="Get Price"
+                                                                                      onclick="{!c.GetPrice}"
+                                                                                      value="{!prod}" />  
+                                                            </aura:if>
+                                                        </aura:if>
+                                                        
+                                                        <!-- SDT-21060 start -->
+                                                        <lightning:buttonIcon iconName="utility:moneybag"
+                                                                              name="FinancialDetails"
+                                                                              variant="brand"
+                                                                              title="Financial Details"
+                                                                              onclick="{!c.financialDetails}"
+                                                                              value="{!prod}" 
+                                                                              disabled="{!v.isUpdateAssetCase}"/>
+                                                        <!-- SDT-21060 end -->
+                                                    </aura:if> 
+                                                </div>
+                                            </aura:if>
+                                            <!-- <aura:if isTrue="{!not(or(prod.quoteStatus == 'Approved',prod.quoteStatus == 'Declined'))}"> -->
+                                            <div style="margin-left: 3px">
+                                                <!--SDT-20939 QO create/view starts-->
+                                                <lightning:buttonIcon iconName="utility:fulfillment_order"
+                                                                      name="CreateViewOrder"
+                                                                      variant="brand"
+                                                                      title="Create/View Order(s)"
+                                                                      onclick="{!c.createViewOrder}"
+                                                                      value="{!prod}" />
+                                                <!--SDT-20939 QO ends-->
+                                            </div>
+                                            <!-- </aura:if> -->
+                                            <!--SDT 33101 SDT 42687 Start -->
+                                            <aura:if isTrue="{!and(and(prod.quoteStatus == 'Price Configured',v.DisplayApprovalButton),prod.quoteOnly)}">    
+                                                <lightning:buttonIcon name="ApproveQuoteOnly"
+                                                                      variant="brand"
+                                                                      iconName="utility:approval"
+                                                                      title="Approve QuoteOnly"
+                                                                      onclick="{!c.ApproveQuoteOnlyOption}"
+                                                                      value="{!prod}" />  
+                                            </aura:if>
+                                            <!--SDT 33101 end -->
+                                            </div>
+                                    </td>
+                                </tr>
+                                <aura:if isTrue="{!prod.showClassificationChanges}">
+                                    <tr>
+                                        <td colspan="12" style="padding:0px !important">
+                                            <c:QuoteLineClassificationChanges caseRecordtype="{!prod.caseRecordType}"
+                                                                              caseType="{!prod.caseType}"
+                                                                              reload="{!prod.showClassificationChanges}" 
+                                                                              parentQuoteLineId="{!prod.parentId}" />
+                                        </td>
+                                    </tr>
+                                </aura:if>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </lightning:layoutItem>
+            </aura:if>
+        </lightning:layout>
+        
+        <aura:if isTrue="{!v.showModal}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeModal }"
+                                              alternativeText="close"
+                                              variant="bare"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Product Configuration</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">                        
+                        <aura:if isTrue="{!v.componentType == 'MASLookupComponent'}">
+                            <c:MASLookupComponent productWrapper="{!v.selectedProduct}" />
+                        </aura:if>
+                        <aura:if isTrue="{!v.componentType == 'VendorLookupComponent'}">
+                            <c:VendorLookupComponent productWrapper="{!v.selectedProduct}" />
+                        </aura:if>
+                        <aura:if isTrue="{!v.componentType == 'CompanyCategoryComponent'}">
+                            <c:CompanyCategoryComponent productWrapper="{!v.selectedProduct}" />
+                        </aura:if>
+                        <aura:if isTrue="{!v.componentType == 'QuoteProductDetails'}" >
+                            <!-- 31110 -->
+                            <c:QuoteProductDetails productHeader="{!v.selectedProduct}" disabled="{!v.isUpdateAssetCase}" />
+                        </aura:if>
+                        <aura:if isTrue="{!v.componentType == 'ServiceScheduler'}">
+                            <c:ServiceScheduler quoteId="{!v.recordId}"
+                                                parentId="{!v.selectedProduct.parentId}"/>
+                        </aura:if>
+                    </div>
+                    <footer class="slds-modal__footer">
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            
+        </aura:if>
+        <aura:if isTrue="{!v.showLocationModal}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeLocationModal }"
+                                              alternativeText="close"
+                                              variant="bare"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Product Configuration</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <aura:if isTrue="{!v.componentType == 'LocationPosition'}">
+                            <c:LocationPositionComponent productWrapper="{!v.selectedProduct}" />
+                        </aura:if>
+                    </div>
+                    <footer class="slds-modal__footer">
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        <!-- yeshas code starts here -->
+        <aura:if isTrue="{!v.showSupplementModal}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeSupplementModal }"
+                                              alternativeText="close"
+                                              variant="bare"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Supplemental Details</h2>
+                       </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <aura:if isTrue="{!v.componentType == 'SupplementModal'}">
+                            <c:SupplementalInstructions parentQuoteLineId="{!v.parentQLineId}"
+                                                        showSupplementModal="{!v.showSupplementModal}"/>
+                        </aura:if>
+                    </div>
+                    <footer class="slds-modal__footer">
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        <!-- yeshas code starts here -->
+
+                
+         <!-- 21060 Jatan Code Start-->
+         <aura:if isTrue="{!v.showFinancialDetailsModal}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeFinancialModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <!-- <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Product Configuration</h2> -->
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <c:FinancialDetailComponent productWrapper="{!v.selectedProduct}"
+                            showFinancialDetails="{!v.showFinancialDetailsModal}"/>
+                    </div>
+                    <footer class="slds-modal__footer">
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        <!-- 21060 Jatan Code End-->
+        
+        
+        <aura:if isTrue="{!v.showGetPrice}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeGetPrice }"
+                                              alternativeText="close"
+                                              variant="bare"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Get Price</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        <c:GetQuotePricingOnly recordId="{!v.QuoteID}"/>
+                        
+                        
+                    </div>
+                    <footer class="slds-modal__footer">
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        <aura:if isTrue="{!v.showFavCompModal}">
+            <c:AddFavoriteContainers showForm="{!v.showFavCompModal}" caseId="{!v.caseId}" quoteId="{!v.quoteRecordId}" quoteScreen="{!v.quoteScreen}" parent="{!this}"/>
+        </aura:if>
+        <!--SDT-20939 QO create/view starts-->
+        <aura:if isTrue="{!v.showOrderModal}">
+            <aura:if isTrue="{!or((v.quoteStatus == 'Draft') , or((v.quoteStatus == 'Product Configured') , or((v.quoteStatus == 'Cost Configured'),(v.quoteStatus == 'Price Configured'))))}">
+            	<c:quoteOrderComp aura:id="workOrderLwc1" bShowModal="{!v.showOrderModal}" inlineProd="{!v.selectedProduct}" recordId="{!v.quoteRecordId}" servicePicklist="{!v.servicePicklistValues}"/>
+        	    <aura:set attribute="else">
+                    <c:quoteOrderComp aura:id="workOrderLwc2" bShowModal="{!v.showOrderModal}" inlineProd="{!v.selectedProduct}" recordId="{!v.quoteRecordId}" servicePicklist="{!v.servicePicklistValues}" isView="true"/>
+                </aura:set>
+            </aura:if>
+        </aura:if>
+        <!--SDT-20939 QO ends-->
+    </lightning:card>
+</aura:component>

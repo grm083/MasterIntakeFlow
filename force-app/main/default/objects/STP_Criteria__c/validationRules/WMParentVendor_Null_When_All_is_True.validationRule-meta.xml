@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WMParentVendor_Null_When_All_is_True</fullName>
+    <active>true</active>
+    <description>WM Parent Vendor should not be blank in case All is Unchecked</description>
+    <errorConditionFormula>AND( All_WM_Vendors__c  = true,  Parent_VID__c  != null,  RecordType.Name = &apos;STP Eligibility&apos;)</errorConditionFormula>
+    <errorMessage>If All WM Parent Vendor is checked, then Listed WM Parent Vendor must be blank.</errorMessage>
+</ValidationRule>

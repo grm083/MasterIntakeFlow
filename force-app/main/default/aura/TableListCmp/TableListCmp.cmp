@@ -1,0 +1,90 @@
+<aura:component implements="force:appHostable" access="global" controller="TableListCmpCls">
+    <ltng:require scripts="{!$Resource.Highcharts}"/>
+    <aura:attribute name="AccountTaskCount" type="Integer[]"/>
+    <aura:attribute name="vendorDataCount" type="Object" access="global"/>
+    <aura:attribute name="parentVendor" type="Object" access="global"/>
+    <aura:attribute name="parentVendorMap" type="Map" access="global"/>
+    <aura:attribute name="vendorMap" type="Map" access="global"/>
+    <aura:attribute name="locationMap" type="Map" access="global"/>
+    <aura:attribute name="vendor" type="Object" access="global"/>
+    <aura:attribute name="parentVendorDataCount" type="Object" access="global"/>
+    <aura:attribute name="location" type="Object" access="global"/>
+    <aura:attribute name="locationDataCount" type="Object" access="global"/>
+    <!-- attributes in tableListcmp -->
+    <aura:attribute name="selTabId" type="String" default="vendor" />
+    <aura:attribute name="topTabId" type="String" default="TabOne" />
+    <aura:attribute name="isParentVendorTabSelectedFirstTime" type="boolean" default="true"/>
+    <aura:attribute name="isLocationTabSelectedFirstTime" type="boolean" default="true"/>
+    <aura:attribute name="selChildTabId" type="String" default="vendor" access="global"/>
+    <aura:attribute name="accountName" type="String" access="global"/>
+    <aura:attribute name="numOfVendorDisplayed" type="Integer" access="global"/>
+    <aura:attribute name="selectedUserView" type="String" access="global" default="All"/>
+    <aura:attribute name="isTabSelected" type="Boolean" default="false" />
+    <aura:attribute name="parentVendorData" type="Object" access="global"/>
+    <aura:attribute name="VendorSortedData" type="Object" access="global"/>
+    <aura:attribute name="vendorData" type="Object" access="global"/>
+    <aura:attribute name="currentLoggedInUserRole" type="String" access="global"/>
+    <aura:attribute name="locationData" type="Object" access="global"/>
+    <aura:attribute name="data" type="Object" access="global"/>
+    <aura:attribute name="columns" type="List" access="global"/>
+    <aura:attribute name="method" type="Aura.action"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="taskType" type="String" default="All" access="global"/>
+    <aura:attribute name="ToggleFilter" type="boolean" default="false"/>
+    <aura:method name="displaySelectedTab" action="{!c.tabSelected}" access="PUBLIC">
+        <aura:attribute name="selectedNumberOfVendorTab" type="Integer" default="5" access="global"/>
+    </aura:method>
+    <!-- handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:if isTrue="{!v.loaded}">
+        <div class="spinnerHolder">
+            <lightning:spinner alternativeText="Loading" size="large" />
+        </div>
+    </aura:if>
+    
+    <lightning:tabset onselect="{! c.tabSelected }" selectedTabId="{!v.topTabId}">
+        <lightning:tab label="Top 5" id = "TabOne"/>
+        <lightning:tab label="Top 10" id = "TabTwo"/>
+        <lightning:tab label="Top 20" id = "TabThree"/>
+        <lightning:tab label="Top 50" id = "TabFour"/>
+        <lightning:select aura:id="selectedUserView" name="select" label="User" required="true" class="slds-col slds-size_3-of-12" onchange="{! c.tabSelected }" value="{!v.selectedUserView}">
+            <option value="All">All</option>
+            <option value="Genesys Integration">Genesys Integration</option>
+            <option value="Others">Others</option>
+        </lightning:select>
+        <lightning:select aura:id="selectTaskType" name ="select" label="Task Type" required="true" class="slds-col slds-size_3-of-12" onchange="{! c.tabSelected }" value="{!v.taskType}">
+            <option value="All">All</option>
+            <option value="Project Services">Project Services</option>
+            <option value="Customer Services">Customer Services</option>
+        </lightning:select>
+    </lightning:tabset>
+    
+    
+    <div class="slds-card">
+        
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <div class="slds-align_absolute-center">
+                <div aura:id="chart" style="height: 450px;width:700px; min-width: 400px; max-width: 700px; margin: 0 auto"></div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div aura:id="data-entry">
+        <lightning:tabset onselect="{!c.tabSelected}" variant="default" selectedTabId="{!v.selTabId}" >
+            <lightning:tab label="Parent Vendor" aura:id="parentVendor" tabindex="0" id="parentVendor" title="Parent Vendor">
+                
+            </lightning:tab>
+            
+            <lightning:tab label="Vendor" aura:id="vendor" tabindex="1" id="vendor" title="Vendor">
+            </lightning:tab>
+            <lightning:tab label="Location" aura:id="location" tabindex="2" id="location" title="Location">
+                
+            </lightning:tab>  
+        </lightning:tabset>
+        <aura:if isTrue="{!v.isTabSelected}">
+            <c:ListOfTableDetailsCmp aura:id="childComp" spinnerFunctionClose="{!c.spinnerCloseFunction}" taskType="{!v.taskType}" selectedUserView="{!v.selectedUserView}" showReassignButton="{!v.currentLoggedInUserRole}" columns="{!v.columns}" data="{!v.data}"/>
+        </aura:if>
+    </div>
+</aura:component>

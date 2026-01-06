@@ -1,0 +1,28 @@
+<apex:page standardController="Comment__c" docType="html-5.0" sidebar="false"
+showHeader="false" applyBodyTag="false" extensions="CaseCommentsControllerExtension">
+<apex:pageBlock title="Case Comments" mode="edit" >
+<apex:pageMessages id="errorMessages" />
+<apex:form >
+<apex:pageBlockSection >
+    
+<apex:inputField value="{! Comment__c.Acorn_Tracking_Number__c }" label="Acorn Tracking Number/Quote Number" />
+</apex:pageBlockSection>
+<apex:pageBlockSection >
+<apex:inputField value="{! Comment__c.Comment__c }" label="Comments" />
+</apex:pageBlockSection>
+<apex:commandButton action="{! save }" value="Save" />
+
+</apex:form>
+</apex:pageBlock>
+    <h2>You have successfully logged into Salesforce. You may <a onClick="window.top.close();">close </a> this windows now. </h2>
+
+<body onload="closeMe();">
+<script>
+function closeMe(){
+//window.top.close();
+//window.parent.close();
+//self.close();
+}
+</script>
+</body>
+</apex:page>

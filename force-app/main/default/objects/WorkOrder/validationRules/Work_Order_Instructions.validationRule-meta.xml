@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Work_Order_Instructions</fullName>
+    <active>true</active>
+    <description>SDT-4113
+
+Work Order Instructions can be changed only if WO Status IN (New, Pending/Draft, Issued, Sent)</description>
+    <errorConditionFormula>AND(ISCHANGED( Instructions__c ),
+NOT(  
+OR(ISPICKVAL( Status , &quot;New&quot;) ,
+ISPICKVAL( Status , &quot;Pending/Draft&quot;),
+ISPICKVAL( Status , &quot;Issued&quot;),
+ISPICKVAL( Status , &quot;Sent&quot;))),NOT($User.Bypass_Validation__c))</errorConditionFormula>
+    <errorMessage>Work Order Instructions can be changed only if WO Status IN (New, Pending/Draft, Issued, Sent)</errorMessage>
+</ValidationRule>

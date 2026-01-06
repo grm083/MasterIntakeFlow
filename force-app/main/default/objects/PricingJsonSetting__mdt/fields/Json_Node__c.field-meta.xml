@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Json_Node__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Json Node</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IntegrationHeader</fullName>
+                <default>true</default>
+                <label>IntegrationHeader</label>
+            </value>
+            <value>
+                <fullName>IntegrationDetail</fullName>
+                <default>false</default>
+                <label>IntegrationDetail</label>
+            </value>
+            <value>
+                <fullName>Workorders</fullName>
+                <default>false</default>
+                <label>Workorders</label>
+            </value>
+            <value>
+                <fullName>Start</fullName>
+                <default>false</default>
+                <label>Start</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

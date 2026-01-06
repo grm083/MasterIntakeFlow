@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>metadata to store the parameters regarding  endpoint,client secret &amp; client id for external system</description>
+    <label>Integration Request URLs</label>
+    <pluralLabel>Integration Request URLs</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

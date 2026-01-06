@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Event template" >
+	<aura:attribute name="caseNumber" type="String" description="Destination Case Number"/>
+    <aura:attribute name="lookUpId" type="String" description="Destination RecordId"/>
+    <aura:attribute name="action" type="String" description="Button Source"/>
+</aura:event>

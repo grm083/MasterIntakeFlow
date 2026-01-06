@@ -1,0 +1,113 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" controller="NotificationTrackingController" access="global" >
+    <aura:handler name="init" value="{!this }" action="{!c.initAction }" />
+    <aura:attribute name="NTColumns" type="List" />
+    <aura:attribute name="assetHeaderId" type="string" />
+    <aura:attribute name="IsSpinner" type="Boolean"/>
+    <aura:attribute name="notiTrackingDataLst" type="NotifTrackingWrapper[]" />
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="totalPage" type="Integer"/>
+    <aura:attribute name="assetOptions" type="String[]" default="" />
+    <aura:attribute name="selectedAsset" type="String" />
+    <aura:attribute name="disable" type="Boolean" default="true" />
+    <aura:attribute name="pageSize10" type="Integer" default="10"/>
+    <aura:attribute name="pageSize50" type="Integer" default="50"/>
+    <aura:attribute name="pageNum1" type="Integer" default="1"/> 
+    <aura:attribute name="pageNumber" type="Integer" />
+    <aura:attribute name="pageSize" type="Integer"/>
+    <aura:attribute name="hideFooter" type="Boolean" />
+    <aura:attribute name="isSubTab" type="Boolean" />
+	<aura:attribute name="sObjName" type="String" default="Case" />
+    <lightning:workspaceAPI aura:id="workspace1"/>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col selection slds-size_1-of-4">
+            <aura:if isTrue ="{! not (v.isSubTab) }">
+                <lightning:select
+                                  aura:id="selectAsset"
+                                  name="selectAsset"
+                                  onchange="{!c.onChange}"
+                                  variant="label-hidden"
+                                  class="label-hidden"
+                                  >
+                    <aura:iteration items="{!v.assetOptions}" var="asset">
+                        <option
+                                text="{!asset.assetLabel}"
+                                value="{!asset.assetValue}"
+                                ></option>
+                    </aura:iteration>
+                </lightning:select>
+            </aura:if>
+        </div>
+        <div class="slds-col slds-size_1-of-4">
+            <aura:if isTrue ="{!not (v.isSubTab)}">
+                <lightning:button
+                                  variant="brand"
+                                  label="Get Notification Details"
+                                  onclick="{!c.getNTData}"
+                                  disabled="{!v.disable}"
+                                  /> 
+            </aura:if>
+        </div>
+    </div>
+    <aura:if isTrue="{! not(v.isSubTab)}">
+        <br></br>
+    </aura:if>
+    
+    <div class="slds-scrollable">
+        <table class="slds-table slds-table--bordered">
+            <thead>
+                <tr>
+                    <aura:iteration items="{!v.NTColumns}" var="col">
+                        <th>{!col.label}</th>
+                    </aura:iteration>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.notiTrackingDataLst}" var="data" start="0" end = "{!v.pageSize}">
+                    <tr>
+                        <td>
+                            <a onclick="{!c.handleClick}" data-id="{!data.contactId}"> {!data.contactName}</a></td>
+                        <td>{!data.emailAddPhoneNum}</td>
+                        <td>{!data.emailSMSType}</td>
+                        <td>{!data.emailSubBody}</td>
+                        <td> <a target="_blank"  onclick="{!c.handlePic}" data-id="{!data.imageURL}"  > 
+                            <aura:if isTrue="{!data.imageURL}">
+                                Click here to view
+                            </aura:if>
+                            </a></td>
+                        <td>{!data.messageType}</td>
+                        <td>{!data.dateTimeSent}</td>
+                        <td>{!data.status}</td>
+                    </tr>
+                </aura:iteration>
+                
+                <aura:if isTrue ="{!and(v.totalRecords > v.pageSize10, not(v.isSubTab))}">
+                    <tr  style="cursor: pointer;" onclick="{!c.viewAll}" >
+                        <td class="custom-footer" colspan="8">
+                            <a onclick="{!c.viewAll}" data-Id="all" >View All</a>
+                        </td> 
+                    </tr>
+                </aura:if>
+            </tbody>
+        </table>
+        <aura:if isTrue ="{!and((v.isSubTab) , not(v.hideFooter))}">
+            <div class="modal-footer slds-modal__footer">
+                <lightning:buttonGroup>
+                    <lightning:button label="Previous" 
+                                      disabled="{!v.pageNumber == 1}"  
+                                      onclick="{!c.previous}" 
+                                      variant="brand"
+                                      iconName='utility:back'/>
+                    <lightning:button label="Next" 
+                                      disabled="{!v.pageNumber == v.totalPage}" 
+                                      onclick="{!c.next}" 
+                                      variant="brand"
+                                      iconName='utility:forward'/>
+                </lightning:buttonGroup>
+                Page {!v.pageNumber} of {!v.totalPage}
+            </div>
+        </aura:if>
+    </div>    
+    <aura:if isTrue="{!v.IsSpinner}">
+        <lightning:spinner variant="brand"/>
+    </aura:if>
+</aura:component>

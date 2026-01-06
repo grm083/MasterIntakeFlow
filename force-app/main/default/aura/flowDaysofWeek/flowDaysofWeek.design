@@ -1,0 +1,14 @@
+<design:component>
+	<design:attribute name="occurrenceCode" label="Occurrence Code" description="The occurrence group selected by the user"/>
+    <design:attribute name="frequency" label="Selected Frequency" description="The frequency selected by the user"/>
+    <design:attribute name="chkSunday" label="Sunday Selected" description="This day was selected in the component"/>
+    <design:attribute name="chkMonday" label="Monday Selected" description="This day was selected in the component"/>
+    <design:attribute name="chkTuesday" label="Tuesday Selected" description="This day was selected in the component"/>
+    <design:attribute name="chkWednesday" label="Wednesday Selected" description="This day was selected in the component"/>
+    <design:attribute name="chkThursday" label="Thursday Selected" description="This day was selected in the component"/>
+    <design:attribute name="chkFriday" label="Friday Selected" description="This day was selected in the component"/>
+    <design:attribute name="chkSaturday" label="Saturday Selected" description="This day was selected in the component"/>
+    <design:attribute name="FrequencyNote" label="Selected Schedule" description="Concatenated description"/>
+    <design:attribute name="fullyConfigured" label="Fully Configured" description="Boolean check to make sure user hits submit"/>
+	<design:attribute name="WeeklyFreq" label="Weekly Frequency" description="How Many Days Per Week this is being serviced" />
+</design:component>

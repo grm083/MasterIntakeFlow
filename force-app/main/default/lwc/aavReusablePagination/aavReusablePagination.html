@@ -1,0 +1,14 @@
+<template>
+    <div lwc:if={showPagination} class="slds-p-top_xxx-small slds-p-bottom_xx-small slds-align_absolute-center">
+        <lightning-button-icon icon-name="utility:left" onclick={previousPage} disabled={isFirstPage}
+            alternative-text="Previous" title="Previous"></lightning-button-icon>
+        <lightning-button-group class="slds-m-left_x-small slds-m-right_x-small">
+            <template for:each={numberList} for:item="item">
+                <lightning-button key={item.number} variant={item.variant} label={item.number}
+                    title={item.number} onclick={handleSelectPage}></lightning-button>
+            </template>
+        </lightning-button-group>
+        <lightning-button-icon icon-name="utility:right" onclick={nextPage} disabled={isLastPage}
+            alternative-text="Next" title="Next"></lightning-button-icon>
+    </div>
+</template>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Acorn_CMT_Link__c</fullName>
+    <description>A link that will redirect users to the correct CMT entry for the customer with which they are working.</description>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(&quot;http://adcaconlb.wm.com/Acorn/Client/CompanyContract.aspx?CompanyID=&quot;&amp;TEXT(SBQQ__Account__r.Parent.Acorn_Account_Id__c), SBQQ__Account__r.Parent.Name&amp;&quot; CMT Data&quot;, &quot;_self&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Clicking this link will open a new tab and bring to the Acorn CMT screens</inlineHelpText>
+    <label>Acorn CMT Link</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

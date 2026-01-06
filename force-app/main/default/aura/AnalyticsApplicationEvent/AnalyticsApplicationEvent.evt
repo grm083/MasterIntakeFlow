@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="showWorkflowTaskDashboard" type="Boolean"/>
+    <aura:attribute name="showTaskDashboard" type="Boolean"/>
+    <aura:attribute name="showCaseDashboard" type="Boolean"/>
+    <aura:attribute name="showTicketDashboard" type="Boolean"/>
+</aura:event>

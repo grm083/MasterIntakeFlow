@@ -1,0 +1,48 @@
+<aura:component controller="LocationContainerController" implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="showVendorSearch" type="Boolean"/>
+    <aura:attribute name="statusData" type="Boolean"/>
+    <aura:attribute name="CaseRec" type="Object"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:handler event="c:RefreshEvent" action="{!c.navigate}"/>
+    <aura:attribute name="showForm" type="Boolean" default="true"/>
+    <aura:attribute name="recordTypeId" type="String"/> 
+    <force:recordData aura:id = "recordLoader"
+                      recordId = "{!v.recordId}"
+                      fields = "Id, Supplier__c"
+                      targetRecord = "{!v.CaseRec}"
+                      targetFields =  "{!v.simpleRecord}"
+                      targetError = "{!v.recordLoadError}"
+                      />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <aura:if isTrue="{!v.showForm}">
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small" style="position:fixed !important;padding-top:10rem;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"
+                                          onclick="{!c.closeModel }"/>
+                    <h2 class="slds-text-heading_medium">Vendor</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:tabset class="slds-p-left_xx-large" aura:id="tabset" selectedTabId = "vendor_search">
+                        <lightning:tab onactive="{!c.vendorSearch}" id="vendor_search">
+                            <aura:set attribute="label">
+                                Vendor Search 
+                            </aura:set>
+                            <aura:if isTrue="{!v.showVendorSearch}">
+                                <aura:if isTrue="{!v.statusData}">
+                                    <c:VendorSearch recordId="{!v.recordId}"/>
+                                </aura:if>
+                            </aura:if>     
+                        </lightning:tab>
+                    </lightning:tabset>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
+</aura:component>

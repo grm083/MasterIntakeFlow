@@ -1,0 +1,24 @@
+<!--
+Author: Rishiraj Singh
+Requirement Id/Story: SDT-20076
+FC: Anmoal Bharti
+Module: Asset Management/Quote Lifecycle
+Description: VFC is being used to show LoggedIn user details on Email Template 'Declined Quote Email Template'
+-----------------------------------------------------------------
+Story             Sprint             Modified By           Description
+SDT-20076         AM-MVP3            Rishi                 Show LoggedIn user details
+-->
+<apex:component controller="GetChildCase" access="global">
+    <apex:outputText style="text-align: center;font-family:Arial;" value="Thank you for choosing WM."/><br/>
+    <!--<br/><b><apex:outputText style="text-align: center;color:green;font-family:Arial;" value="{!user.FirstName + ' ' + user.LastName}"/></b><br/>
+    <apex:outputText style="text-align: center;font-family:Arial;" value="Customer Service Representative"/><br/>
+    <apex:outputlink style="text-align:center;font-family:Arial;" value="mailto:{!user.Department_Email__c}">{!user.Department_Email__c}</apex:outputlink><br/>-->
+    <br/><apex:outputText style="text-align: center;color:black;font-size:13px;font-family:Arial;" value="WM"/><br/>
+    <apex:outputText style="text-align: center;color:black;font-size:13px;font-family:Arial;" value="Strategic Business Solutions"/><br/>
+    <apex:outputText style="text-align: center;color:black;font-size:13px;font-family:Arial;" value="1 Griffin Rd North"/><br/>
+    <apex:outputText style="text-align: center;color:black;font-size:13px;font-family:Arial;" value="Suite 4C"/><br/>
+    <apex:outputText style="text-align: center;color:black;font-size:13px;font-family:Arial;" value="Windsor, CT 06095"/><br/>
+    <br/>
+    <apex:image id="theImage" value="https://wmsbs.file.force.com/servlet/servlet.ImageServer?oid=00D1I000001V0eB&id=0153u000002Omy8" alt="WM Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;width:1.1in;height: 0.3in;"  title="WM Logo"/>
+    <!--<apex:outputText style="text-align: center;font-family:Arial;" value="{!user.Department_Phone__c}"/><br/>-->
+ </apex:component>

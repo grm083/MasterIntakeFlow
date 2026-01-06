@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Secondary_Segment__c</fullName>
+    <externalId>false</externalId>
+    <label>Secondary Segment</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Broker</fullName>
+                <default>false</default>
+                <label>Broker</label>
+            </value>
+            <value>
+                <fullName>Canada</fullName>
+                <default>false</default>
+                <label>Canada</label>
+            </value>
+            <value>
+                <fullName>Commercial Property</fullName>
+                <default>false</default>
+                <label>Commercial Property</label>
+            </value>
+            <value>
+                <fullName>Construction and Demolition</fullName>
+                <default>false</default>
+                <label>Construction and Demolition</label>
+            </value>
+            <value>
+                <fullName>Food</fullName>
+                <default>false</default>
+                <label>Food</label>
+            </value>
+            <value>
+                <fullName>Industrial</fullName>
+                <default>false</default>
+                <label>Industrial</label>
+            </value>
+            <value>
+                <fullName>Malls</fullName>
+                <default>false</default>
+                <label>Malls</label>
+            </value>
+            <value>
+                <fullName>Manufacturing</fullName>
+                <default>false</default>
+                <label>Manufacturing</label>
+            </value>
+            <value>
+                <fullName>Retail</fullName>
+                <default>false</default>
+                <label>Retail</label>
+            </value>
+            <value>
+                <fullName>Healthcare</fullName>
+                <default>false</default>
+                <label>Healthcare</label>
+            </value>
+            <value>
+                <fullName>Inside Sales Rep</fullName>
+                <default>false</default>
+                <label>Inside Sales Rep</label>
+            </value>
+            <value>
+                <fullName>Hardware And Home Improvement</fullName>
+                <default>false</default>
+                <label>Hardware And Home Improvement</label>
+            </value>
+            <value>
+                <fullName>Grocery</fullName>
+                <default>false</default>
+                <label>Grocery</label>
+            </value>
+            <value>
+                <fullName>Small Format Value</fullName>
+                <default>false</default>
+                <label>Small Format Value</label>
+            </value>
+            <value>
+                <fullName>Acute Hospitals</fullName>
+                <default>false</default>
+                <label>Acute Hospitals</label>
+            </value>
+            <value>
+                <fullName>Auto Aftermarket</fullName>
+                <default>false</default>
+                <label>Auto Aftermarket</label>
+            </value>
+            <value>
+                <fullName>Convenience Stores</fullName>
+                <default>false</default>
+                <label>Convenience Stores</label>
+            </value>
+            <value>
+                <fullName>Department Store</fullName>
+                <default>false</default>
+                <label>Department Store</label>
+            </value>
+            <value>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+                <label>Electronics</label>
+            </value>
+            <value>
+                <fullName>Entertainment</fullName>
+                <default>false</default>
+                <label>Entertainment</label>
+            </value>
+            <value>
+                <fullName>E-Retailers</fullName>
+                <default>false</default>
+                <label>E-Retailers</label>
+            </value>
+            <value>
+                <fullName>Finance Services And Life Care</fullName>
+                <default>false</default>
+                <label>Finance Services And Life Care</label>
+            </value>
+            <value>
+                <fullName>Food Distribution</fullName>
+                <default>false</default>
+                <label>Food Distribution</label>
+            </value>
+            <value>
+                <fullName>Food Service</fullName>
+                <default>false</default>
+                <label>Food Service</label>
+            </value>
+            <value>
+                <fullName>General Apparel</fullName>
+                <default>false</default>
+                <label>General Apparel</label>
+            </value>
+            <value>
+                <fullName>General Healthcare And Related Services</fullName>
+                <default>false</default>
+                <label>General Healthcare And Related Services</label>
+            </value>
+            <value>
+                <fullName>Health And Beauty</fullName>
+                <default>false</default>
+                <label>Health And Beauty</label>
+            </value>
+            <value>
+                <fullName>Hobby And Craft</fullName>
+                <default>false</default>
+                <label>Hobby And Craft</label>
+            </value>
+            <value>
+                <fullName>Home Goods</fullName>
+                <default>false</default>
+                <label>Home Goods</label>
+            </value>
+            <value>
+                <fullName>Long Term Care And Senior Living</fullName>
+                <default>false</default>
+                <label>Long Term Care And Senior Living</label>
+            </value>
+            <value>
+                <fullName>Manufacturing And Industrial</fullName>
+                <default>false</default>
+                <label>Manufacturing And Industrial</label>
+            </value>
+            <value>
+                <fullName>Office</fullName>
+                <default>false</default>
+                <label>Office</label>
+            </value>
+            <value>
+                <fullName>Office Supplies</fullName>
+                <default>false</default>
+                <label>Office Supplies</label>
+            </value>
+            <value>
+                <fullName>Pet Supplies</fullName>
+                <default>false</default>
+                <label>Pet Supplies</label>
+            </value>
+            <value>
+                <fullName>Property Management And Heavy Equipment Rentals</fullName>
+                <default>false</default>
+                <label>Property Management And Heavy Equipment Rentals</label>
+            </value>
+            <value>
+                <fullName>Restaurant</fullName>
+                <default>false</default>
+                <label>Restaurant</label>
+            </value>
+            <value>
+                <fullName>Specialty Apparel Mall Mix</fullName>
+                <default>false</default>
+                <label>Specialty Apparel Mall Mix</label>
+            </value>
+            <value>
+                <fullName>Sporting Goods</fullName>
+                <default>false</default>
+                <label>Sporting Goods</label>
+            </value>
+            <value>
+                <fullName>Transportation</fullName>
+                <default>false</default>
+                <label>Transportation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

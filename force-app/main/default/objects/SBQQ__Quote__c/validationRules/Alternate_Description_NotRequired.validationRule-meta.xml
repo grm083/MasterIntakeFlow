@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alternate_Description_NotRequired</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Alternate_Service_Provided__c  = False, NOT ISBLANK(Alternate_Description__c))</errorConditionFormula>
+    <errorDisplayField>Alternate_Description__c</errorDisplayField>
+    <errorMessage>Alternate Description is only applicable if Alternate Service Provided checkbox is checked.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,33 @@
+.THIS .greencolor svg{
+    fill : green;
+}
+.THIS .greencolor, .THIS .greencolor a{
+    color: green ;
+    font-weight: bold;
+}
+.THIS .redcolor svg{
+    fill: red !important;
+}
+.THIS .blackcolor svg{
+    fill : black; 
+}
+.THIS .blackcolor{
+    color : black ;
+}
+.THIS .blackcolor a{
+    color : black ;
+}
+.THIS .blackcolor svg{
+    color : black !important;
+}
+
+.THIS .slds-button_icon-bare{
+    display: none;
+}
+
+.THIS .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}

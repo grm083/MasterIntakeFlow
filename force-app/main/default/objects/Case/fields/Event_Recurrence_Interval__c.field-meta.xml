@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Event_Recurrence_Interval__c</fullName>
+    <description>Event Recurrence Interval information to support  SFDC to Acron Integration</description>
+    <externalId>false</externalId>
+    <label>Event Recurrence Interval</label>
+    <length>125</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

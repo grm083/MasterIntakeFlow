@@ -1,0 +1,149 @@
+
+<template>
+  <template if:false={isMultiVendor}>
+  <template if:true={isAPIError}>
+    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+      <p>Error has occured. Please create a new pricing request.</p>
+    </div>
+    <div class=" slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_default">
+      <p style="width:100%;text-align: left;overflow-wrap: anywhere;">{APIErrorMsg}</p>
+    </div>
+    <!-- <div class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small">
+      <lightning-input type="checkbox" label="Mock Response" value={mockresponse} onchange={handleMockResponse} ></lightning-input>
+    </div> -->
+  </template>  
+  <!--Output Header Container-->
+  <div class="slds-section slds-is-open slds-theme_default slds-table clspricingoutput clspricingmsgoutput" id="divPR" style="display:none;">
+
+    <h3 class="slds-section__title slds-theme_shade">
+    <div style="width: 100%;">
+
+      <span class="slds-truncate slds-p-horizontal_small" title="Section Title"><b>Pricing Request:
+          {RequestNo}</b></span>
+      <!-- <div style="float: right;">
+        <lightning-button variant="brand" name="priceComments" label="Copy Price Request to Case" value={priceRequestId} onclick={CopyPriceClick} disabled={isPriceCaseComment} class="slds-m-right_x-small">
+        </lightning-button>
+      </div> -->
+    </div>
+    </h3>
+    
+  </div>
+
+  <!--API Message Detail Container-->
+  <div class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small clspricingmsgoutput" id="divMSG" style="display:none;">
+    <h3 class="slds-section__title slds-theme_shade">
+      <span class="slds-truncate slds-p-horizontal_small" title="Section Title"><b>Output Message Details</b></span>
+    </h3>
+
+    <div lwc:dom="manual" id="outputmessagedetail" class="apimessaged"></div>
+  </div>
+
+  <!--Service Detail Container-->
+  <div class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small clspricingoutput" id="divSD" style="display:none;">
+    <h3 class="slds-section__title slds-theme_shade">
+      <span class="slds-truncate slds-p-horizontal_small" title="Section Title"><b>Service Details</b></span>
+    </h3>
+
+    <div lwc:dom="manual" id="servicedetail" class="serviced"></div>
+  </div>
+
+  <!--Pricing Detail Container-->
+  <div class="slds-section slds-is-open slds-theme_default clspricingoutput" id="divPD" style="display:none;">
+    <h3 class="slds-section__title slds-theme_shade">
+      <span class="slds-truncate slds-p-horizontal_small" title="Section Title"><b>Pricing Details</b></span>
+    </h3>
+    <div lwc:dom="manual" id="pricingdetail" class="pricingd" style="padding-top: 2px;"></div>
+  </div>
+
+  <!--Regulatory Fee Container-->
+  <div class="slds-section slds-is-open slds-theme_default clspricingrfoutput" id="divRF" style="display:none;">
+    <h3 class="slds-section__title slds-theme_shade">
+      <span class="slds-truncate slds-p-horizontal_small" title="Section Title"><b>Regulatory Fee Details</b></span>
+    </h3>
+    <div lwc:dom="manual" id="regulatoryfeedetail" class="regulatoryfeed"></div>
+  </div>
+
+  <!--Invoice Charges Container-->
+  <!-- <div class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small clspricingoutput" id="divID" style="visibility: hidden;">
+    <h3 class="slds-section__title slds-theme_shade">
+      <span class="slds-truncate slds-p-horizontal_small" title="Section Title"><b>Invoice Charges</b></span>
+    </h3>
+    <div lwc:dom="manual" id="invoicedetail" class="invoiced"></div>
+  </div> -->
+
+  <!--System Information Container-->
+  <div class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small clspricingoutput clspricingmsgoutput" id="divSIC" style="display:none;">
+    <h3 class="slds-section__title slds-theme_shade">
+      <span class="slds-truncate slds-p-horizontal_small" title="Section Title"><b>System Information</b></span>
+    </h3>
+    <table class="slds-table slds-table_header-hidden slds-table_striped">
+      <tbody>
+        <tr class="slds-hint-parent">
+          <th data-label="" scope="row">
+            <div class="slds-truncate" title="Created By">
+              <p><b>Created By</b></p>
+            </div>
+          </th>
+          <td data-label="">
+            <div class="slds-truncate" title="Created By">: {CreatedBy}</div>
+            <!-- <div class="slds-truncate" title="Created By">: System - Generated</div> -->
+            <!-- <div class="slds-truncate" title="Created By">: Clifford The big red dog!!</div> -->
+          </td>
+          <th data-label="" scope="row">
+            <div class="slds-truncate" title="Created Date">
+              <p><b>Created Date</b></p>
+            </div>
+          </th>
+          <td data-label="">
+            <div class="slds-truncate" title="Created Date">: {CreatedDate}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- modal start -->        
+ <!-- <template if:true={bShowModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+          
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Case</h2>
+          </header>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <lightning-record-edit-form object-api-name="Pricing_Request__c" density="comfy" record-id={recordId}
+              onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+              <lightning-messages></lightning-messages>
+              <lightning-input-field field-name="Case__c" value={caseno} >
+              </lightning-input-field>
+
+              <lightning-card class="slds-text-align_center">
+                <lightning-button variant="brand" type="submit" name="save" label="Save"></lightning-button>
+                <lightning-button variant="neutral"  label="Cancel" title="Cancel" type="text" onclick={handleCancel} class="slds-m-right_small"></lightning-button>
+              </lightning-card>  
+            </lightning-record-edit-form>
+          </div>
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+ </template> -->
+</template>
+ <!-- modal end -->
+
+ <!-- Multi vendors-->
+ <template if:true={isMultiVendor}>
+  <div>
+    <c-pricing-multi-vendor-output-screen 
+    recordid={recordId}>
+    </c-pricing-multi-vendor-output-screen>
+   </div>
+ </template>
+ 
+</template>

@@ -1,0 +1,28 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                controller="CustomCommentController">
+    
+    <aura:attribute name="caseId" type="string" default="" />
+    <!--Changes related to SDT-18095-->
+    <aura:attribute name="isRepairCase" type="boolean"/>
+    <aura:attribute name="trackingNumber" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:tabset selectedTabId="Add">
+        <lightning:tab label="View Comments" id="View">
+        <!--    <c:ShowExternalComments recordId="{!v.caseId}"/> -->
+            <c:ExternalComments recordId="{!v.caseId}"/>
+        </lightning:tab>
+        <lightning:tab label="Add Comments" id="Add">
+            <c:CreateNewAcornCaseComment recordId="{!v.caseId}"/>
+        </lightning:tab>
+        <lightning:tab label="Attachments" id="Attachments">
+            <c:CaseAttachUploadComp recordId="{!v.caseId}"/>
+        </lightning:tab>
+        <!--Changes related to SDT-18095-->
+        <aura:if isTrue="{! and(v.isRepairCase, NOT(empty(v.trackingNumber)))}">
+            <lightning:tab label="View Navision Notes" id="viewNavisonNotes" onactive="{!c.refreshNotes}">
+                <c:ViewNavisionNotes recordId="{!v.caseId}" aura:id="navNotes" trackingNumber="{!v.trackingNumber}"/>
+            </lightning:tab>
+        </aura:if>
+    </lightning:tabset>
+</aura:component>

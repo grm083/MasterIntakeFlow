@@ -1,0 +1,134 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                controller="QuoteProcurementController">
+    
+    <aura:attribute name="productWrapper" type="object" />
+    <aura:attribute name="positions" type="Account_Position__c[]" />
+    <aura:attribute name="selectedRecords" type="List" default="[]" />
+    <aura:attribute name="toggleValue" type="string" default="Onsite" />
+    <aura:attribute name="positionName" type="string" />
+    <aura:attribute name="Selectedvalue" type="string" />
+    <aura:attribute name="selectedProduct" type="Object" />
+    <aura:attribute name="SelectedPositionName" type="string" />
+    <aura:attribute name="altStreet" type="string" />
+    <aura:attribute name="altCity" type="string" />
+    <aura:attribute name="altState" type="string" />
+    <aura:attribute name="altPostal" type="string" />
+    <aura:attribute name="altPosition" type="string" />
+    <aura:attribute name="searchresult" type="String"/>
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Onsite', 'value': 'Onsite'},
+                                                        {'label': 'Offsite', 'value': 'Offsite'}]" />
+    <aura:attribute name="APColumns" type="List" default="[{label: 'Position',  fieldName: 'Container_Position__c', type: 'text'}]"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:registerEvent name="closeLocationModal" type="c:QuoteProductsCloseModal" />
+    <aura:if isTrue="{!v.loadingSpinner}">
+        <lightning:spinner alternativeText="Loading" size="medium" variant="brand" />
+    </aura:if>
+    <lightning:layout multipleRows="true"
+                      horizontalAlign="spread"
+                      verticalAlign="stretch">
+        
+        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+            <div class="slds-align_absolute-center slds-text-heading_medium">
+                Container Position
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="6">
+            <div class="slds-text-title_caps slds-align_absolute-center slds-box slds-p-bottom_xx-small">Position Lookup</div>
+            <lightning:layout multipleRows="true" verticalAlign="center">
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    
+                    <div>
+                        
+                        <lightning:input aura:id="positionSearch"
+                                         name="positionSearch"
+                                         value="{!v.searchresult}"
+                                         label="Search for your Position below"
+                                         type="search" 
+                                         onchange="{!c.handleStrChange}"/>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                    <lightning:button label="Search"
+                                      variant="brand"
+                                      onclick="{!c.handleClick}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small slds-scrollable_y" size="12">
+                    <div style="height: 200px">
+                        <lightning:datatable aura:id="PositionDetails"
+                                             columns="{!v.APColumns}"
+                                             data="{!v.positions}"
+                                             selectedRows="{!v.selectedRecords}"
+                                             resizeColumnDisabled="true"
+                                             keyField="Id"
+                                             maxRowSelection="1"
+                                             hideCheckboxColumn="false"
+                                             onrowselection="{! c.handleEnter }"
+                                             />
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="slds-box" size="6">
+            <div class="slds-text-title_caps slds-align_absolute-center slds-box slds-p-bottom_xx-small">Create New Position</div>
+            <lightning:layout multipleRows="true" verticalAlign="center">
+                <lightning:layoutItem flexibility="auto" size="12" class="slds-p-around_xx-small">
+                    <lightning:radioGroup name="OnsiteOffsite"
+                                          label="Position Type"
+                                          options="{!v.options}"
+                                          value="{! v.toggleValue}"
+                                          type="button" />
+                </lightning:layoutItem>
+                <aura:if isTrue="{!v.toggleValue == 'Onsite'}">
+                    <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                        <lightning:input aura:id="PosName" label="Position Name" 
+                                         name="PositionName" value="{!v.positionName}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                        <lightning:button name="Save"
+                                          variant="brand"
+                                          label="Save"
+                                          onclick="{!c.storeOnsiteClick}" />
+                    </lightning:layoutItem>
+                    <aura:set attribute="else">
+                        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                            <lightning:input aura:id="altLocation" label="Offsite Position"
+                                             name="altLocation" value="{!v.altPosition}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                            <lightning:input aura:id="altStreet" label="Street Address" 
+                                             name="altStreet" value="{!v.altStreet}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                            <lightning:input aura:id="altCity" label="City" 
+                                             name="altCity" value="{!v.altCity}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="7">
+                            <lightning:input aura:id="altState" label="State/Province" 
+                                             name="altState" value="{!v.altState}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="5">
+                            <lightning:input aura:id="altPostal" label="Postal Code" 
+                                             name="altPostal" value="{!v.altPostal}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                            <lightning:button name="Save"
+                                              variant="brand"
+                                              label="Save"
+                                              onclick="{!c.storeOffsiteClick}" />
+                        </lightning:layoutItem>
+                    </aura:set>
+                </aura:if>
+                
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" class="right-align slds-p-around_xx-small " alignmentBump="right" size="12">
+            <lightning:button label="Save"
+                              variant="brand"
+                              onclick="{!c.saveVendor}" />
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+</aura:component>

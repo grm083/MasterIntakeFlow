@@ -1,0 +1,73 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="TableListCmpCls">
+    <ltng:require scripts="{!join(',',$Resource.Highcharts
+                           )}" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    <aura:attribute name="AccountName" type="String[]"/>
+    <aura:attribute name="AccountTaskCount" type="Integer[]"/>
+    <aura:attribute name="AllAccountName" type="String[]"/>
+    <aura:attribute name="accountColumns" type="List"/>
+    <aura:attribute name="showChart" type="Boolean" default = "True" />
+    <aura:attribute name="tabClicked" type="Boolean" default = "True" />
+    <aura:attribute name="selectedNumberOfVendorTab" type="Integer" default = "5" />
+    <aura:attribute name="selectedUserView" type="String" access="global" default="All"/>
+    <aura:attribute name="taskType" type="String" default="All" access="global"/>
+    <aura:attribute name="parentVendorData" type="Object" access="global"/>
+    <aura:attribute name="parentVendor" type="Object" access="global"/>
+    <aura:attribute name="parentVendorDataTaskList" type="Object" access="global"/>
+    <aura:attribute name="parentVendorDataCount" type="Object" access="global"/>
+    <aura:attribute name="vendorData" type="Object" access="global"/>
+    <aura:attribute name="vendor" type="Object" access="global"/>
+    <aura:attribute name="vendorDataTaskList" type="Object" access="global"/>
+    <aura:attribute name="vendorDataCount" type="Object" access="global"/>
+    <aura:attribute name="locationData" type="Object" access="global"/>
+    <aura:attribute name="location" type="Object" access="global"/>
+    <aura:attribute name="locationDataTaskList" type="Object" access="global"/>
+    <aura:attribute name="locationDataCount" type="Object" access="global"/>
+    <aura:attribute name="GraphHeight" type="String" />
+    <aura:attribute name="AllAccountTaskCount" type="Integer[]"/>
+    <aura:attribute name="selTabId" type="String" default="TabOne" />
+    <aura:attribute name="chartType" type="string"/>
+    <aura:attribute name="chartTitle" type="string" default="Opportunity by StageName"/>
+    <aura:attribute name="chartSubTitle" type="string" default="Display Opportunity Count by StageName"/>
+    <aura:attribute name="xAxisCategories" type="string[]" default="['Qualification','Negotiation/Review','Closed Won','Id. Decision Makers','Proposal/Price Quote','Proposition','Prospecting','Perception Analysis','Needs Analysis']"/>
+    <aura:attribute name="yAxisParameter" type="string" default="No. of Opportunity"/>
+    <aura:attribute name="User" type="String[]" default="All,Genesys Integration"/>
+    <lightning:spinner aura:id="mySpinner" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
+    <aura:registerEvent name="cmpEvent" type="c:TaskBundlingChartEvent"/>
+    <aura:registerEvent name="appEvent" type="c:TaskBundlingChartOnclickEvent"/>
+    <aura:registerEvent name="appEvents" type="c:TaskBundlingDashboardUserOnSelectEvent"/>
+    <aura:handler  event="c:TaskBundlingDashboardUserOnSelectEvent" action="{!c.handleDropdownOnclickEvent}"/>
+    <div style="background-color:white">
+        
+        <lightning:tabset onselect="{! c.handleSelect }" selectedTabId="{!v.selTabId}">
+            <lightning:tab label="Top 5" id = "TabOne"/>
+            <lightning:tab label="Top 10" id = "TabTwo"/>
+            <lightning:tab label="Top 20" id = "TabThree"/>
+            <lightning:tab label="Top 50" id = "TabFour"/>
+            <lightning:select aura:id="selectUserType" name="select" label="User" required="true" class="slds-col slds-size_3-of-12" onchange="{! c.userTypeonChange }">
+                <option value="All">All</option>
+                <option value="Genesys Integration">Genesys Integration</option>
+                <option value="Others">Others</option>
+            </lightning:select>
+            <lightning:select aura:id="selectTaskType" name ="select" label="Task Type" required="true" class="slds-col slds-size_3-of-12" onchange="{! c.taskTypeonChange }">
+                <option value="All">All</option>
+                <option value="Project Services">Project Services</option>
+                <option value="Customer Services">Customer Services</option>
+            </lightning:select>
+        </lightning:tabset>
+        
+        
+        <div class="slds-card">
+            
+            <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                <div class="slds-align_absolute-center">
+                    <div aura:id="chart" style="height: 450px;width:700px; min-width: 400px; max-width: 700px; margin: 0 auto"></div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <aura:if isTrue="{!v.tabClicked}">
+        <c:TableListCmp aura:id="tableListId" taskType="{!v.taskType}" selectedUserView="{!v.selectedUserView}" numOfVendorDisplayed="{!v.selectedNumberOfVendorTab}" method="{!c.parentPress}"/>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,54 @@
+name: QAValidationOnSchedule
+on: 
+  schedule:
+    - cron:  '01 05 * * *'
+
+jobs:
+  QAValidationOnSchedule:
+   runs-on: [self-hosted, AWS, Node]
+   steps:
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '21'
+        #check-latest: true
+
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu' # for sfdx code scanner
+        java-version: '11'
+
+    - name: Install Salesforce CLI
+      run: |
+        echo %JAVA_HOME%
+        rm -rf node_modules
+        npm cache clean --force
+        npm config set registry https://registry.npmjs.org
+        npm install sfdx-cli --legacy-peer-deps
+        node_modules/sfdx-cli/bin/run plugins --core
+        
+    - name: 'Display Username'
+      run:
+          echo ${{secrets.SFDX_USERNAME_QA02}} | sed 's/./& /g'
+
+    - name: 'Populate auth file with SFDX_URL secret'
+      run: 
+          'echo ${{ secrets.SFDX_AUTH_URL_QA02}} > token.txt'
+      env: 
+          SFDX_USE_GENERIC_UNIX_KEYCHAIN: ${{secrets.SFDX_TRUE}}
+
+
+    - name: 'Authenticate against dev hub'
+      run:
+        node_modules/sfdx-cli/bin/run force:auth:sfdxurl:store -f token.txt -s -a testSandbox
+      env: 
+          SFDX_USE_GENERIC_UNIX_KEYCHAIN: ${{secrets.SFDX_TRUE}}
+
+    - name: Validate source
+      id: Validate
+
+      run:
+        node_modules/sfdx-cli/bin/run force:source:deploy --checkonly -x manifest/package.xml -u "$sfdx_username_qa" --testlevel=RunLocalTests --wait 100
+      env:
+        SFDX_USE_GENERIC_UNIX_KEYCHAIN: ${{secrets.SFDX_TRUE}}
+        sfdx_username_qa: ${{secrets.SFDX_USERNAME_QA02}}

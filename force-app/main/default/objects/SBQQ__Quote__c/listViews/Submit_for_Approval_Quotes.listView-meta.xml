@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Submit_for_Approval_Quotes</fullName>
+    <columns>NAME</columns>
+    <columns>SBQQ__Account__c</columns>
+    <columns>SBQQ__Status__c</columns>
+    <columns>Action_Type__c</columns>
+    <columns>Assigned_To__c</columns>
+    <columns>Next_Action_Due_Date__c</columns>
+    <columns>Last_Action_Performed__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>SBQQ__Status__c</field>
+        <operation>equals</operation>
+        <value>Price Configured</value>
+    </filters>
+    <label>Submit for Approval Quotes</label>
+</ListView>

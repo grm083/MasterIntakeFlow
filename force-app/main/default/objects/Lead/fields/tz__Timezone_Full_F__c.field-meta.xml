@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>tz__Timezone_Full_F__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Current timezone full name.</description>
+    <externalId>false</externalId>
+    <formula>IF( tz__DST_Setting__r.tz__DST__c , tz__Timezone_DST_Full__c, tz__Timezone_Full__c )</formula>
+    <inlineHelpText>Current timezone full name.</inlineHelpText>
+    <label>Timezone (Full)</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

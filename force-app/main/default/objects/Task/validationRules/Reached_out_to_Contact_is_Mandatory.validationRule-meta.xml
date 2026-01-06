@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reached_out_to_Contact_is_Mandatory</fullName>
+    <active>true</active>
+    <description>This checkbox is only editable when the Resolve Service Issue task is created from an Escalation.</description>
+    <errorConditionFormula>AND(Is_Alternate_Contact_Provided__c,Attempt__c == 2,NOT(Reached_out_to_Contact__c), ISPICKVAL(Process__c, &quot;Resolve Service Issue&quot;),ISPICKVAL(Outcome__c, &quot;No Response/Pending Response&quot;) )</errorConditionFormula>
+    <errorMessage>You need to select Reached out to Contact if you want to select outcome as No response/ Pending Response</errorMessage>
+</ValidationRule>

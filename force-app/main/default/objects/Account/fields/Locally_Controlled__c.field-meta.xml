@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Locally_Controlled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Where the Location is Locally Controller or not</description>
+    <externalId>false</externalId>
+    <label>Locally Controlled</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

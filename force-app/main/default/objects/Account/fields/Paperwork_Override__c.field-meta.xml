@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Paperwork_Override__c</fullName>
+    <externalId>false</externalId>
+    <label>Paperwork Override</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Default</fullName>
+                <default>true</default>
+                <label>Default</label>
+            </value>
+            <value>
+                <fullName>Schedule_A</fullName>
+                <default>false</default>
+                <label>Schedule A</label>
+            </value>
+            <value>
+                <fullName>Hauler_of_Record</fullName>
+                <default>false</default>
+                <label>Hauler of Record</label>
+            </value>
+            <value>
+                <fullName>Do_Not_Send</fullName>
+                <default>false</default>
+                <label>Do Not Send</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

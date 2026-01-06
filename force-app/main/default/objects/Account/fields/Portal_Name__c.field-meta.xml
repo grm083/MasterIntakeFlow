@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Portal_Name__c</fullName>
+    <label>Portal Name</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Basecamp</fullName>
+                <default>false</default>
+                <label>Basecamp</label>
+            </value>
+            <value>
+                <fullName>Building Engines / Prism</fullName>
+                <default>false</default>
+                <label>Building Engines / Prism</label>
+            </value>
+            <value>
+                <fullName>Corrigo</fullName>
+                <default>false</default>
+                <label>Corrigo</label>
+            </value>
+            <value>
+                <fullName>Coupa</fullName>
+                <default>false</default>
+                <label>Coupa</label>
+            </value>
+            <value>
+                <fullName>eBusiness</fullName>
+                <default>false</default>
+                <label>eBusiness</label>
+            </value>
+            <value>
+                <fullName>ECOBPM</fullName>
+                <default>false</default>
+                <label>ECOBPM</label>
+            </value>
+            <value>
+                <fullName>FEXA</fullName>
+                <default>false</default>
+                <label>FEXA</label>
+            </value>
+            <value>
+                <fullName>FMPilot</fullName>
+                <default>false</default>
+                <label>FMPilot</label>
+            </value>
+            <value>
+                <fullName>Maximo / PMWOA</fullName>
+                <default>false</default>
+                <label>Maximo / PMWOA</label>
+            </value>
+            <value>
+                <fullName>Nest</fullName>
+                <default>false</default>
+                <label>Nest</label>
+            </value>
+            <value>
+                <fullName>Office Trax</fullName>
+                <default>false</default>
+                <label>Office Trax</label>
+            </value>
+            <value>
+                <fullName>RAMP</fullName>
+                <default>false</default>
+                <label>RAMP</label>
+            </value>
+            <value>
+                <fullName>Ruscomp</fullName>
+                <default>false</default>
+                <label>Ruscomp</label>
+            </value>
+            <value>
+                <fullName>Service Channel</fullName>
+                <default>false</default>
+                <label>Service Channel</label>
+            </value>
+            <value>
+                <fullName>Service Now</fullName>
+                <default>false</default>
+                <label>Service Now</label>
+            </value>
+            <value>
+                <fullName>StaplesIQ</fullName>
+                <default>false</default>
+                <label>StaplesIQ</label>
+            </value>
+            <value>
+                <fullName>Tango</fullName>
+                <default>false</default>
+                <label>Tango</label>
+            </value>
+            <value>
+                <fullName>VAWS</fullName>
+                <default>false</default>
+                <label>VAWS</label>
+            </value>
+            <value>
+                <fullName>Verisae</fullName>
+                <default>false</default>
+                <label>Verisae</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

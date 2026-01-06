@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Edit_For_Unspecified_Contact</fullName>
+    <active>true</active>
+    <description>If First name = “Unspecified”, Last name = “Account Name”, editing of any field should not be allowed.</description>
+    <errorConditionFormula>AND(
+AND($Profile.Name &lt;&gt; &quot;System Administrator&quot;,$Permission.Unspecified_Contact_Edit = False),
+NOT(ISNEW()),
+OR( LOWER(FirstName) = &quot;unspecified&quot;, LOWER(PRIORVALUE(FirstName)) = &quot;unspecified&quot;) ,
+OR( LOWER(LastName) = LOWER(Account.Name) , LOWER(PRIORVALUE(LastName)) = LOWER(Account.Name),LOWER(LastName) = LOWER(PRIORVALUE( AccountNameForContact__c )) , LOWER(PRIORVALUE(LastName)) = LOWER(PRIORVALUE( AccountNameForContact__c )) )
+)</errorConditionFormula>
+    <errorMessage>Unspecified contact cannot be modified.</errorMessage>
+</ValidationRule>

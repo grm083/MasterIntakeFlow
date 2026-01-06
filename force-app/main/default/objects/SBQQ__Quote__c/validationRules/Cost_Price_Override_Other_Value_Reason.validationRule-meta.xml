@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cost_Price_Override_Other_Value_Reason</fullName>
+    <active>true</active>
+    <description>Cost/Price Override Other Value Reason</description>
+    <errorConditionFormula>IF(
+    AND(
+        TEXT(Cost_Price_Override_Reason__c) = &quot;Other&quot;, 
+        ISBLANK(Cost_Price_Override_Description__c)), True, False
+ )</errorConditionFormula>
+    <errorDisplayField>Cost_Price_Override_Description__c</errorDisplayField>
+    <errorMessage>When Cost/Price Override Reason is &apos;Other&apos;, Please provide a Cost/Price Override Description</errorMessage>
+</ValidationRule>

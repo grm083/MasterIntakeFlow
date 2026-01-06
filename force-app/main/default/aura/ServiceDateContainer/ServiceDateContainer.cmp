@@ -1,0 +1,87 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" controller="ServiceDateContainerController" access="global" >
+    <aura:attribute name="showForm" type="Boolean" default="true"/>
+    <aura:attribute name="isModalOpenServiceDate" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenSetCaseDateComp" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenMultiDateComp" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenWMCapacityComp" type="Boolean" default="false"/> 
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    <aura:attribute name="isDateNotListed" type="Boolean" default="false"/> 
+  	<aura:attribute name="caseRecord" type="Object"/> 
+    <aura:handler event="c:RefreshEvent" action="{!c.navigate}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="opensla" event="c:openSetCaseSLACompEvnt" action="{!c.openSetSlaCompFromPlanner}" />
+    <aura:attribute name="parentId" type="String" access="global" />
+    <aura:attribute name="displaySummary" type="Boolean" default="false"/>
+    <aura:attribute name="psiReq" type="Boolean" default="true"/>
+    <aura:attribute name="isMultiCheckedVisible" type="Boolean" default="true"/>    
+    <aura:attribute name="showMultipleCaseLabel" type="Boolean" default="true" />
+    <aura:attribute name="showOnRelatedMultiAssetCase" type="Boolean" default="false" />
+    <aura:attribute name="isCapacityEligible" type="Boolean" default="false"/>
+    <aura:attribute name="isAvailDate" type="Boolean" default="false"/>
+    <aura:attribute name="isDateNotListedCl" type="Boolean" default="false"/>
+    
+   <aura:if isTrue="{!v.showForm}">
+        <aura:if isTrue="{!v.loadingSpinner}">
+           		 <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+        </aura:if>
+    <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small" style="position:fixed !important;padding-top:10rem;">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <!--changes related to SDT-41639-->
+                <lightning:buttonIcon iconName="utility:close"
+                                      alternativeText="close"
+                                      variant="bare"
+                                      class="slds-modal__close"
+                                      onclick="{!c.closeModel }"/>
+                <h2 class="slds-text-heading_medium">Service Date Selection</h2>
+                     
+            </div>
+          
+   			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">                
+               <div class="slds-align_absolute-center">                   
+                    <lightning:buttonStateful
+                                          variant="brand"
+                                          labelWhenOff="Service Date"
+                                          labelWhenOn="Service Date"
+                                          labelWhenHover="Service Date"
+                                          iconNameWhenOff="utility:add"
+                                          iconNameWhenOn="utility:check"                                          
+                                          state="{! v.isModalOpenServiceDate }"
+                                          onclick="{! c.handleServDateClick }"
+                                          />
+                   
+                    
+                              <aura:if isTrue="{!and(and(or(v.displaySummary,v.showOnRelatedMultiAssetCase), v.psiReq), v.isMultiCheckedVisible)}">
+                                    <aura:if isTrue= "{!v.showMultipleCaseLabel}">
+                   <lightning:buttonStateful
+                                          variant="brand"
+                                          labelWhenOff="Multi Dates"
+                                          labelWhenOn="Multi Dates"
+                                          labelWhenHover="Multi Dates"
+                                          iconNameWhenOff="utility:add"
+                                          iconNameWhenOn="utility:check"
+                                          state="{! v.isOpenMultiDateComp }"
+                                          onclick="{! c.handleMultiDateClick }"
+                                          />
+                                        </aura:if> 
+                                    </aura:if>
+                   
+                   </div>
+                <aura:if isTrue="{!and(v.isOpenSetCaseDateComp,v.isModalOpenServiceDate)}">
+                     <c:SetCaseSLADate recordId="{!v.recordId}" closeParent="{!v.showForm}" parentId="{!v.parentId}" isCapacityEligible = "{!v.isCapacityEligible}" isAvailDate = "{!v.isAvailDate}" isDateNotListedCl = "{!v.isDateNotListedCl}"/>
+                </aura:if> 
+                <div class="slds-is-relative">
+                    <aura:if isTrue="{!v.isOpenMultiDateComp}"> 
+                        <c:CustomCalendar recordId="{!v.recordId}" showModal="true" servicedate="{!v.caseRecord.Service_Date__c}" closeParent="{!v.showForm}"/>
+                    </aura:if>
+                </div>
+                
+                <aura:if isTrue="{!and(v.isOpenWMCapacityComp,v.isModalOpenServiceDate)}">         			
+                     <c:WMCapacity recordId="{!v.recordId}" closeParent="{!v.showForm}" parentId="{!v.parentId}"/>
+        		</aura:if>
+            </div>
+        </div>
+       </div>
+       <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>    
+    </aura:if>
+</aura:component>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stepped_cost_and_price</fullName>
+    <active>false</active>
+    <description>created as part of SDT32766 and 32442. It will ensure thatstepped Quoteline must have 2 step cost and price</description>
+    <errorConditionFormula>OR(
+AND(ISPICKVAL(CostModelType__c,&apos;STP&apos;) ,OR(ISNULL(CostPrice1__c),ISNULL(CostPrice2__c))),
+AND(PricingUnitMethod__c=&apos;STP&apos; ,OR(ISNULL(PricePrice2__c),ISNULL(PricePrice2__c)))
+)</errorConditionFormula>
+    <errorMessage>You must enter 2 stepped cost , 2 stepped price if Cost model type is Stepped and Price unit method is stepped.</errorMessage>
+</ValidationRule>

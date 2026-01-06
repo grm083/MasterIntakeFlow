@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Contact_Change_Rule</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(SBQQ__PrimaryContact__c  &lt;&gt; PRIORVALUE(SBQQ__PrimaryContact__c),  TEXT(SBQQ__Status__c)  &lt;&gt; &apos;Draft&apos;)</errorConditionFormula>
+    <errorMessage>Primary Contact can not be changed in this stage.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Type__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Product Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Dumpster</fullName>
+                <default>true</default>
+                <label>Dumpster</label>
+            </value>
+            <value>
+                <fullName>Toter</fullName>
+                <default>false</default>
+                <label>Toter</label>
+            </value>
+            <value>
+                <fullName>Hand Pickup</fullName>
+                <default>false</default>
+                <label>Hand Pickup</label>
+            </value>
+            <value>
+                <fullName>Carts</fullName>
+                <default>false</default>
+                <label>Carts</label>
+            </value>
+            <value>
+                <fullName>Vertical Compactor</fullName>
+                <default>false</default>
+                <label>Vertical Compactor</label>
+            </value>
+            <value>
+                <fullName>Compactor</fullName>
+                <default>false</default>
+                <label>Compactor</label>
+            </value>
+            <value>
+                <fullName>Open Top</fullName>
+                <default>false</default>
+                <label>Open Top</label>
+            </value>
+            <value>
+                <fullName>Baler</fullName>
+                <default>false</default>
+                <label>Baler</label>
+            </value>
+            <value>
+                <fullName>Box</fullName>
+                <default>false</default>
+                <label>Box</label>
+            </value>
+            <value>
+                <fullName>Compactor - Self-Contained</fullName>
+                <default>false</default>
+                <label>Compactor - Self-Contained</label>
+            </value>
+            <value>
+                <fullName>Compactor Box Only</fullName>
+                <default>false</default>
+                <label>Compactor Box Only</label>
+            </value>
+            <value>
+                <fullName>Storage Container</fullName>
+                <default>false</default>
+                <label>Storage Container</label>
+            </value>
+            <value>
+                <fullName>Trailer</fullName>
+                <default>false</default>
+                <label>Trailer</label>
+            </value>
+            <value>
+                <fullName>Holding Tank</fullName>
+                <default>false</default>
+                <label>Holding Tank</label>
+            </value>
+            <value>
+                <fullName>Portable Standard Restroom</fullName>
+                <default>false</default>
+                <label>Portable Standard Restroom</label>
+            </value>
+            <value>
+                <fullName>Double Hand Washing Station</fullName>
+                <default>false</default>
+                <label>Double Hand Washing Station</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Portable Handicap Restroom</fullName>
+                <default>false</default>
+                <label>Portable Handicap Restroom</label>
+            </value>
+            <value>
+                <fullName>Portable Hi-Rise Restroom</fullName>
+                <default>false</default>
+                <label>Portable Hi-Rise Restroom</label>
+            </value>
+            <value>
+                <fullName>Single Hand Washing Station</fullName>
+                <default>false</default>
+                <label>Single Hand Washing Station</label>
+            </value>
+            <value>
+                <fullName>Washout Container</fullName>
+                <default>false</default>
+                <label>Washout Container</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bill_By_Recon__c</fullName>
+    <externalId>false</externalId>
+    <label>Bill By Recon</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Spec Level Pricing</fullName>
+                <default>false</default>
+                <label>Spec Level Pricing</label>
+            </value>
+            <value>
+                <fullName>Client level pass through</fullName>
+                <default>false</default>
+                <label>Client level pass through</label>
+            </value>
+            <value>
+                <fullName>Client level non pass through</fullName>
+                <default>false</default>
+                <label>Client level non pass through</label>
+            </value>
+            <value>
+                <fullName>Service level pass through</fullName>
+                <default>false</default>
+                <label>Service level pass through</label>
+            </value>
+            <value>
+                <fullName>Service level non pass through</fullName>
+                <default>false</default>
+                <label>Service level non pass through</label>
+            </value>
+            <value>
+                <fullName>Service level non pass through no temps</fullName>
+                <default>false</default>
+                <label>Service level non pass through no temps</label>
+            </value>
+            <value>
+                <fullName>Migration True-Up</fullName>
+                <default>false</default>
+                <label>Migration True-Up</label>
+            </value>
+            <value>
+                <fullName>Migration Upload</fullName>
+                <default>false</default>
+                <label>Migration Upload</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

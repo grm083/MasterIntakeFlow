@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approver__c</fullName>
+    <description>Actual Approver for the Business Rule</description>
+    <externalId>false</externalId>
+    <formula>IF(NoT(ISBLANK(Account_Team_Member__c)),HYPERLINK(&quot;/&quot; &amp;  Account_Team_Member__r.Id,   Account_Team_Member__r.FirstName + &apos; &apos; +  Account_Team_Member__r.LastName  ) , IF(NoT(ISBLANK(Approver_Contact__c )),   HYPERLINK(&quot;/&quot; &amp; Approver_Contact__r.Id,    Approver_Contact__r.FirstName + &apos; &apos; + Approver_Contact__r.LastName),IF(NoT( ISBLANK(Title__c  )),   HYPERLINK(&quot;/&quot; &amp; Title__r.Id,  Title__r.Name ),IF(NoT( ISBLANK(Department__r.Name) ), HYPERLINK(&quot;/&quot; &amp; Department__r.Id,  Department__r.Name ),IF(NoT( ISBLANK( User__c ) ), HYPERLINK(&quot;/&quot; &amp; User__r.Id,   User__r.FirstName + &apos; &apos;+  User__r.LastName ), IF(NoT( ISBLANK( Email__c ) ), Email__c ,null))))))</formula>
+    <label>Approver</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

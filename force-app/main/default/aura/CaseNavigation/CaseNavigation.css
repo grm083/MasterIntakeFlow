@@ -1,0 +1,7 @@
+.THIS .newline{
+    white-space : pre-line !important;
+    font-size: medium;
+}
+.THIS .slds-truncate {
+    white-space: normal;
+}

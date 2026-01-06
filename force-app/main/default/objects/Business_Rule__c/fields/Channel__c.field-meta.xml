@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel__c</fullName>
+    <label>Channel</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>WM Portal</fullName>
+                <default>false</default>
+                <label>WM Portal</label>
+            </value>
+            <value>
+                <fullName>Service Channel</fullName>
+                <default>false</default>
+                <label>Service Channel</label>
+            </value>
+            <value>
+                <fullName>Old Seville</fullName>
+                <default>false</default>
+                <label>Old Seville</label>
+            </value>
+            <value>
+                <fullName>RealSuite</fullName>
+                <default>false</default>
+                <label>RealSuite</label>
+            </value>
+            <value>
+                <fullName>VX Maintain/ Verisae</fullName>
+                <default>false</default>
+                <label>VX Maintain/ Verisae</label>
+            </value>
+            <value>
+                <fullName>OfficeTrax</fullName>
+                <default>false</default>
+                <label>OfficeTrax</label>
+            </value>
+            <value>
+                <fullName>Maximo</fullName>
+                <default>false</default>
+                <label>Maximo</label>
+            </value>
+            <value>
+                <fullName>FixIt</fullName>
+                <default>false</default>
+                <label>FixIt</label>
+            </value>
+            <value>
+                <fullName>Big Sky</fullName>
+                <default>false</default>
+                <label>Big Sky</label>
+            </value>
+            <value>
+                <fullName>Corrigo</fullName>
+                <default>false</default>
+                <label>Corrigo</label>
+            </value>
+            <value>
+                <fullName>BaseCamp</fullName>
+                <default>false</default>
+                <label>BaseCamp</label>
+            </value>
+            <value>
+                <fullName>fmPilot</fullName>
+                <default>false</default>
+                <label>fmPilot</label>
+            </value>
+            <value>
+                <fullName>NEST Facilitate</fullName>
+                <default>false</default>
+                <label>NEST Facilitate</label>
+            </value>
+            <value>
+                <fullName>Staples IQ</fullName>
+                <default>false</default>
+                <label>Staples IQ</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

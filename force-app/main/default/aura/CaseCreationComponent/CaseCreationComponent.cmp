@@ -1,0 +1,130 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,lightning:actionOverride,lightning:hasPageReference" access="global" Controller ="CustomCaseCreationCntrlr">
+    <aura:attribute name="selectedRecordType" type="String"/>
+    <aura:attribute name="isOpenModal" type="boolean" default="false"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="caseData" type="SObject"/>
+
+    
+    <aura:attribute name="recordTypeList" type="RecordType[]" access="global"/>
+    <aura:attribute name="copyOptions" type="List" default="[{'label':'Email to Comments', 'value':'Email'}, {'label':'Comments', 'value':'Comments'},{'label':'Asset', 'value':'Asset'},{'label':'Attachments', 'value':'Attachments'}]"/>
+    <aura:attribute name="selectedCopyOptions" type="List" default="Comments"/>
+    <aura:attribute name= "isCopyOptionModal" type="boolean" default = "false"/>
+    <aura:attribute name="isRecTypeModal" type="boolean" default = "false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="nextEnabled" type="Boolean" default="true"/>
+	<aura:attribute name="errorCombination" type="Boolean" default="false"/>
+    <aura:attribute name="IsSpinner" type="Boolean"/>
+    <aura:attribute name="emailList" type="List"/>
+    <aura:attribute name="emailSelectionModal" type= "Boolean" default = "false"/>
+    <aura:attribute name="emailColumns" type = "List" default="[{label: 'Subject', fieldName: 'Subject', type: 'text'}, {label: 'From Address', fieldName: 'FromAddress', type: 'text'}, {label: 'To Address', fieldName: 'ToAddress', type: 'text'}, {label: 'Status', fieldName: 'Status', type: 'text'}, {label: 'Message Date', fieldName: 'MessageDate', type: 'date',typeAttributes: {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    } }]"/>
+    <aura:attribute name="emailData" type="Object"/>
+    <aura:attribute name="selectedEmails" type="List"/>
+    <aura:attribute name="emailNextEnabled" type="Boolean" default = "true"/>
+
+    <aura:html tag="style">
+        .slds-modal__container{
+        max-width: 90rem !important;
+        width:90% !important;
+        }
+    </aura:html>
+
+    <!--Case creation from case home page New button-->
+    <aura:if isTrue="{!v.isOpenModal}">
+    <!--###### MODAL BOX Start From Here ######--> 
+    	 <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+             <div class="slds-modal__container">
+                 <!--###### MODAL BOX HEADER Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel}"
+                                              alternativeText="close"
+                                              variant="bare"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Case</h2>
+                    </div>
+                    <!--###### MODAL BOX HEADER End From Here ######-->
+                 	 <!--###### MODAL BOX BODY Part Start######-->
+                 	<div class="scrollable slds-modal__content slds-p-around--small" >
+                        <c:changeRecordTypeCard recordId="{!v.recordId}" oncancel="{!c.closeModel}" onnext="{!c.handleNext}" action="Create" caseListView="true"  errorCombination = "{!v.errorCombination}"/>
+                    </div> 
+             </div>
+    	 </div>
+    <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+     <!--###### MODAL BOX Part END Here ######-->
+    </aura:if>
+    
+    <!--Invoking the quick action from asset page for creation of case-->
+    <aura:if isTrue="{!v.isOpen}">
+        <div class="modal-header slds-modal__header slds-p-around--small">
+          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Case</h2>
+        </div>
+         <div class="scrollable slds-modal__content slds-p-around--small" >
+            <c:changeRecordTypeCard recordId="{!v.recordId}" oncancel="{!c.cancelPopup}" onnext="{!c.handleNext}" action="Create"/>
+         </div>
+    </aura:if>
+    
+    <!--Invoking the case creation from case detail page-->
+    <aura:if isTrue="{!v.isRecTypeModal}">
+        <c:changeRecordTypeCard recordId="{!v.recordId}" oncancel="{!c.cancelPopup}" onnext="{!c.handleNext}" action="Next"/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.isCopyOptionModal}">
+        <div class="modal-header slds-modal__header slds-p-around--small">
+          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Case</h2>
+        </div>
+         <div class="scrollable slds-modal__content slds-p-around--small">
+             <div><p>What would you like to copy for this case?</p></div>
+            <lightning:checkboxGroup name="Copy Option Checkbox"
+                                     label="Copy Option Checkbox"
+                                     options="{!v.copyOptions}"
+                                     value="{!v.selectedCopyOptions}"
+                                     onchange="{!c.onselectCopyOption}"/>
+         </div>
+         <div class="modal-footer slds-modal__footer">
+        	<div class="forceChangeRecordTypeFooter">
+                <lightning:button variant="brand" disabled="false" label="Previous" aura:id="cancelButton" onclick="{!c.goBack}" />
+            	<lightning:button variant="brand" disabled="{!v.nextEnabled}" label="Create Case" aura:id="nextButton" onclick="{!c.createCaseWithCopyData}" />      
+            </div>
+         </div>
+    </aura:if>
+    
+    <!-- email selection modal for email to comment -->
+    <aura:if isTrue="{!v.emailSelectionModal}">
+        <div class="modal-header slds-modal__header slds-p-around--small">
+          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Case</h2>
+        </div>
+         <div class="scrollable slds-modal__content slds-p-around--small">
+             <div><p>Which emails would you like to create comments for?</p></div>
+            <lightning:datatable 
+                columns = "{!v.emailColumns}"
+                data = "{!v.emailData}"
+                keyField = "id"
+                onrowselection = "{!c.onselectEmailOptions}"
+
+            />
+         </div>
+         <div class="modal-footer slds-modal__footer">
+        	<div class="forceChangeRecordTypeFooter">
+                <lightning:button variant="brand" disabled="false" label="Previous" aura:id="cancelButton" onclick="{!c.goBackToCopyOption}" />
+            	<lightning:button variant="brand" disabled="{!v.emailNextEnabled}" label="Create Case" aura:id="nextButton" onclick="{!c.createCaseAfterEmailSelect}" />      
+            </div>
+         </div>
+    </aura:if>
+
+
+
+
+    <aura:if isTrue="{!v.IsSpinner}">
+        <lightning:spinner variant="brand"/>
+    </aura:if>
+    
+    
+</aura:component>

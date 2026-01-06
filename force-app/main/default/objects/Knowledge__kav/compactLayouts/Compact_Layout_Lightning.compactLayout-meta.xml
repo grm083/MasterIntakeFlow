@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Compact_Layout_Lightning</fullName>
+    <fields>Title</fields>
+    <fields>ArticleNumber</fields>
+    <fields>PublishStatus</fields>
+    <fields>LastModifiedDate</fields>
+    <fields>VersionNumber</fields>
+    <label>Compact Layout Lightning</label>
+</CompactLayout>

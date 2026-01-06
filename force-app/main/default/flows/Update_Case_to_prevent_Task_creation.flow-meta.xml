@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <description>Check if Line item is Disposal or Recycle</description>
+        <name>Check_Service_Type</name>
+        <label>Check Service Type</label>
+        <locationX>294</locationX>
+        <locationY>212</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_BackDated_Case_Condition</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varCaseRecord.Service_Date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>varCaseRecord.Service_Date_from_Local_Time__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_case_if_BackDated_Case</targetReference>
+            </connector>
+            <label>If BackDated Case Condition</label>
+        </rules>
+        <rules>
+            <name>if_Line_item_is_Disposal_or_Recycle</name>
+            <conditionLogic>(1 OR 2) AND 3 AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>varWorkOrderLineItem.Service_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Disposal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varWorkOrderLineItem.Service_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recycling</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varCaseRecord.Service_Date__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varWorkOrderLineItemCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varCaseRecord.Case_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pickup</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_based_on_line_item_type</targetReference>
+            </connector>
+            <label>if Line item is Disposal or Recycle</label>
+        </rules>
+    </decisions>
+    <description>This flow updates the case status and sub status to close in order to prevent task creation</description>
+    <interviewLabel>Update Case to prevent Task creation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Case to prevent Task creation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch case to check if backdated case</description>
+        <name>Get_Case</name>
+        <label>Get Case</label>
+        <locationX>303</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Service_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varCaseId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>varCaseRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Service_Date__c</queriedFields>
+        <queriedFields>Service_Date_from_Local_Time__c</queriedFields>
+        <queriedFields>Case_Type__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetch Work Order Line items</description>
+        <name>Get_Work_Order_Line_items</name>
+        <label>Get Work Order Line items</label>
+        <locationX>187</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WorkOrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varWorkOrderId</elementReference>
+            </value>
+        </filters>
+        <object>WorkOrderLineItem</object>
+        <outputReference>varWorkOrderLineItem</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Service_Type__c</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Case Status and Sub Status</description>
+        <name>Update_Case_based_on_line_item_type</name>
+        <label>Update Case based on line item type</label>
+        <locationX>613</locationX>
+        <locationY>268</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case_Sub_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Service Not Confirmed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varCaseId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Work_Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varWorkOrderId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Service Not Confirmed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the case to close status if backdated case and once the acorn workorder number is received to salesforce</description>
+        <name>Update_case_if_BackDated_Case</name>
+        <label>Update case if BackDated Case</label>
+        <locationX>605</locationX>
+        <locationY>106</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case_Sub_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Service Confirmed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varCaseId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Service Confirmed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <startElementReference>Get_Work_Order_Line_items</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>varAcornWorkOrderNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Holds the case id sent as input parameter</description>
+        <name>varCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varCaseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>Holds the input parameter Work order Id</description>
+        <name>varWorkOrderId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varWorkOrderLineItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>WorkOrderLineItem</objectType>
+    </variables>
+    <variables>
+        <description>This stores the line item count of Work order line items</description>
+        <name>varWorkOrderLineItemCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+</Flow>

@@ -1,0 +1,170 @@
+<apex:component controller="GetDetails" access="global">
+    
+    <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!objQuote}"/>
+    <apex:outputText style="color:black;font-family:Arial;" value="The location listed below is requesting to"/>&nbsp;
+    <apex:outputText style="font-family:Arial;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Case_Sub_Type__c}"/>&nbsp;
+    <apex:outputText style="color:black;font-family:Arial;" value="their current service for the"/>&nbsp;
+   <apex:repeat value="{!ConfigData}" var="fieldKey">
+    <apex:outputText style="font-family:Arial;" value="{!configMap[fieldKey].oldDuration}"/>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value=" {!mQLI[fieldKey].Equipment_Size__c}"/>&nbsp;
+         <apex:outputText style="color:black;font-family:Arial;" value=" {!mQLI[fieldKey].SBQQ__Product__r.Name}"/>&nbsp;
+     <!--   <apex:outputText style="color:black;font-family:Arial;" value="- {!mQLI[fieldKey1].Equipment_Style__c}"/>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value="- {!mQLIMaterialCode[fieldKey1]}"/>&nbsp; -->
+    </apex:repeat>
+    <br/><br/>
+    
+    <apex:repeat value="{!WrapperData}" var="fieldKey">
+        <apex:outputText style="color:black;font-family:Arial;" value="The current service frequency is"/>&nbsp;<apex:outputText style="font-family:Arial;" value="{!configMap[fieldKey].oldScheduleFrequency}"/>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value="The new requested frequency is {!mQLI[fieldKey].Service_Schedule__c}"/>&nbsp;
+    </apex:repeat>
+    <br/><br/>
+    
+    <apex:repeat value="{!WrapperData}" var="fieldKey">
+        <apex:outputText style="color:black;font-family:Arial;" value="The new requested service days are "/>&nbsp;<apex:outputText style="font-family:Arial;" value="{!mQLI[fieldKey].Service_Days__c}."/>&nbsp;
+        <apex:outputText style="color:black;font-family:Arial;" value=" If these days are not available, please provide alternative service days."/>&nbsp;
+    </apex:repeat>
+    <br/><br/>
+    
+    <b style="color:black;font-family:Arial;">Please confirm that the rates will remain the same. </b><br/><br/>
+    
+    <b>SERVICE DETAILS</b><br/><br/>
+    
+    <table width = "100%" style="color:black;font-family:Arial;border:0px solid black">
+        <tr>
+            <td > 
+                <b>Vendor: </b>
+            </td>        
+            <td>
+                <apex:repeat value="{!WrapperData}" var="fieldKey2">
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey2].Vendor__r.Name}"/><br/>
+                </apex:repeat>
+            </td>     
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b>Reference #:</b> </td>
+            <td>{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b>Location Id: </b></td>
+            <td>{!QuoteFields.SBQQ__Account__r.Name}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr >
+            <td >   
+                <b>Location Name:</b>
+            </td>
+            <td>     
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location__r.Customer_Location_Code__c}"/> <br/>
+            </td>   
+        </tr>
+          <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b>Service Address:</b> </td>
+            <td><apex:outputText style="text-align: Top;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Name_Email_Temp__c}">  </apex:outputText> <br/><apex:outputText escape="false" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Tech_Location_Details__c}"></apex:outputText></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td><b>Requested Change Date: </b></td>
+            <td width = "30%"><apex:outputText value="{0,Date, MM/dd/yyyy}"> <apex:param value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Service_Date__c}"/></apex:outputText></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td>
+                <b>Service:</b>   
+            </td>
+            <td>
+                <apex:repeat value="{!WrapperData}" var="fieldKey">
+                <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!configMap[fieldKey].oldDuration}"/>
+                </apex:repeat>
+                </td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+        <tr>
+            <td>
+                <b>Container:</b>   
+            </td>
+            <td>
+                <apex:repeat value="{!WrapperData}" var="fieldKey">
+                    <apex:outputText style="text-align:Top;color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!mQLI[fieldKey].Equipment_Size__c}-{!mQLI[fieldKey].SBQQ__Product__r.Name}"/>
+                </apex:repeat>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/></td>
+        </tr>
+    </table>
+    <br/><br/>
+    <b>Current Rates:</b>
+    <apex:repeat value="{!WrapperData}" var="fieldKey"> 
+     <apex:dataTable value="{!quoteLineMap[fieldKey]}" var="QuoteLine" border="1" width="100%">
+           
+            <apex:column >
+                <apex:facet name="header">Name      </apex:facet>
+                <apex:outputText style="color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteLine.SBQQ__Product__r.Name}"/>
+            </apex:column>
+            
+            <apex:column >
+                <apex:facet name="header">List Price      </apex:facet>
+                <apex:outputText style="color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteLine.SBQQ__ListPrice__c}"/>
+            </apex:column>
+            
+         <!--   <apex:column >
+                <apex:facet name="header">NTE amount   </apex:facet>
+                <apex:outputText style="color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteLine.NTE_amount_on_SR__c}"/>
+            </apex:column> -->
+            
+            <apex:column >
+                <apex:facet name="header">Unit       </apex:facet>
+                <apex:outputText style="color:black;font-family:Arial;text-align:center;font-size:11pt;" value="{!QuoteLine.PriceUOM__c}"/>
+            </apex:column>
+            </apex:dataTable> 
+    <br/>
+    <apex:repeat value="{!childConfigMap[fieldKey]}" var="childQlPrice">
+        <apex:outputPanel rendered="{!IF(AND(childQlPrice.ProductFamily == 'Rolloff',childQlPrice.productName == 'Disposal'), TRUE, FALSE)}">
+            
+            <br/>
+            <br/>
+            <apex:outputPanel rendered="{!IF(AND(childQlPrice.oldpriceMinimumQuantity != null),TRUE, FALSE)}">	
+                <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value=" Additional Pricing Information:"/>&nbsp;
+                <apex:outputText style="color:black;font-family:Arial;" value="You will be charged a minimum of {!childQlPrice.oldpriceMinimumQuantity} tons per pick-up. The disposal charge will be minimum of $ {!childQlPrice.netPrice}."/><br/>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!IF(childQlPrice.oldcheckSTP == true, TRUE, FALSE)}">	
+                <apex:outputText style="color:black;font-family:Arial;" value="Tons will be charged at a stepped rate. You will be charged $ {!childQlPrice.oldsteppedPrice1} per ton for the first {!childQlPrice.newstep1UptoTons} tons. You will be charged ${!childQlPrice.oldsteppedPrice2} per ton for the remaining tons."/><br/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        </apex:repeat>
+        <br/><br/>
+      <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Other:"/>&nbsp; <br/>
+        <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Service Days: {!mQLI[fieldKey].Service_Days__c}"/>&nbsp; 
+    
+    </apex:repeat>
+    <br/><br/>
+    --------------------------------------------------------------------------------------------------------------------------------
+    <br/><br/>
+    <b style="color:black;font-family:Arial;">If the rates have changed, please provide the new rates below:</b><br/><br/>
+    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Rental:"/>&nbsp;<br/>
+    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Haul:"/>&nbsp;<br/>
+    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Disposal:"/>&nbsp;<br/>
+    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Other:"/>&nbsp;<br/>
+    <apex:outputText style="color:black;font-family:Arial;font-weight:bold;" value="Service Days:"/>&nbsp;   
+    
+    <br/><br/>
+    
+    
+</apex:component>

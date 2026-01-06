@@ -1,0 +1,41 @@
+.THIS .slds-form-element__label{
+    font-size: 14px;
+    font-weight: bolder;
+    font-style: italic;
+    color: Black;
+}
+.THIS .scrollerSize {
+    height:500px;
+    overflow-y: auto; 
+}
+
+.THIS .scrollerOuter {
+    overflow-x: auto; 
+}
+.THIS .tdRoleStyle{
+    margin-left : 5px;
+}
+.THIS .wrapText{
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.THIS .slds-table_cell-buffer tr>th:first-child,
+.THIS .slds-table_cell-buffer tr>td:first-child,
+.THIS .slds-table--cell-buffer tr>th:first-child,
+.THIS .slds-table--cell-buffer tr>td:first-child {
+    padding-left: 0.5rem;
+}
+
+.THIS .slds-table_cell-buffer tr>th:last-child,
+.THIS .slds-table_cell-buffer tr>td:last-child,
+.THIS .slds-table--cell-buffer tr>th:last-child,
+.THIS .slds-table--cell-buffer tr>td:last-child {
+    padding-right: 0.5rem;
+}
+
+.THIS label.uiLabel {
+    padding-right: 12px;
+    padding-left: 12px;
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Verify_Service_Task__c</fullName>
+    <externalId>false</externalId>
+    <label>Verify Service Task</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ATN</fullName>
+                <default>false</default>
+                <label>Account Number</label>
+            </value>
+            <value>
+                <fullName>WGS</fullName>
+                <default>false</default>
+                <label>Wrong Service</label>
+            </value>
+            <value>
+                <fullName>WTS</fullName>
+                <default>false</default>
+                <label>Waste Stream</label>
+            </value>
+            <value>
+                <fullName>RES</fullName>
+                <default>false</default>
+                <label>Reschedule</label>
+            </value>
+            <value>
+                <fullName>WRV</fullName>
+                <default>false</default>
+                <label>Wrong Vendor/Out of Service Area</label>
+            </value>
+            <value>
+                <fullName>SRI</fullName>
+                <default>false</default>
+                <label>Service Interuption (Past Due Payments)</label>
+            </value>
+            <value>
+                <fullName>WRC</fullName>
+                <default>false</default>
+                <label>Wrong Cost</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

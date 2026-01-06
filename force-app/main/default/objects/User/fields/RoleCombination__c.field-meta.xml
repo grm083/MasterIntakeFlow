@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RoleCombination__c</fullName>
+    <externalId>false</externalId>
+    <formula>OR(UserRole.Name = &apos;System Administrator&apos;,
+UserRole.Name = &apos;Client Setup &amp; Maintenance Supervisor&apos;,
+UserRole.Name = &apos;Client Setup &amp; Maintenance Manager&apos;,
+UserRole.Name = &apos;Client Setup &amp; Maintenance Representative&apos;,
+UserRole.Name = &apos;Launch Manager&apos;,
+UserRole.Name = &apos;Launch Supervisor&apos;,
+UserRole.Name = &apos;Launch team&apos;,
+UserRole.Name = &apos;Vendor Relations Representative&apos;,
+UserRole.Name = &apos;Vendor Relations Director&apos;,
+UserRole.Name = &apos;Vendor Relations Manager&apos;,
+UserRole.Name = &apos;Project Service Represenative&apos;,
+UserRole.Name = &apos;Program Manager&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>RoleCombination</label>
+    <type>Checkbox</type>
+</CustomField>

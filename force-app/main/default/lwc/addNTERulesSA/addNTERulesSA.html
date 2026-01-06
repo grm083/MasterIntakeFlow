@@ -1,0 +1,26 @@
+<template>
+    <!-- modal start -->      
+   <template if:true={isShowModal}>
+    <lightning-modal-header label="NTE Rules"></lightning-modal-header>
+    <lightning-modal-body>
+    <lightning-combobox
+            name="progress"
+            label="Service Type"
+            value=""
+            placeholder="Select Service Type"
+            options={options}
+            onchange={handleChange}
+            required
+    ></lightning-combobox>
+    <!--<p>Selected value is: {value}</p> -->
+
+    <lightning-input type="number" name="input7" label="NTE Amount" value={amount} onchange={handleAmountChange} formatter="currency" step="0.01" required ></lightning-input>
+    <!--<p>Selected amount is: {amount}</p> -->
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Save" onclick={handleSubmitDetails}></lightning-button>
+        <lightning-button label="Cancel" onclick={handleCloseAction}></lightning-button>
+    </lightning-modal-footer>
+</template>
+<!-- modal end -->
+</template>

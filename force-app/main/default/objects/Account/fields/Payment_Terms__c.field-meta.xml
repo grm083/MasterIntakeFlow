@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Terms__c</fullName>
+    <externalId>false</externalId>
+    <label>Payment Terms</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Net 7</fullName>
+                <default>false</default>
+                <label>Net 7</label>
+            </value>
+            <value>
+                <fullName>Net 10</fullName>
+                <default>false</default>
+                <label>Net 10</label>
+            </value>
+            <value>
+                <fullName>Net 30</fullName>
+                <default>false</default>
+                <label>Net 30</label>
+            </value>
+            <value>
+                <fullName>Net 45</fullName>
+                <default>false</default>
+                <label>Net 45</label>
+            </value>
+            <value>
+                <fullName>Net 60</fullName>
+                <default>false</default>
+                <label>Net 60</label>
+            </value>
+            <value>
+                <fullName>Net 90</fullName>
+                <default>false</default>
+                <label>Net 90</label>
+            </value>
+            <value>
+                <fullName>15 of Month</fullName>
+                <default>false</default>
+                <label>15 of Month</label>
+            </value>
+            <value>
+                <fullName>End of Month</fullName>
+                <default>false</default>
+                <label>End of Month</label>
+            </value>
+            <value>
+                <fullName>DUE ON RECEIPT</fullName>
+                <default>false</default>
+                <label>DUE ON RECEIPT</label>
+            </value>
+            <value>
+                <fullName>Net 1</fullName>
+                <default>false</default>
+                <label>Net 1</label>
+            </value>
+            <value>
+                <fullName>Net 15</fullName>
+                <default>false</default>
+                <label>Net 15</label>
+            </value>
+            <value>
+                <fullName>Net 20</fullName>
+                <default>false</default>
+                <label>Net 20</label>
+            </value>
+            <value>
+                <fullName>Net 25</fullName>
+                <default>false</default>
+                <label>Net 25</label>
+            </value>
+            <value>
+                <fullName>Net 35</fullName>
+                <default>false</default>
+                <label>Net 35</label>
+            </value>
+            <value>
+                <fullName>Net 40</fullName>
+                <default>false</default>
+                <label>Net 40</label>
+            </value>
+            <value>
+                <fullName>Net 5</fullName>
+                <default>false</default>
+                <label>Net 5</label>
+            </value>
+            <value>
+                <fullName>Net 50</fullName>
+                <default>false</default>
+                <label>Net 50</label>
+            </value>
+            <value>
+                <fullName>Net 55</fullName>
+                <default>false</default>
+                <label>Net 55</label>
+            </value>
+            <value>
+                <fullName>Net 70</fullName>
+                <default>false</default>
+                <label>Net 70</label>
+            </value>
+            <value>
+                <fullName>Net 23</fullName>
+                <default>false</default>
+                <label>Net 23</label>
+            </value>
+            <value>
+                <fullName>Net 75</fullName>
+                <default>false</default>
+                <label>Net 75</label>
+            </value>
+            <value>
+                <fullName>By</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>By</label>
+            </value>
+            <value>
+                <fullName>Net</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Net</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

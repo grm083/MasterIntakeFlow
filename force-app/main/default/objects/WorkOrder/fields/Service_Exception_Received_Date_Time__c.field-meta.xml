@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Exception_Received_Date_Time__c</fullName>
+    <description>S10_7602 : This field is use to store Service Exception Received Date and Time.</description>
+    <externalId>false</externalId>
+    <label>Service Exception Received Date/Time</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>DateTime</type>
+</CustomField>

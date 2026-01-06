@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Code__c</fullName>
+    <description>This Field Holds the auto Populate Account Number which is unique respective to the Account.</description>
+    <externalId>false</externalId>
+    <formula>AccountNumber</formula>
+    <label>Customer Code</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

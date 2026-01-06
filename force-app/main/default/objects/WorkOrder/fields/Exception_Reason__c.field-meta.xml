@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Cancellation Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Blocked Can</fullName>
+                <default>false</default>
+                <label>Blocked Can</label>
+            </value>
+            <value>
+                <fullName>Client&apos;s Request</fullName>
+                <default>false</default>
+                <label>Client&apos;s Request</label>
+            </value>
+            <value>
+                <fullName>Contamination</fullName>
+                <default>false</default>
+                <label>Contamination</label>
+            </value>
+            <value>
+                <fullName>Dry Run</fullName>
+                <default>false</default>
+                <label>Dry Run</label>
+            </value>
+            <value>
+                <fullName>Duplicate Request</fullName>
+                <default>false</default>
+                <label>Duplicate Request</label>
+            </value>
+            <value>
+                <fullName>Equipment Issues</fullName>
+                <default>false</default>
+                <label>Equipment Issues</label>
+            </value>
+            <value>
+                <fullName>Schedule Change - Client</fullName>
+                <default>false</default>
+                <label>Schedule Change - Client</label>
+            </value>
+            <value>
+                <fullName>Schedule Change - Vendor</fullName>
+                <default>false</default>
+                <label>Schedule Change - Vendor</label>
+            </value>
+            <value>
+                <fullName>Weather Conditions</fullName>
+                <default>false</default>
+                <label>Weather Conditions</label>
+            </value>
+            <value>
+                <fullName>Vendor did not perform service</fullName>
+                <default>false</default>
+                <label>Vendor did not perform service</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Incorrect Service</fullName>
+                <default>false</default>
+                <label>Incorrect Service</label>
+            </value>
+            <value>
+                <fullName>Incorrect Service Date</fullName>
+                <default>false</default>
+                <label>Incorrect Service Date</label>
+            </value>
+            <value>
+                <fullName>Incorrect Hauler</fullName>
+                <default>false</default>
+                <label>Incorrect Hauler</label>
+            </value>
+            <value>
+                <fullName>Incorrect Work-Order Description</fullName>
+                <default>false</default>
+                <label>Incorrect Work-Order Description</label>
+            </value>
+            <value>
+                <fullName>Incorrect Amount</fullName>
+                <default>false</default>
+                <label>Incorrect Amount</label>
+            </value>
+            <value>
+                <fullName>Work Order Cleanup</fullName>
+                <default>false</default>
+                <label>Work Order Cleanup</label>
+            </value>
+            <value>
+                <fullName>Incorrect Container Selected</fullName>
+                <default>false</default>
+                <label>Incorrect Container Selected</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

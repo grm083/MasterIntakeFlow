@@ -1,0 +1,90 @@
+<template>
+    <lightning-accordion allow-multiple-sections-open>
+         <lightning-accordion-section name="A" label ="Chat Transcript">    
+     <lightning-card>
+        <template if:false={noChatPresent}>
+         <br>
+          <div>
+             <lightning-combobox
+             name="--Select--"
+             label="Select the date of Chat"
+             value={value}
+             placeholder="Select Date"
+             options={options}
+             onchange={handleChange} 
+             disabled={isComboBoxDisabled}></lightning-combobox>
+          </div> 
+         </br>
+        </template>
+ 
+         <template if:false={disableChatbutton}>
+            <template if:false={noChatPresent}>
+             <lightning-button variant="brand" label="Get Chat Transcript" onclick={loadChatTranscript} disabled={isButtonDisabled}></lightning-button>
+            </template>
+         </template>
+         <template lwc:if={noChatPresent}>
+                <div style="text-align:center; font-weight: bold; font-size: large;"> There is no Chat transcript associated to this case</div>
+         </template>
+          
+         <template lwc:if={isShowError}>
+              <div lwc:if={isshowcancelbutton}> 
+             <h2 style="text-align:center; font-weight: bold; font-size: large;">{errorMessage}</h2>
+            <div style="font-weight: bold;">
+              <lightning-button label ="Close" onclick={handleCloseClick}></lightning-button>  
+            </div>
+             </div> 
+         </template>
+         <template lwc:elseif={isShowChat}>
+         <div class="slds-m-around_medium">
+             <table style="border:none; width:100%">
+                 <tr>
+                   <th style="width:60%; font-size:15px;">WM ChatNow Transcript Case {refNumber}</th>
+                   <th style="width:31%"><lightning-button variant="brand" label="Download PDF" icon-name="utility:download" onclick={generatePdfFiles}></lightning-button></th>
+                  <th>
+                    <lightning-button label ="Close" onclick={handleCloseClick}></lightning-button> 
+                  </th> 
+                </tr>
+            </table>
+         <!--   <lightning-layout multiple-rows >
+                
+                <lightning-layout-item size="11" flexibility="auto" padding="horizontal-small" class="slds-text-align_left">
+                    <lightning-card title="Chat Transcript" icon-name="action:new_note"></lightning-card>
+                </lightning-layout-item> -->
+           <!-- <lightning-layout-item size="11" flexibility="auto" padding="horizontal-small" class="slds-text-align_right">
+                <lightning-button variant="brand" label="Download PDF" icon-name="utility:download" onclick={generatePdfFiles}></lightning-button>
+                <lightning-button variant="brand" label="Download Chat" onclick={generatePdf}>    
+                </lightning-button> 
+            </lightning-layout-item>
+        </lightning-layout> -->
+        </div>
+        <div class="slds-box slds-theme_default">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                <thead>
+                    <tr>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Chat Time">Date Time</div>
+                          </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="User Name">User Name</div>
+                          </th>
+                          <th class="" scope="col">
+                            <div class="slds-truncate" title="Message">Chat Message</div>
+                          </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={chatTranscriptResult} for:item="chat" for:index="index">
+                        <tr key={chat.userId}>
+                            <td >{chat.chatDateTime}</td>
+                            <td >{chat.userId}</td>    
+                            <td style="white-space: break-spaces;">{chat.messageText}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </template>
+    </lightning-card>
+      </lightning-accordion-section>
+     </lightning-accordion> 
+ </template>

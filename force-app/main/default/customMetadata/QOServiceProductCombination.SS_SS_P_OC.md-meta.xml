@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SS-SS-P-OC</label>
+    <protected>false</protected>
+    <values>
+        <field>Case_Reason__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Case_Sub_Type__c</field>
+        <value xsi:type="xsd:string">Existing Location</value>
+    </values>
+    <values>
+        <field>Case_Type__c</field>
+        <value xsi:type="xsd:string">Site Survey</value>
+    </values>
+    <values>
+        <field>Duration__c</field>
+        <value xsi:type="xsd:string">PERM</value>
+    </values>
+    <values>
+        <field>IsExtraPickup__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsTransformation__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Occurrence_Type__c</field>
+        <value xsi:type="xsd:string">OC</value>
+    </values>
+    <values>
+        <field>PO_Mandatory_Scenario__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Primary_Component__c</field>
+        <value xsi:type="xsd:string">Site Survey</value>
+    </values>
+    <values>
+        <field>ServiceProdFilter__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Service__c</field>
+        <value xsi:type="xsd:string">Site Survey</value>
+    </values>
+</CustomMetadata>

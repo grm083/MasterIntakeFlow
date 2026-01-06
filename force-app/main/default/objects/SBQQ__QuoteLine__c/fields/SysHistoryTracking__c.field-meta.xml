@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SysHistoryTracking__c</fullName>
+    <description>SDT44716, this is system field and will be use to store snapshot of certain fields when quote status change from draft to any other status. Should not be added in page layout.</description>
+    <label>SysHistoryTracking</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Selected_Asset_Header_Ids__c</fullName>
+    <description>SDT-42417-To store the Asset Header Ids (separated by ;) selected on the Case</description>
+    <externalId>false</externalId>
+    <label>Selected Asset Header Ids</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

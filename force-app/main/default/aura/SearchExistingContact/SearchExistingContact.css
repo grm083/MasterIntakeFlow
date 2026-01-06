@@ -1,0 +1,40 @@
+.THIS .bigBoxVert{
+    max-height: 30vh;
+}
+
+.THIS .selectContactEdit{
+    overflow: auto;
+}
+
+.THIS .ridgedBorder{
+    border-style: ridge;
+}
+
+.THIS .highlightedNewRow tbody>:nth-child(1){
+    background-color: aquamarine;
+}  
+  
+.THIS .slds-scrollable_y {
+    -webkit-overflow-scrolling: touch; 
+    max-height: 150px;
+    overflow-y: auto; 
+}  
+.THIS .noBgHighlight{
+   background-color: white !important;
+}
+.THIS .bgHighlight{
+    background-color: #71C863 !important;
+}
+.THIS .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+.THIS .minimizeIcon{
+    position: absolute;
+    top: -6.5rem;
+    right: 2rem; 
+    margin-left: 0;
+    bottom: 0;
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_CheckBoxes_for_BSI_and_BSD</fullName>
+    <active>true</active>
+    <description>Check if ByPassMASServiceChange and DoNotCreateTaskGridTickets checkboxes are checked if VCR code = BSI / BSD</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED(VCRCode__c)),OR( ISPICKVAL(VCRCode__c, &apos;BSI&apos;),ISPICKVAL(VCRCode__c, &apos;BSD&apos;)) ,OR( NOT(ByPassMASServiceChange__c), NOT(DoNotCreateTaskGridTickets__c )))</errorConditionFormula>
+    <errorMessage>For &apos;Business Service Decrease - Does NOT integrate into MAS&apos; or &quot;Business Service Increase - Does NOT integrate into MAS&apos; VCR codes, ByPassMASServiceChange and DoNotCreateTaskGridTickets should be checked.</errorMessage>
+</ValidationRule>

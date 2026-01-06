@@ -1,0 +1,10 @@
+.THIS {
+}
+.THIS.success{
+    position: relative;
+    display: none;
+}
+.THIS.failed{
+    position: relative;
+    display: none;
+}

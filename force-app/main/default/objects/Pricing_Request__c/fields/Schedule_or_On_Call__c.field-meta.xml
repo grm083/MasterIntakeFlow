@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Schedule_or_On_Call__c</fullName>
+    <externalId>false</externalId>
+    <label>Schedule or On-Call</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Line_of_Business__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>On-Call</fullName>
+                <default>false</default>
+                <label>On-Call</label>
+            </value>
+            <value>
+                <fullName>Scheduled</fullName>
+                <default>false</default>
+                <label>Scheduled</label>
+            </value>
+            <value>
+                <fullName>No Mapping</fullName>
+                <default>false</default>
+                <label>No Mapping</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>On-Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>Scheduled</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

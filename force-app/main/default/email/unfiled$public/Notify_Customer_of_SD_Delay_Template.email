@@ -1,0 +1,14 @@
+<messaging:emailTemplate subject="WM Alert: Your service date has changed {!relatedTo.Location_Code__c}" recipientType="User" relatedToType="Case">
+<messaging:htmlEmailBody >
+
+        
+ <html>
+    <body contenteditable="true">
+
+<c:NotifyCustomerOfDelayEmailComponent caseDetail="{!relatedTo}"/>  
+
+</body>
+</html>    
+        
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

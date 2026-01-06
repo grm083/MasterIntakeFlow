@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Created as a part of SDT-40723 for Task and Genesys creation on Quote validation</description>
+    <eventType>HighVolume</eventType>
+    <label>Task and Genesys Platform Event</label>
+    <pluralLabel>Task and Genesys Platform Events</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
+</CustomObject>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This is used to store the voice prompt and the prompt id. And update the Material Prompt Id and Voice Prompt on Asset.</description>
+    <label>IVRMaterialTypePrompt</label>
+    <pluralLabel>IVRMaterialTypePrompts</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

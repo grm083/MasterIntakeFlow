@@ -1,0 +1,14 @@
+.THIS .slds-truncate {
+   word-wrap: break-word;
+    overflow-wrap: break-word;     
+    text-overflow: inherit;
+    white-space: normal;
+    
+ 
+}
+.THIS .slds-table_bordered tbody td, .THIS .slds-table_bordered tbody th, .THIS .slds-table--bordered tbody td, .THIS .slds-table--bordered tbody th {
+    vertical-align: top;
+}
+.THIS .slds-button_icon-bare{
+	display: none;
+}

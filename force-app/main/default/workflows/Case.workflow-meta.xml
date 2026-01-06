@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Test_Alert</fullName>
+        <ccEmails>gmarti18@wm.com</ccEmails>
+        <description>Test Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>gmarti18@wm.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Case_Email_Templates/Escalation_Obtain_Service_Approval</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Case_status_is_Pending</fullName>
+        <description>Case is pending if PO number is required and customer does not have PO number.</description>
+        <field>Status</field>
+        <literalValue>Pending</literalValue>
+        <name>Case status is Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Close_Case</fullName>
+        <field>Status</field>
+        <literalValue>Closed</literalValue>
+        <name>Close Case</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>IsWorkOrderCreated</fullName>
+        <field>isWorkOrderCreated__c</field>
+        <literalValue>1</literalValue>
+        <name>IsWorkOrderCreated</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Remove_Is_Recreated_Flag</fullName>
+        <field>Is_Recreated__c</field>
+        <literalValue>0</literalValue>
+        <name>Remove Is Recreated Flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Case_Reference_Number</fullName>
+        <field>Reference_Number__c</field>
+        <formula>CaseNumber</formula>
+        <name>Set Case Reference Number</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Ignore_Duplicate</fullName>
+        <field>Ignore_Duplicate__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Ignore Duplicate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>UpdateBypassDulicateCase</fullName>
+        <field>Bypass_WO_Duplicate__c</field>
+        <literalValue>1</literalValue>
+        <name>UpdateBypassDulicateCase</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Acorn_WorkOrder_Number</fullName>
+        <field>Acorn_Work_order_Number__c</field>
+        <formula>Work_Order__r.WorkOrderNumber</formula>
+        <name>Update Acorn WorkOrder Number</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_BackOffice_Checkbox</fullName>
+        <field>BackOffice_Case__c</field>
+        <literalValue>1</literalValue>
+        <name>Update BackOffice Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_To_Closed</fullName>
+        <field>Status</field>
+        <literalValue>Closed</literalValue>
+        <name>Update Status To Closed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_SubStatus_Request_Closed</fullName>
+        <field>Case_Sub_Status__c</field>
+        <literalValue>Request Closed</literalValue>
+        <name>Update SubStatus Request Closed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Team_Name</fullName>
+        <field>Team_Name__c</field>
+        <literalValue>Core Customer Service</literalValue>
+        <name>Update Team Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Team_Queue</fullName>
+        <field>Team_Queue__c</field>
+        <literalValue>CS Bale Resolution</literalValue>
+        <name>Update Team Queue</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>updateSLA</fullName>
+        <description>update SLA Data Time with Incoming Service Date</description>
+        <field>SLA_Service_Date_Time__c</field>
+        <formula>DATETIMEVALUE( Service_Date__c ) + (25/24)</formula>
+        <name>updateSLA</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <outboundMessages>
+        <fullName>Case_Payload</fullName>
+        <apiVersion>45.0</apiVersion>
+        <description>Sends Acorn Case Record Information when Case is Created</description>
+        <endpointUrl>https://qa.sf.wmsbs.wm.com/SalesforceOutboundMessage/Services/CaseService.svc</endpointUrl>
+        <fields>CaseNumber</fields>
+        <fields>Id</fields>
+        <includeSessionId>true</includeSessionId>
+        <integrationUser>api.user@wm.com</integrationUser>
+        <name>Case Payload</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>true</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Acorn W%2FO Is Populated</fullName>
+        <actions>
+            <name>Update_Acorn_WorkOrder_Number</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>AND(NOT(OR(ISBLANK(Work_Order__c ) ,ISNULL(Work_Order__c ) )),NOT(OR(ISBLANK(Work_Order__r.Acorn_WorkOrder_Number__c) ,ISNULL(Work_Order__r.Acorn_WorkOrder_Number__c ))))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close Case</fullName>
+        <actions>
+            <name>Close_Case</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.Close_Irrelevant_Case__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close Pickup Case</fullName>
+        <actions>
+            <name>Update_Status_To_Closed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_SubStatus_Request_Closed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>Close_Pickup_Case__c == true</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GENESYS Email2Case Workflow Rule</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Override_SLA_Option</fullName>
+        <active>false</active>
+        <description>This flow matches Service Date/Time and Service Date to override SLA overwritten field.</description>
+        <formula>SLA_Service_Date__c=DATEVALUE( SLA_Service_Date_Time__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>PO Mandatory or Not</fullName>
+        <actions>
+            <name>Case_status_is_Pending</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.PO_Required__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.PurchaseOrder_Number__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Recreated Work Order Successful</fullName>
+        <actions>
+            <name>Remove_Is_Recreated_Flag</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.Is_Recreated__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acorn_Work_order__c</field>
+            <operation>notEqual</operation>
+            <value>Null</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send Acorn New Case Information</fullName>
+        <actions>
+            <name>Case_Payload</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>true</active>
+        <description>Modified as per SDT-21433 [Added logic for Legacy New Service Case integration trigger. Introduced Integrate_with_Acorn__c field to the rule.] Modified as per SDT-29390 [Change logic  for Modify Existing Service Case]</description>
+        <formula>AND(Integrate_with_Acorn__c == true, OR( AND( RecordType.DeveloperName == &quot;New_Service_Case&quot;, TEXT(Case_Type__c) == &quot;New Service&quot;, Integrate_with_Acorn__c == true, NOT(ISBLANK(TEXT(Case_Sub_Type__c))), ISCHANGED(Status), NOT(ISPICKVAL(PRIORVALUE(Status),&apos;Open&apos;)), OR( AND( ISPICKVAL(Status, &quot;Open&quot;), OR( AND( ISPICKVAL(Status, &quot;Open&quot;), TEXT(Case_Type__c) == &quot;Status&quot; ), ISPICKVAL((Case_Sub_Status__c),&quot;&quot;) ), NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Closed&quot;)), ISPICKVAL(Source_System__c, &quot;Salesforce&quot;) ), AND( ISPICKVAL(Status, &quot;Closed&quot;), NOT(ISBLANK(ContactId)), NOT(ISBLANK(Location__c)), NOT(ISBLANK(Acorn_Issue_Id__c)), ISPICKVAL(Source_System__c, &quot;Salesforce&quot;) ), AND( ISPICKVAL(Status, &quot;Closed&quot;), NOT(ISBLANK(ContactId)), NOT(ISBLANK(Location__c)), ISPICKVAL(Source_System__c, &quot;Salesforce&quot;), ISPICKVAL(PRIORVALUE(Status),&apos;New&apos;), Close_Irrelevant_Case__c == false ) ) ), AND(RecordType.DeveloperName != &apos;Modify_Existing_Service_Case&apos;, RecordType.DeveloperName != &apos;Pickup_Case&apos;, RecordType.DeveloperName != &quot;New_Service_Case&quot;, TEXT(Case_Type__c) != &apos;Pickup&apos;, NOT(ISBLANK(TEXT(Case_Sub_Type__c))), ISCHANGED(Status), NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Open&quot;)), OR( AND( ISPICKVAL(Status, &apos;Open&apos;), OR( AND( ISPICKVAL(Status, &apos;Open&apos;), TEXT(Case_Type__c) == &apos;Status&apos; ), ISPICKVAL((Case_Sub_Status__c),&apos;&apos;) ), NOT(ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;)), ISPICKVAL(Source_System__c, &apos;Salesforce&apos;) ), AND( ISPICKVAL(Status, &apos;Closed&apos;), NOT(ISBLANK(ContactId)), NOT(ISBLANK(Location__c)), NOT(ISBLANK(Acorn_Issue_Id__c)), ISPICKVAL(Source_System__c, &apos;Salesforce&apos;) ), AND( ISPICKVAL(Status, &apos;Closed&apos;), NOT(ISBLANK(ContactId)), NOT(ISBLANK(Location__c)), ISPICKVAL(Source_System__c, &apos;Salesforce&apos;), ISPICKVAL(PRIORVALUE(Status),&quot;New&quot;), Close_Irrelevant_Case__c == false ) ) ), AND( RecordType.DeveloperName == &apos;Pickup_Case&apos;, TEXT(Case_Type__c) == &apos;Pickup&apos;, NOT(ISBLANK(TEXT(Case_Sub_Type__c))), TEXT(Case_Sub_Type__c) == &apos;Bale(s)&apos;, ISCHANGED(Status), OR( AND( ISPICKVAL(Status, &apos;Open&apos;), ISPICKVAL(Source_System__c, &apos;Salesforce&apos;) ) ) ), AND( RecordType.DeveloperName == &apos;Pickup_Case&apos;, TEXT(Case_Type__c) == &apos;Pickup&apos;, NOT(ISBLANK(TEXT(Asset.Sensitivity_Code__c))), OR( TEXT(Asset.Sensitivity_Code__c) == &apos;CAM&apos;, TEXT(Asset.Sensitivity_Code__c) ==&apos;Utility&apos; ), ISCHANGED(Status), OR( AND( ISPICKVAL(Status, &apos;Open&apos;), ISPICKVAL(Source_System__c, &apos;Salesforce&apos;) ) ) ), 		AND( RecordType.DeveloperName == &apos;Modify_Existing_Service_Case&apos;,   ISCHANGED( Status), OR( AND( ISPICKVAL(Status, &apos;Open&apos;), ISPICKVAL(Source_System__c, &apos;Salesforce&apos;) ) ) ),AND( OR(TEXT(Case_Type__c) == &apos;Activate&apos;,TEXT(Case_Type__c) == &apos;Modify&apos;,TEXT(Case_Type__c) == &apos;Deactivate&apos;), NOT(ISBLANK(TEXT(Case_Sub_Type__c))), ISCHANGED(Status), ISPICKVAL(PRIORVALUE(Status),&quot;New&quot;),ISPICKVAL(Status, &apos;Closed&apos;),NOT(ISBLANK(ContactId)), ISPICKVAL(Source_System__c, &apos;Salesforce&apos;),NOT(ISBLANK(TEXT(Case_Reason__c))) ) ))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>SendBaleCaseToAcorn</fullName>
+        <actions>
+            <name>Update_Team_Name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Team_Queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>send case to CS Bale Resolution queue when Case subtype is Bale(s).</description>
+        <formula>AND( RecordType.DeveloperName == &apos;Pickup_Case&apos;,  TEXT(Case_Type__c) == &apos;Pickup&apos;,  NOT(ISBLANK(TEXT(Case_Sub_Type__c))),  TEXT(Case_Sub_Type__c) == &apos;Bale(s)&apos;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Reference Number</fullName>
+        <actions>
+            <name>Set_Case_Reference_Number</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>update the reference number field on case with the parent case number</description>
+        <formula>ParentId == null &amp;&amp;  Reference_Number__c == null</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Uncheck Ignore Duplicate on change</fullName>
+        <actions>
+            <name>Uncheck_Ignore_Duplicate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>un checks the Ignore_Duplicate__c field when asset/case type/case sub type/service date is changed after ignoring duplicates</description>
+        <formula>AND( Ignore_Duplicate__c ,OR(ISCHANGED(AssetId) ,  ISCHANGED( Case_Type__c ) , ISCHANGED( Case_Sub_Type__c ) , ISCHANGED( Service_Date__c )) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update BackOffice Checkbox Workflow</fullName>
+        <actions>
+            <name>Update_BackOffice_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>equals</operation>
+            <value>Corporate Service Queue</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Service Date with Local Time</fullName>
+        <active>false</active>
+        <description>This workflow updates the service date from Local time field to make use in backdated case logic</description>
+        <formula>NOT(ISBLANK( Location__c ))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>UpdateCaseSla</fullName>
+        <actions>
+            <name>updateSLA</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Update Case SLA_Service_Date_Time__c</description>
+        <formula>AND(ISBLANK(SLA_Service_Date_Time__c) ,ISPICKVAL(Status , &apos;New&apos;) ,OR(ISPICKVAL(Origin, &apos;Officetrax&apos;),ISPICKVAL(Origin, &apos;E-Business&apos;)))</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>WorkOrderCreated</fullName>
+        <actions>
+            <name>IsWorkOrderCreated</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Pickup Case - Lock Fields after W/O created</description>
+        <formula>OR(AND(RecordType.Name == &apos;Pickup Case&apos;,OR(ISPICKVAL( Status ,&quot;Pending&quot;),ISPICKVAL(Status,&quot;Open&quot;))), 	AND((RecordType.Name != &apos;Pickup Case&apos;),ISPICKVAL(Status,&quot;Open&quot;),  ISBLANK(Acorn_Work_order__c)))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>isByPassDuplicateCase</fullName>
+        <actions>
+            <name>UpdateBypassDulicateCase</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Case.Create_AM_and_PM_Pickups__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Is_Multivendor__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

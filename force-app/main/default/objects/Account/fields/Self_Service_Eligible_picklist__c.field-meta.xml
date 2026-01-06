@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Self_Service_Eligible_picklist__c</fullName>
+    <externalId>false</externalId>
+    <label>Self Service Eligible</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pickup Self Service Eligible</fullName>
+                <default>false</default>
+                <label>Pickup Self Service Eligible</label>
+            </value>
+            <value>
+                <fullName>Status Self Service Eligible</fullName>
+                <default>false</default>
+                <label>Status Self Service Eligible</label>
+            </value>
+            <value>
+                <fullName>New Service Self Service Eligible</fullName>
+                <default>false</default>
+                <label>New Service Self Service Eligible</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

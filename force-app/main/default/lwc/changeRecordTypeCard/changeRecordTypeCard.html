@@ -1,0 +1,80 @@
+<template>
+    <lightning-card title="Record Type Selector">
+        <template if:true={recordTypes}>
+        <lightning-layout horizontal-align="spread">
+              <lightning-layout-Item class="layoutSelector" size="4" padding="around-large">
+                <lightning-vertical-navigation compact="true" 
+                                              selected-item={selectedItem} 
+                                              onselect={handleSelect}
+                                              shaded="true">
+                    <lightning-vertical-navigation-section label="Available Record Types" >
+                        <template for:each={recordTypes} for:item="rt">
+                                <lightning-vertical-navigation-item data-id={rt.recid} key={rt.recid} label={rt.name} name={rt.name} ></lightning-vertical-navigation-item>
+                        </template>
+                    </lightning-vertical-navigation-section>
+                </lightning-vertical-navigation>
+            </lightning-layout-Item>
+            
+            <lightning-layout-Item size="8" padding="around-small" >
+                <div class="slds-align_absolute-center" style="height:5rem">
+                        <lightning-button variant="success" label="Pickup" name="Pickup" onclick={handleButtonClick} class="slds-p-right_x-small"></lightning-button>
+                        <lightning-button variant="success" label="New Service" name="New Service" onclick={handleButtonClick} class="slds-p-right_x-small"></lightning-button>
+						<!--		
+					   <template if:true={Update_Asset_Active_User__c}>
+                          
+                        <lightning-button variant="success" label="Update Asset" name="Update Asset Case" onclick={handleButtonClick} class="slds-p-right_x-small"></lightning-button>
+						 </template>
+						 <lightning-button variant="success" label="Modify Existing Case" name="Modify Existing Service Case" onclick={handleButtonClick} class="slds-p-right_x-small"></lightning-button>
+                          -->												
+                           
+
+                       
+                        <lightning-button variant="success" label="SNP" name="SNP" onclick={handleButtonClick} class="slds-p-right_x-small"></lightning-button>
+                        <lightning-button variant="success" label="ETA" name="ETA" onclick={handleButtonClick} class="slds-p-right_x-small"></lightning-button>
+                    </div>
+                 
+                    <br/>
+                <div if:true={recordTypeSelected}>  
+                    <p class="slds-align_absolute-center"> You've selected: <b class="slds-p-left_x-small">{selectedItem}</b> </p>
+                    <br/>
+                    <p class="slds-align_absolute-center"> {itemDescription} </p>
+                    <br/>
+					<template if:true={errorCombination}>
+                        <p class="requiredField">{errorMsg}</p>
+                    </template>
+                    <br/>
+                    <lightning-record-edit-form record-type-id={recordTypeId} object-api-name="Case" onsubmit={handleSubmit}>
+                        <lightning-input-field  field-name="Case_Type__c" ></lightning-input-field>
+                        <lightning-input-field   field-name="Case_Sub_Type__c" ></lightning-input-field>
+                        <lightning-input-field   field-name="Case_Reason__c" ></lightning-input-field>
+                      <!--  <div  class="slds-m-top_medium slds-align_absolute-center"> --> 
+                        <div class="modal-footer slds-modal__footer" if:false={caseListView}>
+                            <div class="forceChangeRecordTypeFooter">
+                            <lightning-button label="Cancel" variant="brand" onclick={handleCancel} class="slds-p-right_x-small"></lightning-button>
+                            <lightning-button type="submit" variant="brand" label={action} class="slds-p-right_x-small" ></lightning-button>
+                            </div>
+                        </div>
+                        <footer class="slds-modal__footer" if:true={caseListView}>
+                            <lightning-button label="Cancel" onclick={handleCancel} class="slds-p-right_x-small" variant="brand"></lightning-button>
+                            <lightning-button type="submit" label={action} class="slds-p-right_x-small"  variant="brand"></lightning-button>
+                         </footer>
+                        
+                    </lightning-record-edit-form>
+                </div> 
+            </lightning-layout-Item>
+        </lightning-layout>
+        <div if:false={recordTypeSelected}>
+            <div class="modal-footer slds-modal__footer" if:false={caseListView}>
+                <div class="forceChangeRecordTypeFooter">
+                <lightning-button label="Cancel" onclick={handleCancel} class="slds-p-right_x-small" variant="brand"></lightning-button>
+                <lightning-button type="submit" label={action} class="slds-p-right_x-small" disabled="true" variant="brand"></lightning-button>
+                </div>
+            </div>
+            <footer class="slds-modal__footer" if:true={caseListView}>
+                <lightning-button label="Cancel" onclick={handleCancel} class="slds-p-right_x-small" variant="brand"></lightning-button>
+                <lightning-button type="submit" label={action} class="slds-p-right_x-small" disabled="true" variant="brand"></lightning-button>
+             </footer>
+        </div>
+    </template>
+    </lightning-card>
+</template>

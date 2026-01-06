@@ -1,0 +1,80 @@
+<aura:component controller="WMCapacityController"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+	
+    <lightning:workspaceAPI aura:id="workspace" />
+    
+    <aura:attribute name="SLADate" type="String" />
+    <aura:attribute name="baseline" type="String" default='' />
+    <aura:attribute name="requestedDate" type="Date" default='{!v.SLADate}' />
+    <aura:attribute name="selectedDate" type="Date" default='' />
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="currAvail" type="String" />
+    <aura:attribute name="availDates" type="String[]" />
+    <aura:attribute name="dateAvail" type="String" default="unavailable" />
+    <aura:attribute name="boolDisplay" type="Boolean" default="true" />
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+     <aura:attribute name="closeParent" type="Boolean" />
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+	<aura:attribute name="isDateAvailable" type="Boolean" default="false" />
+    <aura:attribute name="parentId" type="String" access="global"/>
+    <aura:registerEvent name="opensla" type="c:openSetCaseSLACompEvnt"/>
+   <aura:registerEvent name="SingleTabRefreshEvent" type="c:SingleTabComponentRefresh"/>
+   <lightning:messageChannel type="SetServiceDate__c" aura:id="lmschannel" onMessage="{!c.handleReceiveMessage}" scope="APPLICATION"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+     <div class="slds-is-relative">
+          <aura:if isTrue="{!v.loadingSpinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" variant="brand" />
+        </aura:if>
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:channel_programs" size="medium" />
+            WM Capacity Planner
+        </aura:set>
+        <aura:set attribute="footer">
+            <lightning:button variant="destructive"
+                              label="Date Not Listed"
+                              title="Cancel"
+                              onclick="{!c.closeModal}" />
+        </aura:set>
+        <aura:if isTrue="{!v.loaded}">
+            <lightning:spinner title="Performing Operation" class="spins" style="z-index:0 !important" />
+        </aura:if>
+        <aura:if isTrue="{!v.boolDisplay}">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="12" padding="around-small">
+                    This customer's entitled SLA date is <strong>{!v.SLADate}</strong>.
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" padding="around-small">
+                    Using the below, please select the customer's requested service date.  
+                    If the customer is requesting service more than 10 business days out or 
+                    if one of the dates are not available, please select "Date Not Listed" and 
+                    enter your service date manually on the case detail page.
+                </lightning:layoutItem>
+                <aura:iteration items="{!v.availDates}" var="date">
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <lightning:button label="{!date}"
+                                          iconName="utility:threedots_vertical"
+                                          variant="brand"
+                                          onclick="{!c.handleDate}"
+                                          class="slds-align_absolute-center"/>
+                    </lightning:layoutItem>
+                </aura:iteration>
+                <lightning:layoutItem size="12" padding="around-small">
+                    If your date isn't listed or the requested service date is prior to the SLA date, you will 
+                    need to check Green Pages or contact the local branch of WM to confirm the availability.
+                </lightning:layoutItem>
+            </lightning:layout>
+            <aura:set attribute="else">
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutItem size="12" padding="around-small">
+                        WM Capacity could not be systemically confirmed at this time.  
+                        Please use Green Pages to confirm availability, or contact the 
+                        local WM Dispatch to confirm availability manually.
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </aura:set>
+        </aura:if>
+    </lightning:card>                    
+         </div>
+</aura:component>

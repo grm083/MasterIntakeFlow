@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_Override_Reason</fullName>
+    <active>false</active>
+    <description>Price Override Reason only when the price is getting updated from a greater than zero value to another value</description>
+    <errorConditionFormula>AND(!(ISNEW()),ISCHANGED(SBQQ__ListPrice__c), PRIORVALUE(SBQQ__ListPrice__c) &gt; 0 , ISBLANK(TEXT(Price_Override_Reason__c)))</errorConditionFormula>
+    <errorDisplayField>Price_Override_Reason__c</errorDisplayField>
+    <errorMessage>When Unit price is Overridden, Price Override Reason must be provided.</errorMessage>
+</ValidationRule>

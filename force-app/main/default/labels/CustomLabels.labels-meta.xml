@@ -1,0 +1,2373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AAV_API_Failure_Error_Message</fullName>
+        <categories>Asset Availability App Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>API Failure Error Message</shortDescription>
+        <value>API did not return any data, please try again later</value>
+    </labels>
+   
+    <labels>
+        <fullName>AAV_Alternate_Products_Threshold</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Alternate Products Threshold</shortDescription>
+        <value>10</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Availability_API_Error_Out</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability API Error Out</shortDescription>
+        <value>Availability could not be confirmed as there is no response from the API</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Availability_API_Error_Picklist_Value</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability API Error Picklist Value</shortDescription>
+        <value>Availability could not be confirmed as there is no response from the API</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Availability_For_Accessories_Alert</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability for Accessories Alert</shortDescription>
+        <value>Available with WM, but user has requested additional services and accessories</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Availability_For_Accessories_Comment</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability for Accessories Comment</shortDescription>
+        <value>User has requested additional services and accessories</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Availability_for_Delivery_Alert</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability for Delivery Alert</shortDescription>
+        <value>Requested Container not Available</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Availability_for_Delivery_Beyond_N_Days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability for Delivery Beyond N Days</shortDescription>
+        <value>selected date is beyond 30 days</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Availability_for_Delivery_With_In_N_Days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability for Delivery With In N Days</shortDescription>
+        <value>Selected Delivery is as per WM Availability, selected date is beyond SLA days but within 30 days</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Availability_for_Service_Alert</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability for Service Alert</shortDescription>
+        <value>WM Service Date Unavailable</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_Date_Label</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available Date Label</shortDescription>
+        <value>WM available date</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_Delivery_Days_Upto</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available Delivery Days Upto</shortDescription>
+        <value>30</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_No_Containers</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available No Containers</shortDescription>
+        <value>No WM Container Available</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_No_Containers_With_Confirm</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available No Containers With Confirm</shortDescription>
+        <value>No WM containers available, please confirm with WM dispatch</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_No_Delivery_Message</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available No Delivery Message</shortDescription>
+        <value>No WM delivery date information is available for this location</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_No_Service_With_Confirm</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available No Service With Confirm</shortDescription>
+        <value>No WM service day information is available for this location, please confirm with WM dispatch</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_No_Service_or_Delivery</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available No Service or Delivery</shortDescription>
+        <value>No WM service day/delivery date information is available for this location</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_Record_Save_Failure</fullName>
+        <categories>Asset Availability App Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available Record Save Failure</shortDescription>
+        <value>Failed to save or call Availability API</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_SLA_Date_Label</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available SLA Date Label</shortDescription>
+        <value>WM inventory available, route capacity is not guaranteed</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Available_Unavailable_Container</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available Unavailable Container</shortDescription>
+        <value>No WM Availability for the {equipmentSize} container</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Delivery_Date_Back_Dated_Picklist_Value</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Date Back Dated Picklist Value</shortDescription>
+        <value>as this is a back dated order</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Delivery_Date_Beyond_Limit_Picklist_Value</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Date Beyond Limit Picklist Value</shortDescription>
+        <value>selected date is beyond 30 days</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Delivery_Date_Beyond_SLA_Picklist_Value</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Date Beyond SLA Picklist Value</shortDescription>
+        <value>selected date is beyond SLA days but within 30 days</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Delivery_Date_Within_SLA_Picklist_Value</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Date Within SLA Picklist Value</shortDescription>
+        <value>selected date is within SLA days</value>
+    </labels>
+    <labels>
+        <fullName>AAV_NON_WM_Availability_MSG</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NON WM Availability MSG</shortDescription>
+        <value>WM NOT Available in the area, kindly confirm availability with Vendor</value>
+    </labels>
+    <labels>
+        <fullName>AAV_No_Outage_Information_Message</fullName>
+        <categories>Asset Availability App Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Outage Information Message</shortDescription>
+        <value>No Outage Information Available</value>
+    </labels>
+    <labels>
+        <fullName>AAV_No_WM_Container_Available</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No WM Container Available</shortDescription>
+        <value>No WM Container Available in the Location</value>
+    </labels>
+    <labels>
+        <fullName>AAV_No_WM_Container_Available_Message</fullName>
+        <categories>Asset Availability App Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No WM Container Available Message</shortDescription>
+        <value>No Inventory currently available from WM</value>
+    </labels>
+    <labels>
+        <fullName>AAV_No_WM_Service_Days_Message</fullName>
+        <categories>Asset Availability App Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No WM Service Days Message</shortDescription>
+        <value>Info not Available. Please review knowledge or reach out to the Market  area</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Non_WM_Serviceable_Error_Message</fullName>
+        <categories>Asset Availability App Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Non WM Serviceable Error Message</shortDescription>
+        <value>Not WM Serviceable area, availability information is not accessible for third party vendors</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Record_Updated_Description</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Record Updated Description</shortDescription>
+        <value>Equipment size updated for {name}</value>
+    </labels>
+    <labels>
+        <fullName>AAV_Record_Updated_Successfully</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Record Updated Successfully</shortDescription>
+        <value>Record Updated Successfully</value>
+    </labels>
+    <labels>
+        <fullName>AAV_WM_Availability_Picklist_Value</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WM Availability Picklist_Value</shortDescription>
+        <value>Selected Delivery is as per WM Availability</value>
+    </labels>
+    <labels>
+        <fullName>AAV_WM_Not_Deliverable_Picklist_Value</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WM Not Deliverable Picklist Value</shortDescription>
+        <value>WM NOT available to Deliver in the area</value>
+    </labels>
+    <labels>
+        <fullName>AAV_WM_Unavailability_Picklist_Value</fullName>
+        <categories>Asset Availability Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WM Unavailability Picklist Value</shortDescription>
+        <value>Selected Delivery is NOT as per WM Availability</value>
+    </labels>
+    <labels>
+        <fullName>AccTeamMemIsServiceApprover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccTeamMemIsServiceApprover</shortDescription>
+        <value>&apos;This Account Team member is a Service Approver&apos;</value>
+    </labels>
+    <labels>
+        <fullName>AccTitleIsServiceApprover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccTitleIsServiceApprover</shortDescription>
+        <value>&apos;This Title is a Service Approver.&apos;</value>
+    </labels>
+    <labels>
+        <fullName>Account_Eligibility</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Eligibility</shortDescription>
+        <value>Account not eligible for pricing.</value>
+    </labels>
+    <labels>
+        <fullName>Account_Title_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Title Task Description</shortDescription>
+        <value>Please Approve/Reject the Account title being created from CSR</value>
+    </labels>
+    <labels>
+        <fullName>Account_Title_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Title Subject</shortDescription>
+        <value>Task created to Approve/Reject Account Title</value>
+    </labels>
+    <labels>
+        <fullName>AcornTeamNamesToRemove</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AcornTeamNamesToRemove</shortDescription>
+        <value>M&amp;I Customer Service:Service Resolution Team:Mall Customer Service:Corporate Services:New Stores:Vendor Operations:New, Add and Change Service:Core Customer Service:Finance:Project Services:Recycling Services:Account Management:Compliance:Vendor Relations Management:Wasteless:Service Setup &amp; Maintenance</value>
+    </labels>
+    <labels>
+        <fullName>Acron_Team_Queues_To_Remove</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Acron Team Queues To Remove</shortDescription>
+        <value>CS FAM/DLL Resolution:Internal Spec Correction:SFDC-Launch Fast Response:FAST Response Team</value>
+    </labels>
+    <labels>
+        <fullName>AdministratorMessage</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AdministratorMessage</shortDescription>
+        <value>Please contact Administrator for this error.</value>
+    </labels>
+    <labels>
+        <fullName>All_Other_Minimum_Tonnage</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>All Other Minimum Tonnage</shortDescription>
+        <value>all other minimum tonnage</value>
+    </labels>
+    <labels>
+        <fullName>Alternate_Container_Message</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Alternate Container Message</shortDescription>
+        <value>PLEASE NOTE: The request container size was not available and has been substituted for a</value>
+    </labels>
+    <labels>
+        <fullName>Amendment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Amendment</shortDescription>
+        <value>Amendment</value>
+    </labels>
+    <labels>
+        <fullName>AmendmentQuoteValidationError1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AmendmentQuoteValidationError1</shortDescription>
+        <value>Customer Approval flag is not selected for any of the Quote Only Services</value>
+    </labels>
+    <labels>
+        <fullName>AnalyticsDataLimit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AnalyticsDataLimit</shortDescription>
+        <value>5000</value>
+    </labels>
+    <labels>
+        <fullName>Applies_to_Disposal</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Applies to Disposal</shortDescription>
+        <value>Applies to Disposal</value>
+    </labels>
+    <labels>
+        <fullName>Applies_to_Haul</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Applies to Haul</shortDescription>
+        <value>Applies to Haul</value>
+    </labels>
+    <labels>
+        <fullName>Applies_to_Rental</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Applies to Rental</shortDescription>
+        <value>Applies to Rental</value>
+    </labels>
+    <labels>
+        <fullName>ApprovalEmailSuccessMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ApprovalEmailSuccessMsg</shortDescription>
+        <value>An approval email has been automatically sent to the designated approver(s)</value>
+    </labels>
+    <labels>
+        <fullName>AssetQuery</fullName>
+        <categories>PBO Optimization</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AssetQuery</shortDescription>
+        <value>Select Id,Name,Product2.ProductTypeSelected__c,Material_Type__c,Is_Active__c,Service_Type__c,Service_Header_Id__c,productFamily ,Is_Core_Service__c,Duration__c,Project_Code__c,Active__c,End_Date_Based_on_Project_code__c,product2.family,Occurrence_Type__c, product2.Equipment_Type__c,Supplier__c,Start_Date__c,End_Date__c,Has_Extra_Pickup__c from Asset</value>
+    </labels>
+    <labels>
+        <fullName>Attempt_Batch_Frequency</fullName>
+        <categories>This is the time interval to schedule AttemptTasksCreationBatch class</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Attempt Batch Frequency</shortDescription>
+        <value>15</value>
+    </labels>
+    <labels>
+        <fullName>AllowedCaseOrigins</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AllowedCaseOrigins</shortDescription>
+        <value>Monitor, Officetrax, Service Channel, E-Business</value>
+    </labels>
+    <labels>
+        <fullName>Basis</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Basis</shortDescription>
+        <value>Basis</value>
+    </labels>
+    <labels>
+        <fullName>BrNotificationError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BrNotificationError</shortDescription>
+        <value>The user do not have permission to access this record</value>
+    </labels>
+    <labels>
+        <fullName>Bypass_HasOpenTask_filter</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bypass HasOpenTask filter</shortDescription>
+        <value>bypassfalse</value>
+    </labels>
+    <labels>
+        <fullName>Bypass_PSI_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bypass PSI Error</shortDescription>
+        <value>Please obtain a valid PSI for the compactor. If one cannot be obtained, please select the reason why from the Bypass PSI drop down menu below.</value>
+    </labels>
+    <labels>
+        <fullName>CAAG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CAAG</shortDescription>
+        <value>https://customer.wm.com/search/</value>
+    </labels>
+    <labels>
+        <fullName>CASE_ASSET_VAL_ERR_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Asset Validation Error Message</shortDescription>
+        <value>One or more Asset Details are End Dated. Please Correct End Date to Progress Case</value>
+    </labels>
+    <labels>
+        <fullName>CAT_Member_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CAT Member Error</shortDescription>
+        <value>Selected Account Team Member doesn\&apos;t Match Account or Location</value>
+    </labels>
+    <labels>
+        <fullName>CaseDataset</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseDataset</shortDescription>
+        <value>NoCaseTask</value>
+    </labels>
+    <labels>
+        <fullName>CaseDateFilters</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseDateFilters</shortDescription>
+        <value>90 days ago</value>
+    </labels>
+    <labels>
+        <fullName>CaseRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseRecordType</shortDescription>
+        <value>Pickup Case|New Service Case|Status Case|Service Request Case|Modify Existing Service Case|Repair Case|Interruption Case|Vendor Case|Standard Case</value>
+    </labels>
+    <labels>
+        <fullName>CaseReopenTime</fullName>
+        <categories>EmailMessage</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseReopenTime</shortDescription>
+        <value>24</value>
+    </labels>
+    <labels>
+        <fullName>CaseSubTypeError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message shown when certain combinations of Case type and subtype is selected</shortDescription>
+        <value>Case sub type cannot be selected.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Creation_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Creation Error</shortDescription>
+        <value>Please re-try to create the Quote again. Quote has not been created due to</value>
+    </labels>
+    <labels>
+        <fullName>Case_Email_Copy</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Email_Copy</shortDescription>
+        <value>Email successfully copied to Case</value>
+    </labels>
+    <labels>
+        <fullName>Case_Required_Fields_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Required Fields Error</shortDescription>
+        <value>Please check that all required fields are filled on Case.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Template_Tool</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Template Tool</shortDescription>
+        <value>https://wmsbs.my.salesforce.com/sfc/p/#1I000001V0eB/a/1I000000TcAU/O0bSGBtYP2sTO.6qMFSNz.7pawBfinPjbJE0.c.UWoQ</value>
+    </labels>
+    <labels>
+        <fullName>Case_success</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case success</shortDescription>
+        <value>Cases created successfully</value>
+    </labels>
+    <labels>
+        <fullName>ChatNowEmailExcludeList</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatNowEmailExcludeList</shortDescription>
+        <value>Noreply;donotreply;auto-noreply</value>
+    </labels>
+    <labels>
+        <fullName>Commercial</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Commercial</shortDescription>
+        <value>Commercial</value>
+    </labels>
+    <labels>
+        <fullName>Competitor</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Competitor</shortDescription>
+        <value>competitor</value>
+    </labels>
+    <labels>
+        <fullName>Compliance_Group</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Compliance Group</shortDescription>
+        <value>Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ContactDuplicateRuleId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ContactDuplicateRuleId</shortDescription>
+        <value>0Bm1I000002AfF2</value>
+    </labels>
+    <labels>
+        <fullName>ContactisServiceApprover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ContactisServiceApprover</shortDescription>
+        <value>&apos;This Contact is a Service Approver.&apos;</value>
+    </labels>
+    <labels>
+        <fullName>Cost</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cost</shortDescription>
+        <value>Cost</value>
+    </labels>
+    <labels>
+        <fullName>Cost_Compare_Message</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cost Compare Message</shortDescription>
+        <value>INVALID PRICING: Please follow up with the Market Area for corrected pricing</value>
+    </labels>
+
+    <labels>
+        <fullName>Cost_and_Price_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cost and Price Code</shortDescription>
+        <value>False</value>
+    </labels>
+    <labels>
+        <fullName>Create_cancel_GR_record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create cancel GR record</shortDescription>
+        <value>ON</value>
+    </labels>
+    <labels>
+        <fullName>Create_cancel_GR_record_On_Update</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create cancel GR record On Update</shortDescription>
+        <value>ON</value>
+    </labels>
+    <labels>
+        <fullName>CurrentDatasetVersionIdForTestCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrentDatasetVersionIdForTestCase</shortDescription>
+        <value>0Fc2a0000016GbJCAU</value>
+    </labels>
+    <labels>
+        <fullName>CurrentDatasetVersionIdForTestTicket</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrentDatasetVersionIdForTestTicket</shortDescription>
+        <value>0Fc2a0000016GbYCAU</value>
+    </labels>
+    <labels>
+        <fullName>CurrentDatasetVersionIdForTestWorkflow</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrentDatasetVersionIdForTestWorkflow</shortDescription>
+        <value>0Fc2a0000016GbTCAU</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Service_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Service Profile</shortDescription>
+        <value>Customer Service</value>
+    </labels>
+    <labels>
+        <fullName>DB_Query_4_Ref_Num_Search_Limit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DB Query 4 Ref Num Search Limit</shortDescription>
+        <value>3</value>
+    </labels>
+    <labels>
+        <fullName>DatasetIdForTestCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DatasetIdForTestCase</shortDescription>
+        <value>0Fb2a0000000wpICAQ</value>
+    </labels>
+    <labels>
+        <fullName>DatasetIdForTestTicket</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DatasetIdForTestTicket</shortDescription>
+        <value>0Fb2a0000009YYhCAM</value>
+    </labels>
+    <labels>
+        <fullName>DatasetIdForTestWorkflow</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DatasetIdForTestWorkflow</shortDescription>
+        <value>0Fb2a0000005PsCCAU</value>
+    </labels>
+    <labels>
+        <fullName>Delivery_Order_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Order Error</shortDescription>
+        <value>Delivery order should be equal to start date.</value>
+    </labels>
+    <labels>
+        <fullName>Disposal</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Disposal</shortDescription>
+        <value>Disposal</value>
+    </labels>
+    <labels>
+        <fullName>Disposal_Facility</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Disposal Facility</shortDescription>
+        <value>Disposal Facility</value>
+    </labels>
+    <labels>
+        <fullName>Disposition</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Disposition</shortDescription>
+        <value>Disposition</value>
+    </labels>
+    <labels>
+        <fullName>Diversion_Percentage</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Diversion Percentage</shortDescription>
+        <value>Diversion Percentage</value>
+    </labels>
+    <labels>
+        <fullName>DoNotReplyFromEmail</fullName>
+        <categories>Validation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DoNotReplyFromEmail</shortDescription>
+        <value>do_not_reply@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>DoNotReplyProfile</fullName>
+        <categories>Validation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DoNotReplyProfile</shortDescription>
+        <value>System Administrator</value>
+    </labels>
+    <labels>
+        <fullName>DupContSameNotiErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message for duplicate contact with same notification type</shortDescription>
+        <value>Contact with same Notification Type already exists in the system</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Business_Rule_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate Business Rule Error</shortDescription>
+        <value>Duplicate Business Rule cannot be created.</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Service_Approver_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate Service Approver Error</shortDescription>
+        <value>Business Rule cannot have Duplicate Service Approver.</value>
+    </labels>
+    <labels>
+        <fullName>ETA_Default</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom label for default ETA selection</shortDescription>
+        <value>Please select an asset for ETA</value>
+    </labels>
+    <labels>
+        <fullName>ETA_Reason_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ETA Reason Code</shortDescription>
+        <value>AlreadyServiced,</value>
+    </labels>
+    <labels>
+        <fullName>EmailAddress1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EmailAddress1</shortDescription>
+        <value>donotreply@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>EmailAddress2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EmailAddress2</shortDescription>
+        <value>Donotreply_DTnewreq@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>EmailAddress3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EmailAddress3</shortDescription>
+        <value>Donotreply_DTalerts@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>EmailAddress4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EmailAddress4</shortDescription>
+        <value>mlanoue@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>Email_Approval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email Approval</shortDescription>
+        <value>This task has been completed automatically by the system via a returned email approval.</value>
+    </labels>
+    <labels>
+        <fullName>EmptyEquipmentSize</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EmptyEquipmentSize</shortDescription>
+        <value>Unknown,UNK</value>
+    </labels>
+    <labels>
+        <fullName>Error_InvalidServiceBaseline</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error_InvalidServiceBaseline</shortDescription>
+        <value>This asset does not meet the standard criteria for a Change Pricing Event. The asset must be a WM Open Market, Commercial, Permanent, Scheduled Service.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Message_for_Quote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Message for Quote</shortDescription>
+        <value>Please provide Onsite Contact Name, Onsite Contact Phone Number and Placement Instructions</value>
+    </labels>
+    <labels>
+        <fullName>Error_PC_FieldChange</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error_PC_FieldChange</shortDescription>
+        <value>This asset does not meet the standard criteria for a Change Pricing Event. Due to Container Size, Quantity, Service Type, Frequency Type and Frequency Count are not change.</value>
+    </labels>
+    <labels>
+        <fullName>Error_PC_PT_FieldChange</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error_PC_PT_FieldChange</shortDescription>
+        <value>Please change the Container Size, Quantity, Service Type, Frequency Type and Frequency Count to call the pricing response,</value>
+    </labels>
+    <labels>
+        <fullName>Exclude</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exclude</shortDescription>
+        <value>exclude</value>
+    </labels>
+    <labels>
+        <fullName>ForRequestorOnly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ForRequestorOnly</shortDescription>
+        <value>*The Approvers highlighted in Green are Requestors only.</value>
+    </labels>
+    <labels>
+        <fullName>Frequency_Count</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Frequency Count</shortDescription>
+        <value>Frequency Count</value>
+    </labels>
+    <labels>
+        <fullName>Frequency_Type</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Frequency Type</shortDescription>
+        <value>Frequency Type</value>
+    </labels>
+    <labels>
+        <fullName>Genesys_Record_Creation_Interval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Genesys Record Creation Interval</shortDescription>
+        <value>30</value>
+    </labels>
+    <labels>
+        <fullName>Green_Pages</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Green Pages</shortDescription>
+        <value>http://greenpages.wm.com/eAgent/tabs.jsp</value>
+    </labels>
+    <labels>
+        <fullName>HourCreation</fullName>
+        <categories>EmailMessage</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HourCreation</shortDescription>
+        <value>0.5</value>
+    </labels>
+    <labels>
+        <fullName>HoverDelay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HoverDelay</shortDescription>
+        <value>1000</value>
+    </labels>
+    <labels>
+        <fullName>Initiate_Task</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Initiate Task</shortDescription>
+        <value>Obtain Internal Response;Initiate Service Request;Service Escalation;Spec Processing</value>
+    </labels>
+    <labels>
+        <fullName>IsActiveOptinOptout</fullName>
+        <categories>Notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IsActiveOptinOptout</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>JobErrorNotification_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Users to be notified when BatchToUpdateUsersGroupId ended with errors</shortDescription>
+        <value>toconne@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>Job_Error_Notification_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Users to be notified when BatchToUpdateUsersGroupId ended with errors</shortDescription>
+        <value>cprato@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>Label_EMAILSUBJECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label_EMAILSUBJECT</shortDescription>
+        <value>[EXTERNAL] DO NOT REPLY - You have some unread CruChats at Waste Management - Belk</value>
+    </labels>
+    <labels>
+        <fullName>Label_EmailFrom_Indico</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label_EmailFrom_Indico</shortDescription>
+        <value>alerts@am.corrigopro.com</value>
+    </labels>
+    <labels>
+        <fullName>LastAgentIdProfile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LastAgentIdProfile</shortDescription>
+        <value>Customer Service;Launch Team;Customer Account Team;SSM;Vendor Relations;Compliance</value>
+    </labels>
+    <labels>
+        <fullName>Last_Ref_Num_days</fullName>
+        <categories>This is to fetch last 30 days records for ref num search by case location on db query 1 and 3</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last Ref Num days</shortDescription>
+        <value>-5</value>
+    </labels>
+    <labels>
+        <fullName>Last_n_no_of_Service_Date_Days</fullName>
+        <categories>This is to fetch last 30 days work order records based on service date in db query 5</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last n no of Service Date Days</shortDescription>
+        <value>-30</value>
+    </labels>
+    <labels>
+        <fullName>LockFeeAndLockProducts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LockFeeAndLockProducts</shortDescription>
+        <value>Lock Fee,Lock Bar with Padlock,Gravity Lock Bar,Chains with Padlock,Gravity Lock Bar with Padlock</value>
+    </labels>
+    <labels>
+        <fullName>Market_Non_WM_Franchise</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Market Non - WM Franchise</shortDescription>
+        <value>Non - WM Franchise</value>
+    </labels>
+    <labels>
+        <fullName>Market_WM_Franchise</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Market WM Franchise</shortDescription>
+        <value>WM Franchise</value>
+    </labels>
+    <labels>
+        <fullName>Market_WM_Pre_Determined_Pricing</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Market WM Pre-Determined Pricing</shortDescription>
+        <value>WM Pre-Determined Pricing</value>
+    </labels>
+    <labels>
+        <fullName>Market_WM_Third_Party_Agreement</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Market WM Third -Party Agreement</shortDescription>
+        <value>WM Third -Party Agreement</value>
+    </labels>
+    <labels>
+        <fullName>MicroStrategy_Dashboard_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MicroStrategy Insights Dashboard URL</shortDescription>
+        <value>http://alvpcct014/MicroStrategy/servlet/mstrWeb</value>
+    </labels>
+    <labels>
+        <fullName>Minimum_Tons</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Minimum Tons</shortDescription>
+        <value>Minimum Tons</value>
+    </labels>
+    <labels>
+        <fullName>Minimum_Tons_Recycling</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Minimum Tons Recycling</shortDescription>
+        <value>minimum tons recycling</value>
+    </labels>
+	<labels>
+        <fullName>MonthlyTypeServiceScheduleErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MonthlyTypeServiceScheduleErrorMessage</shortDescription>
+        <value>Please select monthly service schedule</value>
+    </labels>
+    <labels>
+        <fullName>NO_CASE_SELECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NO_CASE_SELECT</shortDescription>
+        <value>Please enter valid case #</value>
+    </labels>
+    <labels>
+        <fullName>Name</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>Next_Business_Days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Next n Business Days</shortDescription>
+        <value>5</value>
+    </labels>
+    <labels>
+        <fullName>No_Approval_Required_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Approval Required Error</shortDescription>
+        <value>Service Approvers should not be added when the No Approval Required checkbox is checked</value>
+    </labels>
+    <labels>
+        <fullName>No_Email_Select</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Email Select</shortDescription>
+        <value>Please select any E-mail to copy as comments</value>
+    </labels>
+    <labels>
+        <fullName>No_Mapping</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Mapping</shortDescription>
+        <value>No Mapping</value>
+    </labels>
+    <labels>
+        <fullName>No_record_found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Norecordfound</shortDescription>
+        <value>No record found.</value>
+    </labels>
+    <labels>
+        <fullName>Non_Serviceable</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Non-Serviceable</shortDescription>
+        <value>non-serviceable</value>
+    </labels>
+    <labels>
+        <fullName>NotiPointContactErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Notification Point of Contact Error Message</shortDescription>
+        <value>Notification point of contact can be set only for contact associated with location</value>
+    </labels>
+    <labels>
+        <fullName>Notification_Default</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom label for default Notification selection</shortDescription>
+        <value>Please select an asset for Notification</value>
+    </labels>
+    <labels>
+        <fullName>Number_of_Quote_Only_Allowed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Number of Quote Only Allowed</shortDescription>
+        <value>3</value>
+    </labels>
+    <labels>
+        <fullName>OOODuplicateErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OOODuplicateErrorMessage</shortDescription>
+        <value>Business Rule(s) are already associated to an OOO record, please select another user or update the existing rules.</value>
+    </labels>
+    <labels>
+        <fullName>Obtain_Service_Approval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Obtain Service Approval</shortDescription>
+        <value>Obtain Service Approval</value>
+    </labels>
+    <labels>
+        <fullName>OneNote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneNote</shortDescription>
+        <value>https://wmgmt.sharepoint.com/:o:/s/sbsclientexperience/Eh6zcWfy9o5Oi53ivcPy83IBVkY8lfq7MfCBLTBY1XCniQ?e=NWrjHL</value>
+    </labels>
+    <labels>
+        <fullName>Open_Case_Tab_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Open Case Tab URL</shortDescription>
+        <value>/lightning/n/MyOpenCases</value>
+    </labels>
+    <labels>
+        <fullName>Open_Market</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Open Market</shortDescription>
+        <value>open market</value>
+    </labels>
+    <labels>
+        <fullName>Open_SFDC_Team_Task_Url</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Open SFDC Team Task Url</shortDescription>
+        <value>/lightning/n/SFDC_Team_Task</value>
+    </labels>
+    <labels>
+        <fullName>Open_Tasks_tab_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Open Task Tab Url</shortDescription>
+        <value>/lightning/n/MyOpenTasks/</value>
+    </labels>
+    <labels>
+        <fullName>Opus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opus</shortDescription>
+        <value>https://opus.wm.com/opus-report/report/report</value>
+    </labels>
+    <labels>
+        <fullName>Order</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order</shortDescription>
+        <value>Order</value>
+    </labels>
+    <labels>
+        <fullName>PSI_Comments_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PSI Comments Error</shortDescription>
+        <value>Please provide &apos;PSI Comments&apos; if Bypass PSI Reason is selected as &apos;Other&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>PauseTime</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PauseTime in Hours . It is being used in WorkOrderCreation</shortDescription>
+        <value>0.000277778</value>
+    </labels>
+    <labels>
+        <fullName>Pending_Information_Tasks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pending Information Tasks</shortDescription>
+        <value>Pending Information;Service Follow up;Resolve Service Issue</value>
+    </labels>
+    <labels>
+        <fullName>Percent</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Percent</shortDescription>
+        <value>Percent</value>
+    </labels>
+    <labels>
+        <fullName>Percent_Base_or_Compounded</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Percent Base or Compounded</shortDescription>
+        <value>Percent Base or Compounded</value>
+    </labels>
+    <labels>
+        <fullName>Pickup</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pickup</shortDescription>
+        <value>Pickup</value>
+    </labels>
+    <labels>
+        <fullName>Pickup_Order_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pickup Order Error</shortDescription>
+        <value>Pickup order should be equal or greater than start date and less than or equal to end date.</value>
+    </labels>
+    <labels>
+        <fullName>Pre_Determined_Pricing</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pre-Determined Pricing</shortDescription>
+        <value>pre-determined pricing</value>
+    </labels>
+    <labels>
+        <fullName>Premium_Delivery</fullName>
+        <categories>SameDayPremiumService</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Premium Delivery - Group Inbox</shortDescription>
+        <value>gmarti18@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>Premium_Delivery_Script</fullName>
+        <categories>SameDayPremiumService</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Premium Delivery Eligible</shortDescription>
+        <value>I see your location is eligible for a 6-hour guaranteed delivery. For an additional charge, we would be able to guarantee your container will be delivered within 6 hours. Would you be interested in upgrading to this priority delivery?</value>
+    </labels>
+    <labels>
+        <fullName>Premium_Delivery_Teams</fullName>
+        <categories>SameDayPremiumService</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Premium Delivery - Teams</shortDescription>
+        <value>399049db.Wmgmt.onmicrosoft.com@amer.teams.ms</value>
+    </labels>
+    <labels>
+        <fullName>Price_Per_Haul</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Price Per Haul</shortDescription>
+        <value>Price per haul</value>
+    </labels>
+    <labels>
+        <fullName>PricingDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PricingDetails</shortDescription>
+        <value>Pricing Details</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Availability</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Availability</shortDescription>
+        <value>Pricing is not available for this input parameter.</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_BaselineId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing BaselineId</shortDescription>
+        <value>Baseline ID</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Business_Unit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Business Unit</shortDescription>
+        <value>Business Unit</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_ContainerCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing ContainerCode</shortDescription>
+        <value>Container Code</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Cost_Steps</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Cost Steps</shortDescription>
+        <value>Cost Steps</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Created_By</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Created By</shortDescription>
+        <value>Created By</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Created_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Created Date</shortDescription>
+        <value>Created Date</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Customer_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Customer Type</shortDescription>
+        <value>Customer Price Type</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Details</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Details</shortDescription>
+        <value>Pricing Details</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Disposal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Disposal</shortDescription>
+        <value>Disposal</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Disposal_Facility</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Disposal Facility</shortDescription>
+        <value>Disposal Facility</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Disposal_RecId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Disposal RecId</shortDescription>
+        <value>Disposal Record Id</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Disposition</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Disposition</shortDescription>
+        <value>Disposition</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Diversion_Percentage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Diversion Percentage</shortDescription>
+        <value>Diversion Percentage</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_EST_Tons_PerHaul</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing EST Tons PerHaul</shortDescription>
+        <value>Est.Tons per Haul</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Error_Head</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Error Head</shortDescription>
+        <value>Error has occurred. Please create a new pricing request.</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Extra_Pickup</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Extra Pickup</shortDescription>
+        <value>Extra Pickup</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Extra_Pickup_RecId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Extra Pickup RecId</shortDescription>
+        <value>Extra Pickup Record Id</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Facility_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Facility Id</shortDescription>
+        <value>Facility Id</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Fail_Message</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Fail Message</shortDescription>
+        <value>Failed to save the pricing in case comment.</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Franchise_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Franchise Link</shortDescription>
+        <value>Franchise Pricing Link</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Frequency_Count</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Frequency Count</shortDescription>
+        <value>Frequency Count</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Frequency_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Frequency Type</shortDescription>
+        <value>Frequency Type</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_GreenPage_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing GreenPage Link</shortDescription>
+        <value>Green Pages Link</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Haul_RecId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Haul RecId</shortDescription>
+        <value>Haul Record Id</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_IsScale_Available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing IsScale Available</shortDescription>
+        <value>Is Scale Available</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_MAS_Library</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing MAS Library</shortDescription>
+        <value>MAS Library</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_MAS_Unique_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing MAS Unique Id</shortDescription>
+        <value>MAS Unique ID</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Market</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Market</shortDescription>
+        <value>Market</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Market_AreaCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Market AreaCode</shortDescription>
+        <value>Market Area Code</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Market_AreaName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Market AreaName</shortDescription>
+        <value>Market Area Name</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Message</shortDescription>
+        <value>Message</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Minimum_Tons</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Minimum Tons</shortDescription>
+        <value>Minimum Tons</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Notes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Notes</shortDescription>
+        <value>Notes</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_OutPut_Msg_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing OutPut Msg Details</shortDescription>
+        <value>Output Message Details</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Pickup</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Pickup</shortDescription>
+        <value>Pickup</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Pickup_RecId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Pickup RecId</shortDescription>
+        <value>Pickup Record Id</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Price</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Price</shortDescription>
+        <value>Price per haul</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Price_Steps</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Price Steps</shortDescription>
+        <value>Price Steps</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Quantity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Quantity</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Quote_Identifier</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Quote Identifier</shortDescription>
+        <value>Quote Identifier</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_RateType_Haul</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing RateType Haul</shortDescription>
+        <value>Rate Type Hauling</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_RateType_Pickup</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing RateType Pickup</shortDescription>
+        <value>Rate Type Pickup</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Request_No</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Request No</shortDescription>
+        <value>Pricing Request</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Request_Title</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Request Title</shortDescription>
+        <value>Pricing Request</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Service_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Service Details</shortDescription>
+        <value>Service Details</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Site_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Site Id</shortDescription>
+        <value>Site ID</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Source_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Source Code</shortDescription>
+        <value>Source Code</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Substituted_ContainerCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Substituted ContainerCode</shortDescription>
+        <value>Substituted Container Code</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Success_Message</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Success Message</shortDescription>
+        <value>Pricing is successfully saved in case comment.</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_System_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing System Info</shortDescription>
+        <value>System Information</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_UOM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing UOM</shortDescription>
+        <value>UOM</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Unit_Cost</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Unit Cost</shortDescription>
+        <value>Unit Cost</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Unit_Price</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Unit Price</shortDescription>
+        <value>Unit Price</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_VendorId_Commercial</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing VendorId Commercial</shortDescription>
+        <value>Vendor ID Commercial</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_VendorName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing VendorName</shortDescription>
+        <value>Vendor Name</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_VendorName_Commercial</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing VendorName Commercial</shortDescription>
+        <value>Vendor Name Commercial</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Vendor_Comments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Vendor Comments</shortDescription>
+        <value>Vendor Comments</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Vendor_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Vendor Id</shortDescription>
+        <value>Vendor ID</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Waste_Stream</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Waste Stream</shortDescription>
+        <value>Waste Stream</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Zone_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Zone Name</shortDescription>
+        <value>Zone Name</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Zone_desc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Zone desc</shortDescription>
+        <value>Zone Description</value>
+    </labels>
+    <labels>
+        <fullName>Process_List</fullName>
+        <categories>This is used in case highlight panel for sub status color changes</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Process List</shortDescription>
+        <value>Notify Customer of Decline, Obtain Customer Information,Obtain Service Approval,Confirm Vendor Availability,Notify Customer of Delay, Notify Customer of Service Update</value>
+    </labels>
+    <labels>
+        <fullName>Processes_to_Exclude</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Processes to Exclude</shortDescription>
+        <value>Obtain Customer Info,Notify Customer of Decline,Obtain Service Approval,Pending Information,Service Follow up,Case Assignment,Resolve Service Issue,Escalation Obtain Customer Info,Escalation Obtain Service Approval</value>
+    </labels>
+    <labels>
+        <fullName>Proposed_Service_Date_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Proposed Service Date Error</shortDescription>
+        <value>Proposed Service Date should be greater than Case Service Date.</value>
+    </labels>
+    <labels>
+        <fullName>Quantity</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quantity</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>Quantity_Client_Price_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quantity Client Price Error Message</shortDescription>
+        <value>WO Component values cannot be changed when a Service has Occurrence type as Scheduled</value>
+    </labels>
+    <labels>
+        <fullName>Quantity_Error_Message_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quantity Error Message 1</shortDescription>
+        <value>, quantity cannot be greater than the available quantity</value>
+    </labels>
+    <labels>
+        <fullName>Quantity_Error_Message_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quantity Error Message 2</shortDescription>
+        <value>Override Quantity cannot be less than equal to 0</value>
+    </labels>
+    <labels>
+        <fullName>Quantity_Error_Message_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quantity Error Message 3</shortDescription>
+        <value>Override Quantity cannot be 0</value>
+    </labels>
+    <labels>
+        <fullName>QuoteApprovalDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteApprovalDescription</shortDescription>
+        <value>Per your corporate requirements, approval is required for this request.  We are currently waiting to hear back from your Corporate approver for their decision.</value>
+    </labels>
+    <labels>
+        <fullName>QuoteApprovedDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteApprovedDescription</shortDescription>
+        <value>If the customer is looking for an ETA on a delivery, review the case comments and the delivery work order to see if there is an ETA already documented. Utilize other resources available to confirm when the delivery will be completed (Status function, OPUS/CAAG, MAS, confirmation from the vendor)</value>
+    </labels>
+    <labels>
+        <fullName>QuoteCreationCheckError1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultipleCoreServicesExist</shortDescription>
+        <value>A quote cannot be created because multiple active services of the same type were found under a selected asset.</value>
+    </labels>
+    <labels>
+        <fullName>QuoteCreationCheckError2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneCoreServiceWithFutureEndDate</shortDescription>
+        <value>A quote cannot be created because a core service under a selected asset has an upcoming end date.</value>
+    </labels>
+    <labels>
+        <fullName>QuoteCreationCheckError3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AllCoreServicesEndedInThePast</shortDescription>
+        <value>A quote cannot be created because there are no currently active core services under a selected asset.</value>
+    </labels>
+    <labels>
+        <fullName>QuoteDeclinedDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteDeclinedDescription</shortDescription>
+        <value>Per your corporate notes, approval is required for this request. The Corporate approver for this service has declined the delivery. Please contact your corporate for further information as to why the delivery was not approved.</value>
+    </labels>
+    <labels>
+        <fullName>QuoteDraftDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteDraftDescription</shortDescription>
+        <value>You have a new quote that has not yet been submitted for procurement, pricing and approval.</value>
+    </labels>
+    <labels>
+        <fullName>QuotePriceDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuotePriceDescription</shortDescription>
+        <value>Our setup team is currently establishing the price for your service.</value>
+    </labels>
+    <labels>
+        <fullName>QuoteProcureDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteProcureDescription</shortDescription>
+        <value>Our setup team is currently confirming a vendor and their availability for your service.</value>
+    </labels>
+    <labels>
+        <fullName>Read_timed_out</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Read timed out</shortDescription>
+        <value>Read timed out</value>
+    </labels>
+    <labels>
+        <fullName>ReasonCode_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReasonCode Error Message</shortDescription>
+        <value>Reason code is mandatory when client price is changed</value>
+    </labels>
+    <labels>
+        <fullName>Record_Update_Title</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Record Update Title</shortDescription>
+        <value>Record Update</value>
+    </labels>
+    <labels>
+        <fullName>RecordsLimits</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RecordsLimits</shortDescription>
+        <value>LIMIT 10</value>
+    </labels>
+    <labels>
+        <fullName>Removal_Order_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Removal Order Error</shortDescription>
+        <value>Removal order should be greater than or equal to start date.</value>
+    </labels>
+    <labels>
+        <fullName>Removal_Order_Error2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Removal Order Error2</shortDescription>
+        <value>Removal order should be equal to the end date.</value>
+    </labels>
+    <labels>
+        <fullName>Removal_Order_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Removal Order Warning</shortDescription>
+        <value>Warning: Removal work order is scheduled for the same date as the delivery work order.</value>
+    </labels>
+    <labels>
+        <fullName>Republic_Portal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Republic Portal</shortDescription>
+        <value>https://secure.myrepublicaccount.com/</value>
+    </labels>
+    <labels>
+        <fullName>Rolloff</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rolloff</shortDescription>
+        <value>Rolloff</value>
+    </labels>
+    <labels>
+        <fullName>SSMTeamUCCCodes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SSMTeamUCCCodes</shortDescription>
+        <value>SSMGEN</value>
+    </labels>
+    <labels>
+        <fullName>SSTTeamUCCCodes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SSTTeamUCCCodes</shortDescription>
+        <value>CSRES</value>
+    </labels>
+    <labels>
+        <fullName>STP_Process_on_off_switch</fullName>
+        <categories>STP Switches</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STP Process on/off switch</shortDescription>
+        <value>On</value>
+    </labels>
+    <labels>
+        <fullName>SalesTeamUCCCodes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamUCCCodes</shortDescription>
+        <value>SALESGEN,SALESPREM</value>
+    </labels>
+    <labels>
+        <fullName>Save_Asset_Header_Failure</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Save Asset Header Failure</shortDescription>
+        <value>Something went wrong.Please contact administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Save_Asset_Header_Success</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Save Asset Header Success</shortDescription>
+        <value>Asset Header saved successfully to Case</value>
+    </labels>
+    <labels>
+        <fullName>Select_Case</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select Case</shortDescription>
+        <value>Please select case number.</value>
+    </labels>
+    <labels>
+        <fullName>Select_future_date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select future date</shortDescription>
+        <value>Please select future dates</value>
+    </labels>
+    <labels>
+        <fullName>ServiceApproverCannotBeAdded</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ServiceApproverCannotBeAdded</shortDescription>
+        <value>Service Approver cannot be added for Past Business Rules</value>
+    </labels>
+    <labels>
+        <fullName>Service_Details</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Details</shortDescription>
+        <value>Service Details</value>
+    </labels>
+    <labels>
+        <fullName>Service_ETA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service ETA</shortDescription>
+        <value>Get_Service_ETA</value>
+    </labels>
+    <labels>
+        <fullName>Service_Guarantees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Guarantees</shortDescription>
+        <value>Set Customer&apos;s Service Guarantees</value>
+    </labels>
+    <labels>
+        <fullName>SleepDelay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SleepDelay</shortDescription>
+        <value>500</value>
+    </labels>
+    <labels>
+        <fullName>TaskByLocationReport_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Task by Location Report URL</shortDescription>
+        <value>/lightning/r/Report/00O1I000006p1GEUAY/view</value>
+    </labels>
+    <labels>
+        <fullName>TaskByVendorReport_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Task by Vendor report url</shortDescription>
+        <value>/lightning/r/Report/00O1I000006p1GFUAY/view</value>
+    </labels>
+    <labels>
+        <fullName>TaskCreated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TaskDateFilters</shortDescription>
+        <value>90 days ago</value>
+    </labels>
+    <labels>
+        <fullName>TaskWorkflowDataset</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TaskWorkflowDataset</shortDescription>
+        <value>InteractionDuration</value>
+    </labels>
+    <labels>
+        <fullName>Task_Validation_Closed_Case</fullName>
+        <categories>Validation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Task Validation Closed Case</shortDescription>
+        <value>Tasks can only be created on cases that have a corresponding Acorn ticket number.</value>
+    </labels>
+    <labels>
+        <fullName>Team_Open_Case_Tab_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Team&apos;s Open Cases Tab URL</shortDescription>
+        <value>/lightning/n/Team_Open_Cases/</value>
+    </labels>
+    <labels>
+        <fullName>Team_Open_Task_Tab_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Team&apos;s Open Task Tab URL</shortDescription>
+        <value>/lightning/n/Team_Open_Tasks/</value>
+    </labels>
+    <labels>
+        <fullName>Third_Party_Agreement</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Third -Party Agreement</shortDescription>
+        <value>third -party agreement</value>
+    </labels>
+    <labels>
+        <fullName>TicketCaseCommentDataset</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TicketCaseCommentDataset</shortDescription>
+        <value>TicketCaseComment</value>
+    </labels>
+    <labels>
+        <fullName>Trun_off_task</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trun off task</shortDescription>
+        <value>true</value>
+    </labels>
+    <labels>
+        <fullName>Turn_On_ChatNow_Email_Auto_Reply</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Turn On ChatNow Email Auto Reply</shortDescription>
+        <value>true</value>
+    </labels>
+    <labels>
+        <fullName>TwoWayAccessErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TwoWayAccessErrorMessage</shortDescription>
+        <value>There is some access problem Salesforce . Please contact system admin.</value>
+    </labels>
+    <labels>
+        <fullName>TwowayCommCharslimit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TwowayCommCharslimit</shortDescription>
+        <value>1000</value>
+    </labels>
+    <labels>
+        <fullName>TwowaycommentsPerPage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TwowaycommentsPerPage</shortDescription>
+        <value>8</value>
+    </labels>
+    <labels>
+        <fullName>UOM</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UOM</shortDescription>
+        <value>UOM</value>
+    </labels>
+    <labels>
+        <fullName>UserCheckId</fullName>
+        <categories>Notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UserCheckId</shortDescription>
+        <value>0051I000003vwkyQAA</value>
+    </labels>
+    <labels>
+        <fullName>UserIsServiceApprover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UserIsServiceApprover</shortDescription>
+        <value>&apos;This User is a Service Approver.&apos;</value>
+    </labels>
+	<labels>
+        <fullName>ValidDayOfMonthErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ValidDayOfMonthErrorMessage</shortDescription>
+        <value>Please select valid Day Of Month</value>
+    </labels>
+	<labels>
+        <fullName>ValidMonthlyIntervalErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ValidMonthlyIntervalErrorMessage</shortDescription>
+        <value>Please select valid monthly Interval</value>
+    </labels>
+    <labels>
+        <fullName>Vendor_Mismatch</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Vendor Mismatch</shortDescription>
+        <value>Vendor cost must be manually determined because the pricing engine has returned a vendor that does not match the incumbent vendor.</value>
+    </labels>
+    <labels>
+        <fullName>WM_Franchise</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WM Franchise</shortDescription>
+        <value>wm franchise</value>
+    </labels>
+    <labels>
+        <fullName>WM_LOGO_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WM LOGO_URL</shortDescription>
+        <value>https://wmsbs--qa--c.documentforce.com/servlet/servlet.ImageServer?id=0157A00000019RM&amp;oid=00D7A000000DIz2&amp;lastMod=1569877525000</value>
+    </labels>
+    <labels>
+        <fullName>WasteCategory_ShowLocalVendorComp</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WasteCategory_ShowLocalVendorComp</shortDescription>
+        <value>All Waste Categories</value>
+    </labels>
+    <labels>
+        <fullName>WorkOrder_Service_Date_Update_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WorkOrder Service Date Update Error</shortDescription>
+        <value>Due to the current work order status and/or service date, modifications to this work order cannot be made at this time. Please navigate to the case record to cancel and recreate the work order with the appropriate date using the &quot;Work Order on Case&quot; tab.</value>
+    </labels>
+    <labels>
+        <fullName>Work_Order_ETA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Work Order ETA</shortDescription>
+        <value>Get_Work_Order_ETA</value>
+    </labels>
+    <labels>
+        <fullName>WorkflowTaskAssignmentDataset</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WorkflowTaskAssignmentDataset</shortDescription>
+        <value>InteractionDuration</value>
+    </labels>
+    <labels>
+        <fullName>open_Team_Quote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>open Team Quote</shortDescription>
+        <value>/lightning/n/Team_User_Quotes</value>
+    </labels>
+    <labels>
+        <fullName>service_Channel_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>service Channel Email</shortDescription>
+        <value>servicechannelservicerequests@wm.com</value>
+    </labels>
+    <labels>
+        <fullName>service_guarantees_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>service guarantees Description</shortDescription>
+        <value>Please set your customer’s service guarantees where applicable</value>
+    </labels>
+    <labels>
+        <fullName>zone3PAMsg</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>zone3PAMsg</shortDescription>
+        <value>This location may have a WM Third-Party Agreement, Contact the Market Area for Pricing.</value>
+    </labels>
+    <labels>
+        <fullName>zoneCompetitorMsg</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>zoneCompetitorMsg</shortDescription>
+        <value>This location is within a Non-WM Franchise area, refer to the Franchise pricing process.</value>
+    </labels>
+    <labels>
+        <fullName>zoneDeterminedMsg</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>zoneDeterminedMsg</shortDescription>
+        <value>This location is may have Pre-Determined Pricing, Contact the Market Area for pricing.</value>
+    </labels>
+    <labels>
+        <fullName>zoneFranchiseMsg</fullName>
+        <categories>Pricing Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>zoneFranchiseMsg</shortDescription>
+        <value>This location is within a WM Franchise area, refer to Franchise pricing process.</value>
+    </labels>
+	<labels>
+        <fullName>CloseDate_TimeFrame</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>indicates the close date timeframe considered in BatchCloseAcornTicket batch</shortDescription>
+        <value>3</value>
+    </labels>
+    <labels>
+        <fullName>Generic_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic Error Message</shortDescription>
+        <value>Error(s) occurred while processing the request.</value>
+    </labels>
+    <labels>
+        <fullName>OfficeTrax</fullName>
+        <categories>Intake</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OfficeTrax</shortDescription>
+        <value>Officetrax</value>
+    </labels>
+    <labels>
+        <fullName>Service_Channel</fullName>
+        <categories>Intake</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Channel</shortDescription>
+        <value>Service Channel</value>
+    </labels>
+    <labels>
+        <fullName>InternalCorrectionTeamUCC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InternalCorrectionTeamUCC</shortDescription>
+        <value>SPCOR</value>
+    </labels>    
+     <labels>
+        <fullName>SystemGenTask</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SystemGenTask</shortDescription>
+        <value>Obtain Service Approval;Confirm Vendor Availability;Obtain Customer Info;Manually Dispatch;Escalation Obtain Service Approval;Escalation Obtain Customer Info</value>
+    </labels>
+    <labels>
+        <fullName>ExtraPickupAdditionValidationError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ExtraPickupAdditionValidationError</shortDescription>
+        <value>Validation Error: Occurrence Type of Pickup and Bundle should be Scheduled to add an Extra Pickup</value>
+    </labels>
+    <labels>
+        <fullName>ExtraPickupStartDateValidationError</fullName>
+        <categories>SDT-39624</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ExtraPickupStartDateValidationError</shortDescription>
+        <value>Extra Pickup&apos;s Start Date cannot be a date prior to Start Date of the Bundle/Asset Start Date</value>
+    </labels>
+    <labels>
+        <fullName>ValidationErrorEndDateOnCommercialTemporaryContainers</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ValidationErrorEndDateOnCommercialTemporaryContainers</shortDescription>
+        <value>Error: Please select either Do Not Create MAS Ticket or MAS Removal option in MAS Tickets section.</value>
+    </labels>
+    <labels>
+        <fullName>EndDateUpdateOnChildQuoteLinesFlag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EndDateUpdateOnChildQuoteLinesFlag</shortDescription>
+        <value>Y</value>
+    </labels>
+
+    <labels>
+        <fullName>Product_Order_Order_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Order Order Error</shortDescription>
+        <value>Odor-Eater order should be equal or greater than start date and less than or equal to end date.</value>
+    </labels>
+    <labels>
+        <fullName>Site_Survey_Order_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Site Survey Order Error</shortDescription>
+        <value>Site Survey order should be equal or greater than start date and less than or equal to end date.</value>
+    </labels>
+    <labels>
+        <fullName>Dry_Run_Order_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Dry Run Order Error</shortDescription>
+        <value>Dry Run order should be equal or greater than start date and less than or equal to end date.</value>
+    </labels>
+    <labels>
+        <fullName>CSServiceResolutionTeamUser</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSServiceResolutionTeamUser</shortDescription>
+        <value>csserviceresolutionteam</value>
+    </labels>
+    <labels>
+        <fullName>CSServiceResolutionTeamUserFirstName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSServiceResolutionTeamUserFirstName</shortDescription>
+        <value>CS Service Resolution</value>
+    </labels>
+    <labels>
+        <fullName>CSServiceResolutionTeamUserLastName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSServiceResolutionTeamUserLastName</shortDescription>
+        <value>Team</value>
+    </labels>
+    <labels>
+        <fullName>Emails_For_NSQueue_Routing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emails For NSQueue Routing</shortDescription>
+        <value>WM Service Update 1; WMSBSNewService; WMSBSProjectServices; VRM Email to Quote; SBS Service Fulfill Change</value>
+    </labels>
+
+</CustomLabels>

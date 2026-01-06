@@ -1,0 +1,47 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	  
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="showHide" type="boolean" default= "false"/>
+    <aura:attribute name="isRowSelected" type="boolean" access="global" default="true"/>
+    <aura:attribute name="selectedRows" type="task[]" access="global"/>
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <div class="slds-m-around_xx-large">
+        <lightning:button variant="brand"
+                          label="Reassign"
+                          title="Reassign Task"
+                          onclick="{!c.reassignButtonClick}"
+                          disabled="{!v.isRowSelected}"/>
+        
+        <aura:if isTrue="{!v.showHide}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                
+                <div class="slds-modal__container">
+                    
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                      <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select User</h2>
+                    </header>
+                    
+                    <c:customLookup objectAPIName="user" IconName="standard:user" selectedRecord="{!v.selectedLookUpRecord}" />
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="brand" 
+                                          label="Assign"
+                                          title="Assign"
+                                          onclick="{! c.assignuser }"/>
+                        <lightning:button variant="brand" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        
+                    </footer>
+                </div>
+              <!-- Modal/Popup Box Header Ends here -->
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+</aura:component>

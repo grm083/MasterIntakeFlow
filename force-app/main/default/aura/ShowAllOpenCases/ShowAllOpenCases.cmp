@@ -1,0 +1,84 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller='MyOpenCaseListController'
+                access="global" >
+    
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="CaseData" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="caseStatus" type="Case[]"/>
+    
+    <aura:attribute name="noRecordsFound" type="String"/>
+    <aura:attribute name="isSending" type="boolean" />
+    <aura:attribute name="hideNoRecordSection" type="boolean" default = "true"/>
+    <aura:attribute name="paginationList" type="Task"/>
+    <aura:attribute name="pageLoadList" type="Case"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="15"/>
+    <aura:attribute name="selectCaseStatus" type="String" access="global" default="Open"/>
+    <aura:attribute name="options" type="List"/>
+    
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    
+    <aura:if isTrue="{!v.isSending}">
+        <div class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <div style="background-color:white">
+        <div class="slds-page-header">
+            <div class="slds-media">
+                
+                <div class="slds-media__body">
+                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>List of All Cases</b></h1>
+                    <lightning:select aura:id="selectCaseStatus" name="select" label="Status" required="true" class="slds-col slds-size_3-of-12" onchange="{! c.onStatusChange }">
+                        <aura:iteration items="{!v.options}" var="option">
+                            <option text="{!option.label}" value="{!option.id}" selected="{!option.selected}"/>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="slds-m-top_small" >
+            <aura:if isTrue="{!v.hideNoRecordSection}">
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <ui:outputText value="{!$Label.c.No_record_found}"/>  
+                </div>
+                <br/><br/>
+                
+                <aura:set attribute="else">
+                    <lightning:datatable data="{! v.paginationList }" class="slds-m-top_Large"
+                                         columns="{! v.columns }" 
+                                         keyField="id"
+                                         hideCheckboxColumn="true"
+                                         onrowselection="{! c.getSelectedName }"/>	
+                    <br/>
+                    
+                    <lightning:buttonGroup class="slds-align_absolute-center" >
+                        <lightning:button label="Previous" disabled="{!v.startPage == 0}"  
+                                          onclick="{!c.previous}" variant="brand"
+                                          iconName='utility:back'/>
+                        &nbsp; &nbsp; &nbsp;
+                        <lightning:button label="Next" disabled="{!v.endPage > v.totalRecords}" 
+                                          onclick="{!c.next}" variant="brand"
+                                          iconName='utility:forward' iconPosition='right'/>
+                    </lightning:buttonGroup>
+                </aura:set>
+            </aura:if>
+        </div> 
+        
+        <br/>
+        <!--/aura:set-->
+    </div>
+    
+</aura:component>

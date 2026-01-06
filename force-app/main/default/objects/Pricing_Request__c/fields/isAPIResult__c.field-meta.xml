@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>isAPIResult__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To check the API response</description>
+    <externalId>false</externalId>
+    <label>isAPIResult</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

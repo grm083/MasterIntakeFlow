@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Rule__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The Business Rule that applies to the task</description>
+    <externalId>false</externalId>
+    <label>Business Rule</label>
+    <referenceTo>Business_Rule__c</referenceTo>
+    <relationshipLabel>Task</relationshipLabel>
+    <relationshipName>Tasks</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

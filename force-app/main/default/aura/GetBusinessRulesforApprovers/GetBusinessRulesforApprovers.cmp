@@ -1,0 +1,90 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" 
+                controller="BusinessRuleCtrl"
+                access="global" >
+    <aura:attribute name="showPopUpUI" type="boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="toastMessage" type="string"/>
+    <aura:attribute name="headerMessage" type="string"/>
+    <aura:attribute name="options" type="List" default="[]"/>
+    <aura:attribute name="values" type="List" default="[]"/>
+    <aura:attribute name="brOptions" type="List" default="[]"/>
+    <aura:attribute name="showAllBR" type="boolean"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:html tag="style">
+        .slds-p-around–medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+    </aura:html>
+    <!-- Header -->
+    <!-- <div class="modal-header slds-modal__header slds-size_1-of-1">
+	</div> -->
+     
+    <div class="slds-modal__header  slds-m-top_x-large">
+        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate"><b>Get Business Rules</b></h1> 
+    </div>
+    <!-- Body -->
+    <div class="slds-modal__content slds-p-around–x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative">
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <!-- Add modal Body/Content Inside -->
+            <aura:if isTrue="{!v.showSpinner}">
+                <div aura:id="spinnerId" class="slds-spinner_container">
+                    <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                        <span class="slds-assistive-text">Loading...</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.showPopUpUI}">
+                <!--       @@@@@  Get Business Rules Layout   @@@@@@@          -->
+                <div><br></br></div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_12-of-12  slds-m-around_xxx-small">
+                        <span>
+                            <lightning:input aura:id="checkboxId" type="checkbox" label="Select All" onchange="{!c.onhandleChange}"></lightning:input> 
+                        </span>
+                    </div>
+                </div>
+                <div><br></br></div>
+                
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_12-of-12  slds-m-around_xxx-small">
+                        <span>
+                            <lightning:dualListbox aura:id="businessRules"
+                                                   name="multipleOptions"  
+                                                   label= "Business Rules" 
+                                                   sourceLabel="Available" 
+                                                   selectedLabel="Selected" 
+                                                   options="{!v.brOptions}" 
+                                                   value="{!v.values}"
+                                                   required="true"
+                                                   onchange="{!c.onhandleChange}"/>
+                        </span>
+                    </div>
+                </div>
+                <div style="margin-top: -8px;">
+                </div>  
+            </aura:if>
+            <!-- Modal body ends Here -->      
+        </div>
+    </div>
+    <!-- Body -->
+    
+    <!-- Footer -->
+    <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+        <lightning:button variant="Brand" class="slds-button" label="Save" onclick="{!c.handleSaveRecord}"/>
+        <lightning:button variant="Neutral" class="slds-button" label="Cancel" onclick="{!c.handleCloseModel}"/>
+    </div>
+    <!-- Footer -->
+    
+</aura:component>

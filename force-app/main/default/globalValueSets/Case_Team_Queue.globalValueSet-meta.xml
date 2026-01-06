@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>AM Broker Team</fullName>
+        <default>false</default>
+        <label>AM Broker Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Dollar Tree - Family Dollar Team</fullName>
+        <default>false</default>
+        <label>Dollar Tree - Family Dollar Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Home Depot Projects</fullName>
+        <default>false</default>
+        <label>Home Depot Projects</label>
+    </customValue>
+    <customValue>
+        <fullName>Home Depot Team</fullName>
+        <default>false</default>
+        <label>Home Depot Team</label>
+    </customValue>
+    <customValue>
+        <fullName>SFDC-Launch Fast Response</fullName>
+        <default>false</default>
+        <label>SFDC-Launch Fast Response</label>
+    </customValue>
+	<customValue>
+        <fullName>Internal Spec Correction SF</fullName>
+        <default>false</default>
+        <label>Internal Spec Correction SF</label>
+    </customValue>
+    <customValue>
+        <fullName>New Stores Team SF</fullName>
+        <default>false</default>
+        <label>New Stores Team SF</label>
+    </customValue>
+    <customValue>
+        <fullName>SSM Team SF</fullName>
+        <default>false</default>
+        <label>SSM Team SF</label>
+    </customValue>
+    <customValue>
+        <fullName>VRM Canada SF</fullName>
+        <default>false</default>
+        <label>VRM Canada SF</label>
+    </customValue>
+    <customValue>
+        <fullName>MCY QUOTES</fullName>
+        <default>false</default>
+        <label>MCY QUOTES</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Acevedo, H</fullName>
+        <default>false</default>
+        <label>PM Acevedo, H</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Adler C</fullName>
+        <default>false</default>
+        <label>PM Adler C</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Bailey-Haas, K</fullName>
+        <default>false</default>
+        <label>PM Bailey-Haas, K</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Bouchard, T</fullName>
+        <default>false</default>
+        <label>PM Bouchard, T</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Brooks, J</fullName>
+        <default>false</default>
+        <label>PM Brooks, J</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Chantler, R</fullName>
+        <default>false</default>
+        <label>PM Chantler, R</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Curley, S</fullName>
+        <default>false</default>
+        <label>PM Curley, S</label>
+    </customValue>
+    <customValue>
+        <fullName>PM DeRosa, K</fullName>
+        <default>false</default>
+        <label>PM DeRosa, K</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Evans, K</fullName>
+        <default>false</default>
+        <label>PM Evans, K</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Farquharson</fullName>
+        <default>false</default>
+        <label>PM Farquharson</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Ferrer, L</fullName>
+        <default>false</default>
+        <label>PM Ferrer, L</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Filburn</fullName>
+        <default>false</default>
+        <label>PM Filburn</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Freeman, C</fullName>
+        <default>false</default>
+        <label>PM Freeman, C</label>
+    </customValue>
+    <customValue>
+        <fullName>PM GAGNE</fullName>
+        <default>false</default>
+        <label>PM GAGNE</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Gneiting, K</fullName>
+        <default>false</default>
+        <label>PM Gneiting, K</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Gotay, M</fullName>
+        <default>false</default>
+        <label>PM Gotay, M</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Greene, C</fullName>
+        <default>false</default>
+        <label>PM Greene, C</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Grossi, J</fullName>
+        <default>false</default>
+        <label>PM Grossi, J</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Hartford, A</fullName>
+        <default>false</default>
+        <label>PM Hartford, A</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Herald, M</fullName>
+        <default>false</default>
+        <label>PM Herald, M</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Hill, B</fullName>
+        <default>false</default>
+        <label>PM Hill, B</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Hundhausen, H</fullName>
+        <default>false</default>
+        <label>PM Hundhausen, H</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Hunter, N</fullName>
+        <default>false</default>
+        <label>PM Hunter, N</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Hylas, K</fullName>
+        <default>false</default>
+        <label>PM Hylas, K</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Kelsey, S</fullName>
+        <default>false</default>
+        <label>PM Kelsey, S</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Kidwai, L</fullName>
+        <default>false</default>
+        <label>PM Kidwai, L</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Kirwin</fullName>
+        <default>false</default>
+        <label>PM Kirwin</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Kowalik, M</fullName>
+        <default>false</default>
+        <label>PM Kowalik, M</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Laliberte, A</fullName>
+        <default>false</default>
+        <label>PM Laliberte, A</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Lassonde, M</fullName>
+        <default>false</default>
+        <label>PM Lassonde, M</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Mailhot, K</fullName>
+        <default>false</default>
+        <label>PM Mailhot, K</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Maurer, P</fullName>
+        <default>false</default>
+        <label>PM Maurer, P</label>
+    </customValue>
+    <customValue>
+        <fullName>PM May, R</fullName>
+        <default>false</default>
+        <label>PM May, R</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Miller, S</fullName>
+        <default>false</default>
+        <label>PM Miller, S</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Novi, B</fullName>
+        <default>false</default>
+        <label>PM Novi, B</label>
+    </customValue>
+    <customValue>
+        <fullName>PM O&apos;Neill, D</fullName>
+        <default>false</default>
+        <label>PM O&apos;Neill, D</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Padilla, M</fullName>
+        <default>false</default>
+        <label>PM Padilla, M</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Pelletier, L</fullName>
+        <default>false</default>
+        <label>PM Pelletier, L</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Richardson</fullName>
+        <default>false</default>
+        <label>PM Richardson</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Rossi, D</fullName>
+        <default>false</default>
+        <label>PM Rossi, D</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Sheffield, M</fullName>
+        <default>false</default>
+        <label>PM Sheffield, M</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Stolarz, E</fullName>
+        <default>false</default>
+        <label>PM Stolarz, E</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Stycharz, M</fullName>
+        <default>false</default>
+        <label>PM Stycharz, M</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Torres, L</fullName>
+        <default>false</default>
+        <label>PM Torres, L</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Waversak, T</fullName>
+        <default>false</default>
+        <label>PM Waversak, T</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Williams, R</fullName>
+        <default>false</default>
+        <label>PM Williams, R</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Yeamans</fullName>
+        <default>false</default>
+        <label>PM Yeamans</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Zenofio, C</fullName>
+        <default>false</default>
+        <label>PM Zenofio, C</label>
+    </customValue>
+    <customValue>
+        <fullName>Texas Roadhouse</fullName>
+        <default>false</default>
+        <label>Texas Roadhouse</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Billing Issues</fullName>
+        <default>false</default>
+        <label>Client Billing Issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Credits</fullName>
+        <default>false</default>
+        <label>Client Credits</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Solutions</fullName>
+        <default>false</default>
+        <label>Client Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Bale Resolution</fullName>
+        <default>false</default>
+        <label>CS Bale Resolution</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Eservices</fullName>
+        <default>false</default>
+        <label>CS Eservices</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Hauler Damage</fullName>
+        <default>false</default>
+        <label>CS Hauler Damage</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Follow Up</fullName>
+        <default>false</default>
+        <label>CS Follow Up</label>
+    </customValue>
+    <customValue>
+        <fullName>CS MONITOR TEAM</fullName>
+        <default>false</default>
+        <label>CS MONITOR TEAM</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Portal Requests</fullName>
+        <default>false</default>
+        <label>CS Portal Requests</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Same Day Req Follow Ups</fullName>
+        <default>false</default>
+        <label>CS Same Day Req Follow Ups</label>
+    </customValue>
+    <customValue>
+        <fullName>Indore Follow Up Queue</fullName>
+        <default>false</default>
+        <label>Indore Follow Up Queue</label>
+    </customValue>
+    <customValue>
+        <fullName>Light Bulbs Recycled</fullName>
+        <default>false</default>
+        <label>Light Bulbs Recycled</label>
+    </customValue>
+    <customValue>
+        <fullName>Wal-Mart Monitor</fullName>
+        <default>false</default>
+        <label>Wal-Mart Monitor</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Corporate Services</fullName>
+        <default>false</default>
+        <label>CS Corporate Services</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Dollar Tree</fullName>
+        <default>false</default>
+        <label>CS Dollar Tree</label>
+    </customValue>
+    <customValue>
+        <fullName>Finance Recycling</fullName>
+        <default>false</default>
+        <label>Finance Recycling</label>
+    </customValue>
+    <customValue>
+        <fullName>Greenleaf Billing Issues</fullName>
+        <default>false</default>
+        <label>Greenleaf Billing Issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Greenleaf Equipment</fullName>
+        <default>false</default>
+        <label>Greenleaf Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>Greenleaf Quotes</fullName>
+        <default>false</default>
+        <label>Greenleaf Quotes</label>
+    </customValue>
+    <customValue>
+        <fullName>Repair Follow ups</fullName>
+        <default>false</default>
+        <label>Repair Follow ups</label>
+    </customValue>
+    <customValue>
+        <fullName>Repairs Group</fullName>
+        <default>false</default>
+        <label>Repairs Group</label>
+    </customValue>
+    <customValue>
+        <fullName>Third Party Repairs Follow Up</fullName>
+        <default>false</default>
+        <label>Third Party Repairs Follow Up</label>
+    </customValue>
+    <customValue>
+        <fullName>FAST Response Team</fullName>
+        <default>false</default>
+        <label>FAST Response Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Launch Indore Ticket Resolution</fullName>
+        <default>false</default>
+        <label>Launch Indore Ticket Resolution</label>
+    </customValue>
+    <customValue>
+        <fullName>Launch Outbound Communication</fullName>
+        <default>false</default>
+        <label>Launch Outbound Communication</label>
+    </customValue>
+    <customValue>
+        <fullName>Tier 2 3</fullName>
+        <default>false</default>
+        <label>Tier 2 3</label>
+    </customValue>
+    <customValue>
+        <fullName>CS M&amp;I / Healthcare</fullName>
+        <default>false</default>
+        <label>CS M&amp;I / Healthcare</label>
+    </customValue>
+    <customValue>
+        <fullName>CS SCS Mall Setup</fullName>
+        <default>false</default>
+        <label>CS SCS Mall Setup</label>
+    </customValue>
+    <customValue>
+        <fullName>NS Quote Only</fullName>
+        <default>false</default>
+        <label>NS Quote Only</label>
+    </customValue>
+    <customValue>
+        <fullName>NS Request</fullName>
+        <default>false</default>
+        <label>NS Request</label>
+    </customValue>
+    <customValue>
+        <fullName>NSVR</fullName>
+        <default>false</default>
+        <label>NSVR</label>
+    </customValue>
+    <customValue>
+        <fullName>SSMVR</fullName>
+        <default>false</default>
+        <label>SSMVR</label>
+    </customValue>
+    <customValue>
+        <fullName>VRNS</fullName>
+        <default>false</default>
+        <label>VRNS</label>
+    </customValue>
+    <customValue>
+        <fullName>VRSSM</fullName>
+        <default>false</default>
+        <label>VRSSM</label>
+    </customValue>
+    <customValue>
+        <fullName>PS Delivery</fullName>
+        <default>false</default>
+        <label>PS Delivery</label>
+    </customValue>
+    <customValue>
+        <fullName>PS Location Inquiry</fullName>
+        <default>false</default>
+        <label>PS Location Inquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>PS Portal Requests</fullName>
+        <default>false</default>
+        <label>PS Portal Requests</label>
+    </customValue>
+    <customValue>
+        <fullName>PS Resolution</fullName>
+        <default>false</default>
+        <label>PS Resolution</label>
+    </customValue>
+    <customValue>
+        <fullName>PS Vendor Inquiry</fullName>
+        <default>false</default>
+        <label>PS Vendor Inquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Resolution</fullName>
+        <default>false</default>
+        <label>CS Resolution</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Resolution Team</fullName>
+        <default>false</default>
+        <label>Service Resolution Team</label>
+    </customValue>
+    <customValue>
+        <fullName>SSM-FollowUp</fullName>
+        <default>false</default>
+        <label>SSM-FollowUp</label>
+    </customValue>
+    <customValue>
+        <fullName>SSM-Launch</fullName>
+        <default>false</default>
+        <label>SSM-Launch</label>
+    </customValue>
+    <customValue>
+        <fullName>SSM-Rightsizing Issues</fullName>
+        <default>false</default>
+        <label>SSM-Rightsizing Issues</label>
+    </customValue>
+    <customValue>
+        <fullName>SSM-Setup &amp; Maintenance</fullName>
+        <default>false</default>
+        <label>SSM-Setup &amp; Maintenance</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Management</fullName>
+        <default>false</default>
+        <label>Vendor Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Management – Issue Invoices.</fullName>
+        <default>false</default>
+        <label>Vendor Management – Issue Invoices.</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Payments</fullName>
+        <default>false</default>
+        <label>Vendor Payments</label>
+    </customValue>
+    <customValue>
+        <fullName>PS Pre-Pay</fullName>
+        <default>false</default>
+        <label>PS Pre-Pay</label>
+    </customValue>
+    <customValue>
+        <fullName>VS Stop Service</fullName>
+        <default>false</default>
+        <label>VS Stop Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Recycle Bale Escalation</fullName>
+        <default>false</default>
+        <label>Recycle Bale Escalation</label>
+    </customValue>
+    <customValue>
+        <fullName>VRM Inquiry</fullName>
+        <default>false</default>
+        <label>VRM Inquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>VRM Canada</fullName>
+        <default>false</default>
+        <label>VRM Canada</label>
+    </customValue>
+    <customValue>
+        <fullName>Wasteless</fullName>
+        <default>false</default>
+        <label>Wasteless</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Account Managers</fullName>
+        <default>false</default>
+        <label>WMSSC Account Managers</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Billing</fullName>
+        <default>false</default>
+        <label>WMSSC Billing</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Compliance</fullName>
+        <default>false</default>
+        <label>WMSSC Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>Compliance Audit</fullName>
+        <default>false</default>
+        <label>Compliance Audit</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Cust Svc Incomplete</fullName>
+        <default>false</default>
+        <label>WMSSC Cust Svc Incomplete</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Customer Service</fullName>
+        <default>false</default>
+        <label>WMSSC Customer Service</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Project Specialist</fullName>
+        <default>false</default>
+        <label>WMSSC Project Specialist</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC SSM</fullName>
+        <default>false</default>
+        <label>WMSSC SSM</label>
+    </customValue>
+    <customValue>
+        <fullName>CS M&amp;I Follow Ups</fullName>
+        <default>false</default>
+        <label>CS M&amp;I Follow Ups</label>
+    </customValue>
+    <customValue>
+        <fullName>Follow Up DT/FD</fullName>
+        <default>false</default>
+        <label>Follow Up DT/FD</label>
+    </customValue>
+    <customValue>
+        <fullName>WMRA Electronic Waste</fullName>
+        <default>false</default>
+        <label>WMRA Electronic Waste</label>
+    </customValue>
+    <customValue>
+        <fullName>Lamptracker Universal Waste</fullName>
+        <default>false</default>
+        <label>Lamptracker Universal Waste</label>
+    </customValue>
+    <customValue>
+        <fullName>Rejected Work Order</fullName>
+        <default>false</default>
+        <label>Rejected Work Order</label>
+    </customValue>
+    <customValue>
+        <fullName>SST Resolution</fullName>
+        <default>false</default>
+        <label>SST Resolution</label>
+    </customValue>
+    <customValue>
+        <fullName>SST Locks</fullName>
+        <default>false</default>
+        <label>SST Locks</label>
+    </customValue>
+    <customValue>
+        <fullName>Team Amazon</fullName>
+        <default>false</default>
+        <label>Team Amazon</label>
+    </customValue>
+    <customValue>
+        <fullName>Team Greystar</fullName>
+        <default>false</default>
+        <label>Team Greystar</label>
+    </customValue>
+    <customValue>
+        <fullName>Internal Spec Correction</fullName>
+        <default>false</default>
+        <label>Internal Spec Correction</label>
+    </customValue>
+    <customValue>
+        <fullName>CS FAM/DLL Resolution</fullName>
+        <default>false</default>
+        <label>CS FAM/DLL Resolution</label>
+    </customValue>
+    <customValue>
+        <fullName>PM Sidmore, H</fullName>
+        <default>false</default>
+        <label>PM Sidmore, H</label>
+    </customValue>
+    <customValue>
+        <fullName>Manufacturing &amp; Industrial Team</fullName>
+        <default>false</default>
+        <label>Manufacturing &amp; Industrial Team</label>
+    </customValue>
+    <customValue>
+        <fullName>SSM-Vendor Set Up</fullName>
+        <default>false</default>
+        <label>SSM-Vendor Set Up</label>
+    </customValue>
+    <customValue>
+        <fullName>SSM-Client Set Up</fullName>
+        <default>false</default>
+        <label>SSM-Client Set Up</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Operations Resolution</fullName>
+        <default>false</default>
+        <label>Vendor Operations Resolution</label>
+    </customValue>
+    <customValue>
+        <fullName>National Broker Team</fullName>
+        <default>false</default>
+        <label>National Broker Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Fulfillment – Service Change SF</fullName>
+        <default>false</default>
+        <label>Service Fulfillment – Service Change SF</label>
+    </customValue>
+    <customValue>
+        <fullName>Step Problem Team</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Step Problem Team</label>
+    </customValue>
+    <customValue>
+        <fullName>National Billing</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>National Billing</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Billing - Cancelled Payables Only</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Client Billing - Cancelled Payables Only</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Pro-Ration</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Billing Pro-Ration</label>
+    </customValue>
+    <customValue>
+        <fullName>VPS-Rebate</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>VPS-Rebate</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Deliveries Location Inquiries</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CS Deliveries Location Inquiries</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Delivery Vendor Inquiries</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CS Delivery Vendor Inquiries</label>
+    </customValue>
+    <customValue>
+        <fullName>VS Allison</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>VS Allison</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Projects</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CS Projects</label>
+    </customValue>
+    <customValue>
+        <fullName>CS Service Confirmation</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CS Service Confirmation</label>
+    </customValue>
+    <customValue>
+        <fullName>SSM-Vendor Declines</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>SSM-Vendor Declines</label>
+    </customValue>
+    <customValue>
+        <fullName>Julissa Garcia Vendor Service Group</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Julissa Garcia Vendor Service Group</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Short Pay Wasteless</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Short Pay Wasteless</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Short Pay WMI</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Short Pay WMI</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Vendor Management</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WMSSC Vendor Management</label>
+    </customValue>
+    <customValue>
+        <fullName>WO Dispute</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WO Dispute</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Short Pay Other</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Short Pay Other</label>
+    </customValue>
+    <customValue>
+        <fullName>VS Anderson</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>VS Anderson</label>
+    </customValue>
+    <customValue>
+        <fullName>Team Kroger</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Team Kroger</label>
+    </customValue>
+    <description>Acorn team queue</description>
+    <masterLabel>Case Team Queue</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Add_Mobile_Number</fullName>
+        <description>Adding Contact Mobile number in 11 digit format.</description>
+        <field>ISD_Phone__c</field>
+        <formula>&quot;+1&quot; &amp; Contact_Name__r.MobilePhone</formula>
+        <name>Add Mobile Number</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Adding contact mobile phone%2E</fullName>
+        <actions>
+            <name>Add_Mobile_Number</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Rule for adding contact&apos;s mobile phone.</description>
+        <formula>True</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Address__c</fullName>
+    <externalId>false</externalId>
+    <formula>if(LEN(ShippingStreet)&gt;0, ShippingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp;
+if(LEN(ShippingCity)&gt;0, ShippingCity&amp; &quot;, &quot; , &quot;&quot; )&amp;
+if(LEN(ShippingState)&gt;0, ShippingState&amp; &quot; &quot; , &quot;&quot; )&amp;
+if(LEN(ShippingPostalCode)&gt;0, ShippingPostalCode,&quot;&quot;) &amp; BR() &amp;
+If(LEN(ShippingCountry) &gt;0, ShippingCountry,&quot;&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Address</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

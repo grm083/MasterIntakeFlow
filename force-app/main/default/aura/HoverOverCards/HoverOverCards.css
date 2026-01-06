@@ -1,0 +1,37 @@
+.THIS .heading {
+    text-align: center;
+    font-weight: bold !important;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color : black;
+}
+.THIS .slds-box thead th {
+    color : black !important;
+    border-bottom : 1.5px solid black !important;
+}
+.THIS .locationleft{
+    border-right : 1.5px solid black !important;
+}
+.THIS .red{
+      color: red;
+}
+.THIS .highlight{
+      background-color: yellow;
+}
+.THIS .Location{
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color : black;
+}
+.THIS .slds-box {
+    border: 5px solid rgb(230, 229, 228) !important;
+}
+
+.THIS .spacing td{
+    white-space: normal !important;
+}
+.THIS .textWrapCls {
+    white-space: normal !important;
+}

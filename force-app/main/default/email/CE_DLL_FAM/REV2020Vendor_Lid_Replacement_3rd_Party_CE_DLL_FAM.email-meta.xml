@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Confirmation of lid replacement rate</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Vendor: Lid Replacement - 3rd Party (CE DLLFAM)</name>
+    <style>freeForm</style>
+    <subject>Lid Replacement Cost Needed: {!Case.Location_Code__c} - Ref# {!Case.Reference_Number__c}</subject>
+    <textOnly>Hi,
+
+The following location advised that they need replacement of the lids on their {!Asset.Name}, {!Asset.Material_Type__c} dumpster.
+
+Please confirm if the lids need to be repaired or if a swap out is needed. Please advise if there is any cost associated with this request. If you have any additional questions, please respond to this message or contact us: 866-734-5386
+
+SERVICE DETAILS
+
+Reference #: {!Case.Reference_Number__c}
+
+Location ID:{!Case.Location_Code__c}
+
+Service Address: {!Case.Location_Name_Email_Temp__c},{!Case.Tech_Location_Details__c}
+
+Request: {!Case.Case_Record_Type__c} {!Case.Case_Type__c}- {!Case.Case_Subtype_Email_Format__c}
+
+On-Site Contact: {!Case.Site_Contact__c}
+
+
+Thank you.
+
+{!User.FirstName} {!User.LastName}
+Customer Service Representative
+{!User.Department_Email__c}
+
+WM
+Strategic Business Solutions
+415 Day Hill Rd
+Windsor, CT 06095
+
+{!Case.Thread_Id} : {!Case.Reference_Number__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

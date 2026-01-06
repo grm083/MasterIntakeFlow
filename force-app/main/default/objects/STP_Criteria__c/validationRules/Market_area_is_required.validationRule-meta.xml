@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Market_area_is_required</fullName>
+    <active>true</active>
+    <description>When selecting WM vendors market area is required.</description>
+    <errorConditionFormula>AND(
+OR( 
+AND((WM_Vendor__c),(All_WM_Vendors__c) , ISBLANK( Parent_VID__c)), 
+AND(NOT((All_WM_Vendors__c)) , NOT(ISBLANK( Parent_VID__c )))
+),
+ (ISNULL( MAS__c ))
+)</errorConditionFormula>
+    <errorMessage>Please select market area.</errorMessage>
+</ValidationRule>

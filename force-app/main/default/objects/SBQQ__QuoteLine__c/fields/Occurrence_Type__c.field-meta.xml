@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Occurrence_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Occurrence Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>OC</fullName>
+                <default>false</default>
+                <label>On-Call</label>
+            </value>
+            <value>
+                <fullName>SOC</fullName>
+                <default>false</default>
+                <label>Scheduled On-Call</label>
+            </value>
+            <value>
+                <fullName>SCH</fullName>
+                <default>false</default>
+                <label>Scheduled</label>
+            </value>
+            <value>
+                <fullName>OnCall`</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>OnCall`</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

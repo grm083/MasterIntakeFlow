@@ -1,0 +1,5 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes">
+    <aura:attribute name="setupCommentSize" type="integer" default="0" />
+    <aura:attribute name="mASComment" type="string" />
+    {!v.setupCommentSize - (empty(v.mASComment) ? 0 : v.mASComment.length)} characters remaining
+</aura:component>

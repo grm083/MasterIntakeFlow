@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>VR Decrease U Increase</label>
+    <protected>false</protected>
+    <values>
+        <field>Monthly_Per_Unit_Revenue__c</field>
+        <value xsi:type="xsd:string">Increase</value>
+    </values>
+    <values>
+        <field>Revenue_Impact__c</field>
+        <value xsi:type="xsd:string">Decrease</value>
+    </values>
+    <values>
+        <field>VCR_Code__c</field>
+        <value xsi:type="xsd:string">DIS</value>
+    </values>
+    <values>
+        <field>Yardage_Impact__c</field>
+        <value xsi:type="xsd:string">Decrease</value>
+    </values>
+</CustomMetadata>

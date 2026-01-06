@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForAllPageTypes,lightning:isUrlAddressable" access="global">
+    <aura:attribute type="String" name="caseId"/> 
+    <div class="slds-card">
+        <c:customCaseComment recordId="{!v.caseId}"/>
+    </div>
+</aura:component>

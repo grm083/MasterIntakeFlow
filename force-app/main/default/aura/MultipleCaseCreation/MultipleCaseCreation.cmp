@@ -1,0 +1,42 @@
+<aura:component controller="CaseController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="selectedDate" type="String[]" default="" />
+    <aura:attribute name="lstOfRecordType" type="String[]" />
+    <aura:attribute name="isOpen" type="boolean" default="false" />
+    
+    <ltng:require scripts="{!join(',',$Resource.Jquery3_3_1,$Resource.jquery_ui_1_12_1 + '/jquery-ui-1.12.1/jquery-ui.min.js',$Resource.MultiPickerV166)}"
+                  afterScriptsLoaded="{!c.loadJquery}" />
+    
+    <ltng:require styles="{!join(',',$Resource.jquery_ui_1_12_1 + '/jquery-ui-1.12.1/jquery-ui.min.css',$Resource.MultiDatePicker01,$Resource.MultiDatePicker02)}"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.fetchListOfRecordTypes}"/>
+
+    <div class="slds-form-element">
+        <div class="slds-modal__header">
+            <div class="slds-page-header" >
+                <span data-aura-rendered-by="758:0"><b> Multiple Cases </b></span>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                        <div class="slds-align--absolute-center">Select Date:</div> 
+                        <input id="multiple-date-select"/>
+                    </div>
+
+                    <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                        <div class="slds-align--absolute-center">Select a Record Type</div> 
+                        <ui:inputSelect aura:id="selectid">
+                            <aura:iteration items="{!v.lstOfRecordType}" var="contact">                            
+                                <ui:inputSelectOption text="{!contact}" label="{!contact}"  />
+                            </aura:iteration>
+                        </ui:inputSelect>
+                    </div>                    
+                </div>                   
+            </div>
+                
+            <div class="slds-modal__footer">                
+                <center> <lightning:button class="slds-button slds-button--brand" onclick="{!c.createCase}">Next</lightning:button></center>
+            </div>
+        </div>
+    </div>
+</aura:component>

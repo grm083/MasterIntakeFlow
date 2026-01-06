@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Passes wastestream, QLName and size to the parent wrapper">
+    <aura:attribute name="wasteStreamName" type="String" />
+    <aura:attribute name="QLName" type="String" />
+    <aura:attribute name="equipmentSize" type="String" />
+</aura:event>

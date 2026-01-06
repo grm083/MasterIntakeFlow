@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SFDC_Team_User__c</fullName>
+    <externalId>false</externalId>
+    <label>SFDC Team User</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>SFDC_Team__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Internal Spec Correction Team</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Internal Spec Correction Team</label>
+            </value>
+            <value>
+                <fullName>New Stores Team</fullName>
+                <default>false</default>
+                <label>New Stores Team</label>
+            </value>
+            <value>
+                <fullName>Sales Amazon Team</fullName>
+                <default>false</default>
+                <label>Sales Amazon Team</label>
+            </value>
+            <value>
+                <fullName>Sales Dollar Tree/Family Dollar Team</fullName>
+                <default>false</default>
+                <label>Sales Dollar Tree/Family Dollar Team</label>
+            </value>
+            <value>
+                <fullName>Sales Greystar Team</fullName>
+                <default>false</default>
+                <label>Sales Greystar Team</label>
+            </value>
+            <value>
+                <fullName>Sales Home Depot Projects</fullName>
+                <default>false</default>
+                <label>Sales Home Depot Projects</label>
+            </value>
+            <value>
+                <fullName>Sales Home Depot Team</fullName>
+                <default>false</default>
+                <label>Sales Home Depot Team</label>
+            </value>
+            <value>
+                <fullName>Sales M&amp;I Team</fullName>
+                <default>false</default>
+                <label>Sales M&amp;I Team</label>
+            </value>
+            <value>
+                <fullName>Service Fulfillment - New Service</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Service Fulfillment - New Service</label>
+            </value>
+            <value>
+                <fullName>Service Fulfillment - Service Change</fullName>
+                <default>false</default>
+                <label>Service Fulfillment - Service Change</label>
+            </value>
+            <value>
+                <fullName>SSM Team</fullName>
+                <default>false</default>
+                <label>SSM Team</label>
+            </value>
+            <value>
+                <fullName>Canada VRM Team</fullName>
+                <default>false</default>
+                <label>Canada VRM Team</label>
+            </value>
+            <value>
+                <fullName>Sales Broker Team</fullName>
+                <default>false</default>
+                <label>Sales Broker Team</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Account Management</controllingFieldValue>
+            <valueName>Sales Amazon Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account Management</controllingFieldValue>
+            <valueName>Sales Dollar Tree/Family Dollar Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account Management</controllingFieldValue>
+            <valueName>Sales Greystar Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account Management</controllingFieldValue>
+            <valueName>Sales Home Depot Projects</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account Management</controllingFieldValue>
+            <valueName>Sales Home Depot Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account Management</controllingFieldValue>
+            <valueName>Sales M&amp;I Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account Management</controllingFieldValue>
+            <valueName>Sales Broker Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New, Add and Change Service</controllingFieldValue>
+            <valueName>New Stores Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New, Add and Change Service</controllingFieldValue>
+            <valueName>Service Fulfillment - New Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New, Add and Change Service</controllingFieldValue>
+            <valueName>Service Fulfillment - Service Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New, Add and Change Service</controllingFieldValue>
+            <valueName>SSM Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New, Add and Change Service</controllingFieldValue>
+            <valueName>Canada VRM Team</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

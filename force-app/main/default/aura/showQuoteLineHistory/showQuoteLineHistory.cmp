@@ -1,0 +1,35 @@
+<aura:component controller="ShowQuoteLineHistoryController" implements="flexipage:availableForRecordHome,force:hasRecordId">
+<aura:attribute name="columns" type="List" />
+<aura:attribute name="quoteLineHistories" type="Object"/>
+<aura:attribute name="recordId" type="String"/>
+<aura:attribute name="hasError" type="Boolean" default="false"/>
+<aura:attribute name="errorMessage" type="String"/>
+<aura:attribute name="isLoading" type="Boolean" default="false"/>
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:card title="Quote Line History" iconName="custom:custom93">
+        <aura:set attribute="actions">
+        <div class="slds-grid slds-grid_align-spread slds-p-bottom_small">
+       
+        <lightning:buttonIcon iconName="utility:refresh" alternativeText="Refresh" variant="border-filled" size="medium" onclick="{! c.doInit }" />
+        </div>
+        </aura:set>
+        
+        <aura:if isTrue="{!v.isLoading}">
+            <lightning:spinner alternatveText="Loading" size="medium"/>        
+        </aura:if>
+        <aura:if isTrue="{!v.hasError}">
+        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <h2>{!v.errorMessage}</h2>
+        </div>
+    	</aura:if>
+        <!--<div class="slds-p-horizontal_small slds-p-top_small">
+        <lightning:buttonIcon iconName="utility:refresh" size="medium" variant="border-filled" alternativeText="Refresh" onclick="{!c.doInit}" />
+        </div>-->
+        <lightning:datatable
+                   data="{!v.quoteLineHistories}"
+                   columns="{!v.columns}"
+                   keyField="Id"
+                   hideCheckboxColumn="true"/>
+        </lightning:card>
+</aura:component>

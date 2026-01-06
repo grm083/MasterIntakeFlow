@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Reach out to WM to confirm completion of service.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Vendor: Service Follow Up_WM (CE DLLFAM)</name>
+    <style>none</style>
+    <subject>MAS: {!Asset.MAS_Company_Account_Number__c} - Service Confirmation Needed - Ref#  {!Case.Reference_Number__c} - {!Case.Location_Code__c}</subject>
+    <textOnly>WM National Accounts
+
+Dear Contact,
+
+Your approval is required for the service increase {!Case.Contact} requested at {!Case.Location__c}.
+
+
+Please click “Approve” or “Decline” as soon as possible to help us process this request.
+
+Approve
+
+Reject
+
+Service Details
+
+Requester:
+{!Case.Contact}, {!Case.Contact_Title__c}
+
+Reference #:
+Case Reference_Number__c
+
+Requested Change:
+Case.Case_Type__c- Case.Case_Sub_Type__c
+
+Location ID:
+Case.Location_Code__c
+
+Service Address:
+
+{!Account.Name}
+
+{!Case.Tech_Location_Details__c}
+
+
+
+Container
+
+Schedule
+
+Base Rate
+
+Rate Variance
+
+Current Service
+
+Name
+
+Name
+
+Name
+
+Name
+
+New Service
+
+Name
+
+Name
+
+Name
+
+Name
+
+Please note: if you experience an issue with either of the links above, please contact us:
+
+(888) 625-5323 or wmservicecenters@wm.com.
+
+Thank you for choosing Waste Management.
+
+[Your Name]
+
+Customer Service Representative
+
+youremail@wm.com
+
+Waste Management
+
+Strategic Business Solutions
+
+415 Day Hill Rd
+
+Windsor, CT 06095
+
+(888) 625 – 5323
+
+{!Case.Thread_Id} : {!Case.Reference_Number__c}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

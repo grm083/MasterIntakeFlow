@@ -1,0 +1,3 @@
+<aura:event type="Component" description="Trigger this event from Duplicate Service Date PopUp to close Container used in parent">
+  <aura:attribute name="isParentContaineClosed" type="Boolean" />
+</aura:event>

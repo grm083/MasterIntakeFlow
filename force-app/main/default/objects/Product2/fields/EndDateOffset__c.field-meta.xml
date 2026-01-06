@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EndDateOffset__c</fullName>
+    <description>This field will provide offset to calculate end date based on start date.</description>
+    <externalId>false</externalId>
+    <label>End Date Offset</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>United States_None</fullName>
+                <default>false</default>
+                <label>United States_None</label>
+            </value>
+            <value>
+                <fullName>United States_0</fullName>
+                <default>false</default>
+                <label>United States_0</label>
+            </value>
+            <value>
+                <fullName>United States_5</fullName>
+                <default>false</default>
+                <label>United States_5</label>
+            </value>
+            <value>
+                <fullName>United States_7</fullName>
+                <default>false</default>
+                <label>United States_7</label>
+            </value>
+            <value>
+                <fullName>Canada_None</fullName>
+                <default>false</default>
+                <label>Canada_None</label>
+            </value>
+            <value>
+                <fullName>Canada_0</fullName>
+                <default>false</default>
+                <label>Canada_0</label>
+            </value>
+            <value>
+                <fullName>Canada_5</fullName>
+                <default>false</default>
+                <label>Canada_5</label>
+            </value>
+            <value>
+                <fullName>Canada_7</fullName>
+                <default>false</default>
+                <label>Canada_7</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

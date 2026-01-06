@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_check_on_Asset_and_Project</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT($User.Bypass_Validation__c),
+NOT(ISBLANK(Project_Code__c)),
+NOT(ISBLANK(Project_Code__r.Client_Account__c)),
+RecordType.DeveloperName  = &quot;Service_Header&quot;,
+Account.ParentId  &lt;&gt;  Project_Code__r.Client_Account__c  
+)</errorConditionFormula>
+    <errorMessage>Client Account on Asset and Project should be same.</errorMessage>
+</ValidationRule>

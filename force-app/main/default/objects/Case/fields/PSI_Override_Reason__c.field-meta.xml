@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PSI_Override_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Bypass PSI Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Contact Not Onsite</fullName>
+                <default>false</default>
+                <label>Contact Not Onsite</label>
+            </value>
+            <value>
+                <fullName>Gauge Not Available/Broken</fullName>
+                <default>false</default>
+                <label>Gauge Not Available/Broken</label>
+            </value>
+            <value>
+                <fullName>Other Customer Request</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Gauge is broken</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gauge is broken</label>
+            </value>
+            <value>
+                <fullName>Offsite Requester</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Offsite Requester</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

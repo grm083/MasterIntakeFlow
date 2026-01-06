@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PO_Mandatory__c</fullName>
+    <description>SDT-20110, backend field is being used to determine if Customer Ref# on Quote Order is mandatory for any of the Pickup, Delivery combination present in picklist values.</description>
+    <externalId>false</externalId>
+    <label>PO Mandatory</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NS_PERM</fullName>
+                <default>false</default>
+                <label>NS_PERM</label>
+            </value>
+            <value>
+                <fullName>NS_TEMP</fullName>
+                <default>false</default>
+                <label>NS_TEMP</label>
+            </value>
+            <value>
+                <fullName>PCK_EXPCK</fullName>
+                <default>false</default>
+                <label>PCK_EXPCK</label>
+            </value>
+            <value>
+                <fullName>PCK_ER</fullName>
+                <default>false</default>
+                <label>PCK_ER</label>
+            </value>
+            <value>
+                <fullName>PCK_OC</fullName>
+                <default>false</default>
+                <label>PCK_OC</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

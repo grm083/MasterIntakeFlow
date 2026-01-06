@@ -1,0 +1,493 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @Last Updated Date : 05-02-2025
+  @Updated By    : Srishti Gupta
+  @description   : Modified methods as per BRE-1 || Update Business Rule Pop Up Screen 
+-->
+<template>
+    <!-- modal start -->      
+    <template if:true={isShowModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header">
+        <!--Changes related to SDT-41639-->
+        <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={hideModalBox}>
+        <lightning-icon icon-name="utility:close"
+            alternative-text="close"
+            variant="bare"
+            size="small" ></lightning-icon>
+        <span class="slds-assistive-text">Close</span>
+        
+        </button>
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Business Rules</h2>
+        </header>
+        
+        <!-- modal body start -->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <template if:true={isShowBRData}>
+<!-- Notifcationbr-->
+<template for:each={brWrapperNoficationList} for:item="brWrap" for:index="brIndex">
+    <div key={brWrap.brId}>
+        <h2 style="font-weight: bold;">Business Notification </h2> 
+        <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+            <div class="slds-box slds-theme_default boxCss">
+                <div class="slds-grid slds-wrap slds-theme_default">
+                    <div class="slds-col slds-size_1-of-1 slds-border_bottom ">
+                        <span  class="slds-form-element__label" style="font-weight: bold;">Special Instructions</span>
+                       
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.specialInstruction}  style="font-weight: bold;"></lightning-formatted-text>
+                           
+                        </div>
+                </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-border_bottom ">
+                        <span  class="slds-form-element__label">Alias</span>
+                       
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.alias}></lightning-formatted-text>
+                        </div>
+                </div>
+             
+                <template if:true={brWrap.caseType}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                            <span  class="slds-form-element__label">Case Type</span>
+                            <div  class="slds-form-element__control">
+                                <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.caseType}></lightning-formatted-text>
+                               
+                            </div>
+                    </div>
+                </template>
+                <template if:true={brWrap.caseSubType}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Case Sub-Type</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text class="slds-form-element__static"  value={brWrap.caseSubType}></lightning-formatted-text>
+                           
+                        </div>
+                    </div>
+                </template>
+                <template if:true={brWrap.caseReason}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Case Reason</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text class="slds-form-element__static"  value={brWrap.caseReason}></lightning-formatted-text>
+                            
+                        </div>
+                    </div>
+                </template>
+                    <template if:true={brWrap.locationName}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Location</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.locationName}></lightning-formatted-text>
+                                  
+                                </div>
+                            </div>
+                    </template>
+                    
+                    <template if:true={brWrap.asset}>
+                        <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                            <span  class="slds-form-element__label">Asset</span>
+                            <div  class="slds-form-element__control">
+                                <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.asset}></lightning-formatted-text>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template if:true={brWrap.container}> 
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Container</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.container}></lightning-formatted-text>
+                       
+                        </div>
+                    </div>
+                    </template>
+                   
+                    <template if:true={brWrap.material}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Material</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.material}></lightning-formatted-text>
+                       
+                        </div>
+                    </div>
+                   </template>
+                    
+                   <template if:true={brWrap.duration}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Schedule</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.duration}></lightning-formatted-text>
+                           
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={brWrap.categoryType}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Category Type</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.categoryType}></lightning-formatted-text>
+                           
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={brWrap.groupName}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Group</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.groupName}></lightning-formatted-text>
+                          
+                        </div>
+                    </div>
+                </template>
+                <template if:true={brWrap.companyCategory}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Company Category</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.companyCategory}></lightning-formatted-text>
+                          
+                        </div>
+                    </div>
+                </template>
+                <template if:true={brWrap.projectCode}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Project Code</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.projectCode}></lightning-formatted-text>
+                          
+                        </div>
+                    </div>
+                </template>
+                <template if:true={brWrap.channel}>
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Channel</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.channel}></lightning-formatted-text>
+                          
+                        </div>
+                    </div>
+                </template>
+                <template if:true={brWrap.channelRequirement}>
+
+                    <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                        <span  class="slds-form-element__label">Channel Requirements</span>
+                        <div  class="slds-form-element__control">
+                            <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.channelRequirement}></lightning-formatted-text>
+                          
+                        </div>
+                    </div>
+                </template>
+                <template if:true={brWrap.brId}>
+                    <div class="slds-col slds-size_1-of-1 slds-border_bottom">
+                    
+                        <span  class="slds-form-element__label">Notification</span>
+                        <div  class="slds-form-element__control linkCss">
+                            <lightning-button variant="base" style="--lwc-brandAccessible: rgb(0 100 220); --lwc-brandAccessibleActive:  rgb(0 100 220); margin: auto;" label={brWrap.brName} title={brWrap.brName} value={brWrap.brId} onclick={navigateToRecordPage} class="slds-m-left_x-small"></lightning-button>
+                        </div>
+                    </div>
+                </template>
+                </div> 
+            </div>   
+                    </div>
+    </div>
+    </template>
+<!-- notification-->
+<!-- BUG FIX SDT-34169 -->
+<template if:true={showApprovalrules}>
+<div>
+    <h2 style="font-weight: bold;">Approval Rules</h2> 
+</div>
+</template>
+<!-- BUG FIX SDT-34169 -->
+            <template for:each={brWrapperList} for:item="brWrap" for:index="brIndex">
+            <div key={brWrap.brId}>
+                <h2 style="font-weight: bold;">{brWrap.alias} # {brWrap.brCount}</h2> 
+            <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+                    <div class="slds-box slds-theme_default boxCss">
+                        <div class="slds-grid slds-wrap slds-theme_default">
+                        <template if:true={brWrap.approvalInstructions}>
+                                <div class="slds-col slds-size_1-of-1 slds-border_bottom">
+                                    <span  class="slds-form-element__label" style="font-weight: bold;">Approval Instructions</span>
+                                    <div  class="slds-form-element__control">
+                                        <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.approvalInstructions} style="font-weight: bold;"></lightning-formatted-text>
+                                      
+                                    </div>
+                                </div>
+                        </template>
+                        <template if:true={brWrap.caseType}>
+                            <div class="slds-col slds-size_1-of-4 slds-border_bottom">
+                                    <span  class="slds-form-element__label">Case Type</span>
+                                    <div  class="slds-form-element__control">
+                                        <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.caseType}></lightning-formatted-text>
+                                        
+                                    </div>
+                            </div>
+                        </template>
+                            <template if:true={brWrap.caseSubType}>
+                            <div class="slds-col slds-size_1-of-4 slds-border_bottom">
+                                <span  class="slds-form-element__label">Case Sub-Type</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text class="slds-form-element__static"  value={brWrap.caseSubType}></lightning-formatted-text>
+                                  
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.caseReason}>
+                                <div class="slds-col slds-size_1-of-4 slds-border_bottom">
+                                    <span  class="slds-form-element__label">Case Reason</span>
+                                    <div  class="slds-form-element__control">
+                                        <lightning-formatted-text class="slds-form-element__static"  value={brWrap.caseReason}></lightning-formatted-text>
+                                        
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:true={brWrap.approval}>
+                            <div class="slds-col slds-size_1-of-4 slds-border_bottom">
+                                <span  class="slds-form-element__label">Approval</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static messageColor"  value={brWrap.approval}></lightning-formatted-text>
+                                     </div>
+                                </div>
+                            </template>
+                            
+                        </div> 
+                    </div>   
+    <div class="slds-box slds-theme_default boxCss" if:true={brWrap.isApproval}>
+        <div class="slds-grid slds-wrap slds-theme_default" >
+                            <!-- Approvers Section -->
+        <div class="slds-col slds-size_6-of-6 slds-border_bottom" if:true={brWrap.brApprovers}>
+            <div if:true ={brWrap.brApprovers.length}>
+            <h2 style="font-weight: bold;" >Approvers :</h2>
+                      <br/>
+            <table width="600">
+                <thead>
+                    <tr style="border-bottom:1px solid #333">
+                        <th align="center">Name</th>
+                        <th align="center">Record Type</th>
+                        <th align="center">Account Title</th>
+                        <th align="center">Service Type</th>
+                        <th align="center">NTE Amount</th>
+                    </tr>
+                </thead>
+                <!--Data is coming from this template-->
+                <template for:each={brWrap.brApprovers} for:item="srWrap" for:index="index">
+                    <tr key={srWrap.approverId} style="border-bottom:1px solid #333">
+                        <td><lightning-button variant="base"  style="--lwc-brandAccessible: rgb(0 100 220); --lwc-brandAccessibleActive:  rgb(0 100 220);" label={srWrap.approverName} title={srWrap.approverEmail} onclick={navigateToRecordPage} value={srWrap.approverRecId} class="slds-m-left_x-small"></lightning-button></td>
+                        <td>{srWrap.recordTypeName}</td>
+                        <td>{srWrap.accTitleName}</td>
+                        <td>{srWrap.serviceType}</td>
+                        <td>{srWrap.nteAmount}</td>
+                    </tr>
+                </template> 
+            </table>
+            </div>
+        </div> 
+       <br/>
+       <!--<div class="slds-col slds-size_6-of-6 slds-border_bottom" if:true={hasRequestors}>-->
+        <div class="slds-col slds-size_6-of-6 slds-border_bottom" if:true ={brWrap.brRequestors}>
+            <div if:true ={brWrap.brRequestors.length}>
+        <br/>
+         <h2 style="font-weight: bold;" >Authorized Requestors : </h2>
+         <br/>
+         <table width="600">
+             <thead>
+                 <tr style="border-bottom:1px solid #333">
+                     <th align="center">Name</th>
+                     <th align="center">Record Type</th>
+                     <th align="center">Account Title</th>
+                     <th align="center">Service Type</th>
+                     <th align="center">NTE Amount</th>
+                 </tr>
+             </thead>
+             <!--Data is coming from this template -->
+             
+             <template for:each={brWrap.brRequestors} for:item="srWrap" for:index="index">
+                 <tr key={srWrap.approverId} style="border-bottom:1px solid #333">
+                     <td><lightning-button variant="base"  style="--lwc-brandAccessible: rgb(0 100 220); --lwc-brandAccessibleActive:  rgb(0 100 220);" 
+                        label={srWrap.approverName} title= {srWrap.approverEmail} 
+                        onclick={navigateToRecordPage} value={srWrap.approverRecId} 
+                        class="slds-m-left_x-small"></lightning-button></td>
+                     <td>{srWrap.recordTypeName}</td>
+                     <td>{srWrap.accTitleName}</td>
+                     <td>{srWrap.serviceType}</td>
+                     <td>{srWrap.nteAmount}</td>
+                 </tr>
+             </template> 
+           
+         </table>
+     </div> 
+     </div>
+    <br/>
+    <br/>
+  <!-- Commenting Send Email Button Section 
+        <div class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+            <div class="slds-form-element__control slds-align_absolute-center">
+                <lightning-button variant="brand" 
+                    style="margin: auto;" 
+                    label="Send Email" 
+                    title="Send Email" 
+                    onclick={sendEmail} 
+                    value={brWrap.brId} 
+                    disabled={disableButton} 
+                    class="slds-m-left_x-small">
+                </lightning-button>
+            </div>
+           
+        </div> -->
+                        </div>
+    </div>
+                    <div class="slds-box slds-theme_default boxCss" if:false={brWrap.isApproval}>
+                        <p style="color:red;">No Service Approver.</p>
+                    </div>
+                    <div class="slds-box slds-theme_default boxCss">   
+                        <div class="slds-grid slds-wrap slds-theme_default"> 
+                            <template if:true={brWrap.locationName}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Location</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.locationName}></lightning-formatted-text>
+                                  
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.asset}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Asset</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.asset}></lightning-formatted-text>
+                                  
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.container}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Container</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.container}></lightning-formatted-text>
+                                   
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.material}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Material</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.material}></lightning-formatted-text>
+                                   
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.duration}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Duration</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.duration}></lightning-formatted-text>
+                                 
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.categoryType}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Category Type</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.categoryType}></lightning-formatted-text>
+                             
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.groupName}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Group</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.groupName}></lightning-formatted-text>
+                                  
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.companyCategory}>
+                                <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                    <span  class="slds-form-element__label">Company Category</span>
+                                    <div  class="slds-form-element__control">
+                                        <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.companyCategory}></lightning-formatted-text>
+                                      
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:true={brWrap.projectType}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Project Type</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.projectType}></lightning-formatted-text>
+                                    
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.isNTERule}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">NTE Rules</span>
+                                    <div  class="slds-form-element__control">
+                                        <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.isNTERule}></lightning-formatted-text>
+                                     
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={brWrap.noOfOccurance}>
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Number of Occurence Limit</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.noOfOccurance}></lightning-formatted-text>
+                                   
+                                </div>
+                            </div>
+                            </template>
+                          
+                            <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                                <span  class="slds-form-element__label">Multiple Mandatory Approvers</span>
+                                <div  class="slds-form-element__control">
+                                    <lightning-formatted-text  class="slds-form-element__static"  value={brWrap.multiApprovers}></lightning-formatted-text>
+                                  
+                                </div>
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-1 slds-border_bottom slds-m-bottom_small">
+                                <span  class="slds-form-element__label">Business Rule</span>
+                                <div  class="slds-form-element__control linkCss" >
+                                    <lightning-button variant="base" style="--lwc-brandAccessible:rgb(0 100 220); --lwc-brandAccessibleActive:rgb(0 100 220); margin: auto;" 
+                                                                    label={brWrap.brName} title={brWrap.brName} 
+                                                                    value={brWrap.brId} onclick={navigateToRecordPage} 
+                                                                    class="slds-m-left_x-small"></lightning-button>
+                                 
+                                </div>
+                            </div>
+                        
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            </template>
+        </template> 
+        <template if:false={isShowBRData}>
+            <div>
+                <p style="font-size: 14px; text-align: center;font-weight: bold; color:red;">No Business Rules found.</p>
+            </div>
+            
+        </template>
+        </div>
+        <!-- modal footer start-->
+        </div>
+    </section>
+
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- modal end -->
+    </template>

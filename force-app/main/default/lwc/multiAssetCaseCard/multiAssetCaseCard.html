@@ -1,0 +1,263 @@
+<template>
+  <lightning-card class="cardtitle">
+    <template if:true={cwrappers}>
+      <lightning-layout multiple-rows="true">
+        <lightning-layout-Item padding="around-small" size="7">
+          <div class="slds-float_right">
+            <strong>Multiple Asset Cases</strong>
+          </div>
+        </lightning-layout-Item>
+      <lightning-layout-Item size="5">
+        <div class="slds-float_right">
+          <lightning-button-icon icon-name="action:refresh"
+                                alternative-text="Refresh" 
+                                title="Refresh" 
+                                class="slds-m-right_x-small"
+                                size="small" onclick={handleRefresh} slot="actions">
+          </lightning-button-icon>
+        </div>
+      </lightning-layout-Item>
+      </lightning-layout>
+    <div class="slds-scrollable">
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+      <thead>
+        <tr class="slds-line-height_reset">
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate actionColor"><b>Status</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate"><b>Sub-Status</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate"><b>W/O #</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate actionColor"><b>Service Date</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate"><b>Material</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate"><b>SID</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate actionColor"><b>RecordType</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate actionColor"><b>Sub-Type</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate"><b>Case #</b></span></th>
+          <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate actionColor"><b>PO/PSI</b></span></th>
+        </tr>
+      </thead>
+
+      <template for:each={cwrappers} for:item="cwrap">
+        <tbody key={cwrap.ca.Id} data-id={cwrap.ca.Id}>
+          <tr class="slds-hint-parent" data-id={cwrap.ca.Id}>
+            <td class="assetColor" colspan="10" data-id={cwrap.ca.Id}>
+              <template if:true={cwrap.isOpenTask}>
+                <div class="slds-float_left">
+                  <lightning-button-menu icon-size="x-small" onselect={handleMenuSelect} variant="bare">
+                    <lightning-menu-item
+                        label="Open Task"
+                        value={cwrap.tasklst}
+                        icon-name="utility:task">
+                    </lightning-menu-item>
+                  </lightning-button-menu>
+                </div>
+              </template>
+              <div>
+                <template if:true={cwrap.ca.AssetId}>
+                  <center data-id={cwrap.ca.Id}><a data-id={cwrap.ca.Id} data-assetid={cwrap.ca.AssetId} data-object="Asset" onclick={navigateTo} class="assetName" onmouseover={assetenter} onmouseleave={assetout}><strong data-id={cwrap.ca.Id} data-assetid={cwrap.ca.AssetId} data-object="Asset">{cwrap.ca.Asset.Name}</strong></a></center>
+                </template>
+                <template if:false={cwrap.ca.AssetId}>
+                  <center data-id={cwrap.ca.Id}><a data-id={cwrap.ca.Id} data-object="Asset" onclick={showCaseSummary} class="assetName"><strong data-id={cwrap.ca.Id} data-object="Asset">{cwrap.ca.Equipment_Size_Code__c} - {cwrap.ca.Equipment_Type_Code__c}</strong></a></center>
+                </template>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody key={cwrap.ca.Id}>
+          <tr class="slds-hint-parent">
+            <template if:true={cwrap.assetValidation}>
+              <td role="gridcell" class="slds-size_1-of-10 action" data-id={cwrap.ca.Id} data-case-number={cwrap.ca.CaseNumber} data-tracking-number={cwrap.ca.Tracking_Number__c} data-asset-validation={cwrap.assetValidation} onmouseover={statusenter} onmouseleave={statusout} onclick={openCloseForm}>{cwrap.ca.Status}</td>
+            </template>
+            <template if:false={cwrap.assetValidation}>
+              <td role="gridcell" class="slds-size_1-of-10 blankaction" data-id={cwrap.ca.Id} data-case-number={cwrap.ca.CaseNumber} data-tracking-number={cwrap.ca.Tracking_Number__c} onclick={openCloseForm}>{cwrap.ca.Status}</td>
+            </template>
+            <template if:true={cwrap.isOpenTask}>
+              <td role="gridcell" class="slds-size_1-of-10"><span style="color: red;">{cwrap.ca.Case_Sub_Status__c}</span></td>
+            </template>
+            <template if:false={cwrap.isOpenTask}>
+              <td role="gridcell" class="slds-size_1-of-10">{cwrap.ca.Case_Sub_Status__c}</td>
+            </template>
+                        
+            <template if:true={cwrap.ca.Work_Order__c}><td class="slds-size_1-of-12">{cwrap.ca.Work_Order__r.WorkOrderNumber}</td></template>
+            <template if:false={cwrap.ca.Work_Order__c}><td class="slds-size_1-of-12"></td></template>
+            <template if:true={cwrap.isEditable}>
+              <template if:true={cwrap.isWmCapacityEligible}>
+                <td role="gridcell" class="slds-size_1-of-10 blankaction fontColor" data-id={cwrap.ca.Id} data-record-type-id={cwrap.ca.RecordTypeId} data-is-capacity-eligible = {cwrap.isWmCapacityEligible} onclick={openServiceDateForm}>{cwrap.ca.Service_Date_Text__c}</td>
+              </template>
+              <template if:false={cwrap.isWmCapacityEligible}>
+                <td role="gridcell" class="slds-size_1-of-10 blankaction" data-id={cwrap.ca.Id} data-record-type-id={cwrap.ca.RecordTypeId} onclick={openServiceDateForm}>{cwrap.ca.Service_Date_Text__c}</td>
+              </template>
+            </template>
+            <template if:false={cwrap.isEditable}>
+              <td role="gridcell" class="slds-size_1-of-10">{cwrap.ca.Service_Date_Text__c}</td>
+            </template>
+            <template if:true={cwrap.ca.AssetId}>
+              <td role="gridcell" class="slds-size_1-of-10">{cwrap.ca.Asset_Material__c}</td>
+            </template>
+            <template if:false={cwrap.ca.AssetId}>
+              <td role="gridcell" class="slds-size_1-of-10">{cwrap.ca.Material_Type__c}</td>
+            </template>
+            <template if:true={cwrap.ca.AssetId}>
+              <td role="gridcell" class="slds-size_1-of-10">{cwrap.ca.Asset.Acorn_SID__c}</td>
+            </template>
+            <template if:false={cwrap.ca.AssetId}>
+              <td role="gridcell" class="slds-size_1-of-10"></td>
+            </template>
+            <!--SDT-13516<template if:true={cwrap.isEditable}>
+              <td role="gridcell" class="slds-size_1-of-10 blankaction" data-id={cwrap.ca.Id} onclick={openCaseRecordType}>{cwrap.ca.Case_Record_Type__c}</td>
+            </template>SDT-13516-->
+            <!--SDT-13516<template if:false={cwrap.isEditable}>SDT-13516-->
+            <td role="gridcell" class="slds-size_1-of-10">{cwrap.ca.Case_Record_Type__c}</td>
+            <!--SDT-13516</template>SDT-13516-->
+            <template if:true={cwrap.ca.AssetId}>
+              <template if:true={cwrap.isEditable}>
+                <template if:false={cwrap.ca.Case_Sub_Type__c}>
+                  <td data-id={cwrap.ca.Id} role="gridcell" class="slds-size_1-of-10 action" data-record-type-id={cwrap.ca.RecordTypeId} data-prdfamily={cwrap.ca.Asset.Product2.Family} data-equipmenttype={cwrap.ca.Asset.Equipment_Type__c} data-duration={cwrap.ca.Asset.Duration__c} onclick={openModelCaseType}></td>
+                </template>
+                <template if:true={cwrap.ca.Case_Sub_Type__c}>
+                  <td role="gridcell" class="slds-size_1-of-10 blankaction" data-id={cwrap.ca.Id} data-record-type-id={cwrap.ca.RecordTypeId} data-prdfamily={cwrap.ca.Asset.Product2.Family} data-equipmenttype={cwrap.ca.Asset.Equipment_Type__c} data-duration={cwrap.ca.Asset.Duration__c} onclick={openModelCaseType}>{cwrap.ca.Case_Sub_Type__c}</td>
+                </template>
+              </template>
+            </template>
+            <template if:false={cwrap.ca.AssetId}>
+              <template if:true={cwrap.isEditable}>
+                <template if:false={cwrap.ca.Case_Sub_Type__c}>
+                  <td data-id={cwrap.ca.Id} role="gridcell" class="slds-size_1-of-10 action" data-record-type-id={cwrap.ca.RecordTypeId} onclick={openModelCaseType}></td>
+                </template>
+                <template if:true={cwrap.ca.Case_Sub_Type__c}>
+                  <td role="gridcell" class="slds-size_1-of-10 blankaction" data-id={cwrap.ca.Id} data-record-type-id={cwrap.ca.RecordTypeId} onclick={openModelCaseType}>{cwrap.ca.Case_Sub_Type__c}</td>
+                </template>
+              </template>
+            </template>
+            <template if:false={cwrap.isEditable}>
+              <td role="gridcell" class="slds-size_1-of-10">{cwrap.ca.Case_Sub_Type__c}</td>
+            </template>
+                      
+            <td role="gridcell" class="slds-size_1-of-10"><a data-id={cwrap.ca.Id} data-object="Case" onclick={navigateTo} target="_blank" >{cwrap.ca.CaseNumber}</a></td>
+            <template if:true={cwrap.isInfoRequired}>
+              <td data-id={cwrap.ca.Id} data-record-type-id={cwrap.ca.RecordTypeId} role="gridcell" class="slds-size_1-of-10 action" data-req-info={cwrap.reqInfo} onmouseover={reqInfoEnter} onmouseleave={reqInfoOut} onclick={OpenReqInfo}>
+                <template if:true={cwrap.ca.PurchaseOrder_Number__c}>
+                  {cwrap.ca.PurchaseOrder_Number__c}/
+                </template>
+                <template if:false={cwrap.ca.PurchaseOrder_Number__c}>
+                  -/
+                </template>
+                <template if:true={cwrap.ca.Chargeable__c}>
+                  {cwrap.ca.Chargeable__c}/
+                </template>
+                <template if:false={cwrap.ca.Chargeable__c}>
+                  -/
+                </template>
+                <template if:false={cwrap.ca.PSI__c}>
+                  -
+                </template>
+                <template if:true={cwrap.ca.PSI__c}>
+                  {cwrap.ca.PSI__c}
+                </template>
+              </td>
+            </template>
+            <template if:false={cwrap.isInfoRequired}>
+              <td data-id={cwrap.ca.Id} data-record-type-id={cwrap.ca.RecordTypeId} role="gridcell" class="slds-size_1-of-10 blankaction" onclick={OpenReqInfo}>
+                <template if:true={cwrap.ca.PurchaseOrder_Number__c}>
+                  {cwrap.ca.PurchaseOrder_Number__c}/
+                </template>
+                <template if:false={cwrap.ca.PurchaseOrder_Number__c}>
+                  -/
+                </template>
+                <template if:true={cwrap.ca.Chargeable__c}>
+                  {cwrap.ca.Chargeable__c}/
+                </template>
+                <template if:false={cwrap.ca.Chargeable__c}>
+                  -/
+                </template>
+                <template if:false={cwrap.ca.PSI__c}>
+                  -
+                </template>
+                <template if:true={cwrap.ca.PSI__c}>
+                  {cwrap.ca.PSI__c}
+                </template>
+              </td>
+            </template>
+          </tr>
+        </tbody>
+      </template>
+    </table>
+  </div>
+    </template>
+    </lightning-card>
+    <template if:true={showAssetValidation}>
+      <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" style={assetcss}>
+        <div   class="slds-popover__body" > 
+          <strong>{assetValidation}</strong>
+        </div>
+      </div>
+      
+    </template>
+    <template if:true={showassethover}>
+      <div class="slds-popover" style={assetcss} onmouseover={assetMouseHover} onmouseleave={assetMouseHoverOut}> 
+        <c-asset-hover-card caseid={actionCaseId}> </c-asset-hover-card>
+      </div>
+    </template>
+    <template if:true={openCaseFormModel}>
+      <c-populate-case-sub-type recid={popUpCaseId} record-type-id={recordTypeId} case-number={caseNumber} tracking-number={trackingNumer} action={action} product-family = {prdfamily} equipment-type = {equipmenttype} duration = {duration} oncaseupdate={caseUpdateEvent} onpopupclose={closePopUp}></c-populate-case-sub-type>
+    </template>
+    <template if:true={openRecordType}>
+      <c-change-r-t-card caseid={actionCaseId} oncaseupdate={caseUpdateEvent} onpopupclose={closePopUp}></c-change-r-t-card>
+    </template>
+    <template if:true={showOpenTask}>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__2 slds-modal__container" style="padding-top:10rem;">
+      <!-- Modal/Popup Box Header Starts here-->
+      <header class="slds-modal__header">
+          <!--changes related to SDT-41639-->
+          <lightning-button-icon icon-name="utility:close" onclick={closeModel} alternative-text="close"
+                                  variant="bare" class="slds-modal__close" ></lightning-button-icon>
+          <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"></h3>
+      </header>
+      <!--Modal/Popup Box Body Starts here-->
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <div class="slds-scrollable">
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th scope="col" class="head slds-size_1-of-10"><span class="slds-truncate"><b>Subject</b></span></th>
+              </tr>
+            </thead>
+      
+            <template for:each={opentasks} for:item="t">
+              <tbody key={t.Id} data-id={t.Id}>
+                <tr class="slds-hint-parent" data-id={t.Id}>
+                  <td data-id={t.Id}>
+                    <a data-id={t.Id} data-object="Task" onclick={navigateTo}>{t.Subject}</a></center>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </table>
+          </div>
+      </div>
+      </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </template>
+    <template if:true={openCaseSummary}>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__2 slds-modal__container" style="padding-top:10rem;">
+      <!-- Modal/Popup Box Header Starts here-->
+      <header class="slds-modal__header">
+          <!--changes related to SDT-41639-->
+          <lightning-button-icon icon-name="utility:close" onclick={closeModel} alternative-text="close"
+                                  variant="bare" class="slds-modal__close" ></lightning-button-icon>
+          <h3 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Asset Summary</h3>
+      </header>
+      <!--Modal/Popup Box Body Starts here-->
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+        <div class="slds-scrollable">
+          <lightning-formatted-rich-text value={caseSummary}></lightning-formatted-rich-text>
+        </div>
+      </div>
+      </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </template>
+</template>

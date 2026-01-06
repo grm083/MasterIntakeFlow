@@ -1,0 +1,8 @@
+<apex:page >
+    <h1>Hello from Gplus Adapter!</h1>
+    <apex:pageBlock title="Attached Data">
+        <b>ConnID: </b>{!$CurrentPage.parameters.ConnID}<br/>
+        <b>MediaType: </b>{!$CurrentPage.parameters.MediaType}<br/>
+        <b>Queue: </b>{!$CurrentPage.parameters.Queue}
+	</apex:pageBlock>
+</apex:page>

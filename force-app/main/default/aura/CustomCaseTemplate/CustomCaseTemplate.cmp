@@ -1,0 +1,52 @@
+<aura:component implements="lightning:recordHomeTemplate" description="Main column
+                                                                       and right sidebar. On a phone, the regions are of equal width">
+    <aura:attribute name="left" type="Aura.Component[]" />
+    <aura:attribute name="middle" type="Aura.Component[]" />
+    <aura:attribute name="right" type="Aura.Component[]" />
+    <aura:attribute name="region_header" type="Aura.Component[]" />
+    <aura:attribute name="region_header2" type="Aura.Component[]" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="isSandbox" type="boolean" default="false"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <div style="height:100%;">
+    <div>
+	    <div class="slds-card slds-page-header forceHighlightsPanel slds-scrollable_y" role="banner" id="myHeader" aura:id="stickySection" style="max-height:40vh;background-color: rgb(230, 229, 228);">
+            <lightning:layout multipleRows="false" >
+                <lightning:layoutItem  class="slds-size_12-of-12" flexibility="auto">
+					{!v.region_header}  
+				</lightning:layoutItem>
+            </lightning:layout>
+        </div>
+        <div style="max-height: 500rem; top: 0.7rem; position: relative; border-radius: 5px;">
+            <lightning:layout multipleRows="false" >
+                <lightning:layoutItem  class="slds-size_12-of-12">
+					{!v.region_header2}  
+				</lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout >
+                <lightning:layoutItem  class="slds-p-top_small slds-size_3-of-12"> 
+                    <div class="slds-scrollable_y" style="max-height:48vh;">
+                        <div style="width:97%;">
+                            {!v.left}
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  class="slds-p-top_small slds-p-left_small slds-size_6-of-12">
+                    <div class="slds-scrollable_y" style="max-height:48vh;">
+                        {!v.middle}
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  class="slds-p-top_small slds-p-left_small slds-size_3-of-12">
+                    <div class="slds-scrollable_y" style="max-height:48vh; ">
+                        {!v.right}
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </div>
+   
+    <div>
+
+    </div>
+  </div>
+</aura:component>

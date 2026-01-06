@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Group_user_cases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>Case_Number__c</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Status__c</columns>
+    <columns>CASES.EMAIL</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>Email_Tracking_Number__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OWNER_NAME</field>
+        <operation>equals</operation>
+        <value>Group user</value>
+    </filters>
+    <filters>
+        <field>CASES.CREATED_DATE_DATE_ONLY</field>
+        <operation>notEqual</operation>
+        <value>TODAY</value>
+    </filters>
+    <label>Group user cases</label>
+    <sharedTo>
+        <role>Customer_Experience_Supervisor</role>
+    </sharedTo>
+</ListView>

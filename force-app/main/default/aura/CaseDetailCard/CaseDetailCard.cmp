@@ -1,0 +1,99 @@
+<aura:component  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="CaseDetailCardController"  >
+<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="CaseDetails" type="Case" access="global"/>
+    <aura:attribute name="caseRecord" type="Object" />
+    <aura:attribute name="Origin" type="String" />
+    <aura:attribute name="options" type="List" access="global"/>
+    <aura:attribute name="saveEnabled" type="Boolean" default="false"/>
+    <aura:attribute name="selectedValue" type="String" access="global"/>
+    <aura:attribute name="objInfo" type="case" default="{sobjectType : 'Case'}" />
+    <aura:attribute name="availableOptions" type="List" default="" />
+    <aura:attribute name="caseOrigin" type="String" default="" />
+
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      targetFields="{!v.caseRecord}"
+                      fields="Source_System__c,Origin,OwnerId,recordTypeId,CreatedById,Last_Agent_ID__c,CaseNumber,LastModifiedById,LastModifiedDate,CreatedDate" 
+                      mode="EDIT"
+                      recordUpdated="{!c.recordUpdated}"
+                      />
+    <div class="slds-scrollable">
+        <lightning:card  iconName="standard:case" title="Case Details">
+            <div class="slds-scrollable">
+                <div class="slds-m-top--none slds-m-bottom--none"> 
+                    <table class="slds-table slds-table--bordered " role="grid" >
+                        <tbody>
+                            <tr>
+                                <td>Source System</td>
+                                <td>{!v.CaseDetails.Source_System__c}</td>
+                            </tr> 
+                            <!--  <lightning:recordEditForm aura:id="recordLoader"
+                                                         recordId="{!v.recordId}"
+                                                         recordTypeId="{!v.recordTypeId}"
+                                                         objectApiName="Case">
+                                 <lightning:messages />
+                                 <lightning:inputField fieldName="Origin"   />
+                                 <lightning:button aura:id="submit" variant="brand"  type="submit"  label="Save" class="slds-m-top_medium slds-align_absolute-center" /> 
+                                 </lightning:recordEditForm>-->
+                            <tr>  
+                                <td>Case Origin</td>  
+                                <td>
+                                    <ui:inputSelect  aura:id="caseorigin" class="slds-select cseorg" value="{!v.CaseDetails.Origin}"  change="{!c.enableBtnAgn}"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Case Number</td>
+                                <td>{!v.CaseDetails.CaseNumber}</td>
+                            </tr>
+                            <tr>
+                                <td>Case Owner</td>
+                                <td>{!v.CaseDetails.Owner.Name}</td>
+                            </tr>
+                            <tr>
+                                <td>Created by</td>
+                                <td>{!v.CaseDetails.CreatedBy.Name}</td>
+                            </tr>
+                            <tr>
+                                <td>Created Date</td>
+                                <!-- SDT 31280 -->
+                                <!-- <td><lightning:formattedDateTime value="{!v.CaseDetails.CreatedDate}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                                 minute="2-digit"  hour12="true"/></td> -->
+                                <td>{!v.CaseDetails.createdDt}</td>                                 
+                            </tr>
+                            <tr>   
+                                <td>Last Agent ID</td>
+                                <td>{!v.CaseDetails.Last_Agent_ID__c}</td>
+                            </tr>
+                            <tr>   
+                                <td>Last Modified By</td>
+                                <td>{!v.CaseDetails.LastModifiedBy.Name}</td>
+                            </tr>
+                            <tr>   
+                                <td>Last Modified Date</td>
+                                <!-- SDT 31280 -->
+                                <!-- <td><lightning:formattedDateTime value="{!v.CaseDetails.LastModifiedDate}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                                 minute="2-digit"  hour12="true"/></td> -->
+                                <td>{!v.CaseDetails.modifiedDt}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <td></td>
+                    <div class="slds-m-vertical_xx-small" align="center" draggable="false">
+                        <lightning:button variant="brand"  label="Save"  onclick="{!c.handleSaveRecord}" value="{!v.simpleRecord.Origin}" disabled="{!v.saveEnabled}" />
+                    </div>     
+                    <!-- <tr><td scope="col" class="head slds-size_1-of-6"></td>
+                    <div class="slds-m-vertical_xx-small" align="left" draggable="false">
+                        <lightning:button variant="brand"  label="Save"  onclick="{!c.handleSaveRecord}" value="{!v.simpleRecord.Origin}" disabled="{!v.saveEnabled}" />
+                 </div>
+                     </tr>-->
+                </div> 
+            </div>
+        </lightning:card>
+    </div>
+</aura:component>

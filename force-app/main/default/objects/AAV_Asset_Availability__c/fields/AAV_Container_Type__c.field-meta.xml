@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AAV_Container_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Container Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>AAV_Line_of_Business__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>OT</fullName>
+                <default>false</default>
+                <label>Open Top</label>
+            </value>
+            <value>
+                <fullName>CMP</fullName>
+                <default>false</default>
+                <label>Compactor</label>
+            </value>
+            <value>
+                <fullName>CMPSC</fullName>
+                <default>false</default>
+                <label>Compactor - Self-Contained</label>
+            </value>
+            <value>
+                <fullName>CMB</fullName>
+                <default>false</default>
+                <label>Compactor Box Only</label>
+            </value>
+            <value>
+                <fullName>DMP</fullName>
+                <default>false</default>
+                <label>Dumpster</label>
+            </value>
+            <value>
+                <fullName>VTC</fullName>
+                <default>false</default>
+                <label>Vertical Compactor</label>
+            </value>
+            <value>
+                <fullName>No Mapping</fullName>
+                <default>false</default>
+                <label>No Mapping</label>
+            </value>
+            <value>
+                <fullName>TOT</fullName>
+                <default>false</default>
+                <label>Toter</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>OT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>CMP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>CMPSC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>CMB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>DMP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>VTC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>TOT</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

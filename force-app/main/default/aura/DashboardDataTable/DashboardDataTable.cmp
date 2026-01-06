@@ -1,0 +1,353 @@
+<aura:component controller="TableListCmpCls" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute type="list" name="accValues" access="global"/>
+    <aura:attribute type="Asset" name="assets" access="global"/>
+    <aura:attribute type="String" name="AccountName" access="global"/>
+    <aura:attribute type="String" name="userName" access="global"/>
+    <aura:attribute type="object" name="data" access="global"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0" access="global"/>
+    <aura:attribute name="selectedTaskId" type="Id"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="5"/>
+    <aura:attribute name="selectedValue" type="String" default=""/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="isRowSelected" type="boolean" access="public"/>
+    <aura:attribute name="tableName" type="String" access="public"/>
+    <aura:attribute name="method" type="Aura.action"/>
+    <aura:attribute type="task[]" name="selectedRows" access="global"/>
+    <aura:attribute name="today" type="Date"/>
+    <aura:attribute name="dependentFieldMap" type="map" description="map to store dependent values with controlling value"/>
+    <aura:method name="sampleMethod" action="{!c.doAction}">
+        <aura:attribute type="Object[]" name ="updatedWrapper" />
+    </aura:method>
+    <!-- handlers-->
+    <aura:handler  event="c:DashboardDatatableRefreshEvent" action="{!c.handleDropdownOnclickEvent}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute type="Object[]" name ="wrappers" access="global"/>
+    <aura:attribute type="list" name="columns" access="global"/>
+    <aura:attribute type="Object[]" name="finalDataList" access="global"/>
+    <aura:attribute type="task[]" name="dataList" access="global"/>
+    <aura:attribute name="picklistValues" type="Object" />
+    <aura:attribute name="selectedPicklistValues" type="String" />
+    <aura:attribute name="selectedUserView" type="String" access="global" default="All"/>
+    <aura:attribute name="selectedAccountType" type="String" access="global" default="All"/>
+    <aura:attribute name="listControllingValues" type="list" default="[]" description="to store controller field values"/>
+    <aura:attribute name="listDependingValues" type="list" default="['--- None ---']" description="to store dependent field values"/>
+    <aura:attribute name="depnedentFieldMap" type="map" description="map to store dependent values with controlling value"/>
+    <aura:attribute name="bDisabledDependentFld" type="boolean" default="true"/> 
+    <aura:attribute name="isFirstTime" type="boolean" default="true"/>
+    
+    
+    <!-- handlers-->
+    
+    <div class="slds-scrollable slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols" 
+         style="height:250px;width:100%;table-layout: fixed;">
+        <h1 class="slds-text-heading--medium">{!v.tableName}</h1>
+        <br/>
+        <ui:button class="btn btn-default" press="{!c.export}">Export</ui:button>
+        <br/>
+        <!--Contact List Table-->
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer sortable" id="datagrid" role="grid">      
+            <thead>  
+                <tr class="slds-text-title--caps slds-line-height_reset">
+                    <th style="width:3.25rem;" class="slds-text-align_centre">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <label class="slds-checkbox">
+                                    <ui:inputCheckbox disabled="{!v.totalRecordsCount == 0}"
+                                                      aura:id="selectAllId"
+                                                      change="{!c.selectAllCheckbox}"/>
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </th>
+                    <aura:iteration items="{!v.columns}" var="colName" indexVar="ind">
+                        <th aria-label="{!colName.label}" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col" align="center">
+                            
+                            <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0">
+                                <span class="slds-assistive-text">Sort by: </span>
+                                <div class="slds-text-align_center slds-has-flexi-truncate">
+                                    <span class="slds-truncate" title="{!colName.label}">{!colName.label}</span>
+                                </div>
+                            </a>
+                            
+                            
+                            <div class="slds-resizable">
+                                <input type="range" aria-label="{!colName.label + 'column width'}" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-534" max="1000" min="20" tabindex="0" />
+                                <span class="slds-resizable__handle">
+                                    <span class="slds-resizable__divider"></span>
+                                </span>
+                            </div>
+                            
+                        </th>
+                    </aura:iteration>
+                </tr>
+            </thead>
+            <tbody>        
+                <aura:iteration items="{!v.finalDataList}" var="taskList">
+                    <!--aura:if isTrue="{!taskList.acc.Owner.Name == 'Genesys Integration'}"-->
+                    <tr indexVar="ind">
+                        <th scope="row" class="slds-text-align_right" style="width:3.25rem;" align="center">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox text="{!taskList.acc.Id}"
+                                                          value="{!taskList.isChecked}"
+                                                          change="{!c.checkboxSelect}"/>
+                                        <span class="slds-checkbox_faux"></span>
+                                        <span class="slds-form-element__label text"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="row" align="center">
+                            
+                            <div class="slds-truncate" title="{!taskList.TaskId}">
+                                <aura:if  isTrue="{!taskList.acc.TaskId != null}" >
+                                    <lightning:formattedUrl label="{!taskList.acc.TaskName}" value="{!'/lightning/r/' + taskList.acc.TaskId + '/view'}" target="_self"/>
+                                </aura:if>
+                            </div>
+                            
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.CaseNumber}">
+                                    <aura:if  isTrue="{!taskList.acc.CaseId != null}" >
+                                        <lightning:formattedUrl label="{!taskList.acc.CaseNumber}" value="{!'/lightning/r/' + taskList.acc.CaseId + '/view'}" target="_self"/>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </td>
+                        
+                        <th scope="row" align="center">
+                            
+                            <div class="slds-truncate" title="{!taskList.acc.AssetId}">
+                                <aura:if  isTrue="{!taskList.acc.AssetId != null}" >
+                                    <lightning:formattedUrl label="{!taskList.acc.AssetName}" value="{!'/lightning/r/' + taskList.acc.AssetId + '/view'}" target="_self"/>
+                                </aura:if>
+                            </div>
+                            
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.CaseType}">{!taskList.acc.CaseType}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.CaseSubType}">{!taskList.acc.CaseSubType}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.ServiceDate}">
+                                    <aura:if isTrue="{!taskList.acc.ShowServiceDateAsEdit}">
+                                        <lightning:input type="date" aura:id="today" min="{!v.today}" value="{!taskList.acc.ServiceDate}"/>
+                                        <!--<ui:inputDate aura:id="today" class="field" value="{!taskList.acc.ServiceDate}" displayDatePicker="true" />-->
+                                        <aura:set attribute="else">
+                                            <lightning:formattedDateTime value="{!taskList.acc.ServiceDate}" year="numeric" month="numeric" day="numeric"/>
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </td>
+                        <!--
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.Process}">{!taskList.acc.Process}
+                                    
+                                </div>
+                            </div>
+                        </th> -->
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.Outcome}">{!taskList.acc.Outcome}
+                                    <!--Dependent Field-->
+                                    <lightning:layoutItem size="12" padding="around-small">
+                                        <lightning:select title="{!taskList.acc.TaskId}" aura:id="dependentFld" name="dependentFld"
+                                                          onchange="{!c.checkForServiceDate}" value="{!taskList.acc.Outcome}">
+                                            <aura:iteration items="{!taskList.listDependingValues}" var="val">
+                                                <!--aura:iteration items="{!v.depnedentFieldMap+'.'+taskList.Process__c}" var="val"-->
+                                                <option value="{!val}">{!val}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </lightning:layoutItem>
+                                </div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <!--div class="slds-truncate" title="{!taskList.acc.Due_Date_Time__c}">{!taskList.acc.Due_Date_Time__c}</div-->
+                                <lightning:formattedDateTime value="{!taskList.acc.DueDateTime}" year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit"  timeZone="{!$Locale.timezone}" />
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.CompanyCategory}">{!taskList.acc.CompanyCategory}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.Position}">{!taskList.acc.Position}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.AssetMASAccountNumber}">{!taskList.acc.AssetMASAccountNumber}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.ContactEmail}">{!taskList.acc.ContactEmail}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.ContactNumber}">{!taskList.acc.ContactNumber}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.ContactTitle}">{!taskList.acc.ContactTitle}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.ContactMethod}">{!taskList.acc.ContactMethod}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!v.accValues.AccountId}">
+                                    <aura:if  isTrue="{!taskList.acc.AccountId != null}" >
+                                        <lightning:formattedUrl label="{!taskList.acc.AccountName}" value="{!'/lightning/r/' + taskList.acc.AccountId + '/view'}" target="_self"/>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.AccountNumber}">{!taskList.acc.AccountNumber}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.AcornWONumber}">{!taskList.acc.AcornWONumber}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.Status}">{!taskList.acc.Status}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.ParentVendorId}">
+                                    <aura:if  isTrue="{!taskList.acc.ParentVendorId != null}" >
+                                        <lightning:formattedUrl label="{!taskList.acc.ParentVendor}" value="{!'/lightning/r/' + taskList.acc.ParentVendorId + '/view'}" target="_self"/>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.LocationAccountId}">
+                                    <aura:if  isTrue="{!taskList.acc.LocationAccountId != null}" >
+                                        <lightning:formattedUrl label="{!taskList.acc.LocationAccount}" value="{!'/lightning/r/' + taskList.acc.LocationAccountId + '/view'}" target="_self"/>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.LocationAddress}">{!taskList.acc.LocationAddress}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.LocationCity}">{!taskList.acc.LocationCity}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.LocationState}">{!taskList.acc.LocationState}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.LocationZipCode}">{!taskList.acc.LocationZipCode}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.MarketArea}">{!taskList.acc.MarketArea}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.VendorBU}">{!taskList.acc.VendorBU}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.WMVendor}">{!taskList.acc.WMVendor}</div>
+                            </div>
+                        </th>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.AssetVendorAccountNumber}">{!taskList.acc.AssetVendorAccountNumber}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.AssetEquipmentSize}">{!taskList.acc.AssetEquipmentSize}</div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.AssetMaterialType}">{!taskList.acc.AssetMaterialType}</div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.Comments}">
+                                    <lightning:input name="Comments"
+                                                     label="Comments"
+                                                     maxlength="4000"
+                                                     onchange="{!c.CheckLength}"
+                                                     value="{!taskList.acc.Comments}"
+                                                     />
+                                </div>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.AssignedTo}">
+                                    <aura:if  isTrue="{!taskList.acc.AssignedToName != null}" >
+                                        <lightning:formattedUrl label="{!taskList.acc.AssignedToName}" value="{!'/lightning/r/' + taskList.acc.AssignedTo + '/view'}" target="_self"/>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-text-align_center">
+                                <aura:if isTrue="{!and(taskList.acc.AccountType != 'Construction and Demolition', taskList.acc.AssetProject == null)}">
+                                    <div class="slds-truncate" title="Task Type"> CS </div>
+                                    <aura:set attribute="else">
+                                        <div class="slds-truncate" title="Task Type"> PS </div>
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-text-align_center">
+                                <div class="slds-truncate" title="{!taskList.acc.TaskAttempt}">{!taskList.acc.TaskAttempt}</div>
+                            </div>
+                        </th>
+                    </tr>
+                    <!--/aura:if-->
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>

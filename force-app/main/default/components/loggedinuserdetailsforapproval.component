@@ -1,0 +1,12 @@
+<apex:component controller="GetChildCase" access="global">
+    <apex:outputText style="text-align: center;font-family:Arial;" value="Thank you,"/>
+    <br/>
+    <br/><apex:outputText style="text-align: center;color:black;font-family:Arial;font-size:19px;" value="{!user.FirstName + ' ' + user.LastName}"/><br/>
+     <apex:outputText style="text-align: center;font-family:Arial;font-size:13px;font-weight: bold;" value="Customer Service Representative"/><br/>
+    <br/><apex:outputText style="text-align: center;font-family:Arial;color:black;font-size:13px;" value="WM"/><br/>
+    <apex:outputText style="text-align: center;font-family:Arial;color:black;font-size:13px;" value="1 Griffin Road N"/><br/>
+    <apex:outputText style="text-align: center;font-family:Arial;color:black;font-size:13px;" value="Suite 4C"/><br/>
+    <apex:outputText style="text-align: center;font-family:Arial;color:black;font-size:13px;" value="Windsor, CT 06095"/><br/>
+    <br/>
+    <apex:image id="theImage" value="https://wmsbs.file.force.com/servlet/servlet.ImageServer?oid=00D1I000001V0eB&id=0153u000002Omy8" alt="WM Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;width:1.1in;height: 0.3in;"  title="WM Logo"/>
+ </apex:component>

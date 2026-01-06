@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MessageStatusValidRule</fullName>
+    <active>true</active>
+    <description>Validation rule to prevent message status changed back to previous state once it is moved forward</description>
+    <errorConditionFormula>AND( ISCHANGED( Message_Status__c) , 
+
+OR( ISPICKVAL(PRIORVALUE( Message_Status__c ),&quot;Processed by MC&quot;) ,
+AND(ISPICKVAL(PRIORVALUE( Message_Status__c ),&quot;Complete&quot;), OR(ISPICKVAL(Message_Status__c,&quot;Pending&quot;),ISPICKVAL(Message_Status__c,&quot;&quot;))
+)
+)
+)</errorConditionFormula>
+    <errorDisplayField>Message_Status__c</errorDisplayField>
+    <errorMessage>Message Status can not be changed at this stage</errorMessage>
+</ValidationRule>

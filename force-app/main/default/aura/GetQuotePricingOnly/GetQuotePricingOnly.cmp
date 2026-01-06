@@ -1,0 +1,339 @@
+<aura:component
+    implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,flexipage:availableForRecordHome,force:hasRecordId"
+    controller="ProcessQLIPricingRequest" access="global">
+    <aura:attribute name="productWrapper" type="object" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="activesection" Type="List" />
+    <aura:attribute name="QuotePringRequestList" Type="Object[]" />
+    <aura:attribute name="ErrorMsg" Type="List" />
+    <aura:attribute name="GreenData" Type="List" />
+    <aura:attribute name="NoData" Type="Boolean" />
+    <aura:attribute name="IsPricingAvailable" Type="Boolean" />
+    <aura:attribute name="RefreshButton" Type="Boolean" />
+    <aura:attribute name="IsShowPicklist" Type="Boolean" default="true"/>
+    <aura:attribute name="requestReason" type="List" />
+    <aura:attribute name="selectedValue" type="string" default="-1" />
+    <aura:attribute name="text" type="string" default="" />
+    <!-- <aura:attribute name="SubstituteMsg" Type="List" /> -->
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    <aura:registerEvent name="assetPriceRefreshEvent" type="c:AssetPriceRefreshEvent" />
+    <aura:registerEvent name="closeGetPrice" type="c:QuoteProductsCloseModal" />
+    <aura:html tag="style">
+
+        .slds-modal__container{
+        width: 80% !important;
+        max-width: 80% !important;
+        }
+
+    </aura:html>
+
+    <aura:if isTrue="{!v.loadingSpinner}">
+        <lightning:spinner alternativeText="Loading" size="medium" variant="brand" />
+    </aura:if>
+
+    <div class="slds-truncate" style="height: fit-content;">
+        <div class="page-section page-header">
+            <div style="float: right;">
+                <aura:if isTrue="{!v.RefreshButton}">
+                <lightning:button variant="success" label="Refresh" title="Brand action"
+                    onclick="{! c.refreshClick }" />
+                </aura:if>
+            </div>
+            <aura:if isTrue="{!v.IsShowPicklist}">
+                <lightning:layout multipleRows="true"
+                      horizontalAlign="spread"
+                      verticalAlign="stretch">
+                    <lightning:layoutItem flexibility="auto" class="slds-p-around_xx-small" size="12">
+                        <div class="slds-align_absolute-center slds-text-heading_medium">
+                            Price Only Request
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" class="slds-box" size="12">
+                        <lightning:select aura:id="ccPicklist" label="PriceOnly Request Reason" value="{!v.selectedValue}" required="true" >
+                            <option value="-1" text="--Select Reason--" />
+                            <aura:iteration items="{!v.requestReason}" var="item">
+                                <option value="{!item.key}" text="{!item.value}" />
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <aura:if isTrue="{!v.selectedValue == 'OTH' }" >
+                        <lightning:layoutItem flexibility="auto" class="slds-box" size="12">
+                            <lightning:input  type="text" required="true" name="input1" value="{!v.text}" label="Enter a Reason Description" />
+                        </lightning:layoutItem>
+                    </aura:if>
+                    <lightning:layoutItem flexibility="auto" class="right-align slds-p-around_xx-small " alignmentBump="right" size="12">
+                        <lightning:button label="Save"
+                        variant="brand"
+                        onclick="{!c.saveCC}" />
+                    </lightning:layoutItem>
+                </lightning:layout>
+            <aura:set attribute="else">
+            <div class="page-section page-header">
+                <p style="text-align:center;font-size: 20px; margin-bottom: 5px;"><b>Pricing Response</b> </p>
+            </div>
+            
+            <lightning:accordion aura:id="accordion" allowMultipleSectionsOpen="false"
+                activeSectionName="{!v.activesection}">
+                <aura:if isTrue="{!empty(v.QuotePringRequestList)}">
+                    <b>No Pricing request is created for this Quote.</b>
+                <aura:set attribute="else">
+                <aura:iteration items="{!v.QuotePringRequestList}" var="pr">
+                    <div style="border: 1px outset black;margin: auto;">
+                        <lightning:accordionSection name="{!pr.BundleID}" label="{!pr.ProductName}">
+                            <aura:set attribute="body">
+                                <!-- <aura:if isTrue="{!not(empty(v.SubstituteMsg))}">
+                                    <div class="page-section page-header">
+                                        <p style="text-align:left;color:#FF9033;font-size: 16px; margin-bottom: 5px;"><b>
+                                                {!pr.ProductDetails.SubstituteMessage}
+                                            </b></p>
+                                    </div>
+                                </aura:if> -->
+                                <aura:if isTrue="{!not(empty(pr.ProductDetails.GreenPages.Market))}">
+                                    <table style="table-layout:fixed;width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <p><b>{!pr.ProductDetails.GreenPages.GPLabelName}</b></p>
+                                            </tr>
+                                            <tr>
+                                                <td class="labelCol lable"><label>Market: </label></td>
+                                                <td class="dataCol data">{!pr.ProductDetails.GreenPages.Market}</td>
+                                                <td class="labelCol lable"><label>Message :</label></td>
+                                                <td class="dataCol data"> {!pr.ProductDetails.GreenPages.Message}
+                                                </td>
+                                                <td class="labelCol lable"><label>GPLabelLink :</label></td>
+                                                <td class="dataCol data">
+                                                    <a href="{!pr.ProductDetails.GreenPages.GPLabelLink}"
+                                                        target="_blank">{!pr.ProductDetails.GreenPages.GPLabelLink}</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <aura:set attribute="else">
+                                        <aura:if isTrue="{!empty(pr.Problem.ErrorMessage)}">
+
+                                            <table style="table-layout:fixed;width: 100%;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="labelCol lable"><label>BundleID :</label></td>
+                                                        <td class="dataCol data"><a data-id="{!pr.BundleLink}"
+                                                                onclick="{!c.navigateTosObject}"> {!pr.BundleID}</a>
+                                                        </td>
+                                                        <td class="labelCol lable"><label>PricingReqId :</label></td>
+                                                        <td class="dataCol data"><a data-id="{!pr.PricingRequestLink}"
+                                                                onclick="{!c.navigateTosObject}"> {!pr.PricingReqId}</a>
+                                                        </td>
+                                                        <td class="labelCol lable"><label>SourceCode :</label></td>
+                                                        <td class="dataCol data">{!pr.ProductDetails.SourceCode}</td>
+                                                    </tr>
+                                                    <br></br>
+                                                    <tr>
+                                                        <td class="labelCol lable"><label>Business Unit :</label></td>
+                                                        <td class="dataCol data">{!pr.ProductDetails.BusinessUnit}</td>
+
+                                                        <td class="labelCol lable"><label>Start Date :</label></td>
+                                                        <td class="dataCol data">{!pr.ProductDetails.StartDate}</td>
+
+                                                        <td class="labelCol lable"><label>End Date :</label></td>
+                                                        <td class="dataCol data">{!pr.ProductDetails.EndDate}</td>
+                                                    </tr>
+                                                    <br></br>
+                                                    <tr>
+                                                        <td class="labelCol lable"><label>Vendor :</label></td>
+                                                        <td class="dataCol data">{!pr.ProductDetails.Vendor}</td>
+                                                        <aura:if isTrue="{!pr.LOB == 'Rolloff'}">
+                                                            <td class="labelCol lable"><label>RateTypeDisposal :</label></td>
+                                                            <td class="dataCol data">{!pr.ProductDetails.RateTypeDisposal}</td>
+                                                            
+                                                            <td class="labelCol lable"><label>RateTypeHaul :</label></td>
+                                                            <td class="dataCol data">{!pr.ProductDetails.RateTypeHaul}</td>
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!pr.LOB == 'Commercial'}">
+                                                            <td class="labelCol lable"><label>RateTypePickup :</label></td>
+                                                            <td class="dataCol data">{!pr.ProductDetails.RateTypePickup}</td>
+
+                                                            <td class="labelCol lable">&nbsp;</td>
+                                                            <td class="dataCol data">&nbsp;</td>
+                                                        </aura:if>
+
+                                                    </tr>
+                                                    <!-- Start Changes for SDT-24846 -->
+                                                    <aura:if isTrue="{!not(empty(pr.ProductDetails.FacilityId))}">
+                                                        <br></br>
+                                                        <tr>
+                                                            <td class="labelCol lable"><label>Facility Id :</label></td>
+                                                            <td class="dataCol data">{!pr.ProductDetails.FacilityId}</td>
+                                                        </tr>
+                                                    </aura:if>
+                                                    <!-- End Changes for SDT-24846 -->
+                                                    <br></br>
+                                                    <tr>
+                                                         
+                                                        <td class="labelCol lable"><label>Comments :</label></td>
+                                                        <td class="dataCol data">{!pr.ProductDetails.VendorComments}</td>
+
+                                                    </tr>
+                                                    <aura:if isTrue="{!pr.ProductDetails.IsProjectRequest}">
+                                                        <br></br>
+                                                        <tr>
+                                                            <td class="labelCol lable"><label>Customer Price Type :</label></td>
+                                                            <td class="dataCol data">{!pr.ProductDetails.CustomerPriceType}</td>
+                                                            
+                                                            <aura:if isTrue="{!pr.LOB == 'Rolloff'}">
+                                                                <td class="labelCol lable"><label>Haul Record Id :</label></td>
+                                                                <td class="dataCol data">{!pr.ProductDetails.HaulRecordId}</td>
+                                                                
+                                                                <td class="labelCol lable"><label>Disposal Record Id :</label></td>
+                                                                <td class="dataCol data">{!pr.ProductDetails.DisposalRecordId}</td>
+                                                            </aura:if>
+                                                            <aura:if isTrue="{!pr.LOB == 'Commercial'}">
+                                                                <td class="labelCol lable"><label>Pickup Record Id :</label></td>
+                                                                <td class="dataCol data">{!pr.ProductDetails.PickupRecordId}</td>
+                                                                
+                                                                <td class="labelCol lable"><label>Extra Pickup Record Id :</label></td>
+                                                                <td class="dataCol data">{!pr.ProductDetails.ExtraPickupRecordId}</td>    
+                                                            </aura:if>
+                                                        </tr>
+                                                    </aura:if>                                                    
+                                                </tbody>
+                                            </table>
+
+                                            <hr />
+
+                                            <table class="slds-table slds-table--bordered" style="table-layout:fixed">
+                                                <thead style="width: 100%">
+                                                    <th scope="col" class="head slds-size_1-of-9"><span
+                                                            class="slds-truncate"><b>ServiceName</b></span></th>
+                                                    <th scope="col" class="head slds-size_1-of-9"><span 
+                                                                class="slds-truncate"><b>Cost Steps</b></span></th>                                                            
+                                                    <th scope="col" class="head slds-size_1-of-9"><span
+                                                            class="slds-truncate"><b>CostUOM</b></span></th>
+                                                        <!--Cost Currency Column -->
+                                                    <th style="width: 5%;" scope="col" class="head slds-size_1-of-9"><span
+                                                        class="slds-truncate"></span></th>
+                                                    <th style="width: 10%; text-align: right;" scope="col" class="head slds-size_1-of-9"><span
+                                                            class="slds-truncate"><b>Manual Cost</b></span></th>
+                                                    <th scope="col" class="head slds-size_1-of-9"><span 
+                                                                class="slds-truncate"><b>Price Steps</b></span></th>        
+                                                    <th scope="col" class="head slds-size_1-of-9"><span
+                                                            class="slds-truncate"><b>PriceUOM</b></span></th>
+                                                        <!--Price Currency Column -->
+                                                    <th style="width: 5%;" scope="col" class="head slds-size_1-of-9"><span 
+                                                        class="slds-truncate"></span></th>
+                                                    <th style="width: 10%; text-align: right;" scope="col" class="head slds-size_1-of-9"><span
+                                                            class="slds-truncate"><b>Price</b></span></th>
+                                                </thead>
+                                                <aura:iteration items="{!pr.ProductDetails.ServiceCharges}" var="sc">
+                                                    <tbody>
+                                                        <aura:if isTrue="{!not(sc.IsSteppedRate)}">
+                                                            <tr>
+                                                                <td class="slds-size_1-of-9">{!sc.ServiceName}</td>
+                                                                <td class="slds-size_1-of-9"></td>
+                                                                <td class="slds-size_1-of-9">{!sc.CostUOM}</td>
+                                                                <td style="text-align: right;" class="slds-size_1-of-9">{!sc.CostValueSymbol}</td>
+                                                                <td style="text-align: right;" class="slds-size_1-of-9">{!sc.Cost} {!sc.CostValuePercent}</td>
+                                                                <td class="slds-size_1-of-9"></td>
+                                                                <td class="slds-size_1-of-9">{!sc.PriceUOM}</td>
+                                                                <td style="text-align: right;" class="slds-size_1-of-9">{!sc.PriceValueSymbol}</td>
+                                                                <td style="text-align: right;" class="slds-size_1-of-9">{!sc.Price} {!sc.PriceValuePercent}</td>
+                                                            </tr>
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!sc.IsSteppedRate}">
+                                                            <aura:iteration items="{!sc.StepRates}" var="sr">
+                                                                <tr>
+                                                                    <td class="slds-size_1-of-9">{!sc.ServiceName}</td>
+                                                                    <td class="slds-size_1-of-9">{!sr.StepCostRange}</td>
+                                                                    <aura:if isTrue="{!sr.StepCost != null}">
+                                                                        <td class="slds-size_1-of-9">{!sc.CostUOM}</td>
+                                                                        <td style="text-align: right;" class="slds-size_1-of-9">{!sr.CostValueSymbol}</td>
+                                                                        <td style="text-align: right;" class="slds-size_1-of-9">{!sr.StepCost} {!sc.CostValuePercent}</td>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!sr.StepCost == null}">
+                                                                        <td class="slds-size_1-of-9"></td>
+                                                                        <td class="slds-size_1-of-9"></td>    
+                                                                        <td class="slds-size_1-of-9"></td>    
+                                                                    </aura:if>
+                                                                    <td class="slds-size_1-of-9">{!sr.StepPriceRange}</td>
+                                                                    <aura:if isTrue="{!sr.StepPrice != null}">
+                                                                        <td class="slds-size_1-of-9">{!sc.PriceUOM}</td>
+                                                                        <td style="text-align: right;" class="slds-size_1-of-9">{!sr.PriceValueSymbol}</td>
+                                                                        <td style="text-align: right;" class="slds-size_1-of-9">{!sr.StepPrice} {!sc.PriceValuePercent}</td>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!sr.StepPrice == null}">
+                                                                        <td class="slds-size_1-of-9"></td>
+                                                                        <td class="slds-size_1-of-9"></td>
+                                                                        <td class="slds-size_1-of-9"></td>
+                                                                    </aura:if>
+                                                                </tr>
+                                                            </aura:iteration>
+                                                        </aura:if>
+                                                    </tbody>
+                                                </aura:iteration>
+                                            </table>
+
+                                            <aura:set attribute="else">
+                                                <p  style="color: brown; width:90%;">Real Time Pricing could not be determined for this quote.
+                                                </p>
+                                                <br></br>
+                                                <table style="table-layout:fixed;width: 100%;">
+                                                    <tbody>
+                                                        
+                                                        <tr>
+                                                            <td class="labelCol lable"><label>BundleID :</label></td>
+                                                            <td class="dataCol data"><a data-id="{!pr.BundleLink}"
+                                                                    onclick="{!c.navigateTosObject}"> {!pr.BundleID}</a>
+                                                            </td>
+                                                            <td class="labelCol lable"><label>PricingReqId :</label>
+                                                            </td>
+                                                            <td class="dataCol data"><a
+                                                                    data-id="{!pr.PricingRequestLink}"
+                                                                    onclick="{!c.navigateTosObject}">
+                                                                    {!pr.PricingReqId}</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="labelCol lable">
+                                                                <label>Problem
+                                                                    :</label></td>
+                                                            <td class="dataCol data"
+                                                                style="color: red;">
+                                                                {!pr.Problem.ErrorMessage}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </aura:set>
+
+                                        </aura:if>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </lightning:accordionSection>
+                    </div>
+                </aura:iteration>
+            </aura:set>
+            </aura:if>
+            </lightning:accordion>
+            <hr />
+
+            <aura:if isTrue="{!v.NoData}">
+                <aura:set attribute="else">
+                    <aura:if isTrue="{!v.IsPricingAvailable}">
+                        <aura:set attribute="else">
+                            <div class="container">
+                                <div class="center">
+                                    <!-- Brand variant: Identifies the primary action in a group of buttons -->
+                                    <lightning:button variant="success" label="Copy to Quote Lines" title="Brand action"
+                                        onclick="{! c.acceptClick }" />
+                                </div>
+                                </div>
+                        </aura:set>
+                        <div class="container">
+                            </div>
+                    </aura:if>
+                </aura:set>
+            </aura:if>
+            </aura:set>
+        </aura:if>
+        </div>
+    </div>
+</aura:component>

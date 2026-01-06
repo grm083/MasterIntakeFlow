@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Request_Type_Service__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(TEXT(Business_Rule__r.Request_Type__c) != null , TEXT(Business_Rule__r.Request_Type__c), &quot; - &quot;) + &quot; / &quot; + IF(TEXT(Business_Rule__r.Service__c) != null , TEXT(Business_Rule__r.Service__c) , &quot; - &quot;)</formula>
+    <label>Request Type / Service</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

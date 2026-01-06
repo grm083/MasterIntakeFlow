@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>File_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>File Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client Approval</fullName>
+                <default>false</default>
+                <label>Client Approval</label>
+            </value>
+            <value>
+                <fullName>Client Contract</fullName>
+                <default>false</default>
+                <label>Client Contract</label>
+            </value>
+            <value>
+                <fullName>Container Issues</fullName>
+                <default>false</default>
+                <label>Container Issues</label>
+            </value>
+            <value>
+                <fullName>Container Repair</fullName>
+                <default>false</default>
+                <label>Container Repair</label>
+            </value>
+            <value>
+                <fullName>Customer eBusiness Portal</fullName>
+                <default>false</default>
+                <label>Customer eBusiness Portal</label>
+            </value>
+            <value>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+                <label>Invoice</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Permit</fullName>
+                <default>false</default>
+                <label>Permit</label>
+            </value>
+            <value>
+                <fullName>Photo</fullName>
+                <default>false</default>
+                <label>Photo</label>
+            </value>
+            <value>
+                <fullName>Vendor Contract</fullName>
+                <default>false</default>
+                <label>Vendor Contract</label>
+            </value>
+            <value>
+                <fullName>VRM Approval</fullName>
+                <default>false</default>
+                <label>VRM Approval</label>
+            </value>
+            <value>
+                <fullName>Drawings</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Drawings</label>
+            </value>
+            <value>
+                <fullName>Tax Forms</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tax Forms</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

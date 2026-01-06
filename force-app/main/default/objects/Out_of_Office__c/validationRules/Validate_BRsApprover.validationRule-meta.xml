@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_BRsApprover</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ ISBLANK(  New_Contact_Approver__c  ),
+ISBLANK(   New_Email_Approver__c   ),
+ISBLANK(   New_User_Approver__c  )
+)</errorConditionFormula>
+    <errorMessage>Please Enter an Approver to Continue</errorMessage>
+</ValidationRule>

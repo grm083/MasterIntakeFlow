@@ -1,0 +1,198 @@
+<aura:component controller="CaseDetailHelper" implements="lightning:availableForFlowScreens,force:hasRecordId,flexipage:availableForAllPageTypes" description="Case Contact Add With Title">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="mode" type="String" default="create" />
+    <aura:attribute name="contactId" type="String" />
+    <aura:attribute name="titleOptions" type="Map" />
+    <aura:attribute name="titleId" type="ID" />
+    <aura:attribute name="NewTitle" type="String" />
+    <aura:attribute name="caseAccountInfo" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="contactInfo" type="Object"/>
+    <aura:attribute access="private" name="error" type="String" default=""/>
+    <aura:attribute name="contactID2" type="String"/>
+    <aura:attribute name="editContactId" type="String"/>
+    <aura:attribute name="toggleErrors" type="Boolean"/>
+    
+    <aura:attribute name="label" type="String" access="global" default="Related Account Contact Search"/>
+    <aura:attribute name="selectedRecord" type="sObject" default="" />
+    <aura:attribute name="fetchedRecords" type="List" />
+    <aura:attribute name="searchText" type="String"/>
+    <aura:attribute name="isConRels" type="Boolean" default="false"/>
+    
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+	<aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+    <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    
+    <force:recordData recordId="{!v.recordId}" targetFields="{!v.caseAccountInfo}"
+                  fields="AccountId,Status,Client__c,Account.Id,Account.Name,Acorn_Location_Id__c,Location__c,Location__r.Name" targetError="{!v.recordLoadError}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <!-- <div>Mode: {!v.mode}</div> -->
+    
+    <aura:renderIf isTrue="{!v.HideSpinner}">
+        <div class="slds-spinner_container" >
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading, Please Wait...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:renderIf>
+    
+    <aura:if isTrue="{!empty( v.caseAccountInfo.Location__r.Name ) }">
+        <strong>Please Select A Location</strong>
+    </aura:if>
+    <aura:if isTrue="{! not( empty( v.caseAccountInfo.Location__r.Name ) ) }">
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+            <span>
+              <div class="slds-p-bottom_large slds-p-left_large" style="width:600px">      
+                    <aura:if isTrue="{! !empty(v.error)}">
+                        <ui:message title="Error" severity="error" closable="true">{!v.error}</ui:message>
+                    </aura:if>
+                    
+                    <div class="contactLookup-B">
+                    <aura:if isTrue="{!and(v.caseAccountInfo.Status == 'New', or(v.mode == 'view', v.mode == 'create'))}">
+                    <div aura:id="lookUpPane" class="slds-form-element slds-lookup slds-is-close" onmouseleave="{!c.onLeaveLookupPane}">
+                        <label class="slds-form-element__label" for="lookup-text">{!v.label}</label>
+                        <div class="slds-form-element__control">
+                            <div aura:id="master-container" class="slds-combobox_container slds-has-object-switcher">
+                                <div class="slds-input-has-icon slds-input-has-icon--right input-container">
+                                    <!-- This part displays the slds pill -->
+                                    <div aura:id="selected-item-pill" class="slds-hide pill-container">
+                                        <lightning:pill class="pill-item-size" label="{!v.selectedRecord.name}" name="{!v.selectedRecord.name}" onremove="{! c.remove }">
+                                        </lightning:pill>
+                                    </div>
+                                    <!-- This part displays the input control for search-->
+                                    <div aura:id="input-area" class="slds-show">
+                                        <lightning:icon class="slds-input__icon slds-show" iconName="utility:search " size="x-small" alternativeText="search"/> 
+                                        <ui:inputText aura:id="searchContent" class="slds-lookup__search-input slds-input input-no-border" value="{!v.searchText}" updateOn="keyup" keyup="{!c.onInputChange}" click="{!c.onSearchInputClick}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                            Lookup container to list down the records matched with the criteria
+                        -->
+                         <div id="listbox-unique-id" class="lookup-container" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu" role="presentation">
+                                <aura:iteration var="record" items="{!v.fetchedRecords}" indexVar="index">
+                                    <li role="presentation" class="slds-listbox__item" onclick="{!c.selectedRecordRowClick}" data-index="{!index}">
+                                        <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                            <!--<span class="slds-media__figure">
+                                                <span class="slds-icon_container slds-icon-standard-account" title="Description of icon when needed">
+                                                    
+                                                    <span class="slds-assistive-text">Description of icon when needed</span>
+                                                </span>
+                                            </span>-->
+                                            <span class="slds-media__body">
+                                                <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!record.name}</span>
+                                                <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{!record.description} <aura:if isTrue="{! not( empty( record.title ) ) }">- {!record.title}</aura:if></span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                    </div>
+                    </aura:if>
+                    </div><br/>
+                
+                    <!--
+                    <aura:if isTrue="{!v.caseAccountInfo.Status != 'New'}">
+                        <div class="contactLookup">
+                            <lightning:recordEditForm recordId="{!v.recordId}" objectApiName="Case">
+                                    <lightning:inputField label="Account" fieldName="AccountId" value="{!v.caseAccountInfo.AccountId}" class="slds-hide" />
+                                    <lightning:inputField value="{!v.contactId}" aura:id="ContactId" fieldName="ContactId" onchange="{!c.handleContactSuccess}" class="label-hidden" variant="label-hidden" />
+                            </lightning:recordEditForm>
+                        </div>
+                    </aura:if>
+              		-->
+                    
+                  <div class="createContactSection-B">
+                    <aura:if isTrue="{!v.mode == 'create' || v.mode == 'edit'}">
+                    <lightning:recordEditForm recordId="{!v.editContactId}" objectApiName="Contact" onsubmit="{!c.handleSubmit}" onerror="{!c.handleError}" onsuccess="{!c.handleSuccess}">
+                        <aura:if isTrue="{!v.toggleErrors}"><lightning:messages /></aura:if>
+                        
+                        <!-- <strong>Account Name:</strong>  {!v.caseAccountInfo.Account.Name}<br/> -->
+                        <!-- <div class="slds-m-bottom_x-small slds-m-top_x-small"><strong>Location Code:</strong>  {!v.caseAccountInfo.Location__r.Name}</div> -->
+                        <!-- <Strong>Error:</Strong> {!v.recordLoadError} -->
+                        
+                        <lightning:layout>
+                            <lightning:layoutItem size="10">
+                                <div class="slds-form slds-form_horizontal">
+                                    <lightning:inputField disabled="true" label="Account" fieldName="AccountId" value="{!v.caseAccountInfo.Client__c}" />   
+                                    <lightning:inputField aura:id="firstname" fieldName="FirstName" /> 
+                                    <lightning:inputField aura:id="lastname" fieldName="LastName" />                                   
+                                    <lightning:inputField pattern="^[0-9_ ]*$" messageWhenPatternMismatch="Phone number is not valid" aura:id="phone" fieldName="Phone" />
+                                    <lightning:inputField aura:id="mobile" type="phone" fieldName="MobilePhone" />
+                                    <lightning:inputField aura:id="email" fieldName="Email" />
+                                    <lightning:inputField aura:id="preferredmethod" fieldName="Preferred_Method__c" />
+                                    <lightning:inputField aura:id="contactstatus" fieldName="Contact_Status__c" />
+                                    <lightning:inputField aura:id="hiddenlocationfield" class="slds-hide" fieldName="Location__c" value="{!v.caseAccountInfo.Location__c}" />
+                                    <lightning:inputField aura:id="hiddentitlefield" class="slds-hide" fieldName="Account_Title__c" value="{!v.titleId}" />
+                                    <form>
+                                    
+                                    <lightning:select name="mySelect1" label="Select Title:" aura:id="mySelect1" value="{!v.titleId}">
+                                        <option value="">--None--</option>
+                                        <aura:iteration items="{!v.titleOptions}" var="item" indexVar="key">
+                                            <option text="{!item.value}" value="{!item.key}" selected="{!item.selected}"/>
+                                        </aura:iteration>                       
+                                    </lightning:select>
+                                    
+                                    <div class="slds-grid" style="width:100%">
+                                        <div class="slds-col">
+                                            <span><lightning:input type="text" label="New Title" value="{!v.NewTitle}" /></span>
+                                        </div>
+                                        <div class="slds-col">
+                                            <span><lightning:button class="nowrap" variant="success" label="Create New Title" title="Create Title" onclick="{!c.createTitle}" aura:id="createtitlebutton" /></span>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>                                                 
+                            </lightning:layoutItem>
+                        </lightning:layout>  
+                            <lightning:button aura:id="submit" variant="brand" type="submit" label="Save Contact" class="slds-m-top_medium" />
+                            <lightning:button aura:id="cancel" variant="brand" onclick="{!c.init}" label="Cancel" class="slds-m-top_medium" />
+                       
+                    </lightning:recordEditForm>    
+                    </aura:if>
+                  </div>    
+                        
+                  <div class="selectContactSection-B">
+                  <aura:if isTrue="{!v.mode == 'view'}">
+                      <aura:if isTrue="{! not( empty( v.contactID2 ) ) }">
+                          <lightning:recordEditForm objectApiName="Contact" recordId="{!v.contactID2}">    
+                              <lightning:layout>
+                                  <lightning:layoutItem size="10">
+                                      <div class="slds-box slds-form_horizontal">
+                                          <lightning:outputField label="FirstName" fieldName="FirstName" /> 
+                                          <lightning:outputField fieldName="LastName" />                                    
+                                          <lightning:outputField type="phone" fieldName="Phone" />
+                                          <lightning:outputField type="phone" fieldName="MobilePhone" />
+                                          <lightning:outputField fieldName="Email" />
+                                          <lightning:outputField fieldName="Preferred_Method__c" />
+                                          <lightning:outputField fieldName="Contact_Status__c" />               
+                                          <lightning:outputField fieldName="Account_Title__c" />
+                                      </div>                                                 
+                                  </lightning:layoutItem>
+                              </lightning:layout>
+                          </lightning:recordEditForm>
+                          <aura:if isTrue="{!v.caseAccountInfo.Status == 'New'}"><lightning:button variant="brand" label="Create New" onclick="{!c.createNew}" class="slds-m-top_medium" /></aura:if>
+                          <lightning:button variant="brand" label="Edit" onclick="{!c.editCaseContact}" class="slds-m-top_medium" />
+                      </aura:if>
+                      <!-- <aura:if isTrue="{!v.caseAccountInfo.Status == 'New'}"> -->
+                          <!-- <lightning:button variant="brand" type="submit" label="Next" class="slds-m-top_medium" onclick="{!c.handleNext}" /> -->
+                          
+                          <!-- <lightning:button aura:id="cancel" variant="brand" onclick="{!c.handleCancel}" label="Cancel" class="slds-m-top_medium" /> -->
+                      <!-- </aura:if> -->
+                  </aura:if>
+                  </div>
+                    
+                </div>
+            </span>
+      </div>
+  </div>
+  </aura:if>
+</aura:component>

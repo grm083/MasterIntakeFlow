@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cost_Price_Override_Reason__c</fullName>
+    <description>Adding this field as a part of SDT-25271 in Sprint 18</description>
+    <externalId>false</externalId>
+    <label>Cost/Price Override Reason</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Modeled Rates Provided</fullName>
+                <default>false</default>
+                <label>Modeled Rates Provided</label>
+            </value>
+            <value>
+                <fullName>Pricing Vendor Unable to Provide Service</fullName>
+                <default>false</default>
+                <label>Pricing Vendor Unable to Provide Service</label>
+            </value>
+            <value>
+                <fullName>Pricing Vendor is not the Incumbent</fullName>
+                <default>false</default>
+                <label>Pricing Vendor is not the Incumbent</label>
+            </value>
+            <value>
+                <fullName>Pricing Rates Were Incorrect for Core Service</fullName>
+                <default>false</default>
+                <label>Pricing Rates Were Incorrect for Core Service</label>
+            </value>
+            <value>
+                <fullName>Pricing Rates Were Incorrect for Ancillary Service/PFE</fullName>
+                <default>false</default>
+                <label>Pricing Rates Were Incorrect for Ancillary Service/PFE</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

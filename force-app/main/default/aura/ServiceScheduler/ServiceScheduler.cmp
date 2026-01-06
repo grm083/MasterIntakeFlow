@@ -1,0 +1,546 @@
+<aura:component controller="ServiceSchedulerCtrl"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" 
+                access="global">
+
+    <!-- Added for SDT-24451. This code will overwrite the toastMessage css to breakline.-->
+    <aura:html tag="style">.toastMessage.forceActionsText{
+        white-space : pre-line !important;
+        }</aura:html>
+	<!-- Attributes -->
+    <aura:attribute name="showSIDModal" type="boolean" default="false" />
+    <aura:attribute name="quoteId" type="String" />
+    <aura:attribute name="assetAvailabilityAccess" type="boolean" default="false" /><!--SDT-30072-->
+    <aura:attribute name="parentId" type="String" />
+    <aura:attribute name="LineOfBusiness" type="String" />
+    <aura:attribute name="pqLine" type="SBQQ__QuoteLine__c" default="{'sobjectType':'SBQQ__QuoteLine__c'}"/>
+    <aura:attribute name="clickedBtnName" type="string" default=""/>
+    <aura:attribute name="selectedOptions" type="List" default="[]"/>
+    
+    <!-- Added for SDT-29100 START-->
+    <aura:attribute name="showServiceDays" type="boolean" default="false"/>
+    <!-- <aura:attribute name="serviceReason" type="String" />
+    <aura:attribute name="serviceComment" type="String" default=""/>     -->
+    <aura:attribute name="serviceDaysList"  type="List"/>
+    <aura:attribute name="showOverrideDetails" type="boolean" default="false"/>
+    <aura:attribute name="serviceCommentError" type="boolean" default="false"/>
+    <aura:attribute name="serviceStatus" type="String" default=""/>
+    <aura:attribute name="overrideReasonOptions" type="List" default="[]"/> 
+    <aura:attribute name="selectedUnavailableDays" type="string" default=""/>                                                   
+    <!-- Added for SDT-29100 END-->    
+
+    <aura:attribute name="showAssetAPIError" type="boolean" default="false"/><!-- SDT-31583  -->
+    <aura:attribute name="showAssetAPIButton" type="boolean" default="false"/><!-- SDT-31583  -->
+    <aura:attribute name="msgAssetAPIErrors" type="List" default="[]"/><!-- SDT-31583  -->
+    <aura:attribute name="classAssetAPIErrors" type="String" default=""/><!-- SDT-31583  -->
+    <!-- <aura:attribute name="assetAvailabilityError" type="String" default=""/>SDT-31583  -->
+    
+    <aura:attribute name="selectedOptioweekDaysOptionsns" type="List" default="[]"/>
+    <aura:attribute name="weekDaysOptions" type="List" default="[
+                                                        { label: 'Monday', value: 'M' },
+                                                        { label: 'Tuesday', value: 'T' },
+                                                        { label: 'Wednesday', value: 'W' },
+                                                        { label: 'Thursday', value: 'T1' },
+                                                        { label: 'Friday', value: 'F' },
+                                                        { label: 'Saturday', value: 'S'},
+                                                        { label: 'Sunday', value: 'S1'}]"/>
+
+
+    <!--New Values from CE Wrapper Class to handle screen transitions-->
+    <aura:attribute name="currentProduct" type="Object" default="[]" />
+    <aura:attribute type="Map" name="validationResultsMap"/> 
+    <!--CE Attributes-->
+    <!-- Spinner -->
+    <aura:attribute name="showSpinner" type="boolean" />
+    <!-- Spinner -->
+    <!-- daily -->
+    <aura:attribute name="dailyEveryDayFrequency" type="string" default="1"/>
+    <aura:attribute name="dailyEveryDayBtnstate" type="Boolean" default="false"/>
+    <aura:attribute name="dailyEveryWeekBtnstate" type="Boolean" default="false"/>
+    <!-- daily -->
+    <!-- weekly -->
+    <aura:attribute name="everyWeeks" type="string" default="1"/>
+    <aura:attribute name="selectedWeekDayOption" type="string" default=""/>
+    <aura:attribute name="selectedRadioOptionValue" type="String" default=""/>
+    <aura:attribute name="radioCheckboxOptions" type="List" default="[
+                                                        {'label': 'MWF', 'value': 'MWF'},
+                                                        {'label': 'TR', 'value': 'TR'},
+                                                        {'label': 'Weekdays', 'value': 'Weekdays'}
+                                                        ]"/>
+    <!-- weekly -->
+    <!-- Monthly -->
+    <aura:attribute name="monthlyEveryMonthFrequency" type="string" default="1"/>
+    <aura:attribute name="monthlyEveryMonthBtnstate" type="Boolean" default="false"/>
+    <!-- SDT-38285 Start Default value no longer required-->
+    <!--
+    <aura:attribute name="monthlySpecificdayOfMonth" type="string" default="1"/>
+    <aura:attribute name="monthlySpecificMonthFrequency" type="string" default="1"/>
+	-->
+    <aura:attribute name="monthlySpecificdayOfMonth" type="string" default=""/>
+    <aura:attribute name="monthlySpecificMonthFrequency" type="string" default=""/>
+    <aura:attribute name="monthlySpecificRelativeMonthFrequency" type="string" default=""/>
+    <!-- SDT-38285 End -->
+    <aura:attribute name="monthlySpecificMonthBtnstate" type="Boolean" default="false"/>
+    <!-- SDT-38285 Start-->
+    <aura:attribute name="radioServiceDateChecked" type="Boolean" default="false"/>
+    <aura:attribute name="radioServiceDayChecked" type="Boolean" default="false"/>
+
+    <aura:attribute name="dayOfMonthInptDisabled" type="Boolean" />
+    <aura:attribute name="dayOfMonthFrequencyInptDisabled" type="Boolean" />
+    <aura:attribute name="onTheFirstInptDisabled" type="Boolean" />
+    <aura:attribute name="onTheDayOfWeekInptDisabled" type="Boolean" />
+    <aura:attribute name="onTheFrequencyInptDisabled" type="Boolean" />
+    
+    <aura:attribute name="monthlyRadioCheckboxOptions" type="List" default="[
+                                                        {'label': '', 'value': 'ServiceDate'},
+                                                        {'label': '', 'value': 'ServiceDay'}
+                                                        ]"/>
+    <aura:attribute name="monthlySpecificSelectedRadioOptValue" type="String" default=""/>    
+    <aura:attribute name="monthRelative" type="string" default=""/>
+    <aura:attribute name="monthRelativeInterval" type="string" default=""/>
+    
+	<aura:attribute name="disableSrvDayMonthRelativeField" type="Boolean" default="false" />
+    <aura:attribute name="disableSrvDateMonthRelativeField" type="Boolean" default="false" />
+	<aura:attribute name="monthRelativeIntervalList" type="List"  default="[]"/>
+    <aura:attribute name="monthRelativeList" type="List"  default="[]"/>
+    <!-- SDT-38285 End-->
+    <!-- Monthly -->
+    <!-- Yearly -->
+    <aura:attribute name="yearlyFrequency" type="string" default="1"/>
+    <aura:attribute name="yearlyBtnstate" type="Boolean" default="false"/>
+    <aura:attribute name="selectedAccessoryList" type="Object" default="[]" />
+    <!-- SDT-23055: start-->
+    <aura:attribute name="keyQuantityList" type="List" default="[]"/>
+    <!-- SDT-23055: stop-->
+    <!-- Yearly -->
+    
+    <!-- Attributes -->
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="UpdateSummary" type="c:UpdateSummaryEvent" />
+    <aura:registerEvent name="UpdateWrapperState" type="c:UpdateWrapperStateEvent" />
+    <!-- Handlers -->
+    <!-- Chanegs for SDT-24401 -->
+    <aura:attribute name="isAssetAvailable" type="boolean" default="false" />
+    <aura:registerEvent name="refreshConfiguredProducts" type="c:RefreshConfiguredProducts" />
+
+    
+    <aura:registerEvent name="sendNotification" type="c:schedulerQuoteOverViewCmpEvt"/>
+    <aura:method name="fireSchedulerSubmit" action="{!c.finalSubmit}" 
+                 description="This is used to fire final submit action">
+    </aura:method>
+    <!--SDT-29100-->
+    <aura:method name="invokeAAVapi" action="{!c.handleAvailability}" 
+        description="This method is used for request Availability">
+    </aura:method>
+    <!-- Body -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading Bundles" size="medium" />
+    </aura:if>
+    <!-- SDT-31583 :START-->
+    <aura:if isTrue="{!v.showAssetAPIError}">
+        <div  class="slds-grid slds-gutters slds-m-horizontal_none">
+            <div class="warning-box">
+                <span style ="font-size: 1.8em;"> &#9888; </span>
+                <div class = "warning-text">
+                    <span class="warning-text-heading">Availability API Information: </span>
+                    <ul class="{!v.classAssetAPIErrors}">
+                        <aura:iteration var="errorMsg" items="{!v.msgAssetAPIErrors}">
+                            <li>{!errorMsg}</li> 
+                        </aura:iteration> 
+                    </ul>
+                </div>
+                <aura:if isTrue="{!v.showAssetAPIButton}">
+                    <lightning:button variant="brand" label="Get Availability"
+                            title="Get Availability" onclick="{!c.handleRetryAssetAPI}" />
+                </aura:if>
+            </div>
+        </div>
+    </aura:if>
+    <!-- SDT-31583 :END-->
+    <!-- SDT 27584 Start -->
+    <!--div  class="slds-grid slds-gutters" style="border: 1px solid #e0dedd;"-->
+    <div  class="slds-grid slds-gutters slds-m-horizontal_none" style="border: 1px solid #e0dedd;">
+    <!-- SDT 27584 End -->
+        <div style="text-align: center;font-size: 18px;padding: 1%;border: 1px solid #e4e2e1;width:100%">
+            Service Scheduler
+        </div>
+    </div>
+    <!-- SDT 27584 Start -->
+    <!--div class="slds-grid slds-gutters" style="border: 1px solid #e0dedd;" -->
+    <div class="slds-grid slds-gutters slds-m-horizontal_none" style="border: 1px solid #e0dedd;" >
+    <!-- SDT 27584 End -->
+        <div class="slds-col slds-size_1-of-2 padding-0px border-1px" >
+            <div class="buttonMenuHeadingCls padding-2">
+                <div>{!v.pqLine.Equipment_Size__c}&nbsp;{!v.pqLine.SBQQ__ProductName__c}</div>
+                <div>{!v.pqLine.Name}</div>
+            </div>
+            <div>
+                <lightning:button variant="Neutral" 
+                                label="On Call" 
+                                aura:id="oncallBtnId" 
+                                class="slds-button_stretch border-radius padding-2" 
+                                title="On Call" 
+                                iconName="utility:call"
+                                onclick="{!c.handleClick}" />
+            </div>
+            <div>
+                <lightning:button variant="Neutral" label="Daily" aura:id="dailyBtnId" iconName="utility:dayview" class="slds-button_stretch border-radius padding-2" title="Daily" onclick="{!c.handleClick}" />
+            </div>
+            <div>
+                <lightning:button variant="Neutral" label="Weekly" aura:id="weeklyBtnId" iconName="utility:weeklyview" class="slds-button_stretch border-radius padding-2" title="Weekly" onclick="{!c.handleClick}" />
+            </div>
+            <div>
+                <lightning:button variant="Neutral" label="Monthly" aura:id="monthlyBtnId" iconName="utility:monthlyview" class="slds-button_stretch border-radius padding-2" title="Monthly" onclick="{!c.handleClick}" />
+            </div>
+            <div>
+                <lightning:button variant="Neutral" label="Yearly" aura:id="YearlyBtnId" iconName="utility:date_input" class="slds-button_stretch border-radius padding-2" title="Yearly" onclick="{!c.handleClick}" />
+            </div>
+            
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <aura:if isTrue="{!v.clickedBtnName==''}">
+                <h1 style="text-align:center; font-size: 16px;">Please Click a button to display action</h1>
+            </aura:if>
+            <aura:if isTrue="{!v.clickedBtnName=='On Call'}">
+                <div style="padding-top:5%; font-size:14px;">
+                    No schedule needs to be configured for this service.  In order to receive service, the customer must call WMSBS to request service
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.clickedBtnName=='Daily'}">
+                <lightning:accordion aura:id="accordion" activeSectionName="A">
+                    <lightning:accordionSection name="A" label="Daily">
+                        <div id="dailyId">
+                            <div>Please select the daily frequency below</div>
+                            <div class="slds-p-top_small">
+                                <lightning:icon iconName="utility:picklist_type" alternativeText="picklist_type" title="picklist_type" />
+                                <span class="font-size">Every Day(s)</span>
+                                <span style="float:right">
+                                    <lightning:buttonStateful labelWhenOff="Select"
+                                                              labelWhenOn="Selected"
+                                                              labelWhenHover="Selected"
+                                                              iconNameWhenOff="utility:add"
+                                                              iconNameWhenOn="utility:check"
+                                                              iconNameWhenHover="utility:close"
+                                                              aura:id="dailyEveryDayBtnId"
+                                                              state="{!v.dailyEveryDayBtnstate}"
+                                                              onclick="{!c.dailySelect}"
+                                                              variant="brand"
+                                                              />
+                                </span>
+                            </div>
+                            <aura:if isTrue="{!not(v.assetAvailabilityAccess)}"> 
+                            <div class="slds-p-top_small">This is used for every day service, or service on every X days</div>
+                            </aura:if>
+                            <aura:if isTrue="{!(v.assetAvailabilityAccess)}"> 
+                            <div class="slds-p-top_small">This is used for service on every X days</div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.dailyEveryDayBtnstate}">
+                                <div class="slds-p-top_small"><!--SDT 30079 for allowing user to only input values from 1 t0 500 Adding pattern="(500)|[1-9]\d?" SDT 38498 changing pattern to ([1-9]|[1-9][0-9]|[1-4][0-9]{2}|500)-->
+                                    <lightning:input name="Frequency" label="Every __ Days" value="{!v.dailyEveryDayFrequency}" pattern="([1-9]|[1-9][0-9]|[1-4][0-9]{2}|500)"/>
+                                </div>
+                            
+                        </aura:if>
+                        </div>
+                        <aura:if isTrue="{!not(v.assetAvailabilityAccess)}"> 
+                        <div id="weeklyId" class="slds-p-top_small">
+                            <div>
+                                <lightning:icon iconName="utility:picklist_type" alternativeText="picklist_type" title="picklist_type" />
+                                <span class="font-size">Every Weekday</span>
+                                <span style="float:right">
+                                    <lightning:buttonStateful labelWhenOff="Select"
+                                                              labelWhenOn="Selected"
+                                                              labelWhenHover="Selected"
+                                                              iconNameWhenOff="utility:add"
+                                                              iconNameWhenOn="utility:check"
+                                                              iconNameWhenHover="utility:close"
+                                                              aura:id="dailyEveryWeekBtnId"
+                                                              state="{!v.dailyEveryWeekBtnstate}"
+                                                              onclick="{!c.dailySelect}"
+                                                              variant="brand"
+                                                              />
+                                </span>
+                            </div>
+                            <div class="slds-p-top_small">This is used for service every weekday</div>
+                        </div>
+                    </aura:if>
+                    </lightning:accordionSection>
+                </lightning:accordion>
+            </aura:if>
+            <aura:if isTrue="{!v.clickedBtnName=='Weekly'}">
+                <div class="slds-p-top_small"><!--SDT-31262 Modifing pattern to match values between 1 to 30  pattern="([1-9]|[12][0-9]|30)"-->
+                    <lightning:input name="EveryWeeks" label="Every __ Weeks" value="{!v.everyWeeks}" pattern="([1-9]|[12][0-9]|30)"/>
+                </div>
+                <div class="slds-p-top_small">
+                    <lightning:radioGroup name="ServiceDays"
+                                          label="Service Days"
+                                          options="{!v.radioCheckboxOptions}"
+                                          value="{!v.selectedRadioOptionValue}"
+                                          type="radio"
+                                          style="display:inline-block !important"
+                                          onchange="{!c.radioChange}"/>
+                </div>
+                <!--div class="slds-p-top_small">
+                    <div class="slds-grid slds-gutters slds-p-top_small">
+                        <div class="slds-col">
+                            <lightning:input type="checkbox" label="MWF" name="MWF" checked="{!v.MWF}" onchange="{!c.weeklyChecboxChange}"/>
+                        </div>
+                        <div class="slds-col">
+                            <span>
+                                <lightning:input type="checkbox" label="TR" name="TR" checked="{!v.TR}" onchange="{!c.weeklyChecboxChange}"/>
+                            </span>
+                        </div>
+                        <div class="slds-col">
+                            <span>
+                                <lightning:input type="checkbox" label="Weekdays" name="Weekdays" checked="{!v.Weekdays}" onchange="{!c.weeklyChecboxChange}"/>
+                            </span>
+                        </div>
+                    </div>
+                </div-->
+                <div class="slds-p-top_small">
+                    <lightning:dualListbox name="Days"
+                                           sourceLabel="Available"
+                                           selectedLabel="Selected"
+                                           options="{!v.weekDaysOptions}"
+                                           onchange="{!c.dualListChange}"
+                                           value="{!v.selectedOptions}"
+                                           size="4"/>
+                </div>
+        <!-- Added for SDT-29100 START--> <!--SDT-31583:showAssetAPIError added-->
+        <aura:if isTrue="{!and(v.assetAvailabilityAccess,not(v.showAssetAPIError))}">
+            <div class="daysText">*Days in Green are WM available days</div>
+        </aura:if>
+        <!-- Added for SDT-29100 END-->  
+
+            </aura:if>
+            <aura:if isTrue="{!v.clickedBtnName=='Monthly'}">
+                <lightning:accordion aura:id="monthlyAccordion" activeSectionName="A">
+                    <lightning:accordionSection name="A" label="Monthly">
+                        <div id="everyMonthId">
+                            <div class="slds-p-top_small">Please select the monthly frequency below</div>
+                            <div class="slds-p-top_small">
+                                <lightning:icon iconName="utility:picklist_type" alternativeText="picklist_type" title="picklist_type" />
+                                <span class="font-size">Every Month(s)</span>
+                                <span style="float:right">
+                                    <lightning:buttonStateful labelWhenOff="Select"
+                                                              labelWhenOn="Selected"
+                                                              labelWhenHover="Selected"
+                                                              aura:id="monthlyEveryMonthBtnId"
+                                                              iconNameWhenOff="utility:add"
+                                                              iconNameWhenOn="utility:check"
+                                                              iconNameWhenHover="utility:close"
+                                                              state="{!v.monthlyEveryMonthBtnstate}"
+                                                              onclick="{!c.monthlySelect}"
+                                                              variant="brand"/>
+                                </span>
+                            </div>
+                            <div class="slds-p-top_small">
+                                This is used for every month, or service on every X months
+                            </div>
+                            <aura:if isTrue="{!v.monthlyEveryMonthBtnstate}">
+                                <div class="slds-p-top_small">
+                                    <lightning:input name="Frequency" label="Every __ Months" value="{!v.monthlyEveryMonthFrequency}"/>
+                                </div>
+                            </aura:if>
+                        </div>
+                        <div id="specificMonthId">
+                            <div class="slds-p-top_small">
+                                <lightning:icon iconName="utility:picklist_type" alternativeText="picklist_type" title="picklist_type" />
+                                <span class="font-size">On a Specific Day of the Month</span>
+                                <span style="float:right">
+                                    <lightning:buttonStateful labelWhenOff="Select"
+                                                              labelWhenOn="Selected"
+                                                              labelWhenHover="Selected"
+                                                              aura:id="monthlySpecificMonthBtnId"
+                                                              iconNameWhenOff="utility:add"
+                                                              iconNameWhenOn="utility:check"
+                                                              iconNameWhenHover="utility:close"
+                                                              state="{!v.monthlySpecificMonthBtnstate}"
+                                                              onclick="{!c.monthlySelect}"
+                                                              variant="brand"
+                                                              />
+                                </span>
+                            </div>
+                            <div class="slds-p-top_small">
+                                This is used to specify the day number that service should occur, such as "On Day 10 of every 1 month"
+                            </div>
+                            <!--SDT-38285 Start Commenting as functionality changed-->
+                            <!--aura:if isTrue="{!v.monthlySpecificMonthBtnstate}">
+                                <div class="slds-p-top_small">
+                                    <lightning:input name="On Day:" label="On Day:" value="{!v.monthlySpecificdayOfMonth}"/>
+                                </div>
+                                <div class="slds-p-top_small">
+                                    <lightning:input name="Of Every__Month(s)" label="Of Every__Month(s)" value="{!v.monthlySpecificMonthFrequency}"/>
+                                </div>
+                            </aura:if-->
+                            <!--SDT-38285 New functionality around specific month schedule-->
+                            <aura:if isTrue="{!v.monthlySpecificMonthBtnstate}">
+                            <div class="slds-p-top_small;"> First radio button is used to specify the date number that service should occur, such as “On Day 10 of every 1 month”. 
+                                <br></br>Second radio button is used to specify the day that service should occur, such as “On First Tuesday of every 1 month”. 
+                            </div>                                
+                            <div class="slds-p-top_small">
+                            <fieldset class="slds-form-element">
+                          
+                            <div class="slds-form-element__control">
+                            <div class="slds-radio display-block" style="float: left; width:100%; margin-bottom: 9px;">
+                                <!--div style="float : left; width: 10%"-->
+                                    <input type="radio" id="radioServiceDate" value="ServiceDate" name="radioMonthly" 
+                                           onclick="{!c.radioServiceDateChange}" checked="{!v.radioServiceDateChecked}"/>
+                                    <label class="slds-radio__label" for="radioServiceDate">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label" style="margin:0px"></span>
+                                    </label>
+                                <!--/div-->
+                                    <!--div style="float : left; width: 33%"-->
+                                        <label for="inputFieldDayOfMonth" style="padding: 3px;">On Day</label>
+                                        <input type="input" class= "size-70" name="OnDay" id="inputFieldDayOfMonth" onblur="{!c.onBlur}" data-customAttr="v.monthlySpecificdayOfMonth" 
+                                        value="{!v.monthlySpecificdayOfMonth}" disabled="{!v.dayOfMonthInptDisabled}" />
+                                    <!--/div-->
+                                    <!--div style="float : left; width: 30%"-->
+                                        <label for="inputFieldOfDayOfMonthFrequency" style="padding: 3px;">Of Every</label>
+                                        <input type="input" class="size-70" id="inputFieldOfDayOfMonthFrequency" data-customAttr="v.monthlySpecificMonthFrequency" 
+                                        value="{!v.monthlySpecificMonthFrequency}"  disabled="{!v.dayOfMonthFrequencyInptDisabled}" onblur="{!c.onBlur}" />
+                                    <!--/div-->
+                                    <!--div style="float : left;"-->
+                                        <label style="padding: 3px;">Month(s)</label>
+                                    <!--/div-->
+                              
+                            </div>
+                            <div class="slds-radio display-block" style="float: left; width:100%; margin-bottom: 9px;">
+                              <!--div style="float : left; width: 10%"-->
+                                    <input type="radio" id="radioServiceDay" value="ServiceDay" name="radioMonthly"
+                                           onclick="{!c.radioServiceDayChange}" checked="{!v.radioServiceDayChecked}"/>
+                                    <label class="slds-radio__label" for="radioServiceDay">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label" style="margin:0px"></span>
+                                    </label>
+                                <!--/div>
+                                    <div style="float : left; width: 41%; margin-right:10px;"-->
+                                        <label for="inputFieldOfOnTheFirst" style="padding: 3px;">On The</label>
+                                        <select class= "size-70" name="monthRelativeInterval" id="inputFieldOfOnTheFirst"
+                                        value="{!v.monthRelativeInterval}" style="width: 80px;"  disabled="{!v.onTheFirstInptDisabled}" data-customAttr="v.monthRelativeInterval" onchange="{!c.onSelect}">
+                                            <option value="" text="-None-" />
+                                                <aura:iteration items="{!v.monthRelativeIntervalList}" var="item">
+                                                    <option  value="{!item.value}" selected="{!item.value == v.monthRelativeInterval}">{!item.value}</option>
+                                                </aura:iteration>
+                                        </select>
+                                    
+                                        <select class= "size-70" name="monthRelative" id="inputFieldOfOnTheDayOfWeek"
+                                        value="{!v.monthRelative}" style="width: 113px;margin-left: 4px;" disabled="{!v.onTheDayOfWeekInptDisabled}" data-customAttr="v.monthRelative" onchange="{!c.onSelect}">
+                                            <option value="" text="-None-" />
+                                                            <aura:iteration items="{!v.monthRelativeList}" var="item">
+                                                                <option  value="{!item.value}" selected="{!item.value == v.monthRelative}">{!item.value}</option>
+                                                            </aura:iteration>
+                                        </select>
+                                    <!--/div-->
+                                    <!--div style="float : left; width: 30%"-->
+                                	<div style="float : left; padding-top: 2px;">
+                                        <label for="inputFieldOfOnTheFrequency" style="padding-right: 3px;margin-left: 35px;">Of Every</label>
+                                        <input type="input" style="width: 50px;" id="inputFieldOfOnTheFrequency" data-customAttr="v.monthlySpecificRelativeMonthFrequency"
+                                        value="{!v.monthlySpecificRelativeMonthFrequency}" disabled="{!v.onTheFrequencyInptDisabled}" onblur="{!c.onBlur}"/>
+                                    <!--/div>
+                                    <div style="float: right;margin-right: 27%;"-->
+                                        <label style="padding: 3px;">Month(s)</label>
+                                    </div>
+                            </div>
+                          </div>
+                            </fieldset>
+							</div>
+                                
+                            </aura:if>							
+                        	<!--SDT-38285 End-->
+                        </div>
+                    </lightning:accordionSection>
+                </lightning:accordion>
+            </aura:if>
+            <aura:if isTrue="{!v.clickedBtnName=='Yearly'}">
+                <lightning:accordion aura:id="yearlyAccordion" activeSectionName="A">
+                    <lightning:accordionSection name="A" label="Yearly">
+                        <div id="yealyId">
+                            <div class="slds-p-top_small">
+                                Please select the yearly frequency below:
+                            </div>
+                            <div class="slds-p-top_small">
+                                <lightning:icon iconName="utility:picklist_type" alternativeText="picklist_type" title="picklist_type" />
+                                <span class="font-size">Every Year(s)</span>
+                                <span style="float:right">
+                                    <lightning:buttonStateful labelWhenOff="Select"
+                                                              labelWhenOn="Selected"
+                                                              labelWhenHover="Selected"
+                                                              iconNameWhenOff="utility:add"
+                                                              iconNameWhenOn="utility:check"
+                                                              iconNameWhenHover="utility:close"
+                                                              state="{!v.yearlyBtnstate}"
+                                                              onclick="{!c.yearlySelect}"
+                                                              variant="brand"/>
+                                </span>
+                            </div>
+                            <div class="slds-p-top_small">
+                                This is used for service every month, or service on every X months
+                            </div>
+                            <aura:if isTrue="{!v.yearlyBtnstate}">
+                                <div class="slds-p-top_small">
+                                    <lightning:input name="Every__Year(s)" label="Every__Year(s)" value="{!v.yearlyFrequency}"/>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </lightning:accordionSection>
+                </lightning:accordion>
+            </aura:if>
+        </div>
+    </div>
+    <!-- Added for SDT-29100 START-->  
+    <aura:if isTrue="{!and(v.assetAvailabilityAccess,v.showOverrideDetails)}">
+        <lightning:layoutItem size="10" class="slds-p-around_xxx-small overrideText">
+            You have selected a day which is not available with WM please provide an override reason below
+        </lightning:layoutItem>
+        <lightning:select name="overrideReason" label="Override Reason" aura:id="overrideReason"
+            value="{!v.currentProduct.serviceOverrideReason}" required="true" 
+             onchange="{!c.handleServiceOverrideChange}">
+            <aura:iteration items="{!v.overrideReasonOptions}" var="option">
+                <option label="{!option}" value="{!option}" 
+                    selected="{!(item==v.targetProduct.deliveryOverrideReason)}"/>
+            </aura:iteration>
+        </lightning:select>
+        <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+            <lightning:textarea name="overrideComment" aura:id="servceOverrideComment" 
+                label="Override Comment" value="{!v.currentProduct.serviceOverrideComment}" />
+        </lightning:layoutItem>
+        <aura:if isTrue="{!v.serviceCommentError}">
+            <div class="serviceOverrideCommentError" style="color :red">Please add comment for service override.</div>
+        </aura:if> 
+    </aura:if>        
+    <!-- Added for SDT-29100 END-->  
+    <!-- Buttons div -->
+    <aura:if isTrue="{!v.showSIDModal}">
+        <!-- SDT 27584 Start -->
+        <!--div class="slds-grid slds-gutters" style="border: 1px solid #dfdddc;padding-top: 2%;padding-bottom: 2%;"-->
+        <div class="slds-grid slds-gutters slds-m-horizontal_none" style="border: 1px solid #dfdddc;padding-top: 2%;padding-bottom: 2%;">
+        <!-- SDT 27584 End -->
+            <div class="slds-col">
+                <lightning:button variant="destructive" label="Cancel" title="Cancel" onclick="{!c.handleCancel}"/>
+            </div>
+            <div class="slds-col" style="text-align:right">
+                <lightning:button variant="brand" label="Submit" title="Submit" onclick="{!c.finalSubmit}" />
+            </div>
+        </div>
+        <aura:set attribute="else">
+            <!-- SDT 27584 Start -->
+            <!--div class="slds-grid slds-gutters" style="border: 1px solid #dfdddc;padding-top: 2%;padding-bottom: 2%;"-->
+            <div class="slds-grid slds-gutters slds-m-horizontal_none" style="border: 1px solid #dfdddc;padding-top: 2%;padding-bottom: 2%;">
+            <!-- SDT 27584 End -->
+                <div class="slds-col">
+                    <aura:if isTrue="{!!v.isAssetAvailable}">
+                        <lightning:button label="Back"  onclick="{!c.goBack}" class="slds-float_left" />
+                    </aura:if>
+                </div>
+                <div class="slds-col" style="text-align:right">
+                    <lightning:button variant="brand" label="Next" title="Submit" onclick="{!c.validateParent}" />
+                </div>
+            </div>
+        </aura:set>
+    </aura:if>
+    <!-- Buttons div -->
+    <!-- Body -->
+    
+</aura:component>

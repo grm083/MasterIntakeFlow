@@ -1,0 +1,10 @@
+.THIS .scrollerSize {
+    height: 480px;
+}
+.THIS .columnName{
+    font-weight: bolder;
+    background: lightgrey;
+    font-size: 14pt;
+    margin-top: -28px;
+    margin-left: 32px;
+}

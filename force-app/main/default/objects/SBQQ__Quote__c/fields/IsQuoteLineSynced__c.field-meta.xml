@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsQuoteLineSynced__c</fullName>
+    <description>This will be true if Quote&apos;s all QuoteLines are synced with Acorn</description>
+    <externalId>false</externalId>
+    <label>IsQuoteLineNotSynced</label>
+    <summaryFilterItems>
+        <field>SBQQ__QuoteLine__c.IsSynced__c</field>
+        <operation>equals</operation>
+        <value>False</value>
+    </summaryFilterItems>
+    <summaryForeignKey>SBQQ__QuoteLine__c.SBQQ__Quote__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

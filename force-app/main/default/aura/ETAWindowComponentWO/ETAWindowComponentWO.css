@@ -1,0 +1,20 @@
+.THIS {
+}
+.THIS .nohighlight{
+    background-color : white;
+}
+.THIS .highlight{
+    background-color : lightgreen;
+}
+.THIS .selection{
+    margin:left;
+    
+}
+.THIS .left-align{
+    text-align: left;
+    margin-right: auto;
+    height: 75%;
+}
+.THIS .label-hidden > label {
+    display: none;
+}

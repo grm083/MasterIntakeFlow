@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exclude_All_Vendor_Validation</fullName>
+    <active>true</active>
+    <description>Prevent Records From Having to Exclude All Vendors</description>
+    <errorConditionFormula>AND(All_WM_Vendors__c  = true,  WM_Vendor__c= false, All_3rd_Party_Vendor__c = true, Child_VID_Check_Include_Uncheck_Exclude__c = false, RecordType.Name = &apos;STP Eligibility&apos;)</errorConditionFormula>
+    <errorMessage>All WM and 3rd Party vendors cannot be excluded.</errorMessage>
+</ValidationRule>

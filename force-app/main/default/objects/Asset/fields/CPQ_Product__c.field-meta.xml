@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CPQ_Product__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>SDT-24212 Add Change AM</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The field is dedicated to related CPQ Products of the Asset header/Detail. Eg: when it&apos;s Asset Header, and if Product2 is 20 Yard Open Top, then this field will have the Open Top product2 Id, and If its Asset Detail of Haul or any Service, this field will have Haul or that Service product2 Id.</inlineHelpText>
+    <label>CPQ Product</label>
+    <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Assets (CPQ Products)</relationshipLabel>
+    <relationshipName>Assets</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

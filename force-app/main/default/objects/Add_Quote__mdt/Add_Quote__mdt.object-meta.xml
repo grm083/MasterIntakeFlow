@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Add Quote Button Visibility based on UCC</label>
+    <pluralLabel>Add Quote Button Visibility based on UCC</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <description>To update the combination field for creating the unique key inorder to identify duplicate  Business Rule.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>It is the combination of Date field, Id, Checkbox field , created to be a part of unique key for duplicate rule.</description>
+        <name>CombinationOfMiscellaneousDataRecord</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.RecordType.Name}</expression>
+    </formulas>
+    <formulas>
+        <name>LookupCombinationformula</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.AccountId__r.Name}+ &quot; / &quot; + {!$Record.Group__r.Name}+ &quot; / &quot; + {!$Record.LocationId__r.Name} + &quot; / &quot; +{!$Record.Project_Code__r.Name}+ &quot; / &quot; + {!$Record.AssetId__r.Name}</expression>
+    </formulas>
+    <interviewLabel>Field Update On Business Rule {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Field Update On Business Rule</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Combination_Fields</name>
+        <label>Update Combination Fields</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>Account_Group_Location_Project_Asset__c</field>
+            <value>
+                <elementReference>LookupCombinationformula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EffectiveDate_RecordType_Active__c</field>
+            <value>
+                <elementReference>CombinationOfMiscellaneousDataRecord</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Combination_Fields</targetReference>
+        </connector>
+        <object>Business_Rule__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

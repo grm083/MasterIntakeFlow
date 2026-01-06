@@ -1,0 +1,45 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="item" type="Object"/>
+    <aura:attribute name="objectType" type="String"/>
+    <ul> 
+        <li> 
+            <div class="slds-timeline__item"> 
+                <div class="slds-media"> 
+                    <div class="slds-media__body"> 
+                        <div class="slds-media slds-media--timeline slds-timeline__media--task"> 
+                            <div class="slds-media__figure slds-timeline__icon"> 
+                                <aura:if isTrue="{!v.objectType == 'Case'}"><lightning:icon iconName="standard:case" size="small" /></aura:if>
+                                <aura:if isTrue="{!v.objectType == 'CaseComment' || v.objectType == 'Comment__c'}"><lightning:icon iconName="standard:case_comment" size="small"/></aura:if>
+                                <aura:if isTrue="{!v.objectType == 'Task'}"><lightning:icon iconName="standard:task" size="small"/></aura:if>
+                                <aura:if isTrue="{!v.objectType == 'EmailMessage'}"><lightning:icon iconName="standard:email" size="small"/></aura:if>
+                                <aura:if isTrue="{!v.objectType == 'WorkOrder'}"><lightning:icon iconName="standard:work_order" size="small"/></aura:if>
+                                <aura:if isTrue="{!v.objectType == 'ContentDocumentLink'}"><lightning:icon iconName="standard:file" size="small"/></aura:if>
+                                <aura:if isTrue="{!v.objectType == 'Approval_Log__c'}"><lightning:icon iconName="standard:custom" size="small"/></aura:if> 
+                            </div> 
+                            <div class="slds-media__body"> 
+                                <div class="slds-media slds-tile slds-media--xx-small">
+                                    <div class="slds-media__body"> 
+                                        <p class="slds-tile__title slds-truncate">
+                                            <a onclick="{!c.navigateRecord}" target="_self"><p class="slds-truncate" ><aura:unescapedHtml value="{!v.item.Name__c}" /></p></a>
+                                            <p class="slds-truncate">{!v.item.Description__c}</p>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div> 
+                    <div class="slds-media__figure slds-media__figure--reverse">
+                        <div class="slds-timeline__actions">
+                            <!--<span class="slds-timeline__date">{!v.item.Time_Stamp__c}</span>-->
+                            <lightning:formattedDateTime value="{!v.item.Time_Stamp__c}" year="numeric" day="2-digit" month="long" hour="2-digit" minute="2-digit" timeZone="{! $Locale.timezone }"/>
+                            <div>
+                                <a onclick="{!c.navigateUser}" target="_self">{!v.item.User__r.Name}</a>
+                                <!--<lightning:formattedUrl value="{!v.item.User__c}" label="{!v.item.User__r.Name}" target="_blank" />-->
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </li>        
+    </ul> 
+</aura:component>

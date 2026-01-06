@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>OC</fullName>
+        <default>false</default>
+        <label>On-Call</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC</fullName>
+        <default>false</default>
+        <label>Scheduled On-Call</label>
+    </customValue>
+    <customValue>
+        <fullName>SCH</fullName>
+        <default>false</default>
+        <label>Scheduled</label>
+    </customValue>
+    <description>The schedule type/occurrence type of a product to be used by the CPQ Configurator</description>
+    <masterLabel>Occurrence Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

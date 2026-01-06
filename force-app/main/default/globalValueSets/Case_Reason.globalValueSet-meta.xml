@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Additional Keys</fullName>
+        <default>false</default>
+        <label>Additional Keys</label>
+    </customValue>
+    <customValue>
+        <fullName>All Other Inquiries</fullName>
+        <default>false</default>
+        <label>All Other Inquiries</label>
+    </customValue>
+    <customValue>
+        <fullName>Ancillary/Regulatory</fullName>
+        <default>false</default>
+        <label>Ancillary/Regulatory</label>
+    </customValue>
+    <customValue>
+        <fullName>Annual</fullName>
+        <default>false</default>
+        <label>Annual</label>
+    </customValue>
+    <customValue>
+        <fullName>Baler Repair</fullName>
+        <default>false</default>
+        <label>Baler Repair</label>
+    </customValue>
+    <customValue>
+        <fullName>Mailback Box</fullName>
+        <default>false</default>
+        <label>Mailback Box</label>
+    </customValue>
+    <customValue>
+        <fullName>Onsite Pickup</fullName>
+        <default>false</default>
+        <label>Onsite Pickup</label>
+    </customValue>
+    <customValue>
+        <fullName>Bale Wire</fullName>
+        <default>false</default>
+        <label>Bale Wire</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Discrepancies</fullName>
+        <default>false</default>
+        <label>Billing Discrepancies</label>
+    </customValue>
+    <customValue>
+        <fullName>Bill Not Received</fullName>
+        <default>false</default>
+        <label>Bill Not Received</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancelled Services</fullName>
+        <default>false</default>
+        <label>Cancelled Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancel Service</fullName>
+        <default>false</default>
+        <label>Cancel Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Clean Up External</fullName>
+        <default>false</default>
+        <label>Clean Up External</label>
+    </customValue>
+    <customValue>
+        <fullName>Clean Up Internal</fullName>
+        <default>false</default>
+        <label>Clean Up Internal</label>
+    </customValue>
+    <customValue>
+        <fullName>Closed/Closing Location</fullName>
+        <default>false</default>
+        <label>Closed/Closing Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Communication Channel Changes</fullName>
+        <default>false</default>
+        <label>Communication Channel Changes</label>
+    </customValue>
+    <customValue>
+        <fullName>Compactor</fullName>
+        <default>false</default>
+        <label>Compactor</label>
+    </customValue>
+    <customValue>
+        <fullName>Compactor/Baler/Vertical CMP</fullName>
+        <default>false</default>
+        <label>Compactor/Baler/Vertical CMP</label>
+    </customValue>
+    <customValue>
+        <fullName>Compactor Accessories</fullName>
+        <default>false</default>
+        <label>Compactor Accessories</label>
+    </customValue>
+    <customValue>
+        <fullName>Compactor Repair</fullName>
+        <default>false</default>
+        <label>Compactor Repair</label>
+    </customValue>
+    <customValue>
+        <fullName>Construction and Demolition</fullName>
+        <default>false</default>
+        <label>Construction and Demolition</label>
+    </customValue>
+    <customValue>
+        <fullName>Contaminated</fullName>
+        <default>false</default>
+        <label>Contaminated</label>
+    </customValue>
+    <customValue>
+        <fullName>Cost/Price</fullName>
+        <default>false</default>
+        <label>Cost/Price</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Portal</fullName>
+        <default>false</default>
+        <label>Customer Portal</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Reported</fullName>
+        <default>false</default>
+        <label>Customer Reported</label>
+    </customValue>
+    <customValue>
+        <fullName>Days of Service</fullName>
+        <default>false</default>
+        <label>Days of Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Dig-Out</fullName>
+        <default>false</default>
+        <label>Dig-Out</label>
+    </customValue>
+    <customValue>
+        <fullName>Disposal</fullName>
+        <default>false</default>
+        <label>Disposal</label>
+    </customValue>
+    <customValue>
+        <fullName>Dumpster/Toter/Port-o-let</fullName>
+        <default>false</default>
+        <label>Dumpster/Toter/Port-o-let</label>
+    </customValue>
+    <customValue>
+        <fullName>Electronic Recycling Collection</fullName>
+        <default>false</default>
+        <label>Electronic Recycling Collection</label>
+    </customValue>
+    <customValue>
+        <fullName>Equipment Questions</fullName>
+        <default>false</default>
+        <label>Equipment Questions</label>
+    </customValue>
+    <customValue>
+        <fullName>Exchange Container</fullName>
+        <default>false</default>
+        <label>Exchange Container</label>
+    </customValue>
+    <customValue>
+        <fullName>Existing Location</fullName>
+        <default>false</default>
+        <label>Existing Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Fees</fullName>
+        <default>false</default>
+        <label>Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>Fixture Updates</fullName>
+        <default>false</default>
+        <label>Fixture Updates</label>
+    </customValue>
+    <customValue>
+        <fullName>Frequency</fullName>
+        <default>false</default>
+        <label>Frequency</label>
+    </customValue>
+    <customValue>
+        <fullName>General Billing Inquiry</fullName>
+        <default>false</default>
+        <label>General Billing Inquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>General Fees</fullName>
+        <default>false</default>
+        <label>General Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>Hauler Reported</fullName>
+        <default>false</default>
+        <label>Hauler Reported</label>
+    </customValue>
+    <customValue>
+        <fullName>Keys</fullName>
+        <default>false</default>
+        <label>Keys</label>
+    </customValue>
+    <customValue>
+        <fullName>Landfill</fullName>
+        <default>false</default>
+        <label>Landfill</label>
+    </customValue>
+    <customValue>
+        <fullName>Lids</fullName>
+        <default>false</default>
+        <label>Lids</label>
+    </customValue>
+    <customValue>
+        <fullName>Location Closing</fullName>
+        <default>false</default>
+        <label>Location Closing</label>
+    </customValue>
+    <customValue>
+        <fullName>Location Opening</fullName>
+        <default>false</default>
+        <label>Location Opening</label>
+    </customValue>
+    <customValue>
+        <fullName>Location Relocation</fullName>
+        <default>false</default>
+        <label>Location Relocation</label>
+    </customValue>
+    <customValue>
+        <fullName>Location Sold-New Owner</fullName>
+        <default>false</default>
+        <label>Location Sold-New Owner</label>
+    </customValue>
+    <customValue>
+        <fullName>Locks</fullName>
+        <default>false</default>
+        <label>Locks</label>
+    </customValue>
+    <customValue>
+        <fullName>LOW/NOW</fullName>
+        <default>false</default>
+        <label>LOW/NOW</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing Component</fullName>
+        <default>false</default>
+        <label>Missing Component</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing Service</fullName>
+        <default>false</default>
+        <label>Missing Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Monitor</fullName>
+        <default>false</default>
+        <label>Monitor</label>
+    </customValue>
+    <customValue>
+        <fullName>New Portal User</fullName>
+        <default>false</default>
+        <label>New Portal User</label>
+    </customValue>
+    <customValue>
+        <fullName>NOW/LOW</fullName>
+        <default>false</default>
+        <label>NOW/LOW</label>
+    </customValue>
+    <customValue>
+        <fullName>Open Top</fullName>
+        <default>false</default>
+        <label>Open Top</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Vendor Account Updates</fullName>
+        <default>false</default>
+        <label>Other Vendor Account Updates</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Vendor Billing Inquiry</fullName>
+        <default>false</default>
+        <label>Other Vendor Billing Inquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Vendor Profile Updates</fullName>
+        <default>false</default>
+        <label>Other Vendor Profile Updates</label>
+    </customValue>
+    <customValue>
+        <fullName>Overloaded Container</fullName>
+        <default>false</default>
+        <label>Overloaded Container</label>
+    </customValue>
+    <customValue>
+        <fullName>Power Outage</fullName>
+        <default>false</default>
+        <label>Power Outage</label>
+    </customValue>
+    <customValue>
+        <fullName>Power Wash</fullName>
+        <default>false</default>
+        <label>Power Wash</label>
+    </customValue>
+    <customValue>
+        <fullName>Quantity</fullName>
+        <default>false</default>
+        <label>Quantity</label>
+    </customValue>
+    <customValue>
+        <fullName>Question on Charges (Default)</fullName>
+        <default>false</default>
+        <label>Question on Charges (Default)</label>
+    </customValue>
+    <customValue>
+        <fullName>Question on Payment</fullName>
+        <default>false</default>
+        <label>Question on Payment</label>
+    </customValue>
+    <customValue>
+        <fullName>Recycling</fullName>
+        <default>false</default>
+        <label>Recycling</label>
+    </customValue>
+    <customValue>
+        <fullName>Relocate Container</fullName>
+        <default>false</default>
+        <label>Relocate Container</label>
+    </customValue>
+    <customValue>
+        <fullName>Relocation</fullName>
+        <default>false</default>
+        <label>Relocation</label>
+    </customValue>
+    <customValue>
+        <fullName>Remodel</fullName>
+        <default>false</default>
+        <label>Remodel</label>
+    </customValue>
+    <customValue>
+        <fullName>Remove End Dates</fullName>
+        <default>false</default>
+        <label>Remove End Dates</label>
+    </customValue>
+    <customValue>
+        <fullName>Reset Portal Password</fullName>
+        <default>false</default>
+        <label>Reset Portal Password</label>
+    </customValue>
+    <customValue>
+        <fullName>Seasonal</fullName>
+        <default>false</default>
+        <label>Seasonal</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Correction</fullName>
+        <default>false</default>
+        <label>Service Correction</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Days Unkown</fullName>
+        <default>false</default>
+        <label>Service Days Unkown</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Not Requested</fullName>
+        <default>false</default>
+        <label>Service Not Requested</label>
+    </customValue>
+    <customValue>
+        <fullName>Size</fullName>
+        <default>false</default>
+        <label>Size</label>
+    </customValue>
+    <customValue>
+        <fullName>Snapshot</fullName>
+        <default>false</default>
+        <label>Snapshot</label>
+    </customValue>
+    <customValue>
+        <fullName>Supplier Portal</fullName>
+        <default>false</default>
+        <label>Supplier Portal</label>
+    </customValue>
+    <customValue>
+        <fullName>Temp Upload</fullName>
+        <default>false</default>
+        <label>Temp Upload</label>
+    </customValue>
+    <customValue>
+        <fullName>Universal Waste Collection</fullName>
+        <default>false</default>
+        <label>Universal Waste Collection</label>
+    </customValue>
+    <customValue>
+        <fullName>Update Address</fullName>
+        <default>false</default>
+        <label>Update Address</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Sold</fullName>
+        <default>false</default>
+        <label>Vendor Sold</label>
+    </customValue>
+    <customValue>
+        <fullName>Weather</fullName>
+        <default>false</default>
+        <label>Weather</label>
+    </customValue>
+    <customValue>
+        <fullName>Wheels</fullName>
+        <default>false</default>
+        <label>Wheels</label>
+    </customValue>
+    <customValue>
+        <fullName>Who is my hauler?</fullName>
+        <default>false</default>
+        <label>Who is my hauler?</label>
+    </customValue>
+    <customValue>
+        <fullName>New Business</fullName>
+        <default>false</default>
+        <label>New Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Award Services</fullName>
+        <default>false</default>
+        <label>Award Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Address/Remit To</fullName>
+        <default>false</default>
+        <label>Address/Remit To</label>
+    </customValue>
+    <customValue>
+        <fullName>Phone/Fax Number</fullName>
+        <default>false</default>
+        <label>Phone/Fax Number</label>
+    </customValue>
+    <customValue>
+        <fullName>Email Address</fullName>
+        <default>false</default>
+        <label>Email Address</label>
+    </customValue>
+    <customValue>
+        <fullName>Contact</fullName>
+        <default>false</default>
+        <label>Contact</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellation Client</fullName>
+        <default>false</default>
+        <label>Cancellation Client</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellation Location</fullName>
+        <default>false</default>
+        <label>Cancellation Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellation Vendor</fullName>
+        <default>false</default>
+        <label>Cancellation Vendor</label>
+    </customValue>
+    <customValue>
+        <fullName>New Client Launch</fullName>
+        <default>false</default>
+        <label>New Client Launch</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Change</fullName>
+        <default>false</default>
+        <label>Service Change</label>
+    </customValue>
+    <customValue>
+        <fullName>Legacy- Spec Needs to be updated</fullName>
+        <default>false</default>
+        <label>Legacy- Spec Needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>National- Spec Needs to be updated</fullName>
+        <default>false</default>
+        <label>National- Spec Needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Spec needs to be updated</fullName>
+        <default>false</default>
+        <label>WMSSC Spec needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>National- Hauler needs to be updated</fullName>
+        <default>false</default>
+        <label>National- Hauler needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>National- Spec Amount needs to be updated</fullName>
+        <default>false</default>
+        <label>National- Spec Amount needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>Legacy- Service Date needs to be updated</fullName>
+        <default>false</default>
+        <label>Legacy- Service Date needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>National- Service Date needs to be updated</fullName>
+        <default>false</default>
+        <label>National- Service Date needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Spec Date needs to be updated</fullName>
+        <default>false</default>
+        <label>WMSSC Spec Date needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Wrong Hauler</fullName>
+        <default>false</default>
+        <label>WMSSC Wrong Hauler</label>
+    </customValue>
+    <customValue>
+        <fullName>Cannot identify Location or Vendor</fullName>
+        <default>false</default>
+        <label>Cannot identify Location or Vendor</label>
+    </customValue>
+    <customValue>
+        <fullName>National- Spec Qty/Unit Needs to be updated</fullName>
+        <default>false</default>
+        <label>National- Spec Qty/Unit Needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Short Pay</fullName>
+        <default>false</default>
+        <label>Customer Short Pay</label>
+    </customValue>
+    <customValue>
+        <fullName>Question on Charges</fullName>
+        <default>false</default>
+        <label>Question on Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Got Junk - Emergency Service</fullName>
+        <default>false</default>
+        <label>Got Junk - Emergency Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Cannot Read</fullName>
+        <default>false</default>
+        <label>Cannot Read</label>
+    </customValue>
+    <customValue>
+        <fullName>New Launch Spec Issue Missing/Update</fullName>
+        <default>false</default>
+        <label>New Launch Spec Issue Missing/Update</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Missing Service Line</fullName>
+        <default>false</default>
+        <label>WMSSC Missing Service Line</label>
+    </customValue>
+    <customValue>
+        <fullName>WMSSC Spec Qty/Size needs to be updated</fullName>
+        <default>false</default>
+        <label>WMSSC Spec Qty/Size needs to be updated</label>
+    </customValue>
+    <customValue>
+        <fullName>Credit Request</fullName>
+        <default>false</default>
+        <label>Credit Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Disputes</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Disputes</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Closing - Remove Cans</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Closing - Remove Cans</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Closing - DO NOT Remove Cans</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Closing - DO NOT Remove Cans</label>
+    </customValue>
+    <customValue>
+        <fullName>Unsuccessful Bidder</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Unsuccessful Bidder</label>
+    </customValue>
+    <customValue>
+        <fullName>Tonnage</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Tonnage</label>
+    </customValue>
+    <customValue>
+        <fullName>Supplier</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Supplier</label>
+    </customValue>
+    <customValue>
+        <fullName>Sold Location - Remove Cans</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Sold Location - Remove Cans</label>
+    </customValue>
+    <customValue>
+        <fullName>Sold Location - Don&apos;t Remove Cans</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Sold Location - Don&apos;t Remove Cans</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Cancellation - Selected Services Only</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Service Cancellation - Selected Services Only</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Cancellation - All Location</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Service Cancellation - All Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Seasonal Service Ended</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Seasonal Service Ended</label>
+    </customValue>
+    <customValue>
+        <fullName>Reversion</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Reversion</label>
+    </customValue>
+    <customValue>
+        <fullName>Refusal to Sign Oakleaf Contract</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Refusal to Sign Oakleaf Contract</label>
+    </customValue>
+    <customValue>
+        <fullName>Price Increase Unauthorized</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Price Increase Unauthorized</label>
+    </customValue>
+    <customValue>
+        <fullName>Price/Cost</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Price/Cost</label>
+    </customValue>
+    <customValue>
+        <fullName>Poor Performance</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Poor Performance</label>
+    </customValue>
+    <customValue>
+        <fullName>Perm Upload</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Perm Upload</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Billing Inquiries</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Other Billing Inquiries</label>
+    </customValue>
+    <customValue>
+        <fullName>New Request</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>New Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Missed: WO Rate Incorrect</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missed: WO Rate Incorrect</label>
+    </customValue>
+    <customValue>
+        <fullName>Missed: WO Not Received</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missed: WO Not Received</label>
+    </customValue>
+    <customValue>
+        <fullName>Missed: Weather</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missed: Weather</label>
+    </customValue>
+    <customValue>
+        <fullName>Missed: Truck Down</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missed: Truck Down</label>
+    </customValue>
+    <customValue>
+        <fullName>Missed: Schedule Conflict</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missed: Schedule Conflict</label>
+    </customValue>
+    <customValue>
+        <fullName>Missed: Driver Down</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missed: Driver Down</label>
+    </customValue>
+    <customValue>
+        <fullName>Location is closing</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Location is closing</label>
+    </customValue>
+    <customValue>
+        <fullName>Leaving Oakleaf Program - Remove Cans</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Leaving Oakleaf Program - Remove Cans</label>
+    </customValue>
+    <customValue>
+        <fullName>Leaving Oakleaf Program - DO NOT Remove Cans</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Leaving Oakleaf Program - DO NOT Remove Cans</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete: Overloaded</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incomplete: Overloaded</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete: Locked/Inaccessible</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incomplete: Locked/Inaccessible</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete: Frozen</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incomplete: Frozen</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete: Disconnected CMP</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incomplete: Disconnected CMP</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Questions</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Customer Questions</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete: Blocked</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incomplete: Blocked</label>
+    </customValue>
+    <customValue>
+        <fullName>Existing Contract in Place - No Cans Delivered</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Existing Contract in Place - No Cans Delivered</label>
+    </customValue>
+    <customValue>
+        <fullName>Existing Contract in Place - Cans Delivered</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Existing Contract in Place - Cans Delivered</label>
+    </customValue>
+    <customValue>
+        <fullName>Emergency</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Emergency</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Customer</label>
+    </customValue>
+    <customValue>
+        <fullName>Correction</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Correction</label>
+    </customValue>
+    <customValue>
+        <fullName>Contract Violation - Subcontracting 3rd Party</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contract Violation - Subcontracting 3rd Party</label>
+    </customValue>
+    <customValue>
+        <fullName>Contract Violation - Service</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contract Violation - Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Contract Violation - Invoicing</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contract Violation - Invoicing</label>
+    </customValue>
+    <customValue>
+        <fullName>Contract Expiration</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contract Expiration</label>
+    </customValue>
+    <customValue>
+        <fullName>Landfill/Disposition</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Landfill/Disposition</label>
+    </customValue>
+    <customValue>
+        <fullName>Baler</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Baler</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete: Contaminated</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incomplete: Contaminated</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellation</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cancellation</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Record</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Record</label>
+    </customValue>
+    <customValue>
+        <fullName>Location Record</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Location Record</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Record</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Client Record</label>
+    </customValue>
+    <customValue>
+        <fullName>Chute</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Chute</label>
+    </customValue>
+    <customValue>
+        <fullName>Equipment</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>Cost</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cost</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing Extra Pickup</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missing Extra Pickup</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing Container/Service</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missing Container/Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Wrong Service</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Wrong Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Wrong Division</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Wrong Division</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Base Contract Decline</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Base Contract Decline</label>
+    </customValue>
+    <customValue>
+        <fullName>Unable To Perform Service</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Unable To Perform Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Out of Service Area</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Out of Service Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Occurrence</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Occurrence</label>
+    </customValue>
+    <customValue>
+        <fullName>Material</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Material</label>
+    </customValue>
+    <customValue>
+        <fullName>Extra PU Cost</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Extra PU Cost</label>
+    </customValue>
+    <customValue>
+        <fullName>Effective Date</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Effective Date</label>
+    </customValue>
+    <customValue>
+        <fullName>(Container On Site)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>(Container On Site)</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Procurement - Remove Cans</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Procurement - Remove Cans</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Procurement - DO NOT Remove Cans</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Vendor Procurement - DO NOT Remove Cans</label>
+    </customValue>
+    <masterLabel>Case Reason</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

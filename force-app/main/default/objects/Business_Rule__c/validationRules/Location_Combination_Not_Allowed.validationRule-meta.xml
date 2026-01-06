@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Location_Combination_Not_Allowed</fullName>
+    <active>true</active>
+    <description>Location with Category Type/Group field cannot be combined together.</description>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(  LocationId__c  )), 
+    OR(
+        NOT(ISPICKVAL( Category_Type__c , &quot;&quot;)),   
+        NOT(ISBLANK( Group__c))
+       
+    )
+)</errorConditionFormula>
+    <errorDisplayField>LocationId__c</errorDisplayField>
+    <errorMessage>Location with Category Type/Group field cannot be combined together.</errorMessage>
+</ValidationRule>

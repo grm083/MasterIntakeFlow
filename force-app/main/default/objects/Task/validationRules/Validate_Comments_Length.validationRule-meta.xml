@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Comments_Length</fullName>
+    <active>false</active>
+    <description>This validation is used to validate the comments field length doesnt exceed 4000 Size</description>
+    <errorConditionFormula>LEN(Description) &gt;4000</errorConditionFormula>
+    <errorDisplayField>Description</errorDisplayField>
+    <errorMessage>Max Limit Exceeded</errorMessage>
+</ValidationRule>

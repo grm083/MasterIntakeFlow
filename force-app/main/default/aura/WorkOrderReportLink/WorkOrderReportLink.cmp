@@ -1,0 +1,18 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller="WorkOrderReportCtrl"
+                access="global" >
+    <div style="background-color:white">
+        <div style="font-size:15px">
+            <div class="slds-page-header">
+                <div class="slds-media">
+                    <div class="slds-media__body">
+                        <b>Work Order Report Link</b>
+                    </div><br/>
+                    <ul class="slds-list--vertical slds-has-inline-block-links--space">
+    					<lightning:button variant="brand" label="Work Order Report" title="WO Report" onclick="{!c.handleOnClick}" />
+                    </ul>
+                </div>
+            </div>
+        </div> 
+    </div>
+</aura:component>

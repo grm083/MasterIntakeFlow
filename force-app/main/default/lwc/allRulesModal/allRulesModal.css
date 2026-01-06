@@ -1,0 +1,14 @@
+.accordionClass {
+    --slds-c-accordion-heading-font-size: 1rem;
+    --slds-c-accordion-heading-line-height: 1.5;
+    font-weight: bold;
+}
+
+.normalTextWeight {
+    font-weight: normal;
+}
+
+.linkTextWeight {
+    font-weight: bold;
+    margin-left: 40px;
+}

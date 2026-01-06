@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>tz__Local_Time_24__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Shows the current local time of the Account associated with the Opportunity in 24-hr format.</description>
+    <externalId>false</externalId>
+    <formula>Account.tz__Local_Time_24__c</formula>
+    <inlineHelpText>Shows the current local time of the Account associated with the Opportunity in 24-hr format.</inlineHelpText>
+    <label>Local Time</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

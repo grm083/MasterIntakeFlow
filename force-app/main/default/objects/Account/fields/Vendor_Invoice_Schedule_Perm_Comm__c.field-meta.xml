@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vendor_Invoice_Schedule_Perm_Comm__c</fullName>
+    <externalId>false</externalId>
+    <label>Vendor Invoice Schedule Perm/Comm</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Advance Monthly</fullName>
+                <default>false</default>
+                <label>Advance Monthly</label>
+            </value>
+            <value>
+                <fullName>Arrears Monthly</fullName>
+                <default>false</default>
+                <label>Arrears Monthly</label>
+            </value>
+            <value>
+                <fullName>Advance Bi-Monthly</fullName>
+                <default>false</default>
+                <label>Advance Bi-Monthly</label>
+            </value>
+            <value>
+                <fullName>Arrears Bi-Monthly</fullName>
+                <default>false</default>
+                <label>Arrears Bi-Monthly</label>
+            </value>
+            <value>
+                <fullName>Advance Quarterly</fullName>
+                <default>false</default>
+                <label>Advance Quarterly</label>
+            </value>
+            <value>
+                <fullName>Arrears Quarterly</fullName>
+                <default>false</default>
+                <label>Arrears Quarterly</label>
+            </value>
+            <value>
+                <fullName>Advance Semi-Annually</fullName>
+                <default>false</default>
+                <label>Advance Semi-Annually</label>
+            </value>
+            <value>
+                <fullName>Advance Weekly</fullName>
+                <default>false</default>
+                <label>Advance Weekly</label>
+            </value>
+            <value>
+                <fullName>Arrears Weekly</fullName>
+                <default>false</default>
+                <label>Arrears Weekly</label>
+            </value>
+            <value>
+                <fullName>Advance Bi-Weekly</fullName>
+                <default>false</default>
+                <label>Advance Bi-Weekly</label>
+            </value>
+            <value>
+                <fullName>Arrears Bi-Weekly</fullName>
+                <default>false</default>
+                <label>Arrears Bi-Weekly</label>
+            </value>
+            <value>
+                <fullName>Advance Annually</fullName>
+                <default>false</default>
+                <label>Advance Annually</label>
+            </value>
+            <value>
+                <fullName>Per Event</fullName>
+                <default>false</default>
+                <label>Per Event</label>
+            </value>
+            <value>
+                <fullName>Arrears Annually</fullName>
+                <default>false</default>
+                <label>Arrears Annually</label>
+            </value>
+            <value>
+                <fullName>Arrears Semi-Annually</fullName>
+                <default>false</default>
+                <label>Arrears Semi-Annually</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

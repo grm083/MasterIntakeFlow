@@ -1,0 +1,20 @@
+<!--
+	* Story: SDT-20786
+	* Sprint: AM Sprint6
+	* FC: Rahul Rana Singh
+	* Dev: Rishiraj Singh
+	Discription: Child component of showLocalVendors Aura comp.
+-->
+
+<template>
+    <lightning-combobox label="Waste Categories"
+                                        data-id="wasteStreamBlock"
+                                        name="wasteStreamBox"
+                                        options={wasteStreamOptions} 
+                                        placeholder="--None--" 
+                                        value={selectedWasteStream}
+                                        onchange={wasteStreamHandler}
+                                        disabled={isDisable}
+                                        >
+                                    </lightning-combobox>
+</template>

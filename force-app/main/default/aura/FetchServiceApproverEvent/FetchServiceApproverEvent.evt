@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="callServiceApprover" type="Boolean"/>
+    <aura:attribute name="caseId" type="String"/>
+</aura:event>

@@ -1,0 +1,61 @@
+<aura:component controller="CaseDetailHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="emailMessageList" type="object" />
+    <aura:attribute name="selectedList" type="string" />
+    <aura:attribute name="selectedCaseNumber" type="string" />
+    <aura:attribute name="selectedCaseId" type="string" />
+    <aura:attribute name="caseRecord" type="Object"/>
+    <aura:attribute name="Message" type="Boolean" default="false" />
+    <aura:attribute name="searchCase" type="Boolean" default="false" />
+    <aura:attribute name="isSuccess" type="Boolean" default="false" />
+    <aura:attribute name="showTable" type="Boolean" default="true" />
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="selectedRows" type="List"/>
+    <force:recordData aura:id="recordLoaderHightLightpPanel"
+                      recordId="{!v.recordId}" 
+                      targetFields="{!v.caseRecord}"
+                      fields="Id,CaseNumber"
+                      mode="VIEW"
+                      />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="lookUpAction" event="c:lookUpEvent" action="{!c.handlelookUpEvent}"/>
+    <!-- ERROR MESSAGE IF NOT RECORDS FOUND--> 
+    <aura:if isTrue="{!v.isSuccess}">
+        <div class="slds-notify_container slds-is-relative">
+            <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+                <div class="slds-notify__content">
+                    <h2 class="slds-text-heading_small">Selected Email has been copied successfully to <a href="#" onclick="{!c.navigateToCase}">{!v.selectedCaseNumber}</a></h2>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.showTable}">
+        <aura:if isTrue="{!v.Message}">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">No Records Found...</h2>
+                    </div>
+                </div>
+            </div>
+            
+            <aura:set attribute="else">
+                <div class="slds-box slds-theme_default">
+                    
+                    <lightning:datatable data="{! v.emailMessageList }" 
+                                         columns="{! v.mycolumns }" 
+                                         keyField="Id"
+                                         aura:id="emailMessages"
+                                         selectedRows="{!v.selectedRows}"/>
+                    <br/>
+                    <center>
+                        <lightning:button onclick="{!c.handleNextAction}" label="Next" variant="brand"/>
+                    </center>
+                </div>
+            </aura:set>
+        </aura:if>
+    </aura:if>
+    <aura:if isTrue="{!v.searchCase}">
+        <c:CaseCopyEmail recordId="{!v.recordId}" showBox="true" label="Copy Email as Comments"/>
+    </aura:if>
+</aura:component>

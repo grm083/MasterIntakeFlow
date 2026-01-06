@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SingleEntry_Instructions_ChannelRequ</fullName>
+    <active>true</active>
+    <description>Only allow</description>
+    <errorConditionFormula>AND(NOT(ISBLANK(Special_Ins__c)), NOT(ISPICKVAL(Channel__c, &apos;&apos; ) ))</errorConditionFormula>
+    <errorDisplayField>Special_Ins__c</errorDisplayField>
+    <errorMessage>You can only enter in Special Instructions or Channel Requirements/Channel Name</errorMessage>
+</ValidationRule>

@@ -1,0 +1,150 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller="DisplayCaseAssetController" access="global" >
+	<aura:attribute name="caseAssetColumns" type="List"/>
+    <aura:attribute name="isQuantityError" type="Boolean" default="false"/>
+    <aura:attribute name="quantityErrorMsg" type="String"/>
+    <aura:attribute name="isError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="isWarning" type="Boolean" default="false"/>
+    <aura:attribute name="warningMsg" type="String"/>
+    <aura:attribute name="caseAssetLst" type="object" access="global" />
+    <aura:attribute name="showForm" type="Boolean" default="true"/>
+	<aura:attribute name="CaseAssetEditedValues" type="Object" default="[]"/>
+
+    <aura:attribute name="options" type="List" default="[{'label': 'None', 'value': 'None'},
+                                                         {'label': 'Per PM', 'value': 'INTNAL'},
+                                                     	 {'label': 'Other', 'value': 'OTHR'}]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initAction }"/>
+    
+    <aura:if isTrue="{!v.showForm}">
+	<!--###### MODAL BOX Start From Here ######--> 
+	<div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+		<div class="slds-modal__container">
+			<!--###### MODAL BOX HEADER Start From Here ######-->
+			<div class="slds-modal__header" style="width: 800px !important;">
+				<!--changes related to SDT-41639-->
+				<lightning:buttonIcon iconName="utility:close"
+									  onclick="{! c.closeModel}"
+									  alternativeText="close"
+									  variant="bare"
+									  class="slds-modal__close"/>
+                <div class="slds-m-left_small" style="float: left;font-weight: bold;">
+                    <!--<lightning:icon aura:id="infoIcon" iconName="standard:product" alternativeText="Case Assets" size="xx-small"/>-->
+                    <div class="slds-text-heading_medium slds-m-left_small"><h1>Case Assets</h1></div>
+                </div>
+			</div>
+			<!--###### MODAL BOX HEADER End From Here ######-->
+			<!--###### MODAL BOX BODY Part Start######-->
+			<div class="slds-modal__content slds-p-around_medium slds-scrollable" id="modal-content-id-1" style="width: 800px !important;">
+                <aura:if isTrue="{!v.isError}">
+                    <div class="slds-text-body_medium slds-m-left_medium redFont"><li>{!v.errorMsg}</li></div>
+                </aura:if>
+                <aura:if isTrue="{!v.isWarning}">
+                    <div class="slds-text-body_medium slds-m-left_medium redFont"><li>{!v.warningMsg}</li></div>
+                </aura:if>
+                <aura:if isTrue="{!v.isQuantityError}">
+                    <div class="slds-text-body_medium slds-m-left_medium redFont"><li>{!v.quantityErrorMsg}</li></div>
+                </aura:if>
+				<div class="slds-table--header-fixed_container">
+                    <div class="slds-scrollable" >
+                        <table class="slds-table slds-table--bordered slds-table--striped">
+							<thead >
+								<tr class="slds-table slds-table--bordered slds-table--striped">
+									<th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Asset Detail">Asset Detail</div>
+									</th>
+									<th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Asset Service Type">Service Type</div>
+									</th>
+									<th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Occurence">Occurence</div>
+									</th>
+									<th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Material Type">Material Type</div>
+									</th>
+                                    <th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Original Price">Quantity</div>
+									</th>
+									<th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Original Price">Original Price</div>
+									</th>
+									<th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Client Price">Client Price</div>
+									</th>
+									<th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Reason Code">Reason Code</div>
+									</th>
+									<th scope="col" class="head slds-size_2-of-16">
+										<div class="slds-truncate slds-form-element__control" title="Reason Description">Reason Description</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>                         
+								<aura:iteration items="{!v.caseAssetLst}" var="ca" indexVar="idx">
+									<tr id="{!idx}">
+										<td data-label="Asset Detail">
+											<div class="slds-truncate slds-form-element__control">
+												<p class="slds-hyphenate">{!ca.AssetId__r.Name}</p>
+											</div>
+										</td>
+										<td data-label="Asset Service Type">
+											<div class="slds-truncate slds-form-element__control">
+												<p class="slds-hyphenate">{!ca.Asset_Service_Type__c}</p>
+											</div>
+										</td>
+										<td data-label="Occurrence">
+											<div class="slds-truncate slds-form-element__control">
+												<p class="slds-hyphenate">{!ca.Occurrence__c}</p>
+											</div>
+										</td>
+										<td data-label="Material Type">
+											<div class="slds-truncate slds-form-element__control">
+												<p class="slds-hyphenate">{!ca.AssetId__r.Material_Type__c}</p>
+											</div>
+										</td>
+                                        <td data-label="Quantity" >
+											<div class="slds-truncate slds-form-element__control" >
+                                                <lightning:input type="number" value="{!ca.Quantity_Override__c}"/>
+											</div>
+										</td>
+										<td data-label="Original Price">
+											<div class="slds-truncate slds-form-element__control" name="{!idx}">
+                                                <ui:outputCurrency value="{!ca.AssetId__r.Price__c}"/>
+											</div>
+										</td>
+										<td data-label="Client Price" >
+											<div class="slds-truncate slds-form-element__control" data-value="{!ca.Id}" data-row="{!idx}" >
+                                                <lightning:input type="number" formatter="currency" step = "0.01" value="{!ca.New_Client_Price__c}" onchange="{!c.onChangeClientPrice}"/>
+											</div>
+										</td>
+										<td data-label="Reason Code">	
+											<lightning:combobox class="slds-listbox" aura:id="Combobox" name="reasonCode" variant = "label-hidden" value="{!ca.Reason_Code__c}" options="{!v.options}" />
+										</td>
+										<td data-label="Reason Description">
+											<lightning:textarea name="reasonDesc" value="{!ca.Reason_Description__c}" onchange="{!c.onChangeReasonDescription}"/>
+										</td>
+									</tr>
+								</aura:iteration>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!--###### MODAL BOX BODY Part End######-->
+			<!--###### MODAL BOX FOOTER Part Start ######-->
+			<footer class="slds-modal__footer" style="width: 800px !important;">
+				<lightning:button variant="neutral" 
+								  label="Cancel"
+								  title="Cancel"
+								  onclick="{! c.closeModel }"/>
+				<lightning:button variant="brand" label="Save" aura:id="woliButton" onclick="{!c.handleSave}" />
+			</footer>
+		</div>
+	</div>
+	<!--###### MODAL BOX FOOTER END Start ######-->
+	<div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+	<!--###### MODAL BOX Part END Here ######-->
+</aura:if>
+
+
+</aura:component>

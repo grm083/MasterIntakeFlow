@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stepped_Cost_value_check</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( ISPICKVAL(CostModelType__c,&apos;STP&apos;) ,OR(AND(CostUpTo2__c&gt;0,CostUpTo2__c&lt;= CostUpTo1__c),
+AND(CostUpTo3__c &gt;0,CostUpTo3__c &lt;= CostUpTo2__c),
+AND(CostUpTo4__c &gt;0,CostUpTo4__c &lt;= CostUpTo3__c )))</errorConditionFormula>
+    <errorMessage>Cost UPTO value should be greater than the previous row.</errorMessage>
+</ValidationRule>

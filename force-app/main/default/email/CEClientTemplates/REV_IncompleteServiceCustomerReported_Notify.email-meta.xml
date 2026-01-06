@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Respond to a customer&apos;s report of an Incomplete Service</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>ML_Letterhead</letterhead>
+    <name>Service Not Performed - Hauler Reported</name>
+    <style>freeForm</style>
+    <subject>WM Service Issue: {!Case.Case_Subtype_Email_Format__c} at {!Case.Location_Code__c}, Ref. #: {!Case.Reference_Number__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

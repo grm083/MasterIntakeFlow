@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Facility_Ownership__c</fullName>
+    <externalId>false</externalId>
+    <label>Facility Ownership</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Landfills</fullName>
+                <default>false</default>
+                <label>Landfills</label>
+            </value>
+            <value>
+                <fullName>Recycling Centers (MRFs)</fullName>
+                <default>false</default>
+                <label>Recycling Centers (MRFs)</label>
+            </value>
+            <value>
+                <fullName>Transfer Stations</fullName>
+                <default>false</default>
+                <label>Transfer Stations</label>
+            </value>
+            <value>
+                <fullName>Waste to Energy</fullName>
+                <default>false</default>
+                <label>Waste to Energy</label>
+            </value>
+            <value>
+                <fullName>Multiple Waste Facilities</fullName>
+                <default>false</default>
+                <label>Multiple Waste Facilities</label>
+            </value>
+            <value>
+                <fullName>Incinerator</fullName>
+                <default>false</default>
+                <label>Incinerator</label>
+            </value>
+            <value>
+                <fullName>Demolition Landfill</fullName>
+                <default>false</default>
+                <label>Demolition Landfill</label>
+            </value>
+            <value>
+                <fullName>Composting Facility</fullName>
+                <default>false</default>
+                <label>Composting Facility</label>
+            </value>
+            <value>
+                <fullName>RDF Facility</fullName>
+                <default>false</default>
+                <label>RDF Facility</label>
+            </value>
+            <value>
+                <fullName>Spec Fuel Facility</fullName>
+                <default>false</default>
+                <label>Spec Fuel Facility</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

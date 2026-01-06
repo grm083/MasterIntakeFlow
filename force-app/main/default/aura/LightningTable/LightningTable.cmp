@@ -1,0 +1,31 @@
+<aura:component controller="LightningTableController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="sObjectName" type="String"/>
+	<aura:attribute name="fieldSetName" type="String"/>
+	<aura:attribute name="fieldSetValues" type="List"/>
+	<aura:attribute name="tableRecords" type="List"/>
+	<aura:attribute name="parentFieldName" type="String"/>
+	<aura:attribute name="parentRecordId" type="String"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<div class="slds">
+		<table class="slds-table slds-table--bordered">
+			<thead>
+				<tr>
+					<aura:iteration items="{!v.fieldSetValues}" var="field">
+						<th> {!field.label}</th>
+					</aura:iteration>
+				</tr>
+			</thead>
+			<tbody>
+				<aura:iteration items="{!v.tableRecords}" var="row">
+					<tr>
+						<aura:iteration items="{!v.fieldSetValues}" var="field" indexVar="index">
+							<td>
+								<c:LightningCell record="{!row}" field="{!field}" />
+							</td>
+						</aura:iteration>
+					</tr>
+				</aura:iteration>
+			</tbody>
+		</table>
+	</div>
+</aura:component>

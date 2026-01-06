@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alternate_Contact_is_Mandatory</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Outcome__c,&apos;Alternate Contact Provided&apos;),
+ISBLANK(Alternate_Contact_Email__c), ISBLANK(Alternate_Contact_Number__c),
+NOT($User.Bypass_Validation__c)
+)</errorConditionFormula>
+    <errorMessage>Please Provide Alternate Contact Number/Email</errorMessage>
+</ValidationRule>

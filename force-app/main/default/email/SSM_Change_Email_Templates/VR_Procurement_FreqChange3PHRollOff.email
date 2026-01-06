@@ -1,0 +1,27 @@
+<messaging:emailTemplate subject="Rates Confirmation  - {!relatedTo.SBQQ__Opportunity2__r.Case__r.Location_Code__c} - {!relatedTo.Name}" recipientType="Contact" relatedToType="SBQQ__Quote__c">
+
+
+<messaging:htmlEmailBody > 
+    <div style="align=right">
+        <apex:variable value="{!LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260))}" var="hostUrl"/>
+        <apex:variable value="servlet/servlet.ImageServer?id=" var="staticUrl_1"/>
+        <apex:variable value="&oid=" var="staticUrl_2"/>
+        <apex:variable value="{!$Organization.Id}" var="orgId"/>
+    </div> 
+    <html>
+    <body contenteditable="true">
+    <style type="text/css">
+    body {font-size: 11pt;}
+    </style>
+
+<br><apex:image height="28" width="104" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.DocumentId__c}{!staticUrl_2}{!orgId}"/></br>
+
+<br><apex:outputText style="font-family:Arial;" value="Hello,"/> </br>
+<br></br>
+<c:GetVRProcurementFreqChange3PHRollOff quoteDetail="{!relatedTo}"/>  
+<br><c:signatureNSEmailTemplates /></br>
+{!relatedTo.Quote_Thread_Id__c}
+</body>
+</html>            
+</messaging:htmlEmailBody>  
+</messaging:emailTemplate>

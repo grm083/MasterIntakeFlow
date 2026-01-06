@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Request to the Vendor Client Code team to have a new shell added</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>ML_Letterhead</letterhead>
+    <name>Internal: New Shell Request_CESAT</name>
+    <style>freeForm</style>
+    <subject>New Shell Request: Ref# {!Case.Reference_Number__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,10 @@
+.THIS .slds-modal__content{
+    overflow: initial;
+}
+.THIS .slds-listbox {
+    position: relative !important;
+    z-index: 99999; 
+}
+.THIS .desBreak {
+    white-space: break-spaces; 
+}

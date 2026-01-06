@@ -1,0 +1,2875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <name>add_into_list_for_updating</name>
+        <label>add into list for updating</label>
+        <locationX>1841</locationX>
+        <locationY>1194</locationY>
+        <assignmentItems>
+            <assignToReference>VarUpdateWorkOrderlst</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>VarWorkOrder</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_WO_list</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_into_new_list_to_update</name>
+        <label>Add into new list to update</label>
+        <locationX>1169</locationX>
+        <locationY>1795</locationY>
+        <assignmentItems>
+            <assignToReference>varWorkOrderListToUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varWorkOrderRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Workorder_list</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign Manually Dispatch case update</description>
+        <name>Assign_Manually_Dispatch</name>
+        <label>Assign Manually Dispatch</label>
+        <locationX>541</locationX>
+        <locationY>1096</locationY>
+        <assignmentItems>
+            <assignToReference>varUpdateCase.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varUpdateCase.Case_Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pending Service Confirmation</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varUpdateCase.Service_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TaskRec.Proposed_Service_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varUpdateCase.Proposed_Service_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TaskRec.Proposed_Service_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Service_Date_in_pickup_case</name>
+        <label>Assign Service Date in pickup case</label>
+        <locationX>1539</locationX>
+        <locationY>2739</locationY>
+        <assignmentItems>
+            <assignToReference>varPickupCaseRecordList.Service_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TaskRec.Proposed_Service_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Pickup_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_WO_status</name>
+        <label>Assign WO status</label>
+        <locationX>1019</locationX>
+        <locationY>1761</locationY>
+        <assignmentItems>
+            <assignToReference>varWorkOrderRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_into_new_list_to_update</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Work_order_Service_Date</name>
+        <label>Assign Work order Service Date</label>
+        <locationX>857</locationX>
+        <locationY>2129</locationY>
+        <assignmentItems>
+            <assignToReference>woProposedServiceDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varWorkOrderRecord.Service_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_the_WO_List_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>PickUpCase_Id_assignment</name>
+        <label>PickUpCase Id assignment</label>
+        <locationX>1648</locationX>
+        <locationY>2468</locationY>
+        <assignmentItems>
+            <assignToReference>varPickupCaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>VarWorkOrderRec.CaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>loop_WO</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update Proposed Service Date with Task Proposed Service Date</description>
+        <name>Remaining_Process_case_Update</name>
+        <label>Remaining Process case Update</label>
+        <locationX>545</locationX>
+        <locationY>1232</locationY>
+        <assignmentItems>
+            <assignToReference>varUpdateCase.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varUpdateCase.Proposed_Service_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TaskRec.Proposed_Service_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Size_of_WO_List</name>
+        <label>Update Size of WO List</label>
+        <locationX>995</locationX>
+        <locationY>2629</locationY>
+        <assignmentItems>
+            <assignToReference>varWOSize</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_the_WO_List</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>update_Status</name>
+        <label>update Status</label>
+        <locationX>823</locationX>
+        <locationY>1517</locationY>
+        <assignmentItems>
+            <assignToReference>VarUpdateTasklst</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>TaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Task_Action</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_status_Asignment</name>
+        <label>Update status Asignment</label>
+        <locationX>1001</locationX>
+        <locationY>1517</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>update_Status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_WO_Status</name>
+        <label>Update WO Status</label>
+        <locationX>1653</locationX>
+        <locationY>1186</locationY>
+        <assignmentItems>
+            <assignToReference>VarWorkOrder.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Accepted</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>add_into_list_for_updating</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>constObtainServiceApproval</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Obtain Service Approval</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CustomerNotifiedofDecline</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Customer Notified of Decline</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>NotifyCustomerofDecline</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Notify Customer of Decline</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>StatusProvided</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Status Provided</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Approval_Log_Decision</name>
+        <label>Approval Log Decision</label>
+        <locationX>649</locationX>
+        <locationY>870</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Decision_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varApprovalLogId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Approval_Log_and_Case</targetReference>
+            </connector>
+            <label>Decision 1</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AssetId_is_not_null</name>
+        <label>AssetId is not null</label>
+        <locationX>640</locationX>
+        <locationY>2540</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Asset_Id_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseRecord.AssetId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_WO_for_Case</targetReference>
+            </connector>
+            <label>Asset Id Check</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Case_List_is_not_Null</name>
+        <label>Case List is not Null</label>
+        <locationX>1381</locationX>
+        <locationY>2759</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_List_check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varPickupCaseRecordList</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Service_Date_in_pickup_case</targetReference>
+            </connector>
+            <label>Case List check</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Case_update</name>
+        <label>Case update</label>
+        <locationX>1313</locationX>
+        <locationY>1336</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Vendor_Accepts_Work_Order</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Rejected Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendor Accepts Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_RJW_case</targetReference>
+            </connector>
+            <label>Vendor Accepts Work Order</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_Outcome_is_Customer_Accepts_Status</name>
+        <label>Check if Outcome is Customer Accepts Status</label>
+        <locationX>311</locationX>
+        <locationY>2430</locationY>
+        <defaultConnector>
+            <targetReference>Check_Outcome</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Outcome_is_Customer_Accepts_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Notify Customer of Service Update</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Accepts Status</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_StatusCase</targetReference>
+            </connector>
+            <label>If Outcome is Customer Accepts Status</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_outcome_is_no_response</name>
+        <label>Check if outcome is no response</label>
+        <locationX>296</locationX>
+        <locationY>3165</locationY>
+        <defaultConnector>
+            <targetReference>If_Accepted_Workorder</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_outcome_is_no_response</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Notify Customer of Service Update</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No Response/Pending Response</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Sub_Status_to_not_Provided</targetReference>
+            </connector>
+            <label>If outcome is no response</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_outcome_is_Service_Not_Performed</name>
+        <label>Check if outcome is Service Not Performed</label>
+        <locationX>314</locationX>
+        <locationY>1836</locationY>
+        <defaultConnector>
+            <targetReference>Obtain_Schedule_Confirmation_OutCome_Schedule_Confirmed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Create_Standard_Resolve_Service_Issue_Task</name>
+            <conditionLogic>(1 AND (2 OR 3 OR 4) AND 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Not Performed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Obtain Schedule Confirmation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Confirm Service Completion</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Confirm Service Completion</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CaseRecord.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Open</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Status_and_Sub_Status_Standard</targetReference>
+            </connector>
+            <label>Update Case Sub status for Standard Case</label>
+        </rules>
+        <rules>
+            <name>Create_Emergency_Resolve_Service_Issue_task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Not Performed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Confirm Service Completion with Location</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CaseRecord.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Open</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Status_and_Sub_Status_Emergency</targetReference>
+            </connector>
+            <label>Update Case Sub Status for Emergency Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_task_proposed_service_Date_is_not_null</name>
+        <label>Check if task proposed service Date is not null</label>
+        <locationX>604</locationX>
+        <locationY>2420</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Proposed_Service_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TaskRec.Proposed_Service_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssetId_is_not_null</targetReference>
+            </connector>
+            <label>Check Proposed Service Date</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Outcome</name>
+        <label>Check Outcome</label>
+        <locationX>304</locationX>
+        <locationY>2758</locationY>
+        <defaultConnector>
+            <targetReference>Check_Outcome_for_Notify_Customer_of_Service_Update</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Outcome_Value</name>
+            <conditionLogic>((1 OR 2) AND 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Obtain Vendor Information</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Obtain Vendor Update</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Not Performed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Sub_Type_to_Service_Not_Performed</targetReference>
+            </connector>
+            <label>Check Outcome Value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Outcome_for_Notify_Customer_of_Service_Update</name>
+        <label>Check Outcome for Notify Customer of Service Update</label>
+        <locationX>296</locationX>
+        <locationY>2954</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_outcome_is_no_response</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Outcome_for_Notify_Customer_Update_Task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Notify Customer of Service Update</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Disputes Status</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Sub_Status_Sub_Type_Reason</targetReference>
+            </connector>
+            <label>Check Outcome for Notify Customer Update Task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_whether_WO</name>
+        <label>Check whether WO</label>
+        <locationX>1461</locationX>
+        <locationY>1328</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_WO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VarWorkOrderlst</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_WO_list</targetReference>
+            </connector>
+            <label>Check WO</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check WO is available</description>
+        <name>Check_WO_is_available</name>
+        <label>Check WO is available</label>
+        <locationX>830</locationX>
+        <locationY>2531</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>WO_is_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varWorkOrderRecordList</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_the_WO_List</targetReference>
+            </connector>
+            <label>WO is Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_WO_Size_as_1</name>
+        <label>Check WO Size as 1</label>
+        <locationX>1181</locationX>
+        <locationY>2473</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>if_WO_size_is_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varWOSize</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>loop_WO</targetReference>
+            </connector>
+            <label>if WO size is 1</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Confirm_Service_Completion_outcome_Service_Confirmed</name>
+        <label>Confirm Service Completion - outcome -  Service Confirmed</label>
+        <locationX>321</locationX>
+        <locationY>1690</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_outcome_is_Service_Not_Performed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Case_and_Sub_Status</name>
+            <conditionLogic>(1 OR 3 OR 4 ) AND  2</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Confirm Service Completion</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Confirmed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Confirm Service Completion with Location</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Confirm Service Completion</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_case_Record_with_status_and_sub_status</targetReference>
+            </connector>
+            <label>Update Case and Sub Status</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Confirm_Vendor_Availability_And_Outcome_is_Vendor_Available</name>
+        <label>Confirm Vendor Availability And Outcome is Vendor Available</label>
+        <locationX>307</locationX>
+        <locationY>617</locationY>
+        <defaultConnector>
+            <targetReference>Escalation_Emergency_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Case_Sub_Status_and_SLA_Start_Time</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Confirm Vendor Availability</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Confirm Vendor Availability</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendor Available</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Sub_Status_For_Escalation_Confirm_Vendor_Availability</targetReference>
+            </connector>
+            <label>Update Case Sub Status and SLA Start Time</label>
+        </rules>
+        <rules>
+            <name>Escalation_Emergency</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Emergency Case</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Escalation Emergency</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Escalation_Emergency_Case</name>
+        <label>Escalation Emergency Case</label>
+        <locationX>311</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Obtain_Service_Approval</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_of_Emergency_Escalation</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Emergency Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Obtained</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Not Obtained</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_for_Escalation_obtain_Info_and_Request_Approved</targetReference>
+            </connector>
+            <label>Outcome of Emergency Escalation</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Escalation_Obtain_Cust_Info_Confirm_Vendor_Outcome_Vendor_Unavail_Req_Not_Approv</name>
+        <label>Escalation - Obtain Cust Info/Confirm Vendor - Outcome -Vendor Unavail/Req Not Approved</label>
+        <locationX>311</locationX>
+        <locationY>336</locationY>
+        <defaultConnector>
+            <targetReference>Process_Escalation_Obtain_Customer_Info_Outcome_Request_Approved</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Update Case for process - Escalation obtain customer info</defaultConnectorLabel>
+        <rules>
+            <name>Update_case_status_and_sub_status</name>
+            <conditionLogic>1 AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Obtain Customer Info</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Not Obtained</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Record</targetReference>
+            </connector>
+            <label>Update case status and sub status</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Accepted_Workorder</name>
+        <label>If Accepted Workorder</label>
+        <locationX>298</locationX>
+        <locationY>3391</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Accepted_Workorder</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted WorkOrder</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Accepted WorkOrder</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Rejected Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Update not Required</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Status_to_Closed</targetReference>
+            </connector>
+            <label>Accepted Workorder</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Task_List_Empty</name>
+        <label>Is Task List Empty</label>
+        <locationX>736</locationX>
+        <locationY>1343</locationY>
+        <defaultConnector>
+            <targetReference>Case_update</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>if_not_Empty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TaskRecordlist</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Task_Action</targetReference>
+            </connector>
+            <label>if not Empty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>This is mainly to check if case proposed service Date is the same as the work order proposed service date then no need to update the case and work order service date.</description>
+        <name>Is_Update_Case</name>
+        <label>Is Update Case</label>
+        <locationX>1062</locationX>
+        <locationY>2311</locationY>
+        <defaultConnector>
+            <targetReference>Update_case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Case_And_Work_Order_Service_Date_Same</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>woProposedServiceDate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CaseRecord.Proposed_Service_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Is Case And Work Order Service Date Same</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>check whether WO available related to the case</description>
+        <name>Is_WO_Available</name>
+        <label>Is WO Available</label>
+        <locationX>586</locationX>
+        <locationY>2300</locationY>
+        <defaultConnector>
+            <targetReference>Update_Case_To_Open_Serv_Conf</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No WO Available</defaultConnectorLabel>
+        <rules>
+            <name>WO_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VarWorkOrderlst</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_the_WO_List_0</targetReference>
+            </connector>
+            <label>WO Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>When Process is Manually Dispatch, update the case fields</description>
+        <name>Manually_Dispatch</name>
+        <label>Manually Dispatch</label>
+        <locationX>416</locationX>
+        <locationY>1164</locationY>
+        <defaultConnector>
+            <targetReference>Remaining_Process_case_Update</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Manually_Dispatch_Service_Reschedule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Manually Dispatch</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Rescheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Manually_Dispatch</targetReference>
+            </connector>
+            <label>Manually Dispatch - Service Reschedule</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Notify_Customer_of_Service_Date_Delay_outcome_Customer_Requests_Cancellation</name>
+        <label>Notify Customer of Service Date Delay - outcome - Customer Requests Cancellation</label>
+        <locationX>321</locationX>
+        <locationY>1504</locationY>
+        <defaultConnector>
+            <targetReference>Confirm_Service_Completion_outcome_Service_Confirmed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Updatecase_Status_and_SubStatus</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Notify Customer Of Delay</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Requests Cancellation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_CaseStatus_Sub_Status</targetReference>
+            </connector>
+            <label>Update case Status and SubStatus</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Update the case when outcome of Notify Customer of Service Update is &quot;Customer Accepts New Service Date&quot;</description>
+        <name>Notify_Customer_of_Service_Update_Customer_Accepts_New_Service_Date</name>
+        <label>Notify Customer of Service Update - Customer Accepts New Service Date</label>
+        <locationX>315</locationX>
+        <locationY>2183</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_Outcome_is_Customer_Accepts_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_Accepts_New_Service_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Notify Customer Of Delay</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Accepts New Date</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Case_Relate_WO</targetReference>
+            </connector>
+            <label>Customer Accepts New Service Date</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Obtain_Schedule_Confirmation_OutCome_Schedule_Confirmed</name>
+        <label>Obtain Schedule Confirmation - OutCome - Schedule Confirmed</label>
+        <locationX>313</locationX>
+        <locationY>2069</locationY>
+        <defaultConnector>
+            <targetReference>Notify_Customer_of_Service_Update_Customer_Accepts_New_Service_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Case_SubStatus</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Obtain Schedule Confirmation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Schedule Confirmed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_case_record_with_sub_status</targetReference>
+            </connector>
+            <label>Update Case Sub Status</label>
+        </rules>
+        <rules>
+            <name>Obtain_Schedule_Confirmation_Service_performed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Obtain Schedule Confirmation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Performed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_case_status_and_substatus_on_service_performed</targetReference>
+            </connector>
+            <label>Obtain Schedule Confirmation - Service performed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Obtain_Service_Approval</name>
+        <label>Obtain Service Approval</label>
+        <locationX>312</locationX>
+        <locationY>899</locationY>
+        <defaultConnector>
+            <targetReference>Process_Manually_Dispatch_Positive_outcome</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>update_Case_and_Sub_status_when_Approved</name>
+            <conditionLogic>1 OR 2 OR (3 AND 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>constObtainServiceApproval</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Obtain Service Approval</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Validate Email Approval Response</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Could not verify</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Approval_Log</targetReference>
+            </connector>
+            <label>update Case and Sub status when Approved</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Process_Escalation_Obtain_Customer_Info_Outcome_Request_Approved</name>
+        <label>Process- Escalation Obtain Customer Info, Outcome -Request Approved</label>
+        <locationX>311</locationX>
+        <locationY>483</locationY>
+        <defaultConnector>
+            <targetReference>Confirm_Vendor_Availability_And_Outcome_is_Vendor_Available</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Update Case for process - Confirm vendor availability</defaultConnectorLabel>
+        <rules>
+            <name>Update_Case_Sub_Status_and_SLA_Start_Date</name>
+            <conditionLogic>(1 AND 2 ) OR (3 AND 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Obtain Customer Info</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Obtained</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Obtain Customer Info</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Obtained</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_for_Escalation_obtain_Info_and_Request_Approved</targetReference>
+            </connector>
+            <label>Update Case Sub Status and SLA Start Date</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>checks the outcome of &quot;Manually Dispatch&quot; Process</description>
+        <name>Process_Manually_Dispatch_Positive_outcome</name>
+        <label>Process- Manually Dispatch Positive outcome</label>
+        <locationX>307</locationX>
+        <locationY>994</locationY>
+        <defaultConnector>
+            <targetReference>Update_Proposed_Service_date_based_on_outcome</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_case_status_and</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ManuallyDispatchProcess</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ServiceDispatchedoutcome</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Sub_Status</targetReference>
+            </connector>
+            <label>Update case status</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Process_Notify_Customer_of_Decline</name>
+        <label>Process - Notify Customer of Decline</label>
+        <locationX>324</locationX>
+        <locationY>1343</locationY>
+        <defaultConnector>
+            <targetReference>Notify_Customer_of_Service_Date_Delay_outcome_Customer_Requests_Cancellation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_case_status</name>
+            <conditionLogic>(1 AND 2) OR ((3 OR 4) AND 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NotifyCustomerofDecline</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CustomerNotifiedofDecline</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Rejected Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendor Accepts Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Tasks_Related_Case</targetReference>
+            </connector>
+            <label>Update case status</label>
+        </rules>
+        <rules>
+            <name>Update_case_If_No_Response_on_Notify_customer_of_Decline</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NotifyCustomerofDecline</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No Response/Pending Response</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_Case_if_No_Response_on_third_attempt_of_Notify_Customer_of_Decline</targetReference>
+            </connector>
+            <label>Update case If No Response on Notify customer of  Decline</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check the outcome of Process- Manually Dispatch and proceed further to update case status</description>
+        <name>Update_Proposed_Service_date_based_on_outcome</name>
+        <label>Update Proposed Service date based on outcome</label>
+        <locationX>321</locationX>
+        <locationY>1151</locationY>
+        <defaultConnector>
+            <targetReference>Process_Notify_Customer_of_Decline</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ManuallyUpdate_Case_and_work_order</name>
+            <conditionLogic>((1 OR 6 OR 7 OR 8) AND 2) OR ((3 OR 4) AND 5) OR ( 9 AND 10)OR ((11 OR 12) AND 13)</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Manually Dispatch</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Rescheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Confirm Vendor Availability</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Confirm Vendor Availability</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendor Unavailable</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Confirm Service Completion</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Confirm Service Completion</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Obtain Schedule Confirmation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Obtain Vendor Update</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New ETA Provided</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Rejected Work Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Outcome</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Date Change</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Manually_Dispatch</targetReference>
+            </connector>
+            <label>Update Case and work order</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>WO_List_is_not_null</name>
+        <label>WO List is not null</label>
+        <locationX>793</locationX>
+        <locationY>1630</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>wo_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varWorkOrderListClctn</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Workorder_list</targetReference>
+            </connector>
+            <label>wo not null</label>
+        </rules>
+    </decisions>
+    <description>Update parameter in sub flow Approval log</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Case Status and Sub Status {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Case Status and Sub Status</label>
+    <loops>
+        <name>Iterate_Task_Action</name>
+        <label>Iterate Task Action</label>
+        <locationX>996</locationX>
+        <locationY>1329</locationY>
+        <assignNextValueToReference>TaskRecord</assignNextValueToReference>
+        <collectionReference>TaskRecordlist</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Update_status_Asignment</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Task_status</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Iterate_WO_list</name>
+        <label>Iterate WO list</label>
+        <locationX>1655</locationX>
+        <locationY>1324</locationY>
+        <assignNextValueToReference>VarWorkOrder</assignNextValueToReference>
+        <collectionReference>VarWorkOrderlst</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Update_WO_Status</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_WO_List</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Iterate_Workorder_list</name>
+        <label>Iterate Workorder list</label>
+        <locationX>1064</locationX>
+        <locationY>1630</locationY>
+        <assignNextValueToReference>varWorkOrderRecord</assignNextValueToReference>
+        <collectionReference>varWorkOrderListClctn</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_WO_status</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Work_Order_List</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_the_WO_List</name>
+        <label>Loop the WO List</label>
+        <locationX>992</locationX>
+        <locationY>2472</locationY>
+        <assignNextValueToReference>varWorkOrderRecord</assignNextValueToReference>
+        <collectionReference>varWorkOrderRecordList</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Update_Size_of_WO_List</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Check_WO_Size_as_1</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_the_WO_List_0</name>
+        <label>Loop the WO List</label>
+        <locationX>851</locationX>
+        <locationY>2305</locationY>
+        <assignNextValueToReference>varWorkOrderRecord</assignNextValueToReference>
+        <collectionReference>VarWorkOrderlst</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Work_order_Service_Date</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Is_Update_Case</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>loop_WO</name>
+        <label>loop WO</label>
+        <locationX>1391</locationX>
+        <locationY>2469</locationY>
+        <assignNextValueToReference>VarWorkOrderRec</assignNextValueToReference>
+        <collectionReference>varWorkOrderRecordList</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>PickUpCase_Id_assignment</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_pickUp_Case_Record</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch Approval Log based on the case.</description>
+        <name>Get_Approval_Log</name>
+        <label>Get Approval Log</label>
+        <locationX>545</locationX>
+        <locationY>868</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Approval_Log_Decision</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TaskRec.Approval_Log__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approval Requested</stringValue>
+            </value>
+        </filters>
+        <object>Approval_Log__c</object>
+        <outputAssignments>
+            <assignToReference>varApprovalLogId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_case_associated_to_task</name>
+        <label>Get case associated to task</label>
+        <locationX>183</locationX>
+        <locationY>334</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Escalation_Obtain_Cust_Info_Confirm_Vendor_Outcome_Vendor_Unavail_Req_Not_Approv</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>CaseRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+        <queriedFields>Case_Sub_Status__c</queriedFields>
+        <queriedFields>SlaStartDate</queriedFields>
+        <queriedFields>Proposed_Service_Date__c</queriedFields>
+        <queriedFields>Type</queriedFields>
+        <queriedFields>SubType__c</queriedFields>
+        <queriedFields>Reference_Number__c</queriedFields>
+        <queriedFields>Service_Date__c</queriedFields>
+        <queriedFields>AssetId</queriedFields>
+        <queriedFields>SLA_Service_Date_Time__c</queriedFields>
+        <queriedFields>Location__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Get Case Relate WO</description>
+        <name>Get_Case_Relate_WO</name>
+        <label>Get Case Relate WO</label>
+        <locationX>471</locationX>
+        <locationY>2298</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_WO_Available</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CaseId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <object>WorkOrder</object>
+        <outputReference>VarWorkOrderlst</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Service_Date__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Related_WorkOrder</name>
+        <label>Get Case Related WorkOrder</label>
+        <locationX>678</locationX>
+        <locationY>1594</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>WO_List_is_not_null</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CaseId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <object>WorkOrder</object>
+        <outputReference>varWorkOrderListClctn</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_pickUp_Case_Record</name>
+        <label>Get pickUp Case Record</label>
+        <locationX>1388</locationX>
+        <locationY>2588</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Case_List_is_not_Null</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.AssetId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varPickupCaseId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>varPickupCaseRecordList</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Service_Date__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Tasks_Related_Case</name>
+        <label>Get Tasks Related Case</label>
+        <locationX>546</locationX>
+        <locationY>1342</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Task_List_Empty</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Process__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Obtain Service Approval</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Escalation Obtain Service Approval</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <object>Task</object>
+        <outputReference>TaskRecordlist</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_WO_for_Case</name>
+        <label>Get WO for Case</label>
+        <locationX>769</locationX>
+        <locationY>2424</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_WO_is_available</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.AssetId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Service_Date__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <object>WorkOrder</object>
+        <outputReference>varWorkOrderRecordList</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Service_Date__c</queriedFields>
+        <queriedFields>CaseId</queriedFields>
+        <queriedFields>AssetId</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetch related Work Order</description>
+        <name>Get_WorkOrder</name>
+        <label>Get WorkOrder</label>
+        <locationX>1468</locationX>
+        <locationY>1482</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_whether_WO</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CaseId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TaskRec.WhatId</elementReference>
+            </value>
+        </filters>
+        <object>WorkOrder</object>
+        <outputReference>VarWorkOrderlst</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <name>Close_Case_if_No_Response_on_third_attempt_of_Notify_Customer_of_Decline</name>
+        <label>Close Case if No Response on third attempt of Notify Customer of Decline</label>
+        <locationX>1028</locationX>
+        <locationY>1221</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Request Not Approved</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_case</name>
+        <label>Update case</label>
+        <locationX>1269</locationX>
+        <locationY>2309</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Proposed_Service_Date__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Confirmation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Service_Date__c</field>
+            <value>
+                <elementReference>CaseRecord.Proposed_Service_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update case fields based on Previous condition of process name and outcome</description>
+        <name>Update_Case_Fields</name>
+        <label>Update Case Fields</label>
+        <locationX>793</locationX>
+        <locationY>1137</locationY>
+        <inputReference>varUpdateCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_for_Escalation_obtain_Info_and_Request_Approved</name>
+        <label>Update Case for Escalation obtain Info and Request Approved</label>
+        <locationX>551</locationX>
+        <locationY>463</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Profile_Number__c</field>
+            <value>
+                <elementReference>TaskRec.Profile_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PurchaseOrder_Number__c</field>
+            <value>
+                <elementReference>TaskRec.PurchaseOrder_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>User_Input_Work_Order_Instructions__c</field>
+            <value>
+                <elementReference>TaskRec.Profile_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Record</name>
+        <label>Update Case Record</label>
+        <locationX>546</locationX>
+        <locationY>334</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Request Not Approved</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_case_Record_with_status_and_sub_status</name>
+        <label>Update case Record with status and sub status</label>
+        <locationX>574</locationX>
+        <locationY>1666</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Service Confirmed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_case_record_with_sub_status</name>
+        <label>Update case record with sub status</label>
+        <locationX>712</locationX>
+        <locationY>1981</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Confirmation</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Status_and_Sub_Status_Emergency</name>
+        <label>Update Case Status and Sub Status_Emergency</label>
+        <locationX>594</locationX>
+        <locationY>1879</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Issue Resolution</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Service_Classification__c</field>
+            <value>
+                <stringValue>Emergency</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Status_and_Sub_Status_Standard</name>
+        <label>Update Case Status and Sub Status_Standard</label>
+        <locationX>701</locationX>
+        <locationY>1766</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Issue Resolution</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Service_Classification__c</field>
+            <value>
+                <stringValue>Standard</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_case_status_and_substatus_on_service_performed</name>
+        <label>update case status and substatus on service performed</label>
+        <locationX>586</locationX>
+        <locationY>2093</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Service Confirmed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Status_to_Closed</name>
+        <label>Update Case Status to Closed</label>
+        <locationX>662</locationX>
+        <locationY>3388</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates Case sub status</description>
+        <name>Update_Case_Sub_Status</name>
+        <label>Update Case Sub-Status</label>
+        <locationX>556</locationX>
+        <locationY>988</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Confirmation</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Sub_Status_For_Escalation_Confirm_Vendor_Availability</name>
+        <label>Update Case Sub Status For Escalation/Confirm Vendor Availability</label>
+        <locationX>553</locationX>
+        <locationY>615</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Integration</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Sub_Status_to_not_Provided</name>
+        <label>Update Case Sub Status to not Provided</label>
+        <locationX>612</locationX>
+        <locationY>3170</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Status Not Provided</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_To_Open_Serv_Conf</name>
+        <label>Update Case To Open Serv Conf</label>
+        <locationX>698</locationX>
+        <locationY>2128</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Proposed_Service_Date__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Integration</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Service_Date__c</field>
+            <value>
+                <elementReference>CaseRecord.Proposed_Service_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_CaseStatus_Sub_Status</name>
+        <label>Update Case Status Sub Status</label>
+        <locationX>569</locationX>
+        <locationY>1505</locationY>
+        <connector>
+            <targetReference>Get_Case_Related_WorkOrder</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Request Canceled</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Pickup_Case</name>
+        <label>Update Pickup Case</label>
+        <locationX>1667</locationX>
+        <locationY>2738</locationY>
+        <inputReference>varPickupCaseRecordList</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updaet case sub status as &quot;Pending Service Confirmation&quot;</description>
+        <name>Update_RJW_case</name>
+        <label>Update RJW case</label>
+        <locationX>1320</locationX>
+        <locationY>1482</locationY>
+        <connector>
+            <targetReference>Get_WorkOrder</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TaskRec.WhatId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Confirmation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_StatusCase</name>
+        <label>Update StatusCase</label>
+        <locationX>504</locationX>
+        <locationY>2418</locationY>
+        <connector>
+            <targetReference>Check_if_task_proposed_service_Date_is_not_null</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Status Provided</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Sub_Status_Sub_Type_Reason</name>
+        <label>Update Sub-Status Sub-Type Reason</label>
+        <locationX>749</locationX>
+        <locationY>2948</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Reason__c</field>
+            <value>
+                <stringValue>Customer Reported</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Issue Resolution</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case_Sub_Type__c</field>
+            <value>
+                <stringValue>Service Not Performed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Sub_Type_to_Service_Not_Performed</name>
+        <label>Update Sub Type to Service Not Performed</label>
+        <locationX>739</locationX>
+        <locationY>2758</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Reason__c</field>
+            <value>
+                <stringValue>Hauler Reported</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case_Sub_Status__c</field>
+            <value>
+                <stringValue>Pending Service Issue Resolution</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case_Sub_Type__c</field>
+            <value>
+                <stringValue>Service Not Performed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the task to Complete when case is closed.</description>
+        <name>Update_Task_status</name>
+        <label>Update Task status</label>
+        <locationX>1184</locationX>
+        <locationY>1327</locationY>
+        <connector>
+            <targetReference>Case_update</targetReference>
+        </connector>
+        <inputReference>VarUpdateTasklst</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_WO_List</name>
+        <label>Update  WO List</label>
+        <locationX>1842</locationX>
+        <locationY>1334</locationY>
+        <inputReference>VarUpdateWorkOrderlst</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Work_Order_List</name>
+        <label>Update Work Order List</label>
+        <locationX>1234</locationX>
+        <locationY>1643</locationY>
+        <inputReference>varWorkOrderListToUpdate</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_case_associated_to_task</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Update_Approval_Log_and_Case</name>
+        <label>Update Approval Log and Case</label>
+        <locationX>837</locationX>
+        <locationY>875</locationY>
+        <flowName>Approval_Log</flowName>
+        <inputAssignments>
+            <name>ApproverName</name>
+            <value>
+                <elementReference>TaskRec.Approver_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>CaseId</name>
+            <value>
+                <elementReference>TaskRec.WhatId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ContactId</name>
+            <value>
+                <elementReference>TaskRec.WhoId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TaskRec</name>
+            <value>
+                <elementReference>TaskRec</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Tittle</name>
+            <value>
+                <elementReference>VarApproverTittle</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>UserId</name>
+            <value>
+                <elementReference>VarActualApproverId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>VarContactEmail</name>
+            <value>
+                <elementReference>VarContactEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varServiceDate</name>
+            <value>
+                <elementReference>CaseRecord.Service_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varSLA_ServiceDateTime</name>
+            <value>
+                <elementReference>CaseRecord.SLA_Service_Date_Time__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>LocationId</name>
+            <value>
+                <elementReference>CaseRecord.Location__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>CaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>caseProposedServiceDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>CaseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>CurrentTime</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>$Flow.CurrentDateTime</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>ManuallyDispatchProcess</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Manually Dispatch</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Outcome</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>PendingServiceConfirmationstatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Pending Service Confirmation</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ProcessName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Hold Proposed service date of task</description>
+        <name>Proposedservicedate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>ServiceDispatchedoutcome</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Service Dispatched</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ServiceRescheduledOutcome</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Service Rescheduled</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>TaskGroupId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>TaskID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>TaskRec</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>TaskRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>TaskRecordlist</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>VarActualApproverId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varApprovalLogId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>VarApproverTittle</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varCaseServiceDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>stores the value of the case id that is created for confirm service completion</description>
+        <name>varConfirmServiceCompletionRefCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varConfirmServiceCompletionWithLocCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varConfirmServieCompletionWithLocRefCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Contact Email of the Approval Task</description>
+        <name>VarContactEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varInputCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varInputServiceDateOrRescheduledDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varNewHaulerCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varPickupCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varPickupCaseRecordList</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>varRecordTypeWithoutLocationProcess</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varRetrievedCaseRec</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>varSameReferenceCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varServiceDate</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <dateTimeValue>2019-01-01T05:00:00.000Z</dateTimeValue>
+        </value>
+    </variables>
+    <variables>
+        <description>hold recordtype id of the Status case record type</description>
+        <name>varServiceEnquiryRecordtypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varSourceValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the status recortype id</description>
+        <name>varStatusRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Instance to update the case Record</description>
+        <name>varUpdateCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>List to update the Update</description>
+        <name>VarUpdateTasklst</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <description>List to update the Work Order</description>
+        <name>VarUpdateWorkOrderlst</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>VarwordOrderRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>varWORecFromGetMoreDetails</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <description>Instance of Work Order</description>
+        <name>VarWorkOrder</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>varWorkOrderList</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>varWorkOrderListClctn</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>varWorkOrderListToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <description>Stores all the Work Order related to the Case</description>
+        <name>VarWorkOrderlst</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>VarWorkOrderRec</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>varWorkOrderRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>varWorkOrderRecordList</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>varWOSize</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>varWOUpdateList</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>WorkOrder</objectType>
+    </variables>
+    <variables>
+        <name>woProposedServiceDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Amendment_Quote_Approved_By_Sales__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>SDT-41186-Created-This is checked when an Amendment quote is approved by a Sales Team (UCC=SalesGen, SalesPrem)</description>
+    <label>Is Amendment Quote Approved By Sales</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

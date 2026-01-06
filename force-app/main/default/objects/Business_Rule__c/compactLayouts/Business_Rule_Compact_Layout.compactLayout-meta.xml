@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Rule_Compact_Layout</fullName>
+    <fields>Alias__c</fields>
+    <fields>AssetId__c</fields>
+    <fields>Project_Code__c</fields>
+    <fields>Multiple_Mandatory_Approvers__c</fields>
+    <fields>Active__c</fields>
+    <label>Business Rule Compact Layout</label>
+</CompactLayout>

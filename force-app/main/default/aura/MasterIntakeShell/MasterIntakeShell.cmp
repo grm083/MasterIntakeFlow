@@ -1,0 +1,19 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                controller="IntakeProcessAuraHandler">
+	
+    <!--Pursuant to SDT-14129, the business has requested that Master Intake not be shown when there are no questions.
+	Flow is not great at dynamically hiding and showing itself as the user makes selections and navigates through a case, so the 
+	most elegant solution is to simply embed the flow within the Lightning Component and have the component call the scripts rather than the flow.
+	This will also allow us to migrate the feature into the Progress Case Component, or the ultimate Case Actions component -->
+    
+    <aura:attribute name="Question" type="Intake_Process__c" /> 
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler event="force:refreshView" action="{!c.init}" />
+    
+    <lightning:card>
+    	<aura:if isTrue="{!not(empty(v.Question))}">
+            <lightning:flow aura:id="MasterIntake" />        	
+        </aura:if>
+    </lightning:card>
+    
+</aura:component>

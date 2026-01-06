@@ -1,0 +1,7 @@
+Dear Mr. Person,   
+
+Thank you for submitting your question to us online. Case #{!Case.CaseNumber}: "{!Case.Subject}" has been created and a Customer Advocate will respond to you shortly.   
+
+Thank you,   
+Customer Advocate Team  {!Organization.Name}
+{!Case.Thread_Id}

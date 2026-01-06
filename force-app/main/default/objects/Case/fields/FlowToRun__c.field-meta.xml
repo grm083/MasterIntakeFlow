@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FlowToRun__c</fullName>
+    <externalId>false</externalId>
+    <label>FlowToRun</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Create Task FrameWork Process</fullName>
+                <default>false</default>
+                <label>Create Task FrameWork Process</label>
+            </value>
+            <value>
+                <fullName>Process of Non Pickup Task framework</fullName>
+                <default>false</default>
+                <label>Process of Non Pickup Task framework</label>
+            </value>
+            <value>
+                <fullName>Work Order Creation</fullName>
+                <default>false</default>
+                <label>Work Order Creation</label>
+            </value>
+            <value>
+                <fullName>Invoke Pattern Match</fullName>
+                <default>false</default>
+                <label>Invoke Pattern Match</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

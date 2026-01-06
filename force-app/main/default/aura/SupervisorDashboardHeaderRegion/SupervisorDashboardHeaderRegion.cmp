@@ -1,0 +1,27 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="SupervisorDashboardCls">
+    
+    <ltng:require styles="{!$Resource.NoHeaderLightningPage}"/>
+    
+    <aura:attribute name="showTable" type="Boolean" default="false" access="GLOBAL"/>
+    <aura:attribute name="showDashboard" type="Boolean" default="true" access="GLOBAL"/>
+    <aura:attribute name="workflowVariant" type="String" default="brand" access="GLOBAL"/>
+    <aura:attribute name="taskVariant" type="String" default="brand-outline" access="GLOBAL"/>
+    <aura:attribute name="caseVariant" type="String" default="brand-outline" access="GLOBAL"/>
+    <aura:attribute name="ticketVariant" type="String" default="brand-outline" access="GLOBAL"/>
+    <aura:attribute name="loggedInTeamKPI" type="String" access="GLOBAL"/>
+    <aura:attribute name="superVisorLoggedInKPI" type="String" access="GLOBAL"/>
+    <aura:attribute name="developerName" type="String" access="GLOBAL" default="Task_Assignment_Dashboard"/>
+    <aura:registerEvent name="appEvent" type="c:AnalyticsApplicationEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="update" type="wave:update"/>
+    <div class="container" style="background-color: white;">
+        <!--<ui:inputText value="{!v.filter}" label="Filter: " size="200"></ui:inputText>-->
+        <!--<wave:waveDashboard developerName="{!v.developerName}" filter="{!v.loggedInTeamKPI}" showHeader="false" showTitle="false" height="200px"/>-->
+        {!v.body}
+        <lightning:button variant="{!v.workflowVariant}" onclick="{!c.showWorkflowGroupingDashboard}" label="WORKFLOW TASK"/>
+        <lightning:button variant="{!v.taskVariant}" onclick="{!c.showTaskGroupingDashboard}" label="TASKS"/>
+        <lightning:button variant="{!v.caseVariant}" onclick="{!c.showCaseDashboard}" label="CASES"/>
+        <lightning:button variant="{!v.ticketVariant}" onclick="{!c.showTicketDashboard}" label="TICKETS"/>
+    </div>
+</aura:component>

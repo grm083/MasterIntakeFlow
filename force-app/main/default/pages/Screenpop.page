@@ -1,0 +1,123 @@
+<apex:page controller="ScreenpopController" action="{!init}" lightningStylesheets="true" sidebar="false" showHeader="false" docType="html-5.0">
+    <!--<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <apex:slds />
+        </head> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script type="text/javascript">
+            /* function fetchdata(){
+            var CaseNumberField = document.getElementById('caseNumber');
+            var caseNumber = CaseNumberField.value;
+            var WorkOrderNumberField = document.getElementById('WorkOrderNumber');
+            var WorkOrderNumber = WorkOrderNumberField.value;
+            navigate(caseNumber,WorkOrderNumber,false);
+        }
+        function createCase(){
+            
+            navigate(null,null,true);
+        }*/
+		</script> 
+        <body>
+            <apex:form id="mainForm">
+                <apex:actionFunction name="navigate" action="{!redirect}" ONbeforedomupdate="fetchdata();" rerender="mainForm">
+                    <apex:param id="param" name="referenceNumber" value="" />
+                    <apex:param id="param1" name="workOrder" value="" />
+                    <apex:param id="param2" name="isNewbtn" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <div class="slds-scope">
+                <div style="{!IF(iSError, 'display:block', 'display:none')}">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <span class="slds-icon_container slds-icon-utility-announcement" title="Description of icon when needed">
+                                    <svg aria-hidden="true" class="slds-icon slds-icon-text-error">
+                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#error')}"></use>
+                                        
+                                        <span><h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">  IVR Attached Data</h2></span>
+                                    </svg>
+                                </span>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">Queue :</label>
+                                            <span class="slds-form-element__addon" id="fixed-text-addon-pre">{!pop.ivrQueue}</span>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">LOB :</label>
+                                            <span class="slds-form-element__addon" id="fixed-text-addon-pre">{!pop.ivrLOB}</span>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">IVR Self-service Eligible? :</label>
+                                            <span class="slds-form-element__addon" id="fixed-text-addon-pre">{!pop.ivrsseligible}</span>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">IVR ANI :</label>
+                                            <span class="slds-form-element__addon" id="fixed-text-addon-pre">{!pop.ivrani}</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">R4C :</label>
+                                            <span class="slds-form-element__addon" id="fixed-text-addon-pre">{!pop.ivrR4C}</span>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">Language :</label>
+                                            <span class="slds-form-element__addon" id="fixed-text-addon-pre">{!pop.ivrLang}</span>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">IVR EXit Point :</label>
+                                            <span class="slds-form-element__addon" id="fixed-text-addon-pre">{!pop.ivrexitpoint}</span>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">IVR DNIS :</label>
+                                            <span class="slds-form-element__addon" id="fixed-text-addon-pre">{!pop.ivrdnis}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="{!IF(isredirectCase, 'display:block', 'display:none')}">
+                                    <div class="slds-form-element slds-has-error">
+                                        <label class="slds-form-element__label" for="account-name"><abbr class="slds-required" title="required">* </abbr> Reference Number</label>
+                                        <div class="slds-form-element__control">
+                                            <input id="caseNumber" required="" aria-describedby="error-message-unique-id" class="slds-input" aria-invalid="true" type="text" value="{!pop.CaseRefNo}"/>
+                                        </div>
+                                        <div class="slds-form-element__help" id="error-message-unique-id">{!errorMessage}</div>
+                                    </div>
+                                </div>
+                                <div style="{!IF(NOT(isredirectCase), 'display:block', 'display:none')}">
+                                    <div class="slds-form-element slds-has-error">
+                                        <label class="slds-form-element__label" for="account-name"><abbr class="slds-required" title="required">* </abbr> Work Order Number</label>
+                                        <div class="slds-form-element__control">
+                                            <input id="WorkOrderNumber" type="text" required="" aria-describedby="error-message-unique-id" class="slds-input" aria-invalid="true" value="{!pop.ivrWorkOrder}"/>
+                                        </div>
+                                        <div class="slds-form-element__help" id="error-message-unique-id">{!errorMessage}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <div align="center" draggable="false" style="{!IF(NOT(isredirectCase), 'display:block', 'display:none')}">
+                                    <button class="slds-button slds-button_brand slds-m-top_medium" onclick= "fetchdata();">Open Work Order</button>
+                                    <button class="slds-button slds-button_neutral slds-m-top_medium" onclick= "createCase();">New Case</button>
+                                </div>
+                                <div align="center" draggable="false" style="{!IF(isredirectCase, 'display:block', 'display:none')}">
+                                    <button class="slds-button slds-button_brand slds-m-top_medium" onclick= "fetchdata();">Open Case</button>
+                                    <button class="slds-button slds-button_neutral slds-m-top_medium" onclick= "createCase();">New Case</button>
+                                </div>
+                                <div align="center" draggable="false">
+                                    
+                                </div>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </div>
+        </body>
+    </html> -->
+</apex:page>

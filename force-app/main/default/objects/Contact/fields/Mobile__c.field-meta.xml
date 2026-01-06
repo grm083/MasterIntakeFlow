@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mobile__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK(MobilePhone) , &quot;&quot; ,  HYPERLINK(&quot;tel:&quot; &amp; MobilePhone, &quot;(&quot; + MID(MobilePhone , 1, 3) + &quot;)&quot; + &quot; &quot; + MID(MobilePhone , 4 , 3) + &quot;-&quot; + MID(MobilePhone , 7 , 4) , &quot;_self&quot; ))</formula>
+    <label>Mobile</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

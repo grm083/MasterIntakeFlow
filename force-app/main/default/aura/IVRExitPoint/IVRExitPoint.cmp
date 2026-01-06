@@ -1,0 +1,227 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller = "IVRExitController">
+<aura:attribute name="showPopup" type="Boolean" default="false" />
+<aura:attribute name="showlogo" type="Boolean" default="false" />
+<aura:attribute name = "pop" type = "Screenpop" default = ""/>
+<aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+<aura:attribute name="CaseRecord" type="Object"/>
+<aura:attribute name="recordLoadError" type="String"/>
+
+<force:recordData aura:id="recordLoader"
+                    recordId="{!v.recordId}"
+                    fields="CaseNumber,Reference_Number__c"
+                    targetFields="{!v.CaseRecord}"
+                    targetError="{!v.recordLoadError}"/>
+
+
+<aura:if isTrue="{!v.showlogo}">
+    <div class="slds-clearfix">
+        <div class="slds-float_right">
+            <div class="floatbtn" tabindex="0" accesskey="i" title ="IVR Exit"  aura:id="phoneIconDiv" onclick="{!c.showDetails}" >
+                <img  src="{!$Resource.CallIcon}"   class="imgHeight"/> 
+            </div>
+            <!--commented out new fields below as per SDT-17701 Start -->
+            <!--<lightning:card variant="Narrow" title="IVR Exit" iconName="standard:case" class="card">
+                        <div style = "position: fixed !important"> -->
+            <!--Added new fields below as per SDT-17701 Start -->
+            <aura:if isTrue="{!v.showPopup}">
+                <div class= "box">
+                    <div class="slds-form">
+                        <div class= "slds-box">  
+                        <div style="padding:0.5rem;background:#6d6c32">
+                            <div class="slds-text-heading_medium slds-text-color_inverse slds-text-align_center txtStyle" style="font-weight: bold;">IVR/Chat Information</div>
+                        </div>
+                       
+                        <div class="slds-form__row">
+                            <div aura:id="ivrSpokenName" class="slds-form__item" role="listitem" >
+                                  <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                    <span class="slds-form-element__label LabelText">Spoken Name </span>
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-form-element__static slds-text-align_center txtStyle ">{!v.pop.ivrSpokenName}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                             </div>
+                              <div class="slds-form__row">
+                            <div aura:id="ivrSpokenIntent" class="slds-form__item" role="listitem" >
+                                  <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                    <span class="slds-form-element__label LabelText">Spoken Intent </span>
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.ivrSpokenIntent}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="slds-form__row">
+                              <div aura:id="ivrSpokenLoc" class="slds-form__item" role="listitem" >
+                                  <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                    <span class="slds-form-element__label LabelText">Spoken Loc </span>
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.ivrSpokenLoc}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="slds-form__row">
+                                <div aura:id="ivrani" class="slds-form__item" role="listitem" >
+                                  <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                    <span class="slds-form-element__label LabelText">ANI </span>
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.ivrani}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="slds-form__row">
+                                  <div aura:id="ivrSpokenRefNum" class="slds-form__item" role="listitem" >
+                                  <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                    <span class="slds-form-element__label LabelText">Spoken Ref# </span>
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.ivrSpokenRefNum}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="slds-form__row">
+                                    <div aura:id="ivrLOB" class="slds-form__item" role="listitem" >
+                                  <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                    <span class="slds-form-element__label LabelText">LOB </span>
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.ivrLOB}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                        <!-- SDT-41550 New fields for IVR New service. -->
+                    <aura:if isTrue="{!v.pop.Intent == 'delivery'}">
+                        <div class="slds-form__row">
+                            <div aura:id="NSEqCode" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Container </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSEqCode}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="slds-form__row">
+                            <div aura:id="NSMatType" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Waste Stream </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSMatType}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div> 
+                          <div class="slds-form__row">
+                            <div aura:id="NSEqSizeCode" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Container Size </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSEqSizeCode}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="slds-form__row">
+                            <div aura:id="NSDeliveryDate" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Delivery Date </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSDeliveryDate}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="slds-form__row">
+                            <div aura:id="NSRemovalDate" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Removal Date </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSRemovalDate}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="slds-form__row">
+                            <div aura:id="NSEARDates" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Empty and Return </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSEARDates}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="slds-form__row">
+                            <div aura:id="NSQuoteOnly" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Is Quote Only </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSQuoteOnly}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>		
+                          <div class="slds-form__row">
+                            <div aura:id="NSCompanyCategory" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Company Category </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSCompanyCategory}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>	
+                          <div class="slds-form__row">
+                            <div aura:id="NSPlacementInts" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Placement Instruction </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSPlacementInts}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>	
+                          <div class="slds-form__row">
+                            <div aura:id="NSSiteContName" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Site Contact </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSSiteContName}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="slds-form__row">
+                            <div aura:id="NSSiteContPhNum" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Site Phone </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSSiteContPhNum}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>	
+                          <div class="slds-form__row">
+                            <div aura:id="NSReason" class="slds-form__item" role="listitem" >
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label LabelText">Reason </span>
+                                <div class="slds-form-element__control">
+                                  <div class="slds-form-element__static slds-text-align_center txtStyle">{!v.pop.NSReason}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </aura:if>
+                        <!-- SDT-41550 New fields for IVR New service. END  -->
+                    </div>
+                </div>
+                </div>
+            </aura:if>
+             <!--Added new fields below as per SDT-17701 End -->
+        </div>
+    </div>
+</aura:if>
+</aura:component>

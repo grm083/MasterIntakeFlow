@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>For pricing i/o page</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Pricing Request</label>
+    <navType>Standard</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Pricing_Request_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Pricing_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Customer Account Team</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Pricing_Request_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Pricing_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Customer Account Team</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Pricing_Request_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Pricing_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Customer Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Pricing_Request_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Pricing_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Customer Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Pricing_Request_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Pricing_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Pricing_Request_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Pricing_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <tabs>Pricing</tabs>
+    <tabs>Pricing_Request__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>One_Off_Pricing_UtilityBar</utilityBar>
+</CustomApplication>

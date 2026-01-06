@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Account_or_Location_Changed</fullName>
+    <active>true</active>
+    <description>Account or Location should not be changed.</description>
+    <errorConditionFormula>AND(OR(RecordType.DeveloperName == &apos;Account_Team_Member&apos;,RecordType.DeveloperName == &apos;Contact&apos;,RecordType.DeveloperName == &apos;Title&apos;),OR(IF(Account__c !=  Business_Rule__r.AccountId__c,true,False),IF( Location__c !=  Business_Rule__r.LocationId__c,True,False )))</errorConditionFormula>
+    <errorMessage>Account or Location should match with Business Rule</errorMessage>
+</ValidationRule>

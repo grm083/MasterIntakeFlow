@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Vendor Contact Role Map</label>
+    <pluralLabel>Vendor Contact Role Maps</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

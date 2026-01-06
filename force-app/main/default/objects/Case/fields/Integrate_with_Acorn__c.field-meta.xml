@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integrate_with_Acorn__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Modified as per: SDT-21433 [Field is defaulted to true and now being used for New &apos;New Service Case&apos; Identification as from now onwards it will be false when Quote will be added from Add Quote Button. Also will be used to in WF rule &apos;Send Acorn New Case Information&apos; to identify Legacy &apos;New Service Case&apos; integration trigger]</description>
+    <externalId>false</externalId>
+    <label>Integrate with Acorn</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

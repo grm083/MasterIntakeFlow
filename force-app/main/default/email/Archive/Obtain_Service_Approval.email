@@ -1,0 +1,143 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoChpDefault
+	{font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+
+
+
+
+<p style="font-size: 12pt; margin: 0in 0in 12pt; line-height: 16.5pt;"><font style=""><font face="Arial, sans-serif">Dear Customer</font><span style="font-family: Arial, sans-serif;">,</span></font><span style="font-family: Arial, sans-serif; color: rgb(0, 0, 0); font-size: 15pt; text-indent: -0.25in; white-space: pre; background-color: rgb(255, 255, 255);">                                                         </span></p><p style="font-size: 12pt; color: rgb(0, 0, 0); margin: 0in 0in 12pt; line-height: 16.5pt;"><font face="Arial, sans-serif"><font style=""><span style="background-color: rgb(255, 255, 255);">Y</span>our&nbsp;</font><font style="">approval&nbsp;</font><font style="">is&nbsp;</font><font style="">required.&nbsp;{!Case.Contact}&nbsp;requested&nbsp;</font>service-&nbsp;{!Case.Case_Sub_Type__c}&nbsp;at&nbsp;{!Case.Location__c}. Can you please review the details, and either approve or reject? If you require additional information please let us know so we can process this as quickly as possible</font><span style="font-family: Arial, sans-serif;">.</span></p><p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); margin: 0in 0in 12pt; line-height: 16.5pt;"><strong style="font-size: 12pt;"><span style="font-family: Arial, sans-serif; letter-spacing: -0.25pt;">Request Details</span></strong></p><table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); border-collapse: collapse;"><tbody><tr style="height: 0.2in;"><td width="206" style="width: 154.5pt; padding: 0in 5.4pt; height: 0.2in;"><table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="586" style="width:439.3pt;border-collapse:collapse;mso-yfti-tbllook:1184;
+ mso-padding-alt:0in 0in 0in 0in;mso-border-insideh:.5pt solid windowtext">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:15.65pt">
+  <td width="206" style="width:154.3pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:15.65pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;">Service Requested</span></b><o:p></o:p></p>
+  </td>
+  <td width="380" style="width:285.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:15.65pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;;color:#57584F">{!Case.Case_Sub_Type__c}</span><o:p></o:p></p>
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;;color:#57584F">{!Asset.Equipment_Size__c} {!Asset.</span><span style="font-size:12.0pt;font-family:"Arial",sans-serif;
+mso-fareast-font-family:"Trebuchet MS";mso-fareast-theme-font:minor-latin;
+color:#57584F;mso-themecolor:text1;mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA">Material_Type__c</span><span style="font-size:12.0pt;font-family:"Arial",sans-serif;mso-fareast-font-family:
+  "Times New Roman";color:#57584F">}
+  {!Asset.</span><span style="font-size:12.0pt;font-family:"Arial",sans-serif;
+mso-fareast-font-family:"Trebuchet MS";mso-fareast-theme-font:minor-latin;
+color:#57584F;mso-themecolor:text1;mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA">Equipment_Type__c</span><span style="font-size:12.0pt;font-family:"Arial",sans-serif;mso-fareast-font-family:
+  "Times New Roman";color:#57584F">}</span><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:23.5pt">
+  <td width="206" style="width:154.3pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:23.5pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;">Requested By</span></b><o:p></o:p></p>
+  </td>
+  <td width="380" style="width:285.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:23.5pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;;color:#57584F">{!Case.Contact},&nbsp;{!Account_Title__c.Name}</span><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:2;height:15.65pt">
+  <td width="206" style="width:154.3pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:15.65pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;">Location</span></b><o:p></o:p></p>
+  </td>
+  <td width="380" style="width:285.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:15.65pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><span style="font-family: arial; font-size: medium;">{!Case.Tech_Location_Details__c}</span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:3;height:23.5pt">
+  <td width="206" style="width:154.3pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:23.5pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;">Requested Service Date</span></b><o:p></o:p></p>
+  </td>
+  <td width="380" style="width:285.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:23.5pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;;color:#57584F">{!Case.Service_Date__c}</span><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:4;height:23.5pt">
+  <td width="206" style="width:154.3pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:23.5pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;">Reference Number</span></b><o:p></o:p></p>
+  </td>
+  <td width="380" style="width:285.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:23.5pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;;color:#57584F">{!Case.Reference_Number__c}</span><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:5;mso-yfti-lastrow:yes;height:23.5pt">
+  <td width="206" style="width:154.3pt;border:none;mso-border-top-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:23.5pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+  &quot;Times New Roman&quot;">Comments</span></b><o:p></o:p></p>
+  </td>
+  <td width="380" style="width:285.0pt;border:none;mso-border-top-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:23.5pt">
+  <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><font color="#57584f" face="Arial, sans-serif"><span style="font-size: 12pt;">{!Case.</span><span style="font-size: 16px;">Description</span><span style="font-size: 12pt;">}</span></font><o:p></o:p></p>
+  </td>
+ </tr>
+</tbody></table></td><td width="392" style="width: 294pt; padding: 0in 5.4pt; height: 0.2in;"></td></tr></tbody></table><div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);"><h2 style="text-align: left; margin: 0in 0in 6pt; line-height: 18pt;"><strong style=""><span style="font-family: Arial, sans-serif; letter-spacing: -0.25pt;"><span style="white-space: pre;"><font style="" size="3"><br>                               </font></span></span></strong></h2><h2 style="text-align: left; margin: 0in 0in 6pt; line-height: 18pt;"><strong style=""><span style="font-family: Arial, sans-serif; letter-spacing: -0.25pt;"><span style="white-space: pre;"><font style="" size="3">                                             <a href="mailto:obtain_service_approval@r-2vh44c777rrddq5rtzqbvoz02rtae7434hczs123zjtj2uibka.1i-1v0ebuas.na73.apex.salesforce.com?subject=Approved:{!Case.Id}&amp;body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Approve</a><a href="mailto:approval@2abvmwx2l38af4o0nh4rhoho08xb0msl2g9wfb40skiikbdi2p.c-3kkbseai.cs14.apex.sandbox.salesforce.com?subject=Approved:{!Case.Id}&amp;body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****"> </a>/ <a href="mailto:obtain_service_approval@r-2vh44c777rrddq5rtzqbvoz02rtae7434hczs123zjtj2uibka.1i-1v0ebuas.na73.apex.salesforce.com?subject=Rejected:{!Case.Id}&amp;body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Reject</a></font></span></span></strong></h2></div><div style="font-family: arial; color: rgb(0, 0, 0);"><div style="font-family: arial; font-size: 12pt;"><strong style=""><span style="font-family: Arial, sans-serif; letter-spacing: -0.25pt;"><font size="4"><br></font></span></strong></div><div style="text-align: left;"><font face="Arial, sans-serif"><span style="letter-spacing: -0.25pt;">If you are unable to approve/reject this request via the provide links, please contact us at <b>888-625-5323</b> or </span><a href="mailto:wmservicecenters@wm.com?subject={!Case.Reference_Number__c}"><span style="letter-spacing: -0.25pt;">wmservicecenters@wm.com</span><span style="letter-spacing: -0.25pt;">.</span></a></font></div><div style="font-family: arial; font-size: 12pt;"><strong><span style="font-family: Arial, sans-serif; letter-spacing: -0.25pt;"><br></span></strong></div><h2 style="font-family: arial; font-size: 12pt; margin: 0in 0in 6pt; line-height: 18pt;"><strong><span style="font-family: Arial, sans-serif; letter-spacing: -0.25pt;">Your Approval Requirements&nbsp;</span></strong></h2><div style="font-family: arial; font-size: 12pt;"><strong><span style="font-family: Arial, sans-serif; letter-spacing: -0.25pt;"><br></span></strong></div><div style="font-family: arial; font-size: 12pt;"><span style="font-size:8px;">This email was sent by: WM National Accounts, 415 Day Hill Road, Windsor, CT 06078</span></div></div>]]></td>
+</tr>
+</table>

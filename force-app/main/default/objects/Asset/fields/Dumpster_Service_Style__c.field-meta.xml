@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dumpster_Service_Style__c</fullName>
+    <description>To capture dumpster service styles on the Asset product - this should be deprecated with CPQ - This should either be considered an attribute or standalone product types</description>
+    <externalId>false</externalId>
+    <label>Dumpster Service Style</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No Preference</fullName>
+                <default>false</default>
+                <label>No Preference</label>
+            </value>
+            <value>
+                <fullName>Front Load Container</fullName>
+                <default>false</default>
+                <label>Front Load Container</label>
+            </value>
+            <value>
+                <fullName>Rear Load Container</fullName>
+                <default>false</default>
+                <label>Rear Load Container</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

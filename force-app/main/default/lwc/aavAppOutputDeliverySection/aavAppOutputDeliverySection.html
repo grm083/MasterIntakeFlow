@@ -1,0 +1,30 @@
+<template>
+    <div class="slds-theme_default">
+        <!-- heading Section -->
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-cell-wrap slds-p-horizontal_small">
+                <b>{lbl_header}</b>
+            </span>
+        </h3>
+        <div class="slds-is-relative">
+            <lightning-spinner lwc:if={showSpinner} alternative-text="Loading" size="small"></lightning-spinner>
+            <!-- Error display Section -->
+            <div lwc:if={deliveryDaysError} class="warning-box">
+                <span style="font-size: 1.8em;"> &#9888; </span>
+                <div class="warning-text">
+                    <ul class={cssDeliveryClassError}>
+                        <template for:each={deliveryDaysError} for:item="errorMsg">
+                            <li key={errorMsg}>{errorMsg}</li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+            <!-- Content Section -->
+            <template lwc:else>
+                <c-aav-delivery-dates-u-i deliveries={displayedDeliveries}></c-aav-delivery-dates-u-i>
+                <c-aav-reusable-pagination input-list={allDeliveries}
+                    onlistupdated={handleListUpdated}></c-aav-reusable-pagination>
+            </template>
+        </div>
+    </div>
+</template>

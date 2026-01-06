@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activity_log_Status__c</fullName>
+    <description>Activity log Status</description>
+    <externalId>false</externalId>
+    <label>Activity log Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Closed</fullName>
+                <default>false</default>
+                <label>Closed</label>
+            </value>
+            <value>
+                <fullName>In progress with FAST</fullName>
+                <default>false</default>
+                <label>In progress with FAST</label>
+            </value>
+            <value>
+                <fullName>In progress with Sales</fullName>
+                <default>false</default>
+                <label>In progress with Sales</label>
+            </value>
+            <value>
+                <fullName>In progress with VRM</fullName>
+                <default>false</default>
+                <label>In progress with VRM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

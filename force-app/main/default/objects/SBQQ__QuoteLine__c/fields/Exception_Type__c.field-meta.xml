@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Exception Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>OAKINITCHG</fullName>
+                <default>false</default>
+                <label>Oakleaf Initiated Change</label>
+            </value>
+            <value>
+                <fullName>VENINITCHG</fullName>
+                <default>false</default>
+                <label>Vendor Initiated Change</label>
+            </value>
+            <value>
+                <fullName>CANCELWOCOMP</fullName>
+                <default>false</default>
+                <label>WO Component Cancellation</label>
+            </value>
+            <value>
+                <fullName>COV19</fullName>
+                <default>false</default>
+                <label>COVID – 19</label>
+            </value>
+            <value>
+                <fullName>CLTINITCHG</fullName>
+                <default>false</default>
+                <label>Client Initiated Change</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

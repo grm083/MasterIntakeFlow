@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Origin__c</fullName>
+    <description>To store Origin Information.</description>
+    <externalId>false</externalId>
+    <label>Origin</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Monitor</fullName>
+                <default>false</default>
+                <label>Monitor</label>
+            </value>
+            <value>
+                <fullName>Officetrax</fullName>
+                <default>false</default>
+                <label>Officetrax</label>
+            </value>
+            <value>
+                <fullName>Service Channel</fullName>
+                <default>false</default>
+                <label>Service Channel</label>
+            </value>
+            <value>
+                <fullName>E-Business</fullName>
+                <default>false</default>
+                <label>E-Business</label>
+            </value>
+            <value>
+                <fullName>CMS Monitor</fullName>
+                <default>false</default>
+                <label>CMS Monitor</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

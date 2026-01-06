@@ -1,0 +1,49 @@
+<aura:component controller="CaseDetailHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">    
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="caseNumber" type="string" />
+    <aura:attribute name="spinner" type="boolean" default="false" />
+    <aura:attribute name="renderComponent" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:if isTrue="{!v.spinner}">
+        <lightning:spinner aura:id="spinnerId" variant="brand" alternativeText="Loading" size="large" />
+    </aura:if>
+    
+    <div class="slds">
+        <div class="slds-page-header" style="cursor: pointer;" onclick="{!c.toggleMethod}">
+            <section class="slds-clearfix">
+                <div class="slds-float--left ">
+                    <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+                    <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+                </div>
+                <div class="slds-m-left--large">
+                    <lightning:icon size="small" iconName="standard:case" variant="container"/>
+                    <h2 class="slds-text-heading--medium" style="font-weight:bolder;margin-left: 30px;margin-top: -25px;">{!v.caseNumber}</h2>
+                </div>
+            </section>
+            <aura:if isTrue="{!v.renderComponent}">
+              
+                    <div class="slds-modal__header slds-theme--info">
+                        <lightning:icon size="small" iconName="standard:case" variant="container"/>
+                        <h2 class="slds-text-heading--medium">Case Detail Page</h2>
+                        
+                    </div>
+                
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size--1-of-1">
+                                <force:recordView recordId="{!v.recordId}" type="FULL"/>
+                            </div>
+                            
+                            <p>{!v.body}</p>
+                        </div>
+                   <!-- </div> -->
+               <!--     <footer class="slds-modal__footer" aura:id="modalBoxFooter">
+                        <lightning:button variant="brand" label="Cancel" onclick="{!c.cancelButton}" />
+                    </footer> -->
+          
+            </aura:if>
+        
+        </div>
+    </div>
+     <!--</div>
+   </div> -->
+</aura:component>

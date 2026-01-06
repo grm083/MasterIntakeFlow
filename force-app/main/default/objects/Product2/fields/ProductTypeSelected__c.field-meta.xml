@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProductTypeSelected__c</fullName>
+    <description>The product type (custom field)</description>
+    <externalId>false</externalId>
+    <label>Product Type Selected</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Equipment</fullName>
+                <default>false</default>
+                <label>Equipment</label>
+            </value>
+            <value>
+                <fullName>Service</fullName>
+                <default>false</default>
+                <label>Service</label>
+            </value>
+            <value>
+                <fullName>Entitlement</fullName>
+                <default>false</default>
+                <label>Entitlement</label>
+            </value>
+            <value>
+                <fullName>License</fullName>
+                <default>false</default>
+                <label>License</label>
+            </value>
+            <value>
+                <fullName>Maintenance</fullName>
+                <default>false</default>
+                <label>Maintenance</label>
+            </value>
+            <value>
+                <fullName>Wallet</fullName>
+                <default>false</default>
+                <label>Wallet</label>
+            </value>
+            <value>
+                <fullName>Subscription</fullName>
+                <default>false</default>
+                <label>Subscription</label>
+            </value>
+            <value>
+                <fullName>Fee</fullName>
+                <default>false</default>
+                <label>Fee</label>
+            </value>
+            <value>
+                <fullName>Tracker</fullName>
+                <default>false</default>
+                <label>Tracker</label>
+            </value>
+            <value>
+                <fullName>Ancillary Service</fullName>
+                <default>false</default>
+                <label>Ancillary Service</label>
+            </value>
+            <value>
+                <fullName>Dumpster</fullName>
+                <default>false</default>
+                <label>Dumpster</label>
+            </value>
+            <value>
+                <fullName>Toter</fullName>
+                <default>false</default>
+                <label>Toter</label>
+            </value>
+            <value>
+                <fullName>Compactor</fullName>
+                <default>false</default>
+                <label>Compactor</label>
+            </value>
+            <value>
+                <fullName>Open Top</fullName>
+                <default>false</default>
+                <label>Open Top</label>
+            </value>
+            <value>
+                <fullName>Accessory</fullName>
+                <default>false</default>
+                <label>Accessory</label>
+            </value>
+            <value>
+                <fullName>Core Service</fullName>
+                <default>false</default>
+                <label>Core Service</label>
+            </value>
+            <value>
+                <fullName>Surcharge</fullName>
+                <default>false</default>
+                <label>Surcharge</label>
+            </value>
+            <value>
+                <fullName>Baler</fullName>
+                <default>false</default>
+                <label>Baler</label>
+            </value>
+            <value>
+                <fullName>Box</fullName>
+                <default>false</default>
+                <label>Box</label>
+            </value>
+            <value>
+                <fullName>Carts</fullName>
+                <default>false</default>
+                <label>Carts</label>
+            </value>
+            <value>
+                <fullName>Compactor - Appartment Style</fullName>
+                <default>false</default>
+                <label>Compactor - Appartment Style</label>
+            </value>
+            <value>
+                <fullName>Compactor - Breakaway</fullName>
+                <default>false</default>
+                <label>Compactor - Breakaway</label>
+            </value>
+            <value>
+                <fullName>Compactor - Self-Contained</fullName>
+                <default>false</default>
+                <label>Compactor - Self-Contained</label>
+            </value>
+            <value>
+                <fullName>Compactor - VIP</fullName>
+                <default>false</default>
+                <label>Compactor - VIP</label>
+            </value>
+            <value>
+                <fullName>Compactor Box Only</fullName>
+                <default>false</default>
+                <label>Compactor Box Only</label>
+            </value>
+            <value>
+                <fullName>Drum</fullName>
+                <default>false</default>
+                <label>Drum</label>
+            </value>
+            <value>
+                <fullName>Dumpster - Front Load</fullName>
+                <default>false</default>
+                <label>Dumpster - Front Load</label>
+            </value>
+            <value>
+                <fullName>Dumpster - Rear Load</fullName>
+                <default>false</default>
+                <label>Dumpster - Rear Load</label>
+            </value>
+            <value>
+                <fullName>Hand Pickup</fullName>
+                <default>false</default>
+                <label>Hand Pickup</label>
+            </value>
+            <value>
+                <fullName>Holding Tank</fullName>
+                <default>false</default>
+                <label>Holding Tank</label>
+            </value>
+            <value>
+                <fullName>Keys</fullName>
+                <default>false</default>
+                <label>Keys</label>
+            </value>
+            <value>
+                <fullName>Lock Bar</fullName>
+                <default>false</default>
+                <label>Lock Bar</label>
+            </value>
+            <value>
+                <fullName>Monitor</fullName>
+                <default>false</default>
+                <label>Monitor</label>
+            </value>
+            <value>
+                <fullName>Pad Lock</fullName>
+                <default>false</default>
+                <label>Pad Lock</label>
+            </value>
+            <value>
+                <fullName>Portable Standard Restroom</fullName>
+                <default>false</default>
+                <label>Portable Standard Restroom</label>
+            </value>
+            <value>
+                <fullName>Storage Container</fullName>
+                <default>false</default>
+                <label>Storage Container</label>
+            </value>
+            <value>
+                <fullName>Tilt Hopper</fullName>
+                <default>false</default>
+                <label>Tilt Hopper</label>
+            </value>
+            <value>
+                <fullName>Trailer</fullName>
+                <default>false</default>
+                <label>Trailer</label>
+            </value>
+            <value>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>Vertical Compactor</fullName>
+                <default>false</default>
+                <label>Vertical Compactor</label>
+            </value>
+            <value>
+                <fullName>Bag</fullName>
+                <default>false</default>
+                <label>Bag</label>
+            </value>
+            <value>
+                <fullName>Baler - Horizontal</fullName>
+                <default>false</default>
+                <label>Baler - Horizontal</label>
+            </value>
+            <value>
+                <fullName>Baler - Vertical</fullName>
+                <default>false</default>
+                <label>Baler - Vertical</label>
+            </value>
+            <value>
+                <fullName>Bladder</fullName>
+                <default>false</default>
+                <label>Bladder</label>
+            </value>
+            <value>
+                <fullName>CAGE</fullName>
+                <default>false</default>
+                <label>CAGE</label>
+            </value>
+            <value>
+                <fullName>Cart Dumper - Stand Alone</fullName>
+                <default>false</default>
+                <label>Cart Dumper - Stand Alone</label>
+            </value>
+            <value>
+                <fullName>Client Owned</fullName>
+                <default>false</default>
+                <label>Client Owned</label>
+            </value>
+            <value>
+                <fullName>Compactor Enclosure</fullName>
+                <default>false</default>
+                <label>Compactor Enclosure</label>
+            </value>
+            <value>
+                <fullName>Container/Bin</fullName>
+                <default>false</default>
+                <label>Container/Bin</label>
+            </value>
+            <value>
+                <fullName>CONV</fullName>
+                <default>false</default>
+                <label>CONV</label>
+            </value>
+            <value>
+                <fullName>Gaylord bulk bin container</fullName>
+                <default>false</default>
+                <label>Gaylord bulk bin container</label>
+            </value>
+            <value>
+                <fullName>Hand Washing Station</fullName>
+                <default>false</default>
+                <label>Hand Washing Station</label>
+            </value>
+            <value>
+                <fullName>Loose Yards</fullName>
+                <default>false</default>
+                <label>Loose Yards</label>
+            </value>
+            <value>
+                <fullName>Lugger</fullName>
+                <default>false</default>
+                <label>Lugger</label>
+            </value>
+            <value>
+                <fullName>Molok</fullName>
+                <default>false</default>
+                <label>Molok</label>
+            </value>
+            <value>
+                <fullName>Pack-A Drum</fullName>
+                <default>false</default>
+                <label>Pack-A Drum</label>
+            </value>
+            <value>
+                <fullName>Pail</fullName>
+                <default>false</default>
+                <label>Pail</label>
+            </value>
+            <value>
+                <fullName>Portable Handicap Restroom</fullName>
+                <default>false</default>
+                <label>Portable Handicap Restroom</label>
+            </value>
+            <value>
+                <fullName>Portable Hi-Rise Restroom</fullName>
+                <default>false</default>
+                <label>Portable Hi-Rise Restroom</label>
+            </value>
+            <value>
+                <fullName>Roll Cart</fullName>
+                <default>false</default>
+                <label>Roll Cart</label>
+            </value>
+            <value>
+                <fullName>RVM-Hybrid</fullName>
+                <default>false</default>
+                <label>RVM-Hybrid</label>
+            </value>
+            <value>
+                <fullName>RVM-Multi</fullName>
+                <default>false</default>
+                <label>RVM-Multi</label>
+            </value>
+            <value>
+                <fullName>Shredder - Stationary</fullName>
+                <default>false</default>
+                <label>Shredder - Stationary</label>
+            </value>
+            <value>
+                <fullName>Single Hand Washing Station</fullName>
+                <default>false</default>
+                <label>Single Hand Washing Station</label>
+            </value>
+            <value>
+                <fullName>Skid</fullName>
+                <default>false</default>
+                <label>Skid</label>
+            </value>
+            <value>
+                <fullName>Tanker Truck</fullName>
+                <default>false</default>
+                <label>Tanker Truck</label>
+            </value>
+            <value>
+                <fullName>Tarp</fullName>
+                <default>false</default>
+                <label>Tarp</label>
+            </value>
+            <value>
+                <fullName>Tire Shark</fullName>
+                <default>false</default>
+                <label>Tire Shark</label>
+            </value>
+            <value>
+                <fullName>Tri Compartment</fullName>
+                <default>false</default>
+                <label>Tri Compartment</label>
+            </value>
+            <value>
+                <fullName>Truck</fullName>
+                <default>false</default>
+                <label>Truck</label>
+            </value>
+            <value>
+                <fullName>Tub</fullName>
+                <default>false</default>
+                <label>Tub</label>
+            </value>
+            <value>
+                <fullName>Washout Container</fullName>
+                <default>false</default>
+                <label>Washout Container</label>
+            </value>
+            <value>
+                <fullName>Weatherproof Tire Shark</fullName>
+                <default>false</default>
+                <label>Weatherproof Tire Shark</label>
+            </value>
+            <value>
+                <fullName>Winch Unit</fullName>
+                <default>false</default>
+                <label>Winch Unit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

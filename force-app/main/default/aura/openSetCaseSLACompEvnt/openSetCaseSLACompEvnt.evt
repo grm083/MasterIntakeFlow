@@ -1,0 +1,4 @@
+<aura:event type="Component" description="Trigger this event from wmcapacity planner to open set case sla component">
+  <aura:attribute name="isOpenSLAComp" type="Boolean" />
+  <aura:attribute name="isAvailDate" type="Boolean" />
+</aura:event>

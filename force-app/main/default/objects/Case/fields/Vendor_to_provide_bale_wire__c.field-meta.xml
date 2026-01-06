@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vendor_to_provide_bale_wire__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Should reach out to Accent Wire to obtain cost/availability for bale wire requests.</inlineHelpText>
+    <label>Vendor to provide bale wire</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

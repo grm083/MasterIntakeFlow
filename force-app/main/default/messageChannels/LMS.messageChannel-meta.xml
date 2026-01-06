@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Lightning Message Channel sends information from LWC to Aura</description>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>Record Id to display View Case Summary</description>
+        <fieldName>caseId</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>To Enable/Disable View Case Summary</description>
+        <fieldName>enable</fieldName>
+    </lightningMessageFields>
+    <masterLabel>LMS</masterLabel>
+</LightningMessageChannel>

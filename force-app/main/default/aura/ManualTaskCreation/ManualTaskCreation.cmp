@@ -1,0 +1,32 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller = "ServiceIssueTaskController">
+    
+    <aura:attribute name="ManualTask" type="Boolean" default="true" />
+    <aura:attribute name = "currentCaseID" type="String" description = "Id of Case Record"/>
+    <aura:attribute name="selectedValue" type="String" description = "Selected value of Picklist"/>
+    <lightning:messageChannel type="LMS__c" aura:id="lmschannel" onMessage="{!c.handleReceiveMessage}" scope="APPLICATION"/>
+    
+    <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small"
+            style="position:fixed !important;">
+    <aura:if isTrue="{!v.ManualTask}">
+        <div class="slds-modal slds-fade-in-open" style="position:fixed !important;padding-top:10rem">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close" alternativeText="close" variant="bare"
+                            class="slds-modal__close" onclick="{!c.closeModel}" />
+                   		
+                     <lightning:select name="ReasonPicklist" label="Select reason for Service issue" aura:id="ReasonId" value="{!v.selectedValue}" required="true" class="formatDropDown" >  <br></br>       
+                            
+						 <option value="Hauler Reported">Hauler Reported</option>
+						<option value="Customer Reported">Customer Reported</option>		       				
+                     </lightning:select> <br/><br/>
+                        <lightning:button variant="brand" label= "Save" onclick="{!c.SaveReason}" />     					        					                                             
+                    </div>
+            </div>   
+        </div>        
+          
+   <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+  </aura:if>     
+    </div>       
+</aura:component>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exclude_Tasks__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Enable this checkbox for the tasks to be excluded</description>
+    <externalId>false</externalId>
+    <label>Exclude Tasks</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

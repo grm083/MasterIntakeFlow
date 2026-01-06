@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Accepted_Work_Order7</label>
+    <protected>false</protected>
+    <values>
+        <field>Auto_Approval_OSA_Prod_Delay__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Comments__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Due_Date_Time_Delay__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Next_Action__c</field>
+        <value xsi:type="xsd:string">Update Case</value>
+    </values>
+    <values>
+        <field>No_of_Attempt__c</field>
+        <value xsi:type="xsd:string">1,2</value>
+    </values>
+    <values>
+        <field>Outcome_Parameter__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Outcome__c</field>
+        <value xsi:type="xsd:string">Information Update not Required</value>
+    </values>
+    <values>
+        <field>Parameter__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Process_Name__c</field>
+        <value xsi:type="xsd:string">Accepted WorkOrder</value>
+    </values>
+    <values>
+        <field>Production_Delay_Parameter__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Sequence__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Source__c</field>
+        <value xsi:type="xsd:string">Task</value>
+    </values>
+    <values>
+        <field>TaskDescCode__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Task_Related_Description__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

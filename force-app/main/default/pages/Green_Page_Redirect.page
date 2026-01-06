@@ -1,0 +1,5 @@
+<apex:page >
+  <script>
+ window.open("{!$Label.Green_Page_Link}");        
+  </Script>
+</apex:page>

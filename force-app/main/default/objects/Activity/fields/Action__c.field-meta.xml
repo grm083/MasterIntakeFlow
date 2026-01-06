@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action__c</fullName>
+    <description>Action of the Validate Email Comments Task</description>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL( Process__c ,&apos;Validate Email Comments&apos;) ,&apos;Please review the linked email for any additional required action.&apos; ,&apos;&apos; )</formula>
+    <label>Action</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

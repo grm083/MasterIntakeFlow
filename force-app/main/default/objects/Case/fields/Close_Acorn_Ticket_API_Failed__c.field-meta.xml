@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Acorn_Ticket_API_Failed__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates API request for closing Acorn Ticket is failed</description>
+    <externalId>false</externalId>
+    <label>Close Acorn Ticket API Failed</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

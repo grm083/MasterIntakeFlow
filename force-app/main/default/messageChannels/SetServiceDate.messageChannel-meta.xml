@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Lightning Message Channel sends information from LWC to Custom Highlight Panel for Setting Service Date/Create Multi Date</description>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>Record Id to display Service Date Component</description>
+        <fieldName>caseId</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Parent Id of Multi-Asset Cases</description>
+        <fieldName>parentId</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Service Date returned from AURa</description>
+        <fieldName>serviceDate</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>To inform whether Capacity planner is Eligible or not</description>
+        <fieldName>isCapacityEligible</fieldName>
+    </lightningMessageFields>
+    <masterLabel>SetServiceDate</masterLabel>
+</LightningMessageChannel>

@@ -1,0 +1,614 @@
+<!--SDT-24736 Classification Changes
+Author: Yeshas Konduru
+Date: Feb 27th 2023-->
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+                controller="QuoteLineClassificationChanges" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.reload}" action="{!c.doInit}"/>
+    <aura:attribute name="reload" type="boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="boolean" default="true"/>
+    <aura:attribute name="parentQuoteLineId" type="string" />
+    <aura:attribute name="cChangesObj" type="object"/>
+    <aura:attribute name="isHaulAway" type="boolean" default="false" />
+    <aura:attribute name="caseRecordtype" type="string"/>
+    <aura:attribute name="caseType" type="string"/>
+    <aura:attribute name="colorRed" type="string" default="red"/> <!--pkulkar-TCS-08-May-23-Added as per SDT-29623-->
+    <aura:attribute name="styleRed" type="string" default = "color:red"/> <!--pkulkar-TCS-08-May-23-Added as per SDT-29623-->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading Bundles" size="medium" />
+    </aura:if>
+    <aura:if isTrue="{!!v.showSpinner}">
+        <!-- - SDT-42334 -> start - Added the haul away check in below line for showing only requested configuration
+				in case of haul away product-->
+        <aura:if isTrue="{!and(v.caseRecordtype != 'New Service Case' , !v.isHaulAway)}">
+            <div class="" style="padding:0px;border-radius:0px; width:100% !important">
+                
+                <!--Start -->
+                <div class="slds-col">
+                    <div class="slds-box slds-align_absolute-center" style="border-radius:0px">
+                        <strong>{!v.caseRecordtype}-{!v.caseType}</strong>
+                    </div>
+                    <div class="slds-col slds-grid">
+                        <div class="slds-col slds-size_1-of-2">
+                            <!-- End-->    
+                            
+                            <div class="slds-box slds-align_absolute-center" style="border-radius:0px"><strong>Current Configuration (Old)</strong></div>
+                            <div class="slds-box" style="border-radius:0px">
+                                <div class="slds-box" style="border-radius:0px;padding:0px;">
+                                    <table style="width:100%;">
+                                        <!--pkulkar-TCS-08-May-23-Commented as per SDT-29623
+					<tr>
+                                            <th style="width:50%"><strong>Quantity</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.oldQLineDetails.quantity}</td>
+                                        </tr>
+					-->
+                                        <tr>
+                                            <th style="width:50%"><strong>Equipment Size</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.oldQLineDetails.equipmentSize}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Equipment Type</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.oldQLineDetails.equipmentType}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Waste Stream</strong></th>
+                                            <!-- Updated the field below from wasteStream to wasteStreamMaterialType as per the solution for SDT-28899 -->
+                                            <td style="width:50%">{!v.cChangesObj.oldQLineDetails.wasteStreamMaterialType}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Company Category</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.oldQLineDetails.companyCategory}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Location Position</strong></th>
+                                            <!-- Updated the field below from locationPosition to locationPositionName as per the solution for SDT-28900 -->
+                                            <td style="width:50%">{!v.cChangesObj.oldQLineDetails.locationPositionName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>S-Code</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.oldQLineDetails.sCode}</td>
+                                        </tr>
+                                    </table>  
+                                </div>
+                            </div>
+                            <div class="slds-box" style="border-radius:0px;padding:0px">
+                                <!--<table>
+                            <tr style="background-color: #f2f2f2">
+                                <th>Service</th>
+                                <th>Schedule</th>
+                                <th>Cost</th>
+                                <th>Price</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Vendor</th>
+                            </tr>
+                            <aura:iteration items="{!v.qLineObj.qLineIccList}" var="qLine">
+                                <tr>
+                                    <td>{!qLine.service}</td>
+                                    <td>{!qLine.schedule}</td>
+                                    <td>{!qLine.cost}</td>
+                                    <td>{!qLine.price}</td>
+                                    <td>{!qLine.startDate}</td>
+                                    <td>{!qLine.endDate}</td>
+                                    <td>{!qLine.vendor}</td>
+                                </tr>
+                            </aura:iteration>
+                        </table>-->
+                                <!-- Start -->
+                                <aura:if isTrue="{!empty(v.cChangesObj.oldQLineDetails.serviceLines)}">
+                                    <div class="slds-box">
+                                        There are no Child Quote lines for the Parent Quote Line
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!not(empty(v.cChangesObj.oldQLineDetails.serviceLines))}">
+                                    <div class="slds-box" style="border-radius:0px;padding:0px;">
+                                        <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_fixed-layout slds-table_resizable-cols">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Service">Service</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Schedule">Schedule</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Cost">Cost</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Price">Price</div>
+                                                    </th>
+                                                    <!--pkulkar-TCS-08-May-23-Added as per SDT-29623-->
+						    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Quantity">Quantity</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Start Date">Start Date</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="End Date">End Date</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Vendor">Vendor</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <aura:iteration items="{!v.cChangesObj.oldQLineDetails.serviceLines}" var="oldQline">
+                                                    <tr>
+                                                        <td class="slds-cell-wrap">{!oldQline.service}</td>
+                                                        <!--SDT 41407 added title-->
+                                                        <td class="slds-cell-wrap" title="{!oldQline.monthlyScheduleDetails}">{!oldQline.schedule}</td>
+                                                        <!--TCS-SDT-31265-Added following lines-->
+                                                        <td id="{!oldQline.qlId + 'oldcost'}" class="slds-cell-wrap costPriceHover" onmouseover="{!c.showToolTip}" onmouseout="{!c.HideToolTip}" aria-describedby="Cost1">
+                                                            <!--TCS-SDT-36544-pkulkarn-Added following line-->
+                                                            {!oldQline.costModelType}<br/>
+                                                            {!oldQline.cost}
+                                                            <br/><aura:if isTrue = "{!not(empty(oldQline.cUnitOfMeasurement))}"> Per {!oldQline.cUnitOfMeasurement}</aura:if>
+                                                            <!--STD38111 added lightning:formattedNumbe to give 2 decimal places-->
+                                                            <br/><aura:if isTrue="{!not(empty(oldQline.cMinimumQuantity))}"> Min Qty <lightning:formattedNumber value="{!oldQline.cMinimumQuantity}" maximumFractionDigits="2"/></aura:if>
+                                                            <div id="{!oldQline.qlId + 'oldcostdiv'}" class="slds-popover slds-popover_tooltip slds-hide comparisonTooltip" role="tooltip"  aura:id="{!oldQline.qlId}">
+                                                                <table style="width: 300px;">
+                                                                    <tr><span>Cost Model Type : {!oldQline.costModelType}</span></tr>
+                                                                </table>
+                                                                <aura:if isTrue = "{!oldQline.costModelType == 'Stepped'}">
+                                                                    <div class="slds-popover__body">                                                                            
+                                                                        <table style="width: 300px;"> 
+                                                                            <tr><span>Cost upto 1 : {!oldQline.costUpTo1} &nbsp;&nbsp; Stepped Cost 1 : {!oldQline.steppedCost1}</span></tr>
+                                                                            <tr><span>Cost upto 2 : {!oldQline.costUpTo2} &nbsp;&nbsp; Stepped Cost 2 : {!oldQline.steppedCost2}</span></tr>
+                                                                            <tr><span>Cost upto 3 : {!oldQline.costUpTo3} &nbsp;&nbsp; Stepped Cost 3 : {!oldQline.steppedCost3}</span></tr>
+                                                                            <tr><span>Cost upto 4 : {!oldQline.costUpTo4} &nbsp;&nbsp; Stepped Cost 4 : {!oldQline.steppedCost4}</span></tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </aura:if>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td id="{!oldQline.qlId + 'oldprice'}" class="slds-cell-wrap costPriceHover" onmouseover="{!c.showToolTip}" onmouseout="{!c.HideToolTip}" aria-describedby="price1">
+                                                            <!--TCS-SDT-36544-Added following line-->
+                                                            {!oldQline.pricingMethod}<br/>
+                                                            {!oldQline.price}
+                                                            <br/><aura:if isTrue = "{!not(empty(oldQline.pUnitOfMeasurement))}"> Per {!oldQline.pUnitOfMeasurement}</aura:if>
+                                                            <!--STD38111 added lightning:formattedNumbe to give 2 decimal places-->
+                                                            <br/><aura:if isTrue="{!not(empty(oldQline.pMinimumQuantity))}"> Min Qty <lightning:formattedNumber value="{!oldQline.pMinimumQuantity}" maximumFractionDigits="2"/></aura:if>
+                                                            <div id="{!oldQline.qlId + 'oldpricediv'}" class="slds-popover slds-popover_tooltip slds-hide comparisonTooltip" role="tooltip"  aura:id="{!oldQline.qlId}">
+                                                                <table style="width: 300px;">
+                                                                    <tr><span>Pricing Method : {!oldQline.pricingMethod}</span></tr>
+                                                                </table>
+                                                                <aura:if isTrue = "{!oldQline.pricingMethod == 'Stepped'}">
+                                                                    <div class="slds-popover__body">
+                                                                        <table style="width: 300px;">     
+                                                                            	<tr><span>Price upto 1 : {!oldQline.priceUpTo1} &nbsp;&nbsp; Stepped Price 1 : {!oldQline.steppedPrice1}</span></tr>
+                                                                            	<tr><span>Price upto 2 : {!oldQline.priceUpTo2} &nbsp;&nbsp; Stepped Price 2 : {!oldQline.steppedPrice2}</span></tr>
+                                                                            	<tr><span>Price upto 3 : {!oldQline.priceUpTo3} &nbsp;&nbsp; Stepped Price 3 : {!oldQline.steppedPrice3}</span></tr>
+                                                                           		<tr><span>Price upto 4 : {!oldQline.priceUpTo4} &nbsp;&nbsp; Stepped Price 4 : {!oldQline.steppedPrice4}</span></tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </aura:if>
+                                                            </div>
+                                                        </td>
+                                                        <!--TCS-SDT-31265-End-->
+                                                        
+                                                        <td class="slds-cell-wrap">{!oldQline.quantity}</td> <!--pkulkar-TCS-08-May-23-Added as per SDT-29623-->
+                                                        <td class="slds-cell-wrap">{!oldQline.startDate}</td>
+                                                        <td class="slds-cell-wrap">{!oldQline.EndDate}</td>
+                                                        <td class="slds-cell-wrap">{!oldQline.Vendor}</td>
+                                                    </tr>
+                                                </aura:iteration>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <!--</lightning:layoutItem>-->
+                            <!--Start-->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <!-- End-->
+                            
+                            <!--<lightning:layoutItem size="6">-->
+                            <div class="slds-box slds-align_absolute-center" style="border-radius:0px"><strong>Requested Configuration (New)</strong></div>
+                            <div class="slds-box" style="border-radius:0px">
+                                <div class="slds-box" style="border-radius:0px;padding:0px;">
+                                    <table style="width:100%">
+                                        <!--pkulkar-TCS-08-May-23-Commented as per SDT-29623
+                                        <tr>
+                                            <th style="width:50%"><strong>Quantity</strong></th>
+                                            <td style="width:50%;">
+                                                <div style="{!v.cChangesObj.newQLineDetails.quantityclr =='red' ? 'color:Red;': '' }">
+                                                	{!v.cChangesObj.newQLineDetails.quantity}
+                                                </div>
+                                            </td>
+                                        </tr>
+					-->
+                                        <tr>
+                                            <th style="width:50%"><strong>Equipment Size</strong></th>
+                                            <td style="width:50%">
+                                                <div style="{!v.cChangesObj.newQLineDetails.equipmentSizeclr == v.colorRed ? v.styleRed: '' }">
+                                                	{!v.cChangesObj.newQLineDetails.equipmentSize}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Equipment Type</strong></th>
+                                            <td style="width:50%">
+                                                <div style="{!v.cChangesObj.newQLineDetails.equipmentTypeclr == v.colorRed ? v.styleRed: '' }">
+                                                    {!v.cChangesObj.newQLineDetails.equipmentType}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Waste Stream</strong></th>
+                                            <td style="width:50%">
+                                                <div style="{!v.cChangesObj.newQLineDetails.wasteStreamMaterialTypeclr == v.colorRed ? v.styleRed : '' }">
+                                                    <!-- Updated the field below from wasteStream to wasteStreamMaterialType as per the solution for SDT-28899 -->
+                                                    {!v.cChangesObj.newQLineDetails.wasteStreamMaterialType}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Company Category</strong></th>
+                                            <td style="width:50%">
+                                                <div style="{!v.cChangesObj.newQLineDetails.companyCategoryclr == v.colorRed ? v.styleRed: '' }">
+                                                    {!v.cChangesObj.newQLineDetails.companyCategory}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Location Position</strong></th>
+                                            <td style="width:50%">
+                                                <div style="{!v.cChangesObj.newQLineDetails.locationPositionNameclr == v.colorRed ? v.styleRed : ''}"> 
+                                                    <!-- Updated the field below from locationPosition to locationPositionName as per the solution for SDT-28900 -->
+                                                    {!v.cChangesObj.newQLineDetails.locationPositionName}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>S-Code</strong></th>
+                                            <td style="width:50%">
+                                                <div style="{!v.cChangesObj.newQLineDetails.sCodeclr == v.colorRed ? v.styleRed: '' }">
+                                                    {!v.cChangesObj.newQLineDetails.sCode}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>  
+                                </div>
+                            </div>
+                            <div class="slds-box" style="border-radius:0px;padding:0px">
+                                <aura:if isTrue="{!empty(v.cChangesObj.newQLineDetails.serviceLines)}">
+                                    <div class="slds-box">
+                                        There are no Child Quote lines for the Parent Quote Line
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!not(empty(v.cChangesObj.newQLineDetails.serviceLines))}">
+                                    <!-- Start -->
+                                    <!--<table>
+                            <tr style="background-color: #f2f2f2">
+                                <th>Service</th>
+                                <th>Schedule</th>
+                                <th>Cost</th>
+                                <th>Price</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Vendor</th>
+                            </tr>-->
+                                    <div class="slds-box" style="border-radius:0px;padding:0px;">
+                                        <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_fixed-layout slds-table_resizable-cols">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Service">Service</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Schedule">Schedule</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Cost">Cost</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Price">Price</div>
+                                                    </th>
+                                                    <!--pkulkar-TCS-08-May-23-Added as per SDT-29623-->
+						    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Quantity">Quantity</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Start Date">Start Date</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="End Date">End Date</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Vendor">Vendor</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <aura:iteration items="{!v.cChangesObj.newQLineDetails.serviceLines}" var="newqLine">
+                                                <tr>
+                                                    <td class="slds-cell-wrap">
+                                                        <div style="{!newqLine.serviceclr == v.colorRed ? v.styleRed: '' }">
+                                                            {!newqLine.service}
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap">
+                                                        <div style="{!newqLine.scheduleclr == v.colorRed ? v.styleRed: '' }" title="{!newqLine.monthlyScheduleDetails}"><!--SDT 41407-->
+                                                            {!newqLine.schedule}
+                                                        </div>
+                                                    </td>
+                                                    <!--TCS-SDT-31265-Added following lines-->
+                                                    <td id="{!newqLine.qlId + 'newcost'}" class="slds-cell-wrap costPriceHover" onmouseover="{!c.showToolTip}" onmouseout="{!c.HideToolTip}" aria-describedby="Cost1">
+                                                        <!--TCS-SDT-36544-Added following line-->
+                                                        {!newqLine.costModelType}
+                                                        <div style="{!newqLine.costclr == v.colorRed ? v.styleRed: '' }">{!newqLine.cost}</div>
+                                                        <aura:if isTrue = "{!not(empty(newqLine.cUnitOfMeasurement))}"> Per <span style= "{!newqLine.cUnitOfMeasurementclr == v.colorRed ? v.styleRed: ''}">{!newqLine.cUnitOfMeasurement}</span></aura:if>
+                                                        <!--STD38111 added lightning:formattedNumbe to give 2 decimal places-->
+                                                        <br/><aura:if isTrue = "{!not(empty(newqLine.cMinimumQuantity))}"> Min Qty <span style= "{!newqLine.cMinimumQuantityclr == v.colorRed ? v.styleRed: ''}"><lightning:formattedNumber value="{!newqLine.cMinimumQuantity}" maximumFractionDigits="2"/></span></aura:if>
+                                                        <div id="{!newqLine.qlId + 'newcostdiv'}" class="slds-popover slds-popover_tooltip slds-hide comparisonTooltip" role="tooltip"  aura:id="{!newqLine.qlId}">
+                                                            <table style="width: 300px">
+                                                                <tr><span>Cost Model Type : {!newqLine.costModelType}</span></tr>
+                                                            </table>
+                                                            <aura:if isTrue = "{!newqLine.costModelType == 'Stepped'}">
+                                                                <div class="slds-popover__body">
+                                                                    <table style="width: 300px">     
+                                                                        <tr><span>Cost upto 1 : {!newqLine.costUpTo1} &nbsp;&nbsp; Stepped Cost 1 : {!newqLine.steppedCost1}</span></tr>
+                                                                        <tr><span>Cost upto 2 : {!newqLine.costUpTo2} &nbsp;&nbsp; Stepped Cost 2 : {!newqLine.steppedCost2}</span></tr>
+                                                                        <tr><span>Cost upto 3 : {!newqLine.costUpTo3} &nbsp;&nbsp; Stepped Cost 3 : {!newqLine.steppedCost3}</span></tr>
+                                                                        <tr><span>Cost upto 4 : {!newqLine.costUpTo4} &nbsp;&nbsp; Stepped Cost 4 : {!newqLine.steppedCost4}</span></tr>
+                                                                    </table>
+                                                                </div>
+                                                            </aura:if>
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    <td id="{!newqLine.qlId + 'newprice'}" class="slds-cell-wrap costPriceHover" onmouseover="{!c.showToolTip}" onmouseout="{!c.HideToolTip}" aria-describedby="Cost1">
+                                                        <!--TCS-SDT-36544-Added following line-->
+                                                        {!newqLine.pricingMethod}
+                                                        <div style="{!newqLine.priceclr == v.colorRed ? v.styleRed: '' }">{!newqLine.price}</div>
+                                                        <aura:if isTrue = "{!not(empty(newqLine.pUnitOfMeasurement))}"> Per <span style="{!newqLine.pUnitOfMeasurementclr == v.colorRed ? v.styleRed: '' }">{!newqLine.pUnitOfMeasurement}</span></aura:if>
+                                                        <br/>
+                                                        <!--STD38111 added lightning:formattedNumbe to give 2 decimal places-->
+                                                        <aura:if isTrue = "{!not(empty(newqLine.pMinimumQuantity))}"> Min Qty <span style="{!newqLine.pMinimumQuantityclr == v.colorRed ? v.styleRed: '' }"><lightning:formattedNumber value="{!newqLine.pMinimumQuantity}" maximumFractionDigits="2"/></span></aura:if>
+                                                        <div id="{!newqLine.qlId + 'newpricediv'}" class="slds-popover slds-popover_tooltip slds-hide comparisonTooltip" role="tooltip"  aura:id="{!newqLine.qlId}">
+                                                                <table style="width: 300px">
+                                                                    <tr><span>Pricing Method : {!newqLine.pricingMethod}</span></tr>
+                                                                </table>
+                                                                <aura:if isTrue = "{!newqLine.pricingMethod == 'Stepped'}">
+                                                                    <div class="slds-popover__body">
+                                                                        <table style="width: 300px">     
+                                                                            	<tr><span>Price upto 1 : {!newqLine.priceUpTo1} &nbsp;&nbsp; Stepped Price 1 : {!newqLine.steppedPrice1}</span></tr>
+                                                                            	<tr><span>Price upto 2 : {!newqLine.priceUpTo2} &nbsp;&nbsp; Stepped Price 2 : {!newqLine.steppedPrice2}</span></tr>
+                                                                            	<tr><span>Price upto 3 : {!newqLine.priceUpTo3} &nbsp;&nbsp; Stepped Price 3 : {!newqLine.steppedPrice3}</span></tr>
+                                                                           		<tr><span>Price upto 4 : {!newqLine.priceUpTo4} &nbsp;&nbsp; Stepped Price 4 : {!newqLine.steppedPrice4}</span></tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </aura:if>
+                                                            </div>
+                                                    </td>
+                                                    <!--TCS-SDT-31265-End-->
+                                                    <!--pkulkar-TCS-08-May-23-Added as per SDT-29623-->
+                                                    <td class="slds-cell-wrap">
+                                                        <div style="{!newqLine.quantityclr == v.colorRed ? v.styleRed: '' }">
+                                                            {!newqLine.quantity}
+							</div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap">
+                                                        <div style="{!newqLine.startDateclr == v.colorRed ? v.styleRed: '' }">
+                                                            {!newqLine.startDate}
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap">
+                                                        <div style="{!newqLine.EndDateclr == v.colorRed ? v.styleRed: '' }">
+                                                            {!newqLine.EndDate}
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap">
+                                                        <div style="{!newqLine.Vendorclr == v.colorRed ? v.styleRed: '' }">
+                                                            {!newqLine.Vendor}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </table>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <!-- </lightning:layoutItem>
+            </lightning:layout> -->
+                            <!-- End-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        <!-- - SDT-42334 -> start - Added the haul away check in below line for showing requested configuration
+				in case of haul away product also-->
+        <aura:if isTrue="{!v.caseRecordtype == 'New Service Case' || v.isHaulAway}">
+            <div class="" style="padding:0px;border-radius:0px; width:100% !important">
+                
+                <!--Start -->
+                <div class="slds-col">
+                    <!-- SDT-42334 Added isHaulAway check to show "Haul Away Service Case" heading in product configuration part
+						in case of haul away service  -->
+                    <aura:if isTrue="{!v.isHaulAway}">
+                        <div class="slds-box slds-align_absolute-center" style="border-radius:0px">
+                            <strong>Haul Away Service Case</strong>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!not(v.isHaulAway)}">
+                        <div class="slds-box slds-align_absolute-center" style="border-radius:0px">
+                            <strong>{!v.caseRecordtype} - {!v.caseType}</strong>
+                        </div>
+                    </aura:if>
+                    <!-- SDT-42334 -->
+                    
+                    
+                    <div class="slds-col slds-grid">
+                        <div class="slds-col slds-size_2-of-2">
+                            <!-- End-->
+                            
+                            <!--<lightning:layoutItem size="6">-->
+                            <div class="slds-box slds-align_absolute-center" style="border-radius:0px"><strong>Requested Configuration (New)</strong></div>
+                            <div class="slds-box" style="border-radius:0px">
+                                <div class="slds-box" style="border-radius:0px;padding:0px;">
+                                    <table style="width:100%">
+                                        <!--pkulkar-TCS-08-May-23-Commented as per SDT-29623
+										<tr>
+                                            <th style="width:50%"><strong>Quantity</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.newQLineDetails.quantity}</td>
+                                        </tr>
+					-->
+                                        <tr>
+                                            <th style="width:50%"><strong>Equipment Size</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.newQLineDetails.equipmentSize}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Equipment Type</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.newQLineDetails.equipmentType}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Waste Stream</strong></th>
+                                        <!-- Updated the field below from wasteStream to wasteStreamMaterialType as per the solution for SDT-28899 -->
+                                            <td style="width:50%">{!v.cChangesObj.newQLineDetails.wasteStreamMaterialType}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Company Category</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.newQLineDetails.companyCategory}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>Location Position</strong></th>
+                                            <!-- Updated the field below from locationPosition to locationPositionName as per the solution for SDT-28900 -->
+                                            <td style="width:50%">{!v.cChangesObj.newQLineDetails.locationPositionName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%"><strong>S-Code</strong></th>
+                                            <td style="width:50%">{!v.cChangesObj.newQLineDetails.sCode}</td>
+                                        </tr>
+                                    </table>  
+                                </div>
+                            </div>
+                            <div class="slds-box" style="border-radius:0px;padding:0px">
+                                <aura:if isTrue="{!empty(v.cChangesObj.newQLineDetails.serviceLines)}">
+                                    <div class="slds-box">
+                                        There are no Child Quote lines for the Parent Quote Line
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!not(empty(v.cChangesObj.newQLineDetails.serviceLines))}">
+                                    <!-- Start -->
+                                    <!--<table>
+                            <tr style="background-color: #f2f2f2">
+                                <th>Service</th>
+                                <th>Schedule</th>
+                                <th>Cost</th>
+                                <th>Price</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Vendor</th>
+                            </tr>-->
+                                    <div class="slds-box" style="border-radius:0px;padding:0px;">
+                                        <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_fixed-layout slds-table_resizable-cols">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Service">Service</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Schedule">Schedule</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Cost">Cost</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Price">Price</div>
+                                                    </th>
+                                                    <!--pkulkar-TCS-08-May-23-Added as per SDT-2962-->
+						    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Quantity">Quantity</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Start Date">Start Date</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="End Date">End Date</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate slds-wrap" title="Vendor">Vendor</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <aura:iteration items="{!v.cChangesObj.newQLineDetails.serviceLines}" var="newqLine">
+                                                <tr>
+                                                    <td class="slds-cell-wrap">{!newqLine.service}</td>
+                                                    <!--SDT 41407-->
+                                                    <td class="slds-cell-wrap" title="{!newqLine.monthlyScheduleDetails}">{!newqLine.schedule}</td>
+						    <!--TCS-SDT-31265-Added following lines-->
+                                                    <td id="{!newqLine.qlId + 'newcost'}" class="slds-cell-wrap costPriceHover" onmouseover="{!c.showToolTip}" onmouseout="{!c.HideToolTip}" aria-describedby="Cost1">
+                                                        <!--TCS-SDT-36544-Added following line-->
+                                                        {!newqLine.costModelType}<br/>
+                                                        {!newqLine.cost}
+                                                        <br/><aura:if isTrue = "{!not(empty(newqLine.cUnitOfMeasurement))}"> Per {!newqLine.cUnitOfMeasurement}</aura:if>
+                                                        <!--STD38111 added lightning:formattedNumbe to give 2 decimal places-->
+                                                        <br/><aura:if isTrue = "{!not(empty(newqLine.cMinimumQuantity))}"> Min Qty <lightning:formattedNumber value="{!newqLine.cMinimumQuantity}" maximumFractionDigits="2"/></aura:if>
+                                                        <div id="{!newqLine.qlId + 'newcostdiv'}" class="slds-popover slds-popover_tooltip slds-hide comparisonTooltip" role="tooltip"  aura:id="{!newqLine.qlId}">
+                                                            <table style="width: 300px">
+                                                                <tr><span>Cost Model Type : {!newqLine.costModelType}</span></tr>
+                                                            </table>
+                                                            <aura:if isTrue = "{!newqLine.costModelType == 'Stepped'}">
+                                                                <div class="slds-popover__body">
+                                                                    <table style="width: 300px">     
+                                                                        <tr><span>Cost upto 1 : {!newqLine.costUpTo1} &nbsp;&nbsp; Stepped Cost 1 : {!newqLine.steppedCost1}</span></tr>
+                                                                        <tr><span>Cost upto 2 : {!newqLine.costUpTo2} &nbsp;&nbsp; Stepped Cost 2 : {!newqLine.steppedCost2}</span></tr>
+                                                                        <tr><span>Cost upto 3 : {!newqLine.costUpTo3} &nbsp;&nbsp; Stepped Cost 3 : {!newqLine.steppedCost3}</span></tr>
+                                                                        <tr><span>Cost upto 4 : {!newqLine.costUpTo4} &nbsp;&nbsp; Stepped Cost 4 : {!newqLine.steppedCost4}</span></tr>
+                                                                    </table>
+                                                                </div>
+                                                            </aura:if>
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    <td id="{!newqLine.qlId + 'newprice'}" class="slds-cell-wrap costPriceHover" onmouseover="{!c.showToolTip}" onmouseout="{!c.HideToolTip}" aria-describedby="Cost1">
+                                                        <!--TCS-SDT-36544-Added following line-->
+                                                        {!newqLine.pricingMethod}<br/>
+                                                        {!newqLine.price}
+                                                        <br/><aura:if isTrue = "{!not(empty(newqLine.pUnitOfMeasurement))}"> Per {!newqLine.pUnitOfMeasurement}</aura:if>
+                                                        <!--STD38111 added lightning:formattedNumbe to give 2 decimal places-->
+                                                        <br/><aura:if isTrue = "{!not(empty(newqLine.pMinimumQuantity))}"> Min Qty <lightning:formattedNumber value="{!newqLine.pMinimumQuantity}" maximumFractionDigits="2"/></aura:if>
+                                                       
+                                                        
+                                                        <div id="{!newqLine.qlId + 'newpricediv'}" class="slds-popover slds-popover_tooltip slds-hide comparisonTooltip" role="tooltip"  aura:id="{!newqLine.qlId}">
+                                                                <table style="width: 300px">
+                                                                    <tr><span>Pricing Method : {!newqLine.pricingMethod}</span></tr>
+                                                                </table>
+                                                                <aura:if isTrue = "{!newqLine.pricingMethod == 'Stepped'}">
+                                                                    <div class="slds-popover__body">
+                                                                        <table style="width: 300px">     
+                                                                            	<tr><span>Price upto 1 : {!newqLine.priceUpTo1} &nbsp;&nbsp; Stepped Price 1 : {!newqLine.steppedPrice1}</span></tr>
+                                                                            	<tr><span>Price upto 2 : {!newqLine.priceUpTo2} &nbsp;&nbsp; Stepped Price 2 : {!newqLine.steppedPrice2}</span></tr>
+                                                                            	<tr><span>Price upto 3 : {!newqLine.priceUpTo3} &nbsp;&nbsp; Stepped Price 3 : {!newqLine.steppedPrice3}</span></tr>
+                                                                           		<tr><span>Price upto 4 : {!newqLine.priceUpTo4} &nbsp;&nbsp; Stepped Price 4 : {!newqLine.steppedPrice4}</span></tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </aura:if>
+                                                            </div>
+                                                    </td>
+                                                    <!--TCS-SDT-31265-End-->
+                                                    
+                                                    <td class="slds-cell-wrap">{!newqLine.quantity}</td> <!--pkulkar-TCS-08-May-23-Added as per SDT-29623-->
+                                                    <td class="slds-cell-wrap">{!newqLine.startDate}</td>
+                                                    <td class="slds-cell-wrap">{!newqLine.EndDate}</td>
+                                                    <td class="slds-cell-wrap">{!newqLine.Vendor}</td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </table>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <!-- </lightning:layoutItem>
+            </lightning:layout> -->
+                            <!-- End-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+    </aura:if>
+</aura:component>

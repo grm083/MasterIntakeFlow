@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Either_Location_or_Category_can_entered</fullName>
+    <active>false</active>
+    <description>Either Location or Category Type should be present</description>
+    <errorConditionFormula>AND(NOT(ISBLANK( TEXT(Category_Type__c))),NOT(ISBLANK( LocationId__c )))</errorConditionFormula>
+    <errorMessage>Either location or category type can be entered for a business rule.</errorMessage>
+</ValidationRule>

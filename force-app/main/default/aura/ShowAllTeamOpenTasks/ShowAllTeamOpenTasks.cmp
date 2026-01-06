@@ -1,0 +1,85 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller='MyTaskListController'
+                access="global" >
+    <lightning:workspaceAPI aura:id="workspace" />
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="TaskData" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="noRecordsFound" type="String"/>
+     <aura:attribute name="isSending" type="boolean" />
+     <aura:attribute name="hideNoRecordSection" type="boolean" default = "true"/>
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="PaginationList" type="Task"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="15"/>
+    <!-- Attribute Declration For Pagination End-->
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    
+    <!-- Spinner Start, show the loading screen while 
+		 Client side controller(JS) is communicating with Server Side(APEX) controller -->
+    <aura:if isTrue="{!v.isSending}">
+        <div class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <!-- Spinner End -->
+    <div style="background-color:white">
+    <div class="slds-page-header">
+        <div class="slds-media">
+            
+            <div class="slds-media__body">
+                  <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>List of Team's Open Tasks</b></h1>
+                
+            </div>
+        </div>
+    </div>
+        
+        <!--aura:if isTrue="{!v.noRecordsFound}">
+    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+                <span class="slds-assistive-text">error</span>
+                <h2>No record found.</h2>       
+            </div>
+            <br/><br/>
+    </aura:if-->
+    <!--aura:set attribute="else"-->
+    <div class="slds-m-top_small" >
+        <aura:if isTrue="{!v.hideNoRecordSection}">
+    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+                <span class="slds-assistive-text">error</span>
+                <h2>No record found.</h2>       
+            </div>
+            <br/><br/>
+    
+        <aura:set attribute="else">
+        <lightning:datatable data="{! v.PaginationList }" class="slds-m-top_Large"
+                             columns="{! v.columns }" 
+                             keyField="id"
+                             hideCheckboxColumn="true"
+                             onrowselection="{! c.getSelectedName }"/>	
+        <br/>
+        
+        <lightning:buttonGroup class="slds-align_absolute-center" >
+            <lightning:button label="Previous" disabled="{!v.startPage == 0}"  
+                              onclick="{!c.previous}" variant="brand"
+                              iconName='utility:back'/>
+            &nbsp; &nbsp; &nbsp;
+            <lightning:button label="Next" disabled="{!v.endPage >= v.totalRecords}" 
+                              onclick="{!c.next}" variant="brand"
+                              iconName='utility:forward' iconPosition='right'/>
+        </lightning:buttonGroup>
+          </aura:set>
+            </aura:if>
+         </div> 
+    
+        <br/>
+        <!--/aura:set-->
+        </div>
+     
+</aura:component>

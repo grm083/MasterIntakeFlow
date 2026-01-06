@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Accessories</fullName>
+        <default>false</default>
+        <label>Accessories</label>
+    </customValue>
+    <customValue>
+        <fullName>Additional Keys</fullName>
+        <default>false</default>
+        <label>Additional Keys</label>
+    </customValue>
+    <customValue>
+        <fullName>Award Services</fullName>
+        <default>false</default>
+        <label>Award Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Baler</fullName>
+        <default>false</default>
+        <label>Baler</label>
+    </customValue>
+    <customValue>
+        <fullName>Bale Wire</fullName>
+        <default>false</default>
+        <label>Bale Wire</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancel</fullName>
+        <default>false</default>
+        <label>Cancel</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancel Location</fullName>
+        <default>false</default>
+        <label>Cancel Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Change/Correction</fullName>
+        <default>false</default>
+        <label>Change/Correction</label>
+    </customValue>
+    <customValue>
+        <fullName>Compactor</fullName>
+        <default>false</default>
+        <label>Compactor</label>
+    </customValue>
+    <customValue>
+        <fullName>Compactor Accessories</fullName>
+        <default>false</default>
+        <label>Compactor Accessories</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Question</fullName>
+        <default>false</default>
+        <label>Customer Question</label>
+    </customValue>
+    <customValue>
+        <fullName>Decrease</fullName>
+        <default>false</default>
+        <label>Decrease</label>
+    </customValue>
+    <customValue>
+        <fullName>Dumpster Fresh</fullName>
+        <default>false</default>
+        <label>Dumpster Fresh</label>
+    </customValue>
+    <customValue>
+        <fullName>eBusiness Portal Question</fullName>
+        <default>false</default>
+        <label>eBusiness Portal Question</label>
+    </customValue>
+    <customValue>
+        <fullName>Empty and Return</fullName>
+        <default>false</default>
+        <label>Empty and Return</label>
+    </customValue>
+    <customValue>
+        <fullName>Empty and Do NOT Return</fullName>
+        <default>false</default>
+        <label>Empty and Do NOT Return</label>
+    </customValue>
+    <customValue>
+        <fullName>Equipment</fullName>
+        <default>false</default>
+        <label>Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>Equipment/Property</fullName>
+        <default>false</default>
+        <label>Equipment/Property</label>
+    </customValue>
+    <customValue>
+        <fullName>ETA</fullName>
+        <default>false</default>
+        <label>ETA</label>
+    </customValue>
+    <customValue>
+        <fullName>Event Box(es)</fullName>
+        <default>false</default>
+        <label>Event Box(es)</label>
+    </customValue>
+    <customValue>
+        <fullName>Existing Location</fullName>
+        <default>false</default>
+        <label>Existing Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Existing Service</fullName>
+        <default>false</default>
+        <label>Existing Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Extra Pickup</fullName>
+        <default>false</default>
+        <label>Extra Pickup</label>
+    </customValue>
+    <customValue>
+        <fullName>Fee(s)</fullName>
+        <default>false</default>
+        <label>Fee(s)</label>
+    </customValue>
+    <customValue>
+        <fullName>General Supplies</fullName>
+        <default>false</default>
+        <label>General Supplies</label>
+    </customValue>
+    <customValue>
+        <fullName>Incorrect Service Level</fullName>
+        <default>false</default>
+        <label>Incorrect Service Level</label>
+    </customValue>
+    <customValue>
+        <fullName>Increase</fullName>
+        <default>false</default>
+        <label>Increase</label>
+    </customValue>
+    <customValue>
+        <fullName>Increase/Decrease</fullName>
+        <default>false</default>
+        <label>Increase/Decrease</label>
+    </customValue>
+    <customValue>
+        <fullName>Lamptracker/Batterytracker/MedWaste</fullName>
+        <default>false</default>
+        <label>Lamptracker/Batterytracker/MedWaste</label>
+    </customValue>
+    <customValue>
+        <fullName>Lids</fullName>
+        <default>false</default>
+        <label>Lids</label>
+    </customValue>
+    <customValue>
+        <fullName>Location</fullName>
+        <default>false</default>
+        <label>Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Locks</fullName>
+        <default>false</default>
+        <label>Locks</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing Container</fullName>
+        <default>false</default>
+        <label>Missing Container</label>
+    </customValue>
+    <customValue>
+        <fullName>Monitor</fullName>
+        <default>false</default>
+        <label>Monitor</label>
+    </customValue>
+    <customValue>
+        <fullName>New Business</fullName>
+        <default>false</default>
+        <label>New Business</label>
+    </customValue>
+    <customValue>
+        <fullName>New Hauler No Delivery</fullName>
+        <default>false</default>
+        <label>New Hauler No Delivery</label>
+    </customValue>
+    <customValue>
+        <fullName>Old Hauler No Removal</fullName>
+        <default>false</default>
+        <label>Old Hauler No Removal</label>
+    </customValue>
+    <customValue>
+        <fullName>On Call</fullName>
+        <default>false</default>
+        <label>On Call Pickup</label>
+    </customValue>
+    <customValue>
+        <fullName>Bulk/Got Junk/Junk King</fullName>
+        <default>false</default>
+        <label>Bulk/Got Junk/Junk King</label>
+    </customValue>
+    <customValue>
+        <fullName>Bale(s)</fullName>
+        <default>false</default>
+        <label>Bale(s)</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Past Due</fullName>
+        <default>false</default>
+        <label>Past Due</label>
+    </customValue>
+    <customValue>
+        <fullName>Permanent</fullName>
+        <default>false</default>
+        <label>Permanent</label>
+    </customValue>
+    <customValue>
+        <fullName>Potential Stop Service</fullName>
+        <default>false</default>
+        <label>Potential Stop Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Power Wash</fullName>
+        <default>false</default>
+        <label>Power Wash</label>
+    </customValue>
+    <customValue>
+        <fullName>Relocate Container</fullName>
+        <default>false</default>
+        <label>Relocate Container</label>
+    </customValue>
+    <customValue>
+        <fullName>Rightsizing/Load Max</fullName>
+        <default>false</default>
+        <label>Rightsizing/Load Max</label>
+    </customValue>
+    <customValue>
+        <fullName>Schedule A</fullName>
+        <default>false</default>
+        <label>Schedule A</label>
+    </customValue>
+    <customValue>
+        <fullName>Schedule A Declines</fullName>
+        <default>false</default>
+        <label>Schedule A Declines</label>
+    </customValue>
+    <customValue>
+        <fullName>Scheduled On Call Pickup</fullName>
+        <default>false</default>
+        <label>Scheduled On Call Pickup</label>
+    </customValue>
+    <customValue>
+        <fullName>Service</fullName>
+        <default>false</default>
+        <label>Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Not Performed</fullName>
+        <default>false</default>
+        <label>Service Not Performed</label>
+    </customValue>
+    <customValue>
+        <fullName>Electronic Recycling (Computers, Laptops, etc.)</fullName>
+        <default>false</default>
+        <label>Electronic Recycling (Computers, Laptops, etc.)</label>
+    </customValue>
+    <customValue>
+        <fullName>Universal Waste (Lamps, Batteries, etc.)</fullName>
+        <default>false</default>
+        <label>Universal Waste (Lamps, Batteries, etc.)</label>
+    </customValue>
+    <customValue>
+        <fullName>Services</fullName>
+        <default>false</default>
+        <label>Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Short Pay</fullName>
+        <default>false</default>
+        <label>Short Pay</label>
+    </customValue>
+    <customValue>
+        <fullName>Stop Service</fullName>
+        <default>false</default>
+        <label>Stop Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Temporary</fullName>
+        <default>false</default>
+        <label>Temporary</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor</fullName>
+        <default>false</default>
+        <label>Vendor</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Account</fullName>
+        <default>false</default>
+        <label>Vendor Account</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Account Update</fullName>
+        <default>false</default>
+        <label>Vendor Account Update</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Cost Increase</fullName>
+        <default>false</default>
+        <label>Vendor Cost Increase</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Question</fullName>
+        <default>false</default>
+        <label>Vendor Question</label>
+    </customValue>
+    <customValue>
+        <fullName>Waste Stream</fullName>
+        <default>false</default>
+        <label>Waste Stream</label>
+    </customValue>
+    <customValue>
+        <fullName>Wheels</fullName>
+        <default>false</default>
+        <label>Wheels</label>
+    </customValue>
+    <customValue>
+        <fullName>Extra Loose Yards</fullName>
+        <default>false</default>
+        <label>Extra Loose Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>Bulk</fullName>
+        <default>false</default>
+        <label>Bulk</label>
+    </customValue>
+    <customValue>
+        <fullName>Haul Away - No Equipment</fullName>
+        <default>false</default>
+        <label>Haul Away - No Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>Wrong Hauler</fullName>
+        <default>false</default>
+        <label>Wrong Hauler</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Requested</fullName>
+        <default>false</default>
+        <label>Customer Requested</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Requested</fullName>
+        <default>false</default>
+        <label>Vendor Requested</label>
+    </customValue>
+    <customValue>
+        <fullName>Internally Requested</fullName>
+        <default>false</default>
+        <label>Internally Requested</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancel Locations</fullName>
+        <default>false</default>
+        <label>Cancel Locations</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancel Services</fullName>
+        <default>false</default>
+        <label>Cancel Services</label>
+    </customValue>
+    <customValue>
+        <fullName>New Client</fullName>
+        <default>false</default>
+        <label>New Client</label>
+    </customValue>
+    <customValue>
+        <fullName>New Location</fullName>
+        <default>false</default>
+        <label>New Location</label>
+    </customValue>
+    <customValue>
+        <fullName>New Vendor</fullName>
+        <default>false</default>
+        <label>New Vendor</label>
+    </customValue>
+    <customValue>
+        <fullName>Location Record</fullName>
+        <default>false</default>
+        <label>Location Record</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Record</fullName>
+        <default>false</default>
+        <label>Client Record</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Record</fullName>
+        <default>false</default>
+        <label>Vendor Record</label>
+    </customValue>
+    <customValue>
+        <fullName>Deactivate Client</fullName>
+        <default>false</default>
+        <label>Deactivate Client</label>
+    </customValue>
+    <customValue>
+        <fullName>Deactivate Location</fullName>
+        <default>false</default>
+        <label>Deactivate Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Deactivate Vendor</fullName>
+        <default>false</default>
+        <label>Deactivate Vendor</label>
+    </customValue>
+    <customValue>
+        <fullName>Hauler of Record</fullName>
+        <default>false</default>
+        <label>Hauler of Record</label>
+    </customValue>
+    <customValue>
+        <fullName>Asset</fullName>
+        <default>false</default>
+        <label>Asset</label>
+    </customValue>
+    <customValue>
+        <fullName>Hauler</fullName>
+        <default>false</default>
+        <label>Hauler</label>
+    </customValue>
+    <customValue>
+        <fullName>Price</fullName>
+        <default>false</default>
+        <label>Price</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Date</fullName>
+        <default>false</default>
+        <label>Service Date</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor or Client Identification</fullName>
+        <default>false</default>
+        <label>Vendor or Client Identification</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoice Charge Dispute</fullName>
+        <default>false</default>
+        <label>Invoice Charge Dispute</label>
+    </customValue>
+    <customValue>
+        <fullName>Mismatched Spec</fullName>
+        <default>false</default>
+        <label>Mismatched Spec</label>
+    </customValue>
+    <customValue>
+        <fullName>Recon Problem Quote</fullName>
+        <default>false</default>
+        <label>Recon Problem Quote</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Account Update</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Customer Account Update</label>
+    </customValue>
+    <customValue>
+        <fullName>Currency Type Mismatch</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Currency Type Mismatch</label>
+    </customValue>
+    <customValue>
+        <fullName>Cost Increase</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cost Increase</label>
+    </customValue>
+    <customValue>
+        <fullName>Container Placement</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Container Placement</label>
+    </customValue>
+    <customValue>
+        <fullName>Cannot Read</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cannot Read</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellation Confirmations</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cancellation Confirmations</label>
+    </customValue>
+    <customValue>
+        <fullName>Can&apos;t Identify</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Can&apos;t Identify</label>
+    </customValue>
+    <customValue>
+        <fullName>Seasonal</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Seasonal</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Address</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Billing Address</label>
+    </customValue>
+    <customValue>
+        <fullName>Extra</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Extra</label>
+    </customValue>
+    <customValue>
+        <fullName>Wrong Location</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Wrong Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Validation</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Validation</label>
+    </customValue>
+    <customValue>
+        <fullName>Temporary Delivery</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Temporary Delivery</label>
+    </customValue>
+    <customValue>
+        <fullName>SVC Month</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>SVC Month</label>
+    </customValue>
+    <customValue>
+        <fullName>Statement</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Statement</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Status</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Service Status</label>
+    </customValue>
+    <customValue>
+        <fullName>Remittance</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Remittance</label>
+    </customValue>
+    <customValue>
+        <fullName>Client</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Client</label>
+    </customValue>
+    <customValue>
+        <fullName>Rate</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rate</label>
+    </customValue>
+    <customValue>
+        <fullName>Permanent Delivery</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Permanent Delivery</label>
+    </customValue>
+    <customValue>
+        <fullName>Payable Issue</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Payable Issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellation</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cancellation</label>
+    </customValue>
+    <customValue>
+        <fullName>Open Payables</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Open Payables</label>
+    </customValue>
+    <customValue>
+        <fullName>Incorrect Style</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incorrect Style</label>
+    </customValue>
+    <customValue>
+        <fullName>EDI Error</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>EDI Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Recycling</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Recycling</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Schedule (Recon)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Billing Schedule (Recon)</label>
+    </customValue>
+    <customValue>
+        <fullName>New Service/Location</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>New Service/Location</label>
+    </customValue>
+    <customValue>
+        <fullName>National Mall Monitor</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>National Mall Monitor</label>
+    </customValue>
+    <customValue>
+        <fullName>MSA/Contract Issue</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>MSA/Contract Issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing Pages</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missing Pages</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing Invoice(s)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missing Invoice(s)</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing Accessories</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Missing Accessories</label>
+    </customValue>
+    <customValue>
+        <fullName>Location Profile Update</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Location Profile Update</label>
+    </customValue>
+    <customValue>
+        <fullName>Location Not in System</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Location Not in System</label>
+    </customValue>
+    <customValue>
+        <fullName>Has Equipment or Repairs</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Has Equipment or Repairs</label>
+    </customValue>
+    <customValue>
+        <fullName>General Inquiries/Errors</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>General Inquiries/Errors</label>
+    </customValue>
+    <customValue>
+        <fullName>Existing Container</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Existing Container</label>
+    </customValue>
+    <customValue>
+        <fullName>Equipment Invoice</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Equipment Invoice</label>
+    </customValue>
+    <description>Case Sub Type</description>
+    <masterLabel>Case Sub Type</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

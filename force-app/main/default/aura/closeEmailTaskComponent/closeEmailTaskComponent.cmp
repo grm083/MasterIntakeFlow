@@ -1,0 +1,113 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" Controller = "closeEmailTaskController">
+	
+    <aura:html tag="style">
+        .slds-backdrop {
+        background: rgba(43, 40, 38, 0) !important;
+        }
+        .slds-spinner_container{
+        background: transparent !important;
+        }
+        
+        .modal-body {
+        background: transparent !important;
+        box-shadow: none !important;
+        }
+        .slds-modal__header--empty {
+        display: none !important;
+        }
+</aura:html>
+    
+    
+    
+    <aura:attribute name="record" type="Object" description="The record object" />
+    <aura:attribute name="EmailRec" type="Object" />
+    <aura:attribute name="openWarning" type="boolean" default="true"/>
+    <aura:attribute name="openOwnerWarn" type="boolean" default="false"/>
+    
+
+        
+        <aura:if isTrue="{!v.openWarning}">
+            
+             
+            <section role="dialog" aria-labelledby="modal-heading-01"
+                 aria-modal="true" aria-describedby="modal-content-id-1"
+                 class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+                <div class="slds-modal__container">
+                    
+                    <header class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Complete Related Email Tasks</h2>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>
+                            This will complete all email tasks for this Case.  Are you sure you would like to proceed?
+                            </b>
+                        </p>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand" 
+                                          label="Proceed"
+                                          title="Proceed"
+                                          onclick="{! c.checkOwner }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            
+            
+        </aura:if>
+    
+        <aura:if isTrue="{!v.openOwnerWarn}">
+            
+             
+            <section role="dialog" aria-labelledby="modal-heading-01"
+                 aria-modal="true" aria-describedby="modal-content-id-1"
+                 class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+                <div class="slds-modal__container">
+                    
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Complete Related Email Tasks</h2>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>
+                            One or more of these email tasks is currently assigned to another agent. Do you want to proceed with marking all the email tasks as complete?
+                            </b>
+                        </p>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand" 
+                                          label="Complete Tasks"
+                                          title="Complete Tasks"
+                                          onclick="{! c.completeTasks }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            
+            
+        </aura:if>
+    
+    
+</aura:component>

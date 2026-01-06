@@ -1,0 +1,67 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="GetCaseInformation" >
+    <aura:attribute name="SLAinstructions" type="String" default=""/>
+    <aura:attribute name="recordId" type="String"  />
+    <aura:attribute name="specialInstructions" type="String" default=""/>
+    <aura:attribute name="channelRequirements" type="String" default=""/>
+    <aura:attribute name="channelName" type="String" default=""/>
+    <aura:attribute name="displaySLAInstruction" type="Boolean" default="false" />
+    <aura:attribute name="displayChannelRequirements" type="Boolean" default="false" />
+    <aura:attribute name="displaySpecialInstructions" type="Boolean" default="false" />
+    
+    <aura:handler name="init"  action="{!c.onload}" value="{!this}" />   
+    <!--<aura:handler event="force:refreshView" action="{!c.onload}" />-->    
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}" 
+                      layoutType="FULL"
+                      targetRecord="{!v.case}"
+                      targetFields="{!v.caseRecord}"
+                      fields="Id,CaseNumber,AssetId,Case_Type__c,Case_Sub_Type__c,Client__c,Location__c,ContactId,Status,Case_Sub_Status__c" 
+                      mode="VIEW"
+                      recordUpdated="{!c.recordUpdated}"
+                      />
+    
+	<aura:if isTrue="{!v.displayChannelRequirements}">       
+        <lightning:card title="{!'Channel Requirements - ' +v.channelName}">
+            <p class="slds-p-around_small">
+                <div class="newline">
+                    <ul class="slds-list--horizontal slds-wrap">
+                        <li class="slds-m-right_large">             
+                            <ui:inputTextArea aura:id="comments" value="{!v.channelRequirements}" rows="4" cols="250" disabled="true" />
+                        </li>
+                    </ul>
+                </div>
+            </p>
+        </lightning:card>      
+    </aura:if>
+    
+    <aura:if isTrue="{!v.displaySpecialInstructions}">
+        <lightning:card title="Special Instructions">
+            <p class="slds-p-around_small">
+                                <div class="newline">
+                    <ul class="slds-list--horizontal slds-wrap">
+                        <li class="slds-m-right_large">             
+                            <ui:inputTextArea aura:id="comments" value="{!v.specialInstructions}" rows="4" cols="250" disabled="true" />
+                        </li>
+                        
+                    </ul>
+                </div> `
+            </p>
+        </lightning:card> 
+    </aura:if>
+    <aura:if isTrue="{!v.displaySLAInstruction}"> 
+        <lightning:card title="SLA Instructions">
+            <p class="slds-p-around_small">
+                <div class="newline">
+                    <ul class="slds-list--horizontal slds-wrap">
+                        <li class="slds-m-right_large">             
+                            <ui:inputTextArea aura:id="comments" value="{!v.SLAinstructions}" rows="4" cols="250" disabled="true" />
+                        </li>
+                        
+                    </ul>
+                </div> `
+                
+            </p>
+        </lightning:card> 
+    </aura:if> 
+</aura:component>

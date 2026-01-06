@@ -1,0 +1,21 @@
+<aura:component  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" controller="CaseController" access="global" >
+	<aura:attribute name="showBox" type="Boolean" default="true"/>
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="comments" type="String"/>
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="label" type="String" default="Copy Email"/>
+    <aura:registerEvent name="lookUpAction" type="c:lookUpEvent"/>
+    <aura:if isTrue="{!v.showBox}">
+        <lightning:card title ="Destination Case Number">
+           <div class="slds-grid slds-gutters">
+               <div class="slds-col slds-size_2-of-3">
+                <c:CaseCustomLookup objectAPIName="case" fieldAPIName="casenumber" IconName="standard:case" selectedRecord="{!v.selectedLookUpRecord}" label="Case Number"/>
+               </div>
+               <div class="slds-col slds-size_1-of-3">
+                    <lightning:buttonIcon iconName="utility:copy" variant="brand"  onclick="{!c.saveAction}" aura:Id="saveButton" alternativeText="{!v.label}" title="{!v.label}" size="large"/>
+                    <lightning:buttonIcon iconName="utility:back" variant="border-filled"  onclick="{!c.saveAction}" aura:Id="backButton" alternativeText="Go Back" title="Go Back" size="large"/>
+            	</div>
+            </div>            
+    </lightning:card>
+    </aura:if>
+</aura:component>

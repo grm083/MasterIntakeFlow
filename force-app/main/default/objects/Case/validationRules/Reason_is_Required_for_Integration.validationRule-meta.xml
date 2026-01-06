@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_is_Required_for_Integration</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT($Setup.VRBatchSetting__c.IsBatchExecution__c),
+NOT($RecordType.Name = &apos;Integration Case&apos;),
+OR(
+ISPICKVAL(Case_Sub_Type__c, &quot;Accessories&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Equipment&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Fee(s)&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Services&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Customer Question&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Vendor Question&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Location&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Service&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Cancel&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Change/Correction&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Decrease&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Increase&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Vendor Cost Increase&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;eBusiness Portal Question&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Other&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Vendor Account Update&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Permanent&quot;),
+ISPICKVAL(Case_Sub_Type__c, &quot;Temporary&quot;)
+),
+ISBLANK(TEXT(Case_Reason__c)),
+ISPICKVAL( Source_System__c, &quot;Salesforce&quot;)
+)</errorConditionFormula>
+    <errorMessage>A Case Reason must be set for this Case Sub-Type</errorMessage>
+</ValidationRule>

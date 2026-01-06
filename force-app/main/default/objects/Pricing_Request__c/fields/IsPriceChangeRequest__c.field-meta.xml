@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsPriceChangeRequest__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This filed is use to identify between New and Change price request.</description>
+    <externalId>false</externalId>
+    <label>IsPriceChangeRequest</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

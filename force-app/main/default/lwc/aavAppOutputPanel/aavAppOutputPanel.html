@@ -1,0 +1,41 @@
+<template>
+    <lightning-spinner lwc:if={showSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
+    <!-- Third Party/Non-WM vendor Error -->
+    <template lwc:if={errorMessage}>
+        <div class="outer-section">
+            <div class="slds-theme_default">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-cell-wrap slds-p-horizontal_small">
+                        <b>{lbl_header}</b>
+                    </span>
+                </h3>
+            </div>
+            <div class="warning-box">
+                <span style="font-size: 1.8em;"> &#9888; </span>
+                <div class="warning-text">
+                    <ul class={cssClassError}>
+                        <template for:each={errorMessage} for:item="errorMsg">
+                            <li key={errorMsg}>{errorMsg}</li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+    <!-- Availability Ouput Section -->
+    <template lwc:else>
+        <!-- Delivery Availability Section -->
+        <div title="Delivery Availability">
+            <c-aav-app-output-delivery-section availability-data={availabilityData}></c-aav-app-output-delivery-section>
+        </div>
+        <!-- Service Availability Section -->
+        <div title="Service Availability" class="outerbox">
+            <c-aav-app-output-service-section availability-data={availabilityData}></c-aav-app-output-service-section>
+        </div>
+
+        <!-- Outage data Section -->
+        <div title="Outage Data" class="outerbox">
+            <c-aav-app-output-outage-section outages={outages}></c-aav-app-output-outage-section>
+        </div>
+    </template>
+</template>

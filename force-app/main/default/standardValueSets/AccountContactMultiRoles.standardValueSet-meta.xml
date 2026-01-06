@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Equipment Repairs</fullName>
+        <default>false</default>
+        <label>Equipment Repairs</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Emergency/After Hours</fullName>
+        <default>false</default>
+        <label>Emergency/After Hours</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dispatch - Rolloff</fullName>
+        <default>false</default>
+        <label>Dispatch - Rolloff</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dispatch - Commercial</fullName>
+        <default>false</default>
+        <label>Dispatch - Commercial</label>
+    </standardValue>
+    <standardValue>
+        <fullName>1st Dispatch Escalation-Rolloff</fullName>
+        <default>false</default>
+        <label>1st Dispatch Escalation-Rolloff</label>
+    </standardValue>
+    <standardValue>
+        <fullName>1st Dispatch Escalation-Commercial</fullName>
+        <default>false</default>
+        <label>1st Dispatch Escalation-Commercial</label>
+    </standardValue>
+    <standardValue>
+        <fullName>2nd Dispatch Escalation-Rolloff</fullName>
+        <default>false</default>
+        <label>2nd Dispatch Escalation-Rolloff</label>
+    </standardValue>
+    <standardValue>
+        <fullName>2nd Dispatch Escalation-Commercial</fullName>
+        <default>false</default>
+        <label>2nd Dispatch Escalation-Commercial</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Container Delivery Updates</fullName>
+        <default>false</default>
+        <label>Container Delivery Updates</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Tonnage Inquiries</fullName>
+        <default>false</default>
+        <label>Tonnage Inquiries</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Work Order Inquiries</fullName>
+        <default>false</default>
+        <label>Work Order Inquiries</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Site Surveys</fullName>
+        <default>false</default>
+        <label>Site Surveys</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cost</fullName>
+        <default>false</default>
+        <label>Cost</label>
+    </standardValue>
+    <standardValue>
+        <fullName>1st Cost Escalation</fullName>
+        <default>false</default>
+        <label>1st Cost Escalation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>2nd Cost Escalation</fullName>
+        <default>false</default>
+        <label>2nd Cost Escalation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Account Setup and Maintenance</fullName>
+        <default>false</default>
+        <label>Account Setup and Maintenance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>1st Account Setup and Maintenance  Escalation</fullName>
+        <default>false</default>
+        <label>1st Account Setup and Maintenance  Escalation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>2nd Account Setup and Maintenance  Escalation</fullName>
+        <default>false</default>
+        <label>2nd Account Setup and Maintenance  Escalation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Schedule A Inquiries</fullName>
+        <default>false</default>
+        <label>Schedule A Inquiries</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Billing/Invoice Inquiries</fullName>
+        <default>false</default>
+        <label>Billing/Invoice Inquiries</label>
+    </standardValue>
+</StandardValueSet>

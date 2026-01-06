@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Haul_Away_information__c</fullName>
+    <label>Haul Away information</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Haul Away + Asset Available + End date Available+ Hauler Available</fullName>
+                <default>false</default>
+                <label>Haul Away + Asset Available + End date Available+ Hauler Available</label>
+            </value>
+            <value>
+                <fullName>Haul Away + Asset Available + End date Available + No Hauler Available</fullName>
+                <default>false</default>
+                <label>Haul Away + Asset Available + End date Available + No Hauler Available</label>
+            </value>
+            <value>
+                <fullName>Haul Away + Asset Available + No End date Available</fullName>
+                <default>false</default>
+                <label>Haul Away + Asset Available + No End date Available</label>
+            </value>
+            <value>
+                <fullName>Haul Away + No Asset Available + Hauler Available</fullName>
+                <default>false</default>
+                <label>Haul Away + No Asset Available + Hauler Available</label>
+            </value>
+            <value>
+                <fullName>Haul Away + No Asset Available + No Hauler Available</fullName>
+                <default>false</default>
+                <label>Haul Away + No Asset Available + No Hauler Available</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

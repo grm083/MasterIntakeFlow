@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_Final_Email_Sent</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( AND(ISPICKVAL(Outcome__c,&apos;Final Email Sent&apos;),ISPICKVAL(Process__c,&apos;Escalation Obtain Service Approval&apos;), Attempt__c ==2), true ,false)</errorConditionFormula>
+    <errorDisplayField>Outcome__c</errorDisplayField>
+    <errorMessage>Final Email Sent is restricted for this escalation attempt</errorMessage>
+</ValidationRule>

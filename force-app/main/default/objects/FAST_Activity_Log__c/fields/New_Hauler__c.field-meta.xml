@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Hauler__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>New Hauler</description>
+    <externalId>false</externalId>
+    <label>New Hauler</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Please check the selected Hauler record does not exist or does not match!</errorMessage>
+        <filterItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Vendor</value>
+        </filterItems>
+        <filterItems>
+            <field>Account.Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>FAST Activity Logs</relationshipLabel>
+    <relationshipName>FAST_Activity_Logs</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

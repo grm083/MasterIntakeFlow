@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Default_Price_Method__c</fullName>
+    <externalId>false</externalId>
+    <label>Default Price Method</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Per Unit</fullName>
+                <default>false</default>
+                <label>Per Unit</label>
+            </value>
+            <value>
+                <fullName>Flat Price</fullName>
+                <default>false</default>
+                <label>Flat Price</label>
+            </value>
+            <value>
+                <fullName>Percentage</fullName>
+                <default>false</default>
+                <label>Percentage</label>
+            </value>
+            <value>
+                <fullName>Related Price</fullName>
+                <default>false</default>
+                <label>Related Price</label>
+            </value>
+            <value>
+                <fullName>Tiered Rate</fullName>
+                <default>false</default>
+                <label>Tiered Rate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

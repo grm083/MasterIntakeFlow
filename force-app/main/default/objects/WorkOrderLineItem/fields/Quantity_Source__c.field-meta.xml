@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quantity_Source__c</fullName>
+    <externalId>false</externalId>
+    <label>Quantity Source</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Weight Tkt</fullName>
+                <default>false</default>
+                <label>Weight Tkt</label>
+            </value>
+            <value>
+                <fullName>Vendor Doc</fullName>
+                <default>false</default>
+                <label>Vendor Doc</label>
+            </value>
+            <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>EDI Invoice</fullName>
+                <default>false</default>
+                <label>EDI Invoice</label>
+            </value>
+            <value>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+                <label>Invoice</label>
+            </value>
+            <value>
+                <fullName>eBusiness</fullName>
+                <default>false</default>
+                <label>eBusiness</label>
+            </value>
+            <value>
+                <fullName>Estimate</fullName>
+                <default>false</default>
+                <label>Estimate</label>
+            </value>
+            <value>
+                <fullName>FTP Upload</fullName>
+                <default>false</default>
+                <label>FTP Upload</label>
+            </value>
+            <value>
+                <fullName>Tonnage Fax</fullName>
+                <default>false</default>
+                <label>Tonnage Fax</label>
+            </value>
+            <value>
+                <fullName>MAS Tonnage</fullName>
+                <default>false</default>
+                <label>MAS Tonnage</label>
+            </value>
+            <value>
+                <fullName>ISV Tonnage</fullName>
+                <default>false</default>
+                <label>ISV Tonnage</label>
+            </value>
+            <value>
+                <fullName>Import Tool Upload</fullName>
+                <default>false</default>
+                <label>Import Tool Upload</label>
+            </value>
+            <value>
+                <fullName>Upload</fullName>
+                <default>false</default>
+                <label>Upload</label>
+            </value>
+            <value>
+                <fullName>Manual Entry</fullName>
+                <default>false</default>
+                <label>Manual Entry</label>
+            </value>
+            <value>
+                <fullName>Remittance</fullName>
+                <default>false</default>
+                <label>Remittance</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

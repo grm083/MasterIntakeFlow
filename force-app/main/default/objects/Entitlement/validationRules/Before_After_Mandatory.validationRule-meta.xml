@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Before_After_Mandatory</fullName>
+    <active>true</active>
+    <description>When Call Time field is populated Before/After field is mandatory</description>
+    <errorConditionFormula>AND( NOT($User.Bypass_Validation__c), IF(NOT( ISBLANK( TEXT(Call_Time__c) ) ), ISBLANK( TEXT( Before_After__c )), NOT(ISBLANK( TEXT( Before_After__c )))))</errorConditionFormula>
+    <errorDisplayField>Before_After__c</errorDisplayField>
+    <errorMessage>Complete this field</errorMessage>
+</ValidationRule>

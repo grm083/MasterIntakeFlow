@@ -1,0 +1,45 @@
+<aura:component implements="lightning:appHomeTemplate" description="Custom Template for the App Page">
+    <aura:attribute name="cmp1" type="Aura.Component[]" />
+    <aura:attribute name="cmp2" type="Aura.Component[]" />
+    <aura:attribute name="cmp3" type="Aura.Component[]" />
+    <aura:attribute name="cmp4" type="Aura.Component[]" />
+    <aura:attribute name="cmp5" type="Aura.Component[]" />
+    <aura:attribute name="cmp6" type="Aura.Component[]" />
+    <aura:attribute name="cmp7" type="Aura.Component[]" />
+    <aura:attribute name="cmp8" type="Aura.Component[]" />
+    <aura:attribute name="cmp9" type="Aura.Component[]" />
+    
+    <div>
+        <lightning:layout horizontalAlign="spread" >
+            <lightning:layoutItem size="4" flexibility="grow" class="slds-m-horizontal--xx-small" padding="around-xxsmall">
+                {!v.cmp1}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="8" flexibility="grow" class="slds-m-horizontal--xx-small" padding="around-xxsmall">
+                {!v.cmp2}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="" flexibility="grow" class="slds-m-horizontal--xx-small" padding="around-xxsmall">
+                {!v.cmp3}
+            </lightning:layoutItem>            
+        </lightning:layout>
+         <lightning:layout horizontalAlign="spread">
+            
+            <lightning:layoutItem size="6" flexibility="grow" class="slds-m-horizontal--xx-small" padding="around-xxsmall">
+                {!v.cmp5}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" flexibility="grow" class="slds-m-horizontal--xx-small" padding="around-xxsmall">
+                {!v.cmp6}
+            </lightning:layoutItem>            
+        </lightning:layout> 
+        <lightning:layout horizontalAlign="spread">
+            <lightning:layoutItem size="4" flexibility="grow" class="slds-m-horizontal--xx-small slds-p-top_x-small">
+                {!v.cmp7}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="4" flexibility="grow" class="slds-m-horizontal--xx-small slds-p-top_x-small">
+                {!v.cmp8}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="4" flexibility="grow" class="slds-m-horizontal--xx-small" padding="around-xsmall">
+                {!v.cmp9}
+            </lightning:layoutItem>            
+        </lightning:layout>
+    </div>    
+</aura:component>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>46.0</apiVersion>
+    <available>true</available>
+    <description>Confirmer l&apos;approbation d&apos;une demande de ramassage sur plusieurs services demandés connexes (E/R, DNR, XPU)</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>French Customer or Internal: Pickup Approval – Multi Case Canada Templates</name>
+    <style>none</style>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

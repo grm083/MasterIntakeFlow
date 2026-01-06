@@ -1,0 +1,148 @@
+<aura:component controller="CaseController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">	    
+	
+	<aura:attribute name="searchResult" type="Account[]" description="use for store and display account list return from server"/>
+    <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+    <aura:attribute name="previousSearchKeyword" type="String" description="use for store user search input"/>
+    <aura:attribute name="Message" type="boolean" default="false" description="use for display no record found message"/>
+    <aura:attribute name="TotalNumberOfRecord" type="integer" default="0" description="use for display Number of records"/>
+    
+
+    <aura:attribute name="selectedClientAccountId" type="String"/>
+    
+    <aura:attribute name="recordId" type="String" description="ID of the record."/>	
+	<aura:attribute name="showSaveButton" type="Boolean" default="false"/>
+    <aura:attribute name="selectedText" type="Boolean" default="false"/>
+    
+    <aura:attribute name="selectedAccountFilter" type="Boolean" default="false"/>
+
+    <aura:attribute name="AccountAssetWrapperList" type="CaseController.LocationAssetWrapper[]"/>
+	<aura:attribute name="PageNumber" type="integer" default="0"/>
+    <aura:attribute name="TotalPages" type="integer" default="0"/>
+    <aura:attribute name="TotalRecords" type="integer" default="0"/>
+    <aura:attribute name="RecordStart" type="integer" default="0"/>
+    <aura:attribute name="RecordEnd" type="integer" default="0"/>
+    <aura:attribute name="inactiveAssets" type="Boolean" default="false"/>
+    <aura:attribute name="saveEnabled" type="Boolean" default="false"/>
+    <!--<aura:registerEvent name="RefreshEvent" type="c:RefreshEvent"/>-->
+	<aura:registerEvent name="SingleTabRefreshEvent" type="c:SingleTabComponentRefresh"/>
+  <!--  <ltng:require styles="{!$Resource.slds + '/styles/salesforce-lightning-design-system.css'}" />-->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<lightning:workspaceAPI aura:id="workspace"/>
+    <!-- SHOW LOADING SPINNER-->
+    
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    
+    
+    <div class="slds-m-around_medium">
+       <!-- SEARCH INPUT AND SEARCH BUTTON--> 
+        <lightning:layout >
+            <lightning:layoutItem size="3" padding="around-small">             
+                <div>
+                	<lightning:input type="checkbox" label="All Active and Inactive Accounts" class="slds-size_small" checked="{!v.selectedAccountFilter}"/>
+                </div>            
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" padding="around-small">
+				<span onkeypress="{!c.searchEvents}">                
+                <lightning:input value="{!v.searchKeyword}"
+                                 required="true"
+                                 placeholder="search Accounts.."
+                                 aura:id="searchField"                                 
+                                 label="Client Account"/>
+                    </span>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" padding="around-small">
+                <br/>
+                <lightning:button onclick="{!c.Search}"
+                                  variant="brand"
+                                  label="Search"
+                                  iconName="utility:search"/> 
+                <aura:if isTrue="{!v.showSaveButton}">
+                <lightning:button onclick="{!c.SaveSelection}"
+                                  variant="brand"
+                                  label="Save"
+                                  disabled="{!v.saveEnabled}"
+                                  iconName="utility:save"/>
+                </aura:if>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+       
+        <!-- TOTAL RECORDS BADGES--> 
+        <!--<div class="slds-m-around_x-small">
+            <lightning:badge label="{!v.TotalNumberOfRecord}" />
+        </div>-->
+        
+        <!-- ERROR MESSAGE IF NOT RECORDS FOUND--> 
+        <aura:if isTrue="{!v.Message}">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">No Records Found...</h2>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+       
+        <div class="slds-float_right">
+            <ui:inputSelect aura:id="pageSize" label="Display Records Per Page: " change="{!c.onSelectChange}">
+                <ui:inputSelectOption text="10" label="10" value="true"/>
+                <ui:inputSelectOption text="15" label="15"/>
+                <ui:inputSelectOption text="20" label="20"/>
+            </ui:inputSelect>
+            <br/>
+        </div>
+        
+        <!-- TABLE CONTENT--> 
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer" style="table-layout:fixed !important">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th >
+                        <div class="slds-truncate" title="Action">Action</div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" title="Account Name">Client Id</div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" title="Account Name">Client Name</div>
+                    </th>                               
+                </tr>
+            </thead>
+
+             <tbody> 
+                <!--### display all records of searchResult attribute by aura:iteration ###-->
+                <aura:iteration items="{!v.AccountAssetWrapperList}" var="acc" indexVar="ind">
+                    <tr>                        
+                        <td>
+                          <input type="radio" id="{!acc.objAcc.Id}" data-record="{!acc.objAcc.Id}" name="clientCheck"  onclick="{!c.divClick}"  />
+                        </td> 
+
+                        <td>
+                            <div class="slds-truncate">{!acc.objAcc.Customer_Code__c}</div>
+                        </td>
+                        <td>
+                            <div class="wrapText">{!acc.objAcc.Name}</div>
+                        </td>               
+                    </tr>                      
+                        <tr>
+                            <td colspan="2" style="padding:0px !important">
+                         
+                            </td>
+                        </tr>					                    
+                </aura:iteration>
+            </tbody>
+        </table>  
+        
+        <div class="slds-clearfix">
+            <div class="slds-page-header" role="banner">
+                <div class="slds-float_right">            
+                    <lightning:button disabled="{!or(v.PageNumber == 0,v.PageNumber == 1)}" variant="brand" aura:id="prevPage" label="Prev" onclick="{!c.handlePrev}" />            
+                    <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="Next" onclick="{!c.handleNext}"/>
+                </div>
+                <p class="slds-page-header__title">{!v.RecordStart}-{!v.RecordEnd} of {!v.TotalRecords} | Page {!v.PageNumber} of {!v.TotalPages}</p>
+            </div>
+        </div>
+        
+    </div>
+    
+</aura:component>

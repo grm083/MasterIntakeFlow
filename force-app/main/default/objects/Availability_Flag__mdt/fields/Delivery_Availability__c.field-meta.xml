@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Delivery_Availability__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Delivery Availability</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Selected Delivery is as per WM Availability, selected date is within SLA days</fullName>
+                <default>true</default>
+                <label>Selected Delivery is as per WM Availability, selected date is within SLA days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is as per WM Availability, selected date is beyond SLA days but within 30 days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is as per WM Availability, selected date is beyond SLA days but within 30 days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is NOT as per WM Availability, selected date is within SLA days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is NOT as per WM Availability, selected date is within SLA days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is NOT as per WM Availability, selected date is beyond SLA days but within 30 days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is NOT as per WM Availability, selected date is beyond SLA days but within 30 days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is NOT as per WM Availability, selected date is beyond 30 days</fullName>
+                <default>false</default>
+                <label>Selected Delivery is NOT as per WM Availability, selected date is beyond 30 days</label>
+            </value>
+            <value>
+                <fullName>Selected Delivery is NOT as per WM Availability, as this is a back dated order</fullName>
+                <default>false</default>
+                <label>Selected Delivery is NOT as per WM Availability, as this is a back dated order</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Deliver in the area, selected date is within SLA days</fullName>
+                <default>false</default>
+                <label>WM NOT available to Deliver in the area, selected date is within SLA days</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Deliver in the area, selected date is beyond SLA days but within 30 days</fullName>
+                <default>false</default>
+                <label>WM NOT available to Deliver in the area, selected date is beyond SLA days but within 30 days</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Deliver in the area, selected date is beyond 30 days</fullName>
+                <default>false</default>
+                <label>WM NOT available to Deliver in the area, selected date is beyond 30 days</label>
+            </value>
+            <value>
+                <fullName>WM NOT available to Deliver in the area, as this is a back dated order</fullName>
+                <default>false</default>
+                <label>WM NOT available to Deliver in the area, as this is a back dated order</label>
+            </value>
+            <value>
+                <fullName>Availability API Errored out</fullName>
+                <default>false</default>
+                <label>Availability API Errored out</label>
+            </value>
+            <value>
+                <fullName>Availability could not be confirmed as there is no response from the API</fullName>
+                <default>false</default>
+                <label>Availability could not be confirmed as there is no response from the API</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

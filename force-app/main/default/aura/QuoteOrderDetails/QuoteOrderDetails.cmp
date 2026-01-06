@@ -1,0 +1,341 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+    controller="QuoteProcurementController">
+    
+    <!-- SDT-27107 - Added -->
+    <aura:attribute name="slaDate" type="Date" />
+    <aura:attribute name="slaReasons" type="String[]" default="[]" />
+    <aura:attribute name="slaCommentsExists" type="boolean" default="false"/>
+    <aura:registerEvent name="refreshConfiguredProducts" type="c:RefreshConfiguredProducts" />
+    <!-- SDT-27107 - End -->
+    <aura:attribute name="onsiteContact" type="string" default="" />
+    <aura:attribute name="onsitePhone" type="string" default="" />
+    <aura:attribute name="onsitePhoneExt" type="string" default="" />
+    <aura:attribute name="placementInstructions" type="string" default="" />
+    <aura:attribute name="vendorServiceId" type="string" default="" />  <!--SDT-41473 - 41966-->
+    <aura:attribute name="chargeAbility" type="string" default="" />  <!--SDT-41538 -->
+    <aura:attribute name="customerPO" type="string" default="" />
+    <aura:attribute name="isAssetChanged" type="boolean" default="" />
+
+    <aura:attribute name="poRequired" type="boolean" default="false" />
+    <aura:attribute name="offsiteAddress" type="boolean" default="false" />
+    <aura:attribute name="specialDisposal"  type="boolean" default="false" />
+    <aura:attribute name="serviceRestriction" type="boolean" default="false" />
+    <aura:attribute name="projectServices" type="boolean" default="false" />
+    <!-- Changes for SDT-26541 -->
+    <aura:attribute name="hasDelivery" type="boolean" default="false" />
+    <!--Disposal Details-->
+    <aura:attribute name="certificateType" type="List" default="[
+        {'label': 'None', 'value': 'None'},
+        {'label': 'Destruction', 'value': 'Destruction'},
+        {'label': 'Disposal', 'value': 'Disposal'}
+        ]" />
+    <aura:attribute name="profileNumber" type="string" default="" />
+    <aura:attribute name="certificateValue" type="string" default="None" />
+    <aura:attribute name="landfillTickets" type="boolean" default="false" />
+    <aura:attribute name="serviceDescription" type="string" default="" />
+
+    <!--Gate Codes/Service Hour Restrictions-->
+    <aura:attribute name="serviceInstructions" type="string" default="" />
+    <aura:attribute name="startTime" type="string" default="" />
+    <aura:attribute name="endTime" type="string" default="" />
+    <aura:attribute name="gateCode" type="string" default="" />
+
+    <!--Project Services-->
+    <aura:attribute name="activeProjects" type="Object" />
+    <aura:attribute name="selectedProject" type="string" default="" />
+	<!-- EventParams -->
+    <aura:attribute name="extraParams" type="object"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <aura:attribute name="isAssetAvailable" type="boolean" default="false" />
+    <aura:attribute name="endDisabled" type="boolean" default="false" />
+    <aura:attribute name="orderWrapper" type="Object" />
+    <aura:attribute name="targetProduct" type="Object" default="[]" />
+    <aura:attribute name="targetProductId" type="String" default="" />
+    <aura:attribute name="currentQuote" type="SBQQ__Quote__c" default="[]" />
+    <aura:attribute name="currentQuoteLine" type="SBQQ__QuoteLine__c" default="[]" />
+    <aura:registerEvent name="UpdateWrapperState" type="c:UpdateWrapperStateEvent" />
+    <aura:attribute name="assetStartDate" type="Date" />
+    <aura:attribute name="assetAvailabilityAccess" type="boolean" default="false" /><!--SDT-30072-->
+    <aura:attribute name="assetAvailableDates" type="Object" /><!--SDT-29101-->
+    <aura:attribute name="assetAvailabilityResponseFailure" type="boolean" default="false" /><!--SDT-29156-->
+    <aura:attribute name="aavDeliveryOverrideFlag" type="boolean" default="false"/><!--SDT-30864-->
+    <aura:attribute name="deliveryOverrideReasons" type="String[]" default="[]"/><!--SDT-30864-->
+    <aura:attribute name="showAssetAPIError" type="boolean" default="false"/><!-- SDT-31583  -->
+    <aura:attribute name="msgAssetAPIErrors" type="List" default="[]"/><!-- SDT-31583  -->
+    <aura:attribute name="msgAssetAPIErrorsBE" type="String" default=""/><!-- SDT-31583  -->
+    <aura:attribute name="classAssetAPIErrors" type="String" default=""/><!-- SDT-31583  -->
+
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    <lightning:card>
+        <lightning:layout multipleRows="true" verticalAlign="stretch">
+            <!-- SDT-31583 :START-->
+            <aura:if isTrue="{!v.showAssetAPIError}">
+                <lightning:layoutItem size="12">
+                    <div class="warning-box">
+                        <span style ="font-size: 1.8em;"> &#9888; </span>
+                        <div class = "warning-text">
+                            <span class="warning-text-heading">Availability API Information: </span>
+                            <ul class="{!v.classAssetAPIErrors}">
+                                <aura:iteration var="errorMsg" items="{!v.msgAssetAPIErrors}">
+                                    <li>{!errorMsg}</li> 
+                                </aura:iteration> 
+                            </ul>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+            <!-- SDT-31583 :END-->
+         <!-- SDT-27107 Start -->
+			<lightning:layoutItem size="1" class="slds-p-around_xxx-small">
+                <lightning:helptext content="How is this calculated?  The start date is calculated based on Customer Entitlements and Industry Standards for each container type.  There may be a difference between the case service date and the quote line start date."
+                                    class="slds-align_absolute-center" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="5" class="slds-p-around_xxx-small">
+                <!--SDT-29101 : conditionaly showing custom date picker for asset availability-->
+                <aura:if isTrue="{!and(v.assetAvailabilityAccess,not(v.targetProduct.isHaulAway))}"> <!--41473 - 41542-->
+
+                    <!-- modified as part of SDT 31585-->
+                    <c:aavCustomDatePicker slaDate="{!v.slaDate}" pickerLabel = "Delivery/Start Date" 
+                            quoteLineId = "{!v.targetProduct.parentId}" 
+                            equipmentSize ="{!v.targetProduct.equipmentSize}" selectedDate="{!v.targetProduct.startDate}" 
+                            onupdateparent="{!c.updateDeliveryInfo}" aura:id="aavCustomDatePicker">
+                    </c:aavCustomDatePicker>
+                    <!--31585 ends here-->
+
+                    <aura:set attribute="else">
+                        <lightning:input name="startDate" type="date" label="Delivery/Start Date" required="true" value="{!v.targetProduct.startDate}" onchange = "{!c.handleDateChange}"/><!--slaDate--> <!-- SDT-41473-41542-->
+                    </aura:set>
+                </aura:if>
+                <!--SDT-29101-->
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                <lightning:input name="endDate" type="date" label="Removal/End Date" value="{!v.targetProduct.endDate}" disabled="{!v.endDisabled}" />
+            </lightning:layoutItem>
+            <!-- SDT-30864 :START-->
+            <aura:if isTrue="{!and(v.assetAvailabilityAccess, v.aavDeliveryOverrideFlag)}">
+                <lightning:layoutItem size="8" class="slds-p-around_xxx-small overrideText">
+                    You have selected a day which is not available with WM please provide an override reason below.
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                    <lightning:select name="deliveryOverrideReasons" label="Delivery Override Reason"
+                        onchange="{!c.handledeliveryOverrideChange}" value="{!v.targetProduct.deliveryOverrideReason}" required="true">
+                        <option text="" value="" />
+                        <aura:iteration items="{!v.deliveryOverrideReasons}" var="item">
+                            <option text="{!item}" value="{!item}" selected="{!(item==v.targetProduct.deliveryOverrideReason)}"/>
+                        </aura:iteration>
+                    </lightning:select>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                    <lightning:textarea aura:id="deliveryOverrideComment" label="Delivery Override Comment" value="{!v.targetProduct.deliveryOverrideComment}"
+                                        placeholder="Override comment will be required for 'Delivery Override Reason' - 'Other'" maxlength="255"/>
+                </lightning:layoutItem>
+            </aura:if>
+            <!-- SDT-30864 :END-->
+            <aura:if isTrue="{!or((greaterthan(v.slaDate, v.targetProduct.startDate)), v.slaCommentsExists)}">
+                <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                    The entitled delivery date of this service is {!v.slaDate} and you have selected {!v.targetProduct.startDate}.  As you have selected a date that is sooner, please provide an override reason below.
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                    <lightning:select name="slaReasons" label="SLA Override Reason" value="{!v.targetProduct.slaOverrideReason}">
+                        <option text="--None--" value="" />  <!-- SDT- 46469 -->
+                        <aura:iteration items="{!v.slaReasons}" var="item">
+                            <option text="{!item}" value="{!item}" selected="{!(item==v.targetProduct.slaOverrideReason)}"/>
+                        </aura:iteration>
+                    </lightning:select>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                    <lightning:textarea name="SLAOverrideComment" label="SLA Override Comment" value="{!v.targetProduct.slaOverrideComment}"
+                                        placeholder="When Overriding an SLA Date, SLA Override comment is required." />
+                </lightning:layoutItem>
+            </aura:if>
+            <!-- SDT-27107 End-->
+        </lightning:layout>
+    </lightning:card>
+    <lightning:card>
+        <lightning:layout multipleRows="true" verticalAlign="stretch">
+            <lightning:layoutItem size="12" class="greenBox slds-box slds-align_absolute-center slds-text-title_caps slds-p-around_xxx-small">
+                <b>Onsite Details</b>
+            </lightning:layoutItem> 
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <i>Contact details have been pre-populated from the case contact</i>
+            </lightning:layoutItem>
+            
+           
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <lightning:input name="onsiteContactName" label="Onsite Contact Name" aura:id="field" required="{!v.hasDelivery}" value="{!v.onsiteContact}" maxlength="50" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="9" class="slds-p-around_xxx-small">
+                <lightning:input type="tel" label="Onsite Contact Phone Number" aura:id="field" name="onsitePhone" required="{!v.hasDelivery}" value="{!v.onsitePhone}" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                <lightning:input label="Extension (Optional)" name="onsitePhone" value="{!v.onsitePhoneExt}"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                 <!-- Changes for SDT-26541 -->
+                <lightning:input name="placementInstructions" label="Placement Instructions" aura:id="field" required="{!v.hasDelivery}" value="{!v.placementInstructions}" />
+            </lightning:layoutItem>
+
+            <!--SDT-41473 - 41966 haulaway-->
+            <aura:if isTrue="{!(v.targetProduct.isHaulAway)}">
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <lightning:input name="vendorServiceId" label="Vendor Service Id" aura:id="field" value="{!v.vendorServiceId}"  disabled="true"/> <!--SDT-42651-->
+            </lightning:layoutItem>
+            </aura:if>
+
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <lightning:input name="customerPO" label="Customer Purchase Order" required="{!v.poRequired}" value="{!v.customerPO}" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <!--Intentional blank space-->
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="greenBox slds-box slds-align_absolute-center slds-text-title_caps slds-p-around_xxx-small">
+                <b>Serviceability Details</b>
+            </lightning:layoutItem> 
+            <lightning:layoutItem size="4" class="slds-box">
+                <lightning:layout multipleRows="true" verticalAlign="stretch">
+                    <lightning:layoutItem size="9" class="slds-p-around_xxx-small">
+                        This service requires a Certificate of Destruction/Disposal or Landfill Tickets after each pickup.
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <lightning:input type="checkbox-button" label="specialDisposal" name="specialDisposal" checked="{!v.specialDisposal}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="9" class="slds-p-around_xxx-small">
+                        This service has special restrictions such as gate codes or restricted hours.
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <lightning:input type="checkbox-button" label="serviceRestriction" name="serviceRestriction" checked="{!v.serviceRestriction}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="9" class="slds-p-around_xxx-small">
+                        This service should be setup at a specific onsite or offsite position.
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <lightning:input type="checkbox-button" label="offsiteAddress" name="offsiteAddress" checked="{!v.offsiteAddress}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="9" class="slds-p-around_xxx-small">
+                        This service is part of a Project Services Project.
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                        <lightning:input type="checkbox-button" label="projectServices" name="projectServices" checked="{!v.projectServices}" />
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="8" class="slds-box">
+                <lightning:layout multipleRows="true" verticalAlign="center" horizontalAlign="spread">
+                    <aura:if isTrue="{!v.specialDisposal}">
+                        <lightning:layoutItem size="12" class="slds-box grayBox slds-align_absolute-center slds-text-title_caps slds-p-around_xxx-small">
+                            <b>Special Disposal Details</b>
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                            <lightning:radioGroup name="certificates" label="Certificate Type"
+                                                options="{!v.certificateType}"
+                                                value="{!v.certificateValue}"
+                                                type="button" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="9" class="slds-p-around_xxx-small">
+                            <lightning:input label="Profile Number" name="Profile Number" value="{!v.profileNumber}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="9" class="slds-p-around_xxx-small">
+                            Landfill tickets must be provided for each disposal service provided.
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="3" class="slds-p-around_xxx-small">
+                            <lightning:input type="checkbox-button" label="Landfill Tickets" name="Landfill Tickets" checked="{!v.landfillTickets}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                            <lightning:textarea name="certificates" label="Special Disposal Instructions"
+                                                value="{!v.serviceDescription}"
+                                                placeholder="Provide any supplemental instructions for the vendor here..." />
+                        </lightning:layoutItem>
+                    </aura:if>
+                    <aura:if isTrue="{!v.serviceRestriction}">
+                        <lightning:layoutItem size="12" class="slds-box grayBox slds-align_absolute-center slds-text-title_caps slds-p-around_xxx-small">
+                            <b>Service Restrictions</b>
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                            <lightning:input type="time" name="StartTime" label="Earliest Service Time" value="{!v.startTime}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                            <lightning:input type="time" name="EndTime" label="Latest Service Time" value="{!v.endTime}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                            <lightning:input name="GateCode" label="Gate Code" value="{!v.gateCode}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                            <lightning:textarea name="driverInstructions" label="Driver Instructions"
+                                                value="{!v.serviceInstructions}"
+                                                placeholder="Provide contact information or specific instructions for the driver here..." />
+                        </lightning:layoutItem>
+                    </aura:if>
+                    <aura:if isTrue="{!v.offsiteAddress}">
+                        <lightning:layoutItem size="12" class="slds-box grayBox slds-align_absolute-center slds-text-title_caps slds-p-around_xxx-small">
+                            <b>Location Position</b>
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                            <c:LocationPositionComponent productWrapper="{!v.targetProduct}" />
+                        </lightning:layoutItem>
+                    </aura:if>
+                    <aura:if isTrue="{!v.projectServices}">
+                        <lightning:layoutItem size="12" class="slds-box grayBox slds-align_absolute-center slds-text-title_caps slds-p-around_xxx-small">
+                            <b>Project Services</b>
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xx-small">
+                            <div onkeyup="{!c.searchProjects}" class="slds-p-around_xx-small">
+                                <lightning:input type="search" aura:id="searchProjects" name="searchProjects" label="Project Search" placeholder="Search for your project here..." />
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" flexibility="auto" class="slds-p-around_xx-small favHeight slds-scrollable">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Action">Action</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Project Name">Project Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Project Manager">Project Manager</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Start Date">Start Date</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.activeProjects}" var="item">
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="Action" scope="row">
+                                                <div class="slds-truncate" title="{!item.Id}">
+                                                    <aura:if isTrue="{!v.selectedProject == item.Id}">
+                                                        <lightning:buttonIcon iconName="utility:check" variant="bare" value="{!item.Id}" onclick="{!c.deSelectProject}" />
+                                                        <aura:set attribute="else">
+                                                            <lightning:buttonIcon iconName="utility:add" variant="bare" value="{!item.Id}" onclick="{!c.selectProject}" />
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </div>
+                                            </th>
+                                            <td data-label="Project Name">
+                                                <div class="slds-truncate">{!item.Name}</div>
+                                            </td>
+                                            <td data-label="Material Type">
+                                                <div class="slds-truncate">{!item.Project_Manager__r.Name}</div>
+                                            </td>
+                                            <td data-label="Container Type">
+                                                <div class="slds-truncate">{!item.Effective_Date__c}</div>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        </lightning:layoutItem>
+                    </aura:if>
+                </lightning:layout>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                <lightning:button label="Back"  onclick="{!c.goBack}" class="slds-float_left" />
+                <lightning:button label="Next" variant="brand" onclick="{!c.saveValues}" class="slds-float_right" />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+
+</aura:component>

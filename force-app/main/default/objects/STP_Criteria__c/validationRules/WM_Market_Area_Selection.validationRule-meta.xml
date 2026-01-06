@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WM_Market_Area_Selection</fullName>
+    <active>true</active>
+    <description>WM Market Area must be selected when WM Vendor is selected</description>
+    <errorConditionFormula>AND( RecordType.Name = &apos;STP Eligibility&apos;,
+ NOT(ISNULL(MAS__c)) , WM_Vendor__c = false,  All_WM_Vendors__c  = true,  Parent_VID__c  = null )</errorConditionFormula>
+    <errorMessage>WM Market Area cannot be selected without selecting WM Vendor</errorMessage>
+</ValidationRule>

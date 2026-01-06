@@ -1,0 +1,49 @@
+<template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__2 slds-modal__container" style="padding-top:10rem;">
+        <!-- Modal/Popup Box Header Starts here-->
+        <header class="slds-modal__header">
+            <!--changes related to SDT-41639-->
+            <lightning-button-icon icon-name="utility:close" onclick={closeModel} alternative-text="close"
+                                    variant="bare" class="slds-modal__close" ></lightning-button-icon>
+            <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"></h3>
+        </header>
+        <!--Modal/Popup Box Body Starts here-->
+        
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <lightning-card title="Record Type Selector">
+                <template if:true={recordTypes}>
+                <lightning-layout horizontal-align="spread">
+                    <lightning-layout-Item class="layoutSelector" size="4" padding="around-small">
+                        <lightning-vertical-navigation compact="true" 
+                                                      selected-item={selectedItem} 
+                                                      onselect={handleSelect}
+                                                      shaded="true">
+                            <lightning-vertical-navigation-section label="Available Record Types" ></lightning-vertical-navigation-section>
+                            <template for:each={recordTypes} for:item="rt">
+                                    <lightning-vertical-navigation-item data-id={rt.recid} key={rt.recid} label={rt.name} name={rt.name} ></lightning-vertical-navigation-item>
+                            </template>
+                        </lightning-vertical-navigation>
+                    </lightning-layout-Item>
+                    
+                    <lightning-layout-Item size="8" padding="around-small">
+                        <p> You've selected: <b>{selectedItem}</b> </p>
+                        <br/>
+                        <p> {itemDescription} </p>
+                        <lightning-button label="Confirm Change" 
+                                  icon-name="action:change_record_type" 
+                                  icon-position="left" 
+                                  onclick={handleButtonClick}>
+                                  </lightning-button>
+                    </lightning-layout-Item>
+                </lightning-layout>
+            </template>
+            </lightning-card>
+        </div>
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </template>
+</template>

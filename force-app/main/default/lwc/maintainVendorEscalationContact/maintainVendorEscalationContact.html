@@ -1,0 +1,223 @@
+<!--
+@description       : 
+@author            : Adil Aleem
+@group             : 
+@last modified on  : 08-21-2023
+@last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+<div>
+    <lightning-spinner alternative-text="Loading" size="xx-large" class="slds-is-fixed" if:true={showSpinner}></lightning-spinner>
+</div>
+<div class="slds-page-header" style="margin-bottom: 10px;">
+  <div class=" slds-page-header__row">
+	<div class="slds-page-header__name slds-align_absolute-center">
+		<div class="slds-page-header__name-title">
+			<h1>
+				<span class="slds-page-header__title slds-truncate" title="Vendor Escalation Maintenance">Vendor Escalation Maintenance</span>
+			</h1>
+		</div>
+	</div>
+</div>
+</div>
+<lightning-card>
+<div class="slds-section slds-is-open">
+<h3 class="slds-section__title slds-theme_shade">
+<span class="slds-truncate slds-p-horizontal_small" title="Section Title" style="font-weight: bold;">Category Information</span>
+</h3>
+<div aria-hidden="false" class="slds-section__content">
+    <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="3" medium-device-size="3" padding="around-small">
+                <div class="slds-m-around_medium">
+                    <lightning-input
+                        label="Category Name"
+                        type="search"
+                        onchange={handleCategoryNameChange}
+                        value={searchKey}
+                        disabled={disableInput}
+                        required
+                        message-when-value-missing="Category Name is required"
+                    ></lightning-input>
+                </div>
+                <template if:true={showCategories}>  
+                    <div class="slds-box">
+                        <lightning-icon
+                            icon-name="utility:close"
+                            size="x-small"
+                            alternative-text="Indicates close"
+                            class="slds-float_right"
+                            onclick={closeSearch}
+                        >
+                        </lightning-icon>
+                        <template iterator:it={categories} for:index="index">  
+                            <div onclick={handleCategorySelect} key={it.value.Id} data-id={it.index} style="cursor: pointer;">  
+                                <div class="slds-m-around_medium">                              
+                                    <lightning-formatted-rich-text value={it.value.formattedName}>
+                                    </lightning-formatted-rich-text>  
+                                </div>  
+                            </div>  
+                        </template>
+                    </div>
+                </template>       
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="3" padding="around-small">
+                <div class="slds-card slds-p-around_medium">
+                    <lightning-combobox
+                        name="Category"
+                        label="Category Type"
+                        value={categoryType}
+                        placeholder="Select Category"
+                        options={categoryTypeOptions}
+                        onchange={handleChangeCategoryType} 
+                        disabled={disableInput}>
+                    </lightning-combobox>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" padding="around-small" if:true={typeSelected} style="height:250px">
+                    <div class="slds-card slds-p-around_medium"  style="height:250px">
+                        <lightning-input label="Search Account" type="search"
+                            onchange={searchParentAccount} value={parentAccValue} disabled={disableInput}>
+                        </lightning-input>
+                        <lightning-datatable if:true={showAccResults}
+                            data={searchAccResults}
+                            columns={accountColumns}
+                            key-field="accountId"
+                            onrowselection={handleParentAccountSelect}
+                            selected-rows={preSelectedRows}
+                            resize-column-disabled
+                            max-row-selection="1">
+                        </lightning-datatable>
+                    </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small" if:true={showVendorAccounts}>
+                <div class="slds-card slds-p-around_medium">
+                    <lightning-input type="search" label="Search Vendor Account" onchange={handleSearchVendorAcc} data-recid="vendoSearch"></lightning-input>
+                    <template lwc:if={showSelectAll}>
+                        <lightning-button variant="base" label="Select All" title="Looks like a link" onclick={handleSelectAllVendors} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                    <lightning-dual-listbox name="languages"
+                        label={vendorComboMessage}
+                        source-label="Available"
+                        selected-label="Selected"
+                        value={vendorValues}
+                        field-level-help="Vendor Accounts"
+                        options={optionsAcc}
+                        max={maxVendor}
+                        onchange={handleChangeVendor}>
+                    </lightning-dual-listbox>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>	
+</div>
+</div>
+    
+    <br/><br/>
+    <div>
+<div class="slds-section slds-is-open" if:true={showContacts}>
+  <h3 class="slds-section__title slds-theme_shade">
+    <span class="slds-truncate slds-p-horizontal_small" title="Section Title" style="font-weight: bold;">Contact Information</span>
+  </h3>
+  <div aria-hidden="false" class="slds-section__content">
+     <div if:true={showContacts}>
+        <lightning-layout multiple-rows >
+            <lightning-layout-item size="6" medium-device-size="6" padding="around-small" style="height:250px">
+                <lightning-input type="search" label="Search Contact" onchange={handleSearchContact} class="slds-col"></lightning-input>
+                        <lightning-layout-item size="12" padding="around-small" class="bigBoxVert" >
+                            <!-- Base variant: Makes a button Create New Contact -->
+                            <lightning-button variant="base" label="Create New Contact" title="Looks like a link" onclick={handleShowModalBox} class="slds-m-left_x-small"></lightning-button>
+                            <lightning-datatable if:true={contactData}
+                                    data={contactData}
+                                    columns={contactColumns}
+                                    key-field="Id"
+                                    onrowselection={handleContactSelect}
+                                    resize-column-disabled
+                                    max-row-selection="1">
+                            </lightning-datatable>
+                        </lightning-layout-item>
+                </lightning-layout-item>
+            <lightning-layout-item size="6" medium-device-size="6" padding="around-small" style="height:250px">
+                <lightning-input type="search" label="Search Roles" onchange={handleSearchRoles} class="slds-col"></lightning-input>
+                        <lightning-dual-listbox 
+                            name="languages"
+                            label="Select Roles"
+                            source-label="Available"
+                            selected-label="Selected"
+                            value={selectedRoles}
+                            field-level-help="Contact Roles"
+                            options={optionsRoles}
+                            onchange={handleChangeRoles}>
+                        </lightning-dual-listbox>
+                </lightning-layout-item>
+        </lightning-layout>
+    </div>   
+  </div>
+</div>
+    <br/> <br/>
+<div class="slds-section slds-is-open" if:true={typeSelected} style="margin-top: 70px;">
+  <h3 class="slds-section__title slds-theme_shade">
+    <span class="slds-truncate slds-p-horizontal_small" title="Section Title" style="font-weight: bold;">System Information</span>
+  </h3>
+  <div aria-hidden="false" class="slds-section__content">
+        <div if:true={typeSelected}>
+        <lightning-layout multiple-rows >
+            <lightning-layout-item size="6" padding="around-small">
+                <label class="slds-form-element__label slds-p-left — xx-small">
+                    Validated Date
+                </label>
+                    {validatedDate}
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">      
+                <label class="slds-form-element__label slds-p-left — xx-small">
+                    Validated By
+                </label>         
+                <lightning-button variant="Base" label={validatedBy} onclick={viewRecord} value={validatedById}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+  </div>
+</div>  
+</div>
+<!-- modal start -->      
+    <template if:true={isShowModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            <!-- modal header start -->
+                <header class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <button class="slds-button slds-button_icon slds-modal__close  " title="Close" onclick={handleHideModalBox}>
+                        <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="bare"
+                        size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Contact</h2>
+                </header>
+
+            <!-- modal body start -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning-record-form
+                            object-api-name={contactObject}
+                            onsuccess={handleContactCreated}
+                            onsubmit={createContact}
+                            layout-type="Full">
+                </lightning-record-form>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <footer class="slds-modal__footer slds-align_absolute-center">
+        <lightning-button variant="brand" label="Clear" title="Clear" onclick={handleClear} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmitDetails} class="slds-m-left_x-small" disabled={disableSave}></lightning-button>
+    </footer>
+
+</lightning-card>
+</template>

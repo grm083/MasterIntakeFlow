@@ -1,0 +1,19 @@
+.THIS .redicon{
+    background-color : red !important;
+}
+.THIS .greenicon{
+    background-color : green !important;
+}
+.THIS .slds-truncate {
+    white-space: normal;
+}
+.THIS .spl:before{
+    content: '';
+    width: 100%;
+    height: 1em;
+    display: inline-block;
+}
+.THIS .setHeight{
+    margin-top: -1vh!important;
+    margin-bottom: -1vh!important;
+}

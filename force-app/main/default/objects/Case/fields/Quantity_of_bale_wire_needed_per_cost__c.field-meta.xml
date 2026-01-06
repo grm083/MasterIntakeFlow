@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quantity_of_bale_wire_needed_per_cost__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Include unit cost.</inlineHelpText>
+    <label>Quantity of bale wire needed (per cost)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

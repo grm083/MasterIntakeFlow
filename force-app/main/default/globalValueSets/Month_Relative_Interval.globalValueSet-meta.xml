@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>First</fullName>
+        <default>false</default>
+        <label>First</label>
+    </customValue>
+    <customValue>
+        <fullName>Second</fullName>
+        <default>false</default>
+        <label>Second</label>
+    </customValue>
+    <customValue>
+        <fullName>Third</fullName>
+        <default>false</default>
+        <label>Third</label>
+    </customValue>
+    <customValue>
+        <fullName>Fourth</fullName>
+        <default>false</default>
+        <label>Fourth</label>
+    </customValue>
+    <customValue>
+        <fullName>Last</fullName>
+        <default>false</default>
+        <label>Last</label>
+    </customValue>
+    <masterLabel>Month Relative Interval</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

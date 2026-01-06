@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Confirm the required info for the request</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Customer Escalation:Request Required Info from the customer (CE DLL/FAM)</name>
+    <style>freeForm</style>
+    <subject>Final Request Required Information needed: {!Case.Case_Type__c} - {!Case.Location_Code__c} - Ref. #: {!Case.Reference_Number__c}</subject>
+    <textOnly>Hi {!Contact.FirstName},
+
+Required Information is required for us to process the {!Case.Case_Sub_Type__c} requested at {!Case.Location_Code__c}.
+
+Please respond with the Required Information to be referenced as soon as possible.
+
+SERVICE DETAILS
+
+Requester:
+
+
+{!Case.Contact}, {!Case.Contact_Title_Email_Form__c}
+
+Reference #:
+
+
+{!Case.Reference_Number__c}
+
+Location ID:
+
+
+{!Case.Location_Code__c}
+
+Service Address:
+
+
+{!Case.Location_Name_Email_Temp__c},
+
+{!Case.Tech_Location_Details__c}
+
+Requested Service Date:
+
+
+{!Case.Service_Date__c}
+
+Service:
+
+
+{!Case.Case_Type__c} - {!Case.Case_Sub_Type__c}
+
+Container:
+
+
+{!Asset.Name}, {!Asset.Material_Type__c}, {!Asset.Container_Position__c}
+
+
+.
+
+
+Thank you,
+
+{!User.FirstName} {!User.LastName)
+
+Customer Service Representative
+
+National Accounts
+
+
+(866) 734-5386
+
+1 Griffin Rd North, Suite 4C ,
+
+Windsor, CT 06095
+
+
+
+
+
+Want to save time? Try our new ChatNow app!
+
+Use our self-service options to order a pickup or new container and check a status in minutes. You can also connect to a live agent when you need to. Click ChatNow or scan the code to get started.
+
+
+
+
+{!Case.Thread_Id} : {!Case.Reference_Number__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

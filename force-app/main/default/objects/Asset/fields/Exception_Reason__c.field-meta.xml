@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Reason__c</fullName>
+    <description>Exception Reason on Service in Acorn.</description>
+    <externalId>false</externalId>
+    <label>Exception Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Service</fullName>
+                <default>false</default>
+                <label>Service</label>
+            </value>
+            <value>
+                <fullName>Cost</fullName>
+                <default>false</default>
+                <label>Cost</label>
+            </value>
+            <value>
+                <fullName>Schedule</fullName>
+                <default>false</default>
+                <label>Schedule</label>
+            </value>
+            <value>
+                <fullName>Equipment</fullName>
+                <default>false</default>
+                <label>Equipment</label>
+            </value>
+            <value>
+                <fullName>Vendor Acquisition</fullName>
+                <default>false</default>
+                <label>Vendor Acquisition</label>
+            </value>
+            <value>
+                <fullName>Client Initiated Change</fullName>
+                <default>false</default>
+                <label>Client Initiated Change</label>
+            </value>
+            <value>
+                <fullName>Oakleaf Initiated Change</fullName>
+                <default>false</default>
+                <label>Oakleaf Initiated Change</label>
+            </value>
+            <value>
+                <fullName>Vendor Initiated Change</fullName>
+                <default>false</default>
+                <label>Vendor Initiated Change</label>
+            </value>
+            <value>
+                <fullName>Retire Payable Exception</fullName>
+                <default>false</default>
+                <label>Retire Payable Exception</label>
+            </value>
+            <value>
+                <fullName>Cancel Payable Exception</fullName>
+                <default>false</default>
+                <label>Cancel Payable Exception</label>
+            </value>
+            <value>
+                <fullName>Un-Retire Payable Exception</fullName>
+                <default>false</default>
+                <label>Un-Retire Payable Exception</label>
+            </value>
+            <value>
+                <fullName>WO Component Cancelllation</fullName>
+                <default>false</default>
+                <label>WO Component Cancelllation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

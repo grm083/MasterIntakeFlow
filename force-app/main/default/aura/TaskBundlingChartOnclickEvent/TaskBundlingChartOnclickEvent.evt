@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="AccountName" type="String"/>
+    <aura:attribute name="UserDropdownValue" type="String"/>
+</aura:event>

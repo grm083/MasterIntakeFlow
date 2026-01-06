@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsManual__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field is created to keep track if Case  Assets Creation is done manually by clicking on Add Case Assets</description>
+    <externalId>false</externalId>
+    <label>IsManual</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

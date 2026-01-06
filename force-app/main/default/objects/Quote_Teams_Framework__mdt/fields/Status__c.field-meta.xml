@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Status</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Draft</fullName>
+                <default>true</default>
+                <label>Draft</label>
+            </value>
+            <value>
+                <fullName>Product Configured</fullName>
+                <default>false</default>
+                <label>Product Configured</label>
+            </value>
+            <value>
+                <fullName>Cost Configured</fullName>
+                <default>false</default>
+                <label>Cost Configured</label>
+            </value>
+            <value>
+                <fullName>Price Configured</fullName>
+                <default>false</default>
+                <label>Price Configured</label>
+            </value>
+            <value>
+                <fullName>Quote Submitted</fullName>
+                <default>false</default>
+                <label>Quote Submitted</label>
+            </value>
+            <value>
+                <fullName>Declined</fullName>
+                <default>false</default>
+                <label>Declined</label>
+            </value>
+            <value>
+                <fullName>Approved</fullName>
+                <default>false</default>
+                <label>Approved</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

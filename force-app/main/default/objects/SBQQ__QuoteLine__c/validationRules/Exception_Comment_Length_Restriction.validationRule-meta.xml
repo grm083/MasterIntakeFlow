@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Comment_Length_Restriction</fullName>
+    <active>true</active>
+    <description>Exception comment should not be less than 9 characters</description>
+    <errorConditionFormula>AND(
+ISBLANK(AssetId__c), 
+NOT(ISBLANK(Exception_Comments__c)),
+LEN(Exception_Comments__c) &lt; 9 
+)</errorConditionFormula>
+    <errorMessage>Exception comments should be at least 9 characters in length.</errorMessage>
+</ValidationRule>

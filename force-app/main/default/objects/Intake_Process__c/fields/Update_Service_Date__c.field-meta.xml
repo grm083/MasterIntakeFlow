@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Service_Date__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Determines whether a date field is being collected to update the case service date</description>
+    <externalId>false</externalId>
+    <label>Update Service Date</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

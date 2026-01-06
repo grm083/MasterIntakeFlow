@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>No Price</fullName>
+        <default>false</default>
+        <label>No Price</label>
+    </customValue>
+    <customValue>
+        <fullName>Per Unit</fullName>
+        <default>false</default>
+        <label>Per Unit</label>
+    </customValue>
+    <customValue>
+        <fullName>Rebate</fullName>
+        <default>false</default>
+        <label>Rebate</label>
+    </customValue>
+    <customValue>
+        <fullName>Stepped</fullName>
+        <default>false</default>
+        <label>Stepped</label>
+    </customValue>
+    <customValue>
+        <fullName>Zero Charge</fullName>
+        <default>false</default>
+        <label>Zero Charge</label>
+    </customValue>
+    <masterLabel>Price/Cost Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

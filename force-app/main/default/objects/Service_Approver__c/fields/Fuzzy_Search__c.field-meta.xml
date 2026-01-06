@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fuzzy_Search__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Fuzzy Search will allow for a title match for any requestor that contains the words in their job title. Example &quot;District Manager&quot; and District Area Manager</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Fuzzy Search will allow for a title match for any requestor that contains the words in their job title. Example &quot;District Manager&quot; and District Area Manager</inlineHelpText>
+    <label>Fuzzy Search</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

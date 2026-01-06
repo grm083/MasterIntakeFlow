@@ -1,0 +1,191 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes,force:appHostable" controller="AcornController" access="global">	
+    
+    <aura:attribute name="url" type="String"/>
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="intervalId" type="Integer"/>
+    <aura:attribute name="refresh" type="boolean" default="true"/>
+    <aura:attribute name="caseRecord" type="Case" />
+    <aura:attribute name="showHover" type="boolean" default="false"/>
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false"/> 
+    <aura:attribute name="sortAsc" type="Boolean" default="false"/>
+    <aura:attribute name="sortCol" type="String" default="Date"/>
+    
+    
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="lightning:tabFocused" action="{! c.onTabFocus }"/>
+    <aura:handler event="lightning:tabClosed" action="{! c.onTabClosed }"/>
+
+    <!-- DataTable attributes -->
+    <aura:attribute name="notes" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    
+    <force:recordData aura:id="recordLoader"
+    recordId="{!v.recordId}"
+    fields="Portal_Messages_URL__c"
+    targetFields="{!v.url}"
+    targetError="{!v.recordLoadError}" />
+
+    <force:recordData aura:id="recordLoader"
+    recordId="{!v.recordId}" 
+    layoutType="FULL"
+    targetFields="{!v.caseRecord}"
+    fields="Id,CaseNumber" 
+    mode="VIEW"
+    />
+
+
+    <div class="slds-float--right">
+        <lightning:button variant="brand" label="View All Comments" title="Show Comments" onclick="{!c.showComments}" />
+        <!-- <lightning:button variant="brand" label="View Messages In Portal" title="View Messages In Portal" onclick="{!c.handleClick}" disabled= "{!v.isPortalButtonActive}"  /> -->
+    <lightning:button variant="brand" label="View Messages In Portal" title="View Messages In Portal" onclick="{!c.handleClick}"  />
+   </div>
+    <br/><br/>
+    <!--
+    <div id="acorn-notes" style="height: 600px; overflow:auto"> -->
+        <!-- <lightning:datatable keyField="Id" data="{!v.notes}" columns="{!v.columns}" onrowselection="{!c.getComment}" isLoading="false" maxRowSelection="1" /> -->
+        <!--
+        <lightning:datatable keyField="Id" data="{!v.notes}" columns="{!v.columns}" hideCheckboxColumn="true" />
+    </div>-->
+
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer" >
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="Date">
+                        <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick="{!c.sortColumn}" name="Date">
+                        Date
+                        <aura:if isTrue="{!v.sortCol == 'Date'}">
+                            <aura:if isTrue="{!v.sortAsc}">
+                                <lightning:icon iconName="utility:up" size="x-small"/> 
+                            <aura:set attribute="else">    
+                                <lightning:icon iconName="utility:down" size="x-small"/> 
+                            </aura:set>  
+                            </aura:if>      
+                        </aura:if>   
+                        </a>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate"  title="Comments">Comments</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="User/Team">
+                    <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick="{!c.sortColumn}" name="UserTeam">
+                        User/Team
+                        <aura:if isTrue="{!v.sortCol == 'UserTeam'}">
+                            <aura:if isTrue="{!v.sortAsc}">
+                                <lightning:icon iconName="utility:up" size="x-small"/> 
+                            <aura:set attribute="else">    
+                                <lightning:icon iconName="utility:down" size="x-small"/> 
+                            </aura:set>  
+                            </aura:if>      
+                        </aura:if>   
+                    </a>
+                    </div>
+                </th>
+               <th scope="col">
+                    <div class="slds-truncate" title="EditedBy">
+                    
+                    <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick="{!c.sortColumn}" name="EditedBy">
+                        EditedBy
+                        <aura:if isTrue="{!v.sortCol == 'EditedBy'}">
+                            <aura:if isTrue="{!v.sortAsc}">
+                                <lightning:icon iconName="utility:up" size="x-small"/> 
+                            <aura:set attribute="else">    
+                                <lightning:icon iconName="utility:down" size="x-small"/> 
+                            </aura:set>  
+                            </aura:if>      
+                        </aura:if>   
+                    </a>
+                    </div>
+                </th>
+                
+                <th scope="col" style="padding-left: 5px!important;">
+                    <div class="slds-truncate" title="Action">
+                    
+                    <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick="{!c.sortColumn}" name="Action">
+                        Action
+                        <aura:if isTrue="{!v.sortCol == 'Action'}">
+                            <aura:if isTrue="{!v.sortAsc}">
+                                <lightning:icon iconName="utility:up" size="x-small"/> 
+                            <aura:set attribute="else">    
+                                <lightning:icon iconName="utility:down" size="x-small"/> 
+                            </aura:set>  
+                            </aura:if>      
+                        </aura:if>   
+                    </a>
+                    </div>
+                </th>
+                <th scope="col" style="padding-right: 0px!important;">
+                    <div class="slds-truncate" title="Source">
+                    
+                    <a class="slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0" onclick="{!c.sortColumn}" name="Source">
+                        Source
+                        <aura:if isTrue="{!v.sortCol == 'Source'}">
+                            <aura:if isTrue="{!v.sortAsc}">
+                                <lightning:icon iconName="utility:up" size="x-small"/> 
+                            <aura:set attribute="else">    
+                                <lightning:icon iconName="utility:down" size="x-small"/> 
+                            </aura:set>  
+                            </aura:if>      
+                        </aura:if>   
+                    </a>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+         <aura:iteration items="{!v.notes}" var="note">
+                <tr>
+                    <td data-label="Date">
+                        <div class="slds-truncate" title="">
+                                <lightning:formattedDateTime value="{!note.CreatedDate}" year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit" hour12="true" timeZone="America/New_York" timeZoneName="short"/>
+                            </div>
+                    </td>
+                    <aura:if isTrue="{!note.sobjectKey}">
+                        <td data-label="Comments">
+                            <div class="slds-truncate" style ="word-wrap: break-word; overflow-wrap: break-word; text-overflow: inherit; white-space: normal;"  title="">
+                              <a onclick="{!c.handleCommentClick}" data-record-id="{!note.sObjectType}" data-id="{!note.sObjectId}"  onmouseleave="{!c.hideHover}" onmouseover="{!c.showHover}">{!note.sobjectKey}</a>
+                              <lightning:formattedRichText value="{!note.commentData}"/>
+                            </div>
+                        </td>
+                        <aura:set attribute="else">
+                            <td data-label="Comments">
+                                <div class="slds-truncate" style="word-break: break-all;" title="">
+                                    <lightning:formattedRichText aura:id="outputRT" value="{!note.Comment}"/>
+                                </div> 
+                            </td>
+                        </aura:set>
+                    </aura:if> 
+
+                    <td data-label="User/Team">
+                        <div class="slds-truncate" title="">{!note.WorkflowTeamUser}</div>
+                    </td>
+                     <td data-label="EditedBy">
+                        <div class="slds-truncate" title="" >{!note.CreatedBy}</div>
+                    </td>
+
+                    
+                    <td data-label="Action">
+                        <div class="slds-truncate" title="">{!note.WorkflowAction}</div>
+                    </td>
+                    
+                    <td data-label="Source">
+                        <div class="slds-truncate" title="">{!note.ChannelType}</div>
+                    </td>
+                </tr>
+            </aura:iteration>
+         
+            <aura:if isTrue="{!v.loadingSpinner}">
+                <lightning:spinner class="spins" variant="brand" size="Large" alternativeText="Processing,Please Wait..."/>
+            </aura:if>
+        </tbody>
+    </table>
+    <aura:if isTrue="{!v.showHover}"> 
+        <div class="hover" aura:id="hoverCmp"> </div>
+    </aura:if> 
+   
+    
+</aura:component>

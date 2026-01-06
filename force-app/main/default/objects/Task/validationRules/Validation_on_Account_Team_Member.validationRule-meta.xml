@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_Account_Team_Member</fullName>
+    <active>true</active>
+    <description>When CAT member choose &quot;No Response/Pending Response&quot; error will be displayed.</description>
+    <errorConditionFormula>IF( AND(RecordType.Name == &apos;Approvals&apos;, Owner:User.Profile.Name == &apos;Customer Account Team&apos;, ISPICKVAL(Outcome__c,&apos;No Response/Pending Response&apos;)), true ,false)</errorConditionFormula>
+    <errorDisplayField>Outcome__c</errorDisplayField>
+    <errorMessage>Due to your profile, this is not a valid outcome for the &quot;Obtain Service Approval&quot; Task</errorMessage>
+</ValidationRule>

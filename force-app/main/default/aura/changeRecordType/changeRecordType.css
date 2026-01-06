@@ -1,0 +1,9 @@
+.THIS .layoutSelector {
+    background-color: #f4f6f9;
+}
+.THIS .requiredField{
+    color: Red;
+    text-align: Left;
+    font-size: Larger;
+    line-height:40px;
+}

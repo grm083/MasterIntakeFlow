@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateEndDateBeforeStartDate</fullName>
+    <active>true</active>
+    <description>SDT-41184-Validation for End Date</description>
+    <errorConditionFormula>(SBQQ__EndDate__c &lt;  SBQQ__StartDate__c)</errorConditionFormula>
+    <errorDisplayField>SBQQ__EndDate__c</errorDisplayField>
+    <errorMessage>End Date cannot be before Start Date of the service.</errorMessage>
+</ValidationRule>

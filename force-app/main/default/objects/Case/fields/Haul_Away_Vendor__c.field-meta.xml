@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Haul_Away_Vendor__c</fullName>
+    <description>For SDT 44574, for haul away Quotelines this field is populated based on location and Associated case&apos;s Haul_Away_Vendor, This should be revised if salesforce record exists and in future if there is any change in acorn</description>
+    <inlineHelpText>SDT 445744, for haul away Quotelines this field is populated based on location and Associated case&apos;s Haul_Away_Vendor(api name), in future if these vendor names gets change in acorn one shall change these api names as well</inlineHelpText>
+    <label>Haul Away Vendor</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Available</fullName>
+                <default>false</default>
+                <label>Not Available</label>
+            </value>
+            <value>
+                <fullName>223110_5378</fullName>
+                <default>false</default>
+                <label>Got Junk</label>
+            </value>
+            <value>
+                <fullName>7803</fullName>
+                <default>false</default>
+                <label>Junk King</label>
+            </value>
+            <value>
+                <fullName>8601_9239</fullName>
+                <default>false</default>
+                <label>Check Sammy</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

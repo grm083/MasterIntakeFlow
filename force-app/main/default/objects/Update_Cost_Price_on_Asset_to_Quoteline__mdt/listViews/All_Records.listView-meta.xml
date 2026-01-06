@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Records</fullName>
+    <columns>Type__c</columns>
+    <columns>Product_Family__c</columns>
+    <columns>Occurrence_Type__c</columns>
+    <columns>Updated_Occurrence_Type__c</columns>
+    <columns>Scenarios__c</columns>
+    <columns>Final_Frequency__c</columns>
+    <columns>Expected_Result__c</columns>
+    <columns>Pricing_Call__c</columns>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Records</label>
+</ListView>

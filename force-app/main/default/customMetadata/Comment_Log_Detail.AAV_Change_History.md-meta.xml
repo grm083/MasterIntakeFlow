@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>AAV Change History</label>
+    <protected>false</protected>
+    <values>
+        <field>Comment__c</field>
+        <value xsi:type="xsd:string">&lt;b&gt;Confirmed WM Available &lt;/b&gt;&lt;br&gt;
+&lt;b&gt;&lt;EquipmentSize__x&gt;&lt;/b&gt; &lt;b&gt;&lt;ProductName__x&gt;&lt;/b&gt;&lt;br&gt;
+&lt;b&gt;Availability updated on : &lt;/b&gt;&lt;NewAavDate__x&gt; &lt;TimeZone__x&gt;</value>
+    </values>
+    <values>
+        <field>Object__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_Approval_Log</fullName>
+    <active>true</active>
+    <description>When Outcome is selected as &quot;Verified&quot;, Approval Log should be selected otherwise error will be thrown.</description>
+    <errorConditionFormula>IF( ISPICKVAL( Process__c , &apos;Validate Email Approval Response&apos;) &amp;&amp;OR(ISPICKVAL(  Outcome__c , &apos;Verified and Request Approved&apos;),ISPICKVAL(  Outcome__c , &apos;Verified and Request Not Approved&apos;))&amp;&amp;   ISBLANK(Approval_Log__c  ) ,True,False)</errorConditionFormula>
+    <errorMessage>Please provide appropriate Approval Log for Approval/Rejection.</errorMessage>
+</ValidationRule>

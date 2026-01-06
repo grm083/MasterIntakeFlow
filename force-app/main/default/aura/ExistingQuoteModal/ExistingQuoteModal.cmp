@@ -1,0 +1,131 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global"
+    controller="GetCaseInformation">
+    
+    <aura:attribute name="url" type="String" />
+    <aura:attribute name="CloseModal" type="Boolean" default="false"/>
+    <aura:attribute name="QuotesWrapper" type="Object" />
+    <aura:attribute name="AddFavroiteContainerModal" type="Boolean" default="false" />
+    <aura:attribute name="existingQuoteModal" type="Boolean" default="true" />
+
+
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    
+    <aura:registerEvent name="CloseModalEvent" type="c:QuoteProductsCloseModal"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:if isTrue="{!v.existingQuoteModal}">
+    <div class="slds-m-around_xx-large slds-is-relative">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeExistingQuotes }"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Existing Quote(s)</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                   <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Quote Number">Quote Number</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="QuoteName">Case Type</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Duration">Duration</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Size">Size</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Material">Material</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Product">Product</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Primary Contact">Primary Contact</div>
+                                </th>
+                                 <th class="" scope="col">
+                                    <div class="slds-truncate" title="Start Date">Start Date</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.QuotesWrapper}" var="item">
+                                <aura:iteration items="{!item.configuredProducts}" var = "quote">
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="Quote Number" scope="row">
+                                            <div class="slds-truncate" data-value="{!quote.quoteID}" onclick="{!c.navigate}">
+                                                <a href="">{!quote.quoteName}</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="CaseType">
+                                            <div class="slds-truncate" title="{!quote.caseType}">{!quote.caseType}</div>
+                                        </td>
+                                        <td data-label="Status">
+                                            <div class="slds-truncate" title="{!quote.quoteStatus}">{!quote.quoteStatus}</div>
+                                        </td>
+                                        <td data-label="Duration">
+                                            <div class="slds-truncate" title="{!quote.duration}">{!quote.duration}</div>
+                                        </td>
+                                        <td data-label="Size">
+                                            <div class="slds-truncate" title="{!quote.equipmentSize}">{!quote.equipmentSize}</div>
+                                        </td>
+                                        <td data-label="Material">
+                                            <div class="slds-truncate" title="{!quote.materialType}">{!quote.materialType}</div>
+                                        </td>
+                                        <td data-label="Product">
+                                            <div class="slds-truncate" title="{!quote.equipmentType}">{!quote.equipmentType}</div>
+                                        </td>
+                                        <td data-label="Primary Contact">
+                                            <div class="slds-truncate" title="{!quote.primaryContact}">{!quote.primaryContact}</div>
+                                        </td>
+                                        <td data-label="Start Date">
+                                            <div class="slds-truncate" title="{!quote.startDate}">{!quote.startDate}</div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="slds-modal__footer">
+                    
+                <div class="mybtn slds-grid">
+                     <lightning:button class="slds-button slds-button_success" variant="neutral" 
+                                      label="Add Quote"
+                                      title="Add Quote"
+                                      onclick="{! c.addQuote }"/> 
+                    
+                    <lightning:button class="slds-float_right slds-button_destructive" variant="neutral" 
+                                      label="Close Case"
+                                      title="Close Case"
+                                      onclick="{! c.closeThisCase }"/>
+                    <lightning:button class="slds-button slds-button_neutral" variant="neutral" 
+                                      label="Close"
+                                      title="Close"
+                                      onclick="{! c.closeExistingQuotes }"/>
+       			 </div>
+                    
+                </footer>
+                
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    </aura:if>
+    <aura:if isTrue="{!v.AddFavroiteContainerModal}">
+        <c:AddFavoriteContainers showForm="{!v.AddFavroiteContainerModal}" caseId="{!v.recordId}" />
+    </aura:if>
+</aura:component>

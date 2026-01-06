@@ -1,0 +1,71 @@
+.THIS .floatbtn{
+    box-sizing: border-box;
+    width: 33px;
+    height: 45px;   
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: rgb(160, 166, 171) -2px 0px 2px;
+    border-style: solid none solid solid;
+    border-color: rgb(255, 255, 255);
+    Position: fixed !important;
+    visibility: visible !important;
+    z-index: 9001;
+    right:-3;
+    opacity: 0.7;
+    top:275px;
+
+}
+
+.THIS .floatbtn:hover {opacity: 1;
+right:0px;
+}
+
+.THIS .actv{opacity: 1;
+    right:0px;
+}
+
+.THIS .txtStyle{
+   text-align: center;
+   font-family: sans-serif;
+}
+.THIS .box{
+    box-sizing: border-box;
+    position: fixed;
+    background-color: rgb(255,255,88);
+    right: 0px;
+    z-index: 9000;
+    opacity: 1;
+    padding: 15px;
+    width:400px;
+    padding-left:5px;
+    max-height:500px;
+    overflow-y:auto;
+    scrollbar-width: thin;
+}
+.THIS .slds-box{
+    border-style: groove;
+    border-color: saddlebrown;
+    overflow-y:auto;
+}
+/* .THIS .vertiTruncate {
+    overflow: hidden;  
+    display: -webkit-box;
+    -webkit-line-clamp: 100;
+    -webkit-box-orient: vertical;
+  }
+
+.THIS .custLHeight {
+    line-height:17px;
+} */
+/* .THIS .custPad {
+    padding-left:91px;
+    padding-top:4px
+} */
+.THIS .LabelText{
+    font-size:13px;
+    color:black;
+    padding-right:0px
+}
+.THIS .imgHeight{
+    height: 40px;
+}

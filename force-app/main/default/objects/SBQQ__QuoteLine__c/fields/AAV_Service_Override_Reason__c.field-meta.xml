@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AAV_Service_Override_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Service Override Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Container not accessible on suggested days</fullName>
+                <default>false</default>
+                <label>Container not accessible on suggested days</label>
+            </value>
+            <value>
+                <fullName>High waste volume on specific day(s)</fullName>
+                <default>false</default>
+                <label>High waste volume on specific day(s)</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SelectDoNotCreateTastGridTicket</fullName>
+    <active>true</active>
+    <description>Select DoNotCreateTastGridTicket To ChangeMAS Service Line. SDT 32096</description>
+    <errorConditionFormula>AND(ISCHANGED( MASServiceLine__c),DoNotCreateTaskGridTickets__c =False, SBQQ__Quote__r.Case_record_Type__c!=&apos;New Service Case&apos;)</errorConditionFormula>
+    <errorDisplayField>DoNotCreateTaskGridTickets__c</errorDisplayField>
+    <errorMessage>In order to update the MAS Service Line, the Do Not Create Task Grid Ticket checkbox must be checked.</errorMessage>
+</ValidationRule>

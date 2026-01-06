@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Asset_Error</fullName>
+    <active>true</active>
+    <description>Container, Asset and Project are mutually exclusive. Entitlement should have only one of the three.</description>
+    <errorConditionFormula>OR(IF( NOT(ISBLANK( AssetId )), 
+IF( OR(NOT(ISBLANK(TEXT(Container__c))), NOT(ISBLANK(Project_Code__c)), 
+NOT(ISBLANK(TEXT(Schedule_Type__c)))),True,False ),False),
+IF( NOT(ISBLANK( Project_Code__c)), 
+IF( OR(NOT(ISBLANK(TEXT(Container__c))), NOT(ISBLANK(AssetId)), 
+NOT(ISBLANK(TEXT(Schedule_Type__c)))),True,False ),False))</errorConditionFormula>
+    <errorMessage>Container, Asset and Project are mutually exclusive. You may enter only one of the three in the Entitlement.</errorMessage>
+</ValidationRule>

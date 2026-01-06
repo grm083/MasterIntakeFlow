@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_AccountAndProjectCode</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT($User.Bypass_Validation__c),
+NOT(ISBLANK( Project_Code__c )),
+NOT(ISBLANK( Project_Code__r.Client_Account__c)),
+ Account__r.Id  &lt;&gt;  Project_Code__r.Client_Account__c 
+)</errorConditionFormula>
+    <errorDisplayField>Project_Code__c</errorDisplayField>
+    <errorMessage>Selected Project should come under the selected Account</errorMessage>
+</ValidationRule>

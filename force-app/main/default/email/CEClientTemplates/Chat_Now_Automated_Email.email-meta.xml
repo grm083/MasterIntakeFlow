@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>For sending automated Chat Now Email.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Chat Now Automated Email</name>
+    <style>freeForm</style>
+    <subject>Important Message from WM - Ref# {!Case.Reference_Number__c}</subject>
+    <textOnly>***Please be advised: This email address only accepts replies.***
+
+If you need to submit a new request or inquiry, please use one of our engagement channels to work with the WM Customer Care Team.
+
+Phone: 888-625-5323
+ChatNow: Use ChatNow for self-service or to initiate a live-to-agent chat
+Portal: Request access by registering on our Customer Portal or ask your Program Manager for more information.
+
+
+Thank you,
+
+WM</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

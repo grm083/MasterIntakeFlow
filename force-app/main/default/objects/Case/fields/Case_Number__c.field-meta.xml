@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Number__c</fullName>
+    <description>Formula field utilizing VF page/ merge fields to log effort task on Case.  SDT-4271</description>
+    <externalId>false</externalId>
+    <formula>if( $Profile.Name = &quot;Customer Service&quot;,HYPERLINK(&quot;/apex/GenTaskPage?id=&quot;&amp; Id ,CaseNumber,&quot;_self&quot;),HYPERLINK(&quot;/lightning/r/&quot;&amp; CASESAFEID(Id) &amp; &quot;/view&quot;,CaseNumber, &quot;_self&quot;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Case #</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

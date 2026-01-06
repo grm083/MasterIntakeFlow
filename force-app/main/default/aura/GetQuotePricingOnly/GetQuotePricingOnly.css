@@ -1,0 +1,27 @@
+.THIS{
+    height: 600px;
+}
+.THIS .div { 
+    display: block;
+  }
+
+.THIS .container {
+  height: 50px;
+  position: relative;
+}
+
+.THIS .center {
+    transform: translate(40%, -20%);
+  }
+
+hr.THIS{
+  border-top: 1px solid red;
+}
+
+.THIS .lable{
+  width: 115px;
+}
+
+.THIS .data{
+  white-space: normal; /* css-3 */
+}

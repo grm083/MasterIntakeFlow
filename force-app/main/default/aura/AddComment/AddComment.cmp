@@ -1,0 +1,36 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" Controller="CommentController" >
+    <aura:attribute name="Comment" type="String" default=""/>
+    <!--attribute for email address -->
+    <aura:attribute name="typedValue" type="String" default=""/>
+    <!--<aura:registerEvent name="cmpEvent" type="c:ComponentEvent" /> -->
+    <aura:attribute name="IsSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="typedValueList" type="List" default="" />
+    
+    
+    <div class="slds-grid slds-wrap">
+        <!-- adding input for email address begin-->  
+        <div class="slds-form-element slds-form-element_horizontal slds-col slds-size_1-of-3" style= "width:20%;">
+            <label class="slds-form-element__label" >Email Address</label>
+        </div> 
+        <div class="slds-col slds-size_2-of-3">
+            <c:emailMessageInput onemailtoparent ="{!c.getEmailFromInput}" />
+         </div> 
+        <!-- adding input for email address end-->
+        
+        <div class="slds-form-element slds-form-element_horizontal slds-m-top_medium slds-col slds-size_1-of-3" style= "width:20%;"> 
+            <label class="slds-form-element__label">Type Message</label>
+        </div>      
+        <div class="vertical-align-container slds-col slds-size_2-of-3 slds-m-top_large">
+            <div class="input-field">
+                <lightning:textarea class="slds-size_1-of-2 slds-m-right_x-small custom-textarea" variant="label-hidden" value="{!v.Comment}" onchange="{!c.validateInput}"/>
+            </div>
+            <div class="slds-m-top_medium">
+                <lightning:button variant="brand" label="Send Comment" title="Send Comment" onclick="{!c.sendComment}"/>         
+            </div>
+        </div>
+    </div>
+    
+    <aura:if isTrue="{!v.IsSpinner}">
+        <lightning:spinner variant="brand"/>
+    </aura:if>
+</aura:component>

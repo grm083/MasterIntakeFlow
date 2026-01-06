@@ -1,0 +1,99 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial;"><font face="Arial, sans-serif" style="">Hi,</font></div><div style="color: rgb(0, 0, 0); font-family: arial;"><font face="Arial, sans-serif" style=""><br></font></div><div style="font-family: arial;"><font face="arial" style="color: rgb(0, 0, 0);">An estimated time of arrival (ETA) is required for the following service, WO# {!Case.Acorn_Work_order__c}, scheduled for </font><span style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">{!Case.WO_Service_Date__c}</span><font face="arial" style="color: rgb(0, 0, 0);">. </font><font style=""><b style=""><font color="#cc0000">[Include the reason why the service needs to be expedited]</font>.</b></font><font face="arial" style="color: rgb(0, 0, 0);">&nbsp;</font><b style="color: rgb(0, 0, 0);">Please respond with the ETA as soon as possible so we can update the customer.</b></div><div style="color: rgb(0, 0, 0); font-family: arial;"><b><font face="Arial, sans-serif"><br></font></b></div><div style="color: rgb(0, 0, 0); font-family: arial;"><font face="Arial, sans-serif"><b>SERVICE DETAILS</b></font></div><div style="color: rgb(0, 0, 0); font-family: arial;"><table border="0" cellpadding="0" cellspacing="0" width="748" style="border-collapse:
+ collapse;width:561pt;mso-yfti-tbllook:1536">
+ <colgroup><col width="202" style="mso-width-source:userset;width:151pt">
+ <col width="18" style="mso-width-source:userset;width:14pt">
+ <col width="528" style="mso-width-source:userset;width:396pt">
+ </colgroup><tbody><tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="color: rgb(24, 23, 23); font-weight: bold;"><font face="Arial, sans-serif">Vendor:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#181717" face="Arial, sans-serif">{!Case.Supplier__c}</font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="color: rgb(24, 23, 23); font-weight: bold;"><font face="Arial, sans-serif">Reference #:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#181717" face="Arial, sans-serif">{!Case.Reference_Number__c}</font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="color: rgb(24, 23, 23); font-weight: bold;"><font face="Arial, sans-serif">Location ID:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#181717" face="Arial, sans-serif">{!Case.Location_Code__c}</font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="color: rgb(24, 23, 23); font-weight: bold;"><font face="Arial, sans-serif">Service Address:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt"><p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif"><font color="#181717">{!Account.Name}</font><span style="color: rgb(24, 23, 23);">,&nbsp;</span><font color="#181717">{!Case.Tech_Location_Details__c}</font></font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="color: rgb(24, 23, 23); font-weight: bold;"><font face="Arial, sans-serif">WO #:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#181717" face="Arial, sans-serif">{!Case.Acorn_Work_order__c}</font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="color: rgb(24, 23, 23); font-weight: bold;"><font face="Arial, sans-serif">Requested Service
+  Date:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="line-height: normal; margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#181717" face="Arial, sans-serif">{!Case.Service_Date__c}</font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="color: rgb(24, 23, 23); font-weight: bold;"><font face="Arial, sans-serif">Service:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#181717" face="Arial, sans-serif">{!Case.Case_Type__c} - {!Case.Case_Subtype_Email_Format__c}</font></p>
+  </td>
+ </tr>
+ <tr height="31" style="mso-height-source:userset;height:23.15pt">
+  <td height="31" class="oa1" width="202" style="height:23.15pt;width:151pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="color: rgb(24, 23, 23); font-weight: bold;"><font face="Arial, sans-serif">Container:</font></span></p>
+  </td>
+  <td class="oa2" width="18" style="width:14pt">
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"></p>
+  </td>
+  <td class="oa2" width="528" style="width:396pt">
+  <p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font face="Arial, sans-serif"><font color="#181717">{!Asset.Name},&nbsp;</font>{!Asset.Material_Type__c},&nbsp;<span style="color: rgb(24, 23, 23);">{!Asset.Container_Position__c}</span></font></p>
+  </td>
+ </tr>
+</tbody></table></div><div style="color: rgb(0, 0, 0); font-family: arial;"><font face="Arial, sans-serif" style=""><div style=""><br></div><div style="">Thank you,</div><div style=""><br></div><div style=""><b><font color="#006600">{!User.FirstName} {!User.LastName}</font></b></div><div style="">Customer Service Representative</div><div style="">{!User.Department_Email__c}</div><div style=""><br></div><div style="">Waste Management</div><div style=""><div style="font-family: arial; background-color: rgb(255, 255, 255);"><font face="Arial, sans-serif">1 Griffin Road N</font></div><div style="font-family: arial; background-color: rgb(255, 255, 255);"><font face="Arial, sans-serif">Suite 4C</font></div></div><div style="">Windsor, CT 06095</div><div style=""><br></div><div style="">{!Case.Thread_Id} : {!Case.Reference_Number__c}</div></font></div>]]></td>
+</tr>
+</table>

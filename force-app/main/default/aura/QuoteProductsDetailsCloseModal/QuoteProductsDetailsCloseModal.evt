@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Passes the close modal command to the Quote Products parent component">
+    <aura:attribute name="showSIDModal" type="Boolean" />
+</aura:event>

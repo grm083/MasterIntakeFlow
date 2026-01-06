@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Action Type</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Status Change</fullName>
+                <default>false</default>
+                <label>Status Change</label>
+            </value>
+            <value>
+                <fullName>Escalation</fullName>
+                <default>false</default>
+                <label>Escalation</label>
+            </value>
+            <value>
+                <fullName>Pending Information</fullName>
+                <default>false</default>
+                <label>Pending Information</label>
+            </value>
+            <value>
+                <fullName>Additional Information Needed</fullName>
+                <default>false</default>
+                <label>Additional Information Needed</label>
+            </value>
+            <value>
+                <fullName>Non-SBS Coordination Needed</fullName>
+                <default>false</default>
+                <label>Non-SBS Coordination Needed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

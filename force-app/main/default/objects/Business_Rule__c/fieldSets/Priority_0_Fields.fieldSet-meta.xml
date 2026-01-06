@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priority_0_Fields</fullName>
+    <description>This field set contains the highest order identifying fields of the Business Rule object that mandates a 1:1 match on a list of records being pulled.  This will not include effective dating, as these are &quot;given&quot; conditions that need to be accounted for as part of any other Business Rule Solution Designs.</description>
+    <displayedFields>
+        <field>AccountId__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <label>Priority 0 Fields</label>
+</FieldSet>

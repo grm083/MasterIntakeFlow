@@ -1,0 +1,199 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global" 
+                controller = "SupplementController">
+    <!-- Attributes -->
+    <aura:attribute name="supplement" type="object"/>
+    <aura:attribute name="parentQuoteLineId" type="string" />
+    <aura:attribute name="showSupplementModal" type="boolean"/>
+    <aura:attribute name="showSpinner" type="boolean" />
+    <aura:attribute name="destructionTypeOptions" type="List" default="[
+                                                                       {'label': 'None', 'value': ''},
+                                                                       {'label': 'Destruction', 'value': 'Destruction'},
+                                                                       {'label': 'Disposal', 'value': 'Disposal'}
+                                                                       ]"/>
+    <aura:attribute name="selectedDestructionType" type="String" default="None"/>
+     <!--aura:attribute name="RestrictionDetails" type="String" default="None"/-->
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- Handlers -->
+    
+    <!-- Body -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading Bundles" size="medium" />
+    </aura:if>
+    
+    <lightning:card>
+        <div class="slds-box slds-theme_shade">
+            <div class="slds-align_absolute-center" >
+                <p>Supplemental Details</p>
+            </div>
+        </div>
+        <div class="slds-p-around_small">
+            <div class="slds-box slds-theme_success">
+                <div class="slds-align_absolute-center" >
+                    <p>Special Waste Handling</p>
+                </div>
+            </div>
+            <div class="slds-p-around_small">
+                <div class="slds-p-top_small">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" style="margin-right: 0.5rem;">Profile Number</label>
+                            <lightning:helptext content="When working with special wastes, landfills may require manifests and profiles prior to allowing the waste to be dumped" class="customIcon"/> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning:input type="text"
+                                             name="ProfileNumber"
+                                             label="Profile Number"
+                                             variant="label-hidden" 
+                                             maxlength = "100"
+                                             value="{!v.supplement.profileNumber}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-top_small">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" style="margin-right: 0.5rem;">Landfill Ticket Required</label>
+                            <lightning:helptext content="A customer may require landfill tickets for diversion reporting, or other evidence of disposal" class="customIcon"/> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning:input type="checkbox" 
+                                             label="Landfill Ticket Required" 
+                                             name="LandfillTicketRequired"
+                                             variant="label-hidden"
+                                             checked="{!v.supplement.landfillTickets}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-top_small">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" style="margin-right: 0.5rem;">Special Disposal Instructions</label>
+                            <lightning:helptext content="If the customer has other paperwork requirements, document them here." class="customIcon"/> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning:textarea name="specialDisposalDescription" 
+                                                label="Special Disposal Instructions"
+                                                variant="label-hidden"
+                                                value="{!v.supplement.specialDisposalDescription}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small">
+            <div class="slds-box slds-theme_success">
+                <div class="slds-align_absolute-center" >
+                    <p>Evidence of Destruction</p>
+                </div>
+            </div>
+            <div class="slds-p-around_small">
+                <div class="slds-p-top_small">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" style="margin-right: 0.5rem;">
+                                Certification of Destruction/Disposal
+                            </label>
+                            <lightning:helptext content="Depending on the type of debris being removed, some customers may require evidence of its destruction." class="customIcon"/> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning:radioGroup name="DestructionDisposalType"
+                                                  label="DestructionDisposalType"
+                                                  options="{!v.destructionTypeOptions}"
+                                                  value="{!v.supplement.selectedDestructionType}"
+                                                  type="button"
+                                                  variant="label-hidden"
+                                                  onchange="{!c.assignDestructionDisposalType}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small">
+            <div class="slds-box slds-theme_success">
+                <div class="slds-align_absolute-center" >
+                    <p>Serviceability Details</p>
+                </div>
+            </div>
+            <div class="slds-p-around_small">
+                <lightning:layout multipleRows="true" verticalAlign="center" horizontalAlign="spread">
+                    <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                        <lightning:input type="time" name="StartTime" label="Earliest Service Time" value="{!v.supplement.serviceStartTime}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                        <lightning:input type="time" name="EndTime" label="Latest Service Time" value="{!v.supplement.serviceEndTime}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                        <lightning:input name="GateCode" label="Gate Code" value="{!v.supplement.gateCode}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-p-around_xxx-small">
+                        <lightning:textarea name="driverInstructions" label="Driver Instructions"
+                                            value="{!v.supplement.restrictionDetails}"
+                                            placeholder="Provide contact information or specific instructions for the driver here..." />
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+        </div>
+        <div class="slds-p-around_small">
+            <div class="slds-box slds-theme_success">
+                <div class="slds-align_absolute-center" >
+                    <p>Project Affliation</p>
+                </div>
+            </div>
+            <div class="slds-p-around_small">
+                <div class="slds-p-top_small">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" style="margin-right: 0.5rem;">
+                                Project Service Request
+                            </label>
+                            <lightning:helptext content="If this request is for the project services team, please check this box to ensure it routes to the correct team." class="customIcon"/> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning:input type="checkbox" 
+                                             name="ProjectServiceRequest"
+                                             checked="{!v.supplement.projectServiceRequest}"
+                                             variant="label-hidden"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-top_small">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" style="margin-right: 0.5rem;">
+                                Project Look Up
+                            </label>
+                            <lightning:helptext content="If a project has been provided, please search and select it below." class="customIcon"/> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <!--lightning:input aura:id="ProjectLookUp"
+                                             name="ProjectLookUp"
+                                             value="{!v.sbqquote.Project__c}"
+                                             label=""
+                                             type="search" 
+                                             variant="label-hidden"/-->
+                            <lightning:recordEditForm recordId="{!v.supplement.parentQuoteId}"
+                                                      objectApiName="SBQQ__Quote__c">
+                                <lightning:inputField fieldName="Project__c"
+                                                      value="{!v.supplement.projectLookUpId}"
+                                                      variant="label-hidden"/>
+                            </lightning:recordEditForm>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                    <br>
+                    </br>
+                </br>
+                <div class="slds-align_absolute-center" >
+                    <lightning:button class="slds-theme_success" label="Save"
+                                      variant="brand"
+                                      onclick="{!c.updateQLines}" />
+                    
+                    <lightning:button label="Cancel"
+                                      onclick="{!c.cancelSupplement}" />
+                </div>
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

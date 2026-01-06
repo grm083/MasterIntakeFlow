@@ -1,0 +1,82 @@
+<aura:component controller="assetCustomTreeGridController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="gridColumns" type="List" access="PRIVATE" />
+    <aura:attribute name="gridData" type="Object" access="PRIVATE" />
+    <aura:attribute name="allRecordGridData" type="Object" access="PRIVATE" />
+    <aura:attribute name="gridExpandedRows" type="List" access="PRIVATE" />
+    <aura:attribute name="assetRecordCount" type="Integer" access="PRIVATE" />
+    <aura:attribute name="currentExpandedRows" type="String" />
+    <aura:attribute name="showSpinner" type="boolean" default="true"/>
+    <aura:attribute name="showSpinnerOnPageChange" type="boolean" default="true"/>
+     <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="showDataTable" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+   
+    <!-- hideCheckboxColumn = "true"  handleRowAction-->
+    <div>
+    <p> 
+        <b>
+            Asset Roll up ({! v.assetRecordCount })
+        </b>
+        </p>
+    </div>
+    <!--div>
+        <lightning:treeGrid
+            columns="{! v.gridColumns }"
+            data="{! v.gridData }"
+            expandedRows="{! v.gridExpandedRows }"
+            keyField="Id"
+            aura:id="mytree"
+            onrowselection="{! c.getSelectedRows}"
+            onrowaction="{!c.handleRowAction}"
+            hideCheckboxColumn = "true"                
+        >
+    </div-->
+     <div class="slds-card__body">
+           <aura:if isTrue="{!v.showSpinnerOnPageChange}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+            <aura:if isTrue="{!v.showDataTable}">
+             <lightning:treeGrid
+            columns="{! v.gridColumns }"
+            data="{! v.gridData }"
+            expandedRows="{! v.gridExpandedRows }"
+            keyField="Id"
+            aura:id="mytree"
+            onrowselection="{! c.getSelectedRows}"
+            onrowaction="{!c.handleRowAction}"
+            hideCheckboxColumn = "true"                
+                                 />
+            </aura:if>
+        </div>
+        <footer class="slds-card__footer"> <div>
+              <lightning:buttonGroup class="slds-align_absolute-center" >
+            <lightning:button label="Previous" disabled="{!v.startPage == 0}"  
+                              onclick="{!c.previous}" variant="brand"
+                              iconName='utility:back'/>
+            &nbsp; &nbsp; &nbsp;
+            <lightning:button label="Next" disabled="{!v.endPage >= v.totalRecords}" 
+                              onclick="{!c.next}" variant="brand"
+                              iconName='utility:forward' iconPosition='right'/>
+        </lightning:buttonGroup>
+            </div></footer>
+    <aura:if isTrue="{!v.showSpinnerOnPageChange}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+</aura:component>

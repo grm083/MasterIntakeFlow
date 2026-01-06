@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_to_Task_Payload</name>
+        <label>Send to Task Payload</label>
+        <locationX>264</locationX>
+        <locationY>408</locationY>
+        <actionName>Genesys_Routing__c.Task_Payload</actionName>
+        <actionType>outboundMessage</actionType>
+        <connector>
+            <targetReference>Check_if_Canceled_Activity</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>Check_if_Canceled_Activity</name>
+        <label>Check if Canceled Activity</label>
+        <locationX>264</locationX>
+        <locationY>528</locationY>
+        <defaultConnector>
+            <targetReference>Update_Quote_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>New Task</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_Type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Action__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancel</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Cancel Type</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Update for SDT-37849</description>                                                                                                           
+        <name>Determine_record_type_0</name>
+        <label>Determine record type and Object Type</label>
+        <locationX>440</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>All Others</defaultConnectorLabel>
+        <rules>
+            <name>CPQ_Quote_Type_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.MediaType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SFDCCPQQuote</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SFDCObjType__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>EmailMessage</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_to_Task_Payload</targetReference>
+            </connector>
+            <label>CPQ Quote Type</label>
+        </rules>
+    </decisions>
+    <description>Send OB Message to Genesys</description>
+    <interviewLabel>Outbound Message to Genesys {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Outbound Message to Genesys</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Quote_0_0</name>
+        <label>Update Quote</label>
+        <locationX>352</locationX>
+        <locationY>648</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.SFDCObjRecordID__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Genesys_Record_Created__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SBQQ__Notes__c</field>
+            <value>
+                <stringValue>This was updated through the Genesys Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <object>SBQQ__Quote__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <object>Genesys_Routing__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <name>Send_to_Genesys</name>
+            <connector>
+                <targetReference>Determine_record_type_0</targetReference>
+            </connector>
+            <label>Send to Genesys</label>
+            <offsetNumber>0</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <recordField>Send_to_Genesys_Time__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AAV_MaterialCode__c</fullName>
+    <externalId>false</externalId>
+    <label>Material Code</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>AAV_Line_of_Business__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>T</fullName>
+                <default>false</default>
+                <label>Trash</label>
+            </value>
+            <value>
+                <fullName>C</fullName>
+                <default>false</default>
+                <label>Cardboard</label>
+            </value>
+            <value>
+                <fullName>C&amp;D</fullName>
+                <default>false</default>
+                <label>Construction / Demolition</label>
+            </value>
+            <value>
+                <fullName>SSR</fullName>
+                <default>false</default>
+                <label>Single Stream Recycling</label>
+            </value>
+            <value>
+                <fullName>ORGANIC</fullName>
+                <default>false</default>
+                <label>Organic Waste</label>
+            </value>
+            <value>
+                <fullName>ME</fullName>
+                <default>false</default>
+                <label>Metal</label>
+            </value>
+            <value>
+                <fullName>CU</fullName>
+                <default>false</default>
+                <label>Copper</label>
+            </value>
+            <value>
+                <fullName>No Mapping</fullName>
+                <default>false</default>
+                <label>No Mapping</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>T</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>C</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>C&amp;D</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>SSR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>ORGANIC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>ME</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>CU</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DoResyncOutBoundcall__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If Resync is true then Out Bound message via workflow is invoked</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This filed is used to invoke outbound message to Acorn</inlineHelpText>
+    <label>DoResyncOutBoundcall</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

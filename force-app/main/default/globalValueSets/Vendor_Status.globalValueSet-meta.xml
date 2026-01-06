@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Active</fullName>
+        <default>false</default>
+        <label>Active</label>
+    </customValue>
+    <customValue>
+        <fullName>Do Not Use</fullName>
+        <default>false</default>
+        <label>Do Not Use</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive</fullName>
+        <default>false</default>
+        <label>Inactive</label>
+    </customValue>
+    <customValue>
+        <fullName>Not Qualified</fullName>
+        <default>false</default>
+        <label>Not Qualified</label>
+    </customValue>
+    <customValue>
+        <fullName>On Hold</fullName>
+        <default>false</default>
+        <label>On Hold</label>
+    </customValue>
+    <customValue>
+        <fullName>Out of Business</fullName>
+        <default>false</default>
+        <label>Out of Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Pending</fullName>
+        <default>false</default>
+        <label>Pending</label>
+    </customValue>
+    <customValue>
+        <fullName>Remove</fullName>
+        <default>false</default>
+        <label>Remove</label>
+    </customValue>
+    <description>Vendor Status</description>
+    <masterLabel>Vendor Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

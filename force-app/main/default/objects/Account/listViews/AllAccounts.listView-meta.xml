@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AllAccounts</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.ACCOUNT_NUMBER</columns>
+    <columns>ACCOUNT.ADDRESS2_STREET</columns>
+    <columns>ACCOUNT.ADDRESS2_CITY</columns>
+    <columns>ACCOUNT.ADDRESS2_STATE</columns>
+    <columns>ACCOUNT.ADDRESS2_ZIP</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <columns>Location_Code__c</columns>
+    <columns>Primary_Segment__c</columns>
+    <columns>Customer_Code__c</columns>
+    <columns>tz__Timezone__c</columns>
+    <columns>tz__Timezone_Full__c</columns>
+    <columns>tz__Timezone_IANA__c</columns>
+    <columns>tz__Timezone_SFDC__c</columns>
+    <columns>IsPricingEligible__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Accounts</label>
+</ListView>

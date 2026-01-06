@@ -1,0 +1,49 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" controller = "GetCaseInformation">
+    <aura:attribute name="showForm" type="Boolean" default="true"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+     <aura:attribute name="closeParent" type="Boolean" />
+    <aura:attribute name="parentId" type="String" access="global" />
+    <aura:attribute name="isCapacityEligible" type="Boolean" default="false"/>
+    <aura:attribute name="isAvailDate" type="Boolean" default="false"/>
+    <aura:attribute name="isDateNotListedCl" type="Boolean" default="false"/>	
+    <aura:registerEvent name="SingleTabRefreshEvent" type="c:SingleTabComponentRefresh"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <lightning:messageChannel type="SetServiceDate__c" aura:id="lmschannel" onMessage="{!c.handleReceiveMessage}" scope="APPLICATION"/>
+  
+  
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="simpleNewCase" type="Case"/>
+    
+    <force:recordData aura:id="recordLoader"
+    recordId="{!v.recordId}"
+    fields="SLA_Service_DateTime__c,Service_Date__c"
+    targetFields="{!v.simpleNewCase}"
+    targetError="{!v.recordLoadError}"
+    />
+    
+       <aura:if isTrue="{!v.showForm}">
+        <div>
+            <lightning:recordEditForm aura:id="recordViewForm"
+                                      recordId="{!v.recordId}"
+                                      recordTypeId="{!v.recordTypeId}"
+                                      onsuccess="{!c.handleSuccess}"
+                                      onerror="{!c.handleError}"
+                                      onsubmit = "{!c.handleSubmit}"
+                                      objectApiName="Case"
+                                      >
+                <lightning:messages aura:id="OppMessage" />
+                <lightning:inputField fieldName="SLA_Service_DateTime__c" type="datetime-local"  value="{!v.slaServiceDate}" />
+                <lightning:inputField fieldName="Service_Date__c"  required="true" value="{!v.serviceDate}"  />
+                <lightning:inputField fieldName="SLA_Override_Reason__c"  />
+                <lightning:inputField fieldName="SLA_Override_Comment__c"  />
+                <lightning:inputField fieldName="Availability_Checked__c" class="slds-hidden"/>
+                <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium slds-align_absolute-center" />
+                <aura:if isTrue="{!v.loading}">
+                    <lightning:spinner alternativeText="Loading" />
+                </aura:if>
+                
+            </lightning:recordEditForm>
+        </div>
+        
+    </aura:if>
+</aura:component>

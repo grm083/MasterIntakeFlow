@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Commercial</fullName>
+        <default>false</default>
+        <label>Commercial</label>
+    </customValue>
+    <customValue>
+        <fullName>Rolloff</fullName>
+        <default>false</default>
+        <label>Rolloff</label>
+    </customValue>
+    <description>This is the Waste Management Line of Business</description>
+    <masterLabel>LOB</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cost_Override_Reason</fullName>
+    <active>false</active>
+    <description>Cost Override Reason only when the cost is getting updated from a greater than zero value to another value</description>
+    <errorConditionFormula>AND(!(ISNEW()),ISCHANGED(SBQQ__UnitCost__c), PRIORVALUE(SBQQ__UnitCost__c) &gt; 0 , ISBLANK(TEXT(Cost_Override_Reason__c)))</errorConditionFormula>
+    <errorDisplayField>Cost_Override_Reason__c</errorDisplayField>
+    <errorMessage>When Unit Cost is Overridden, Cost Override Reason must be provided.</errorMessage>
+</ValidationRule>

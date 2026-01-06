@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cost_Compare_Message__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( SBQQ__ProductCode__c = &apos;H&apos;
+  &amp;&amp; (SBQQ__ProductFamily__c  = &apos;Rolloff&apos;
+  &amp;&amp; MID( Source_Code__c , 0, 2)  = &apos;WM&apos;
+  &amp;&amp;  (Pricing_Request__r.Customer_Price_Type__c != &apos;Exhibit Pricing&apos; &amp;&amp; Pricing_Request__r.Customer_Price_Type__c != &apos;Exhibit Cost Pricing&apos;))
+  
+,  IF( SBQQ__UnitCost__c &lt;  $CustomMetadata.Pricing_Threshold_Settings__mdt.Price_Per_Haul.Minimum_Value__c 
+,  &apos;Haul Cost is &lt; $&apos;  &amp; TEXT($CustomMetadata.Pricing_Threshold_Settings__mdt.Price_Per_Haul.Minimum_Value__c)  &amp; &apos;, please confirm or re-procure if required.&apos;
+,  IF(SBQQ__UnitCost__c &gt;  $CustomMetadata.Pricing_Threshold_Settings__mdt.Price_Per_Haul.Maximum_Value__c 
+, &apos;Haul Cost is &gt; $&apos;  &amp; TEXT($CustomMetadata.Pricing_Threshold_Settings__mdt.Price_Per_Haul.Maximum_Value__c)  &amp; &apos;, please confirm or re-procure if required.&apos;
+, &apos;&apos;) )
+, &apos;&apos;)</formula>
+    <label>Cost Compare Message</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Outcome__c</fullName>
+    <description>possible outcomes for the work item</description>
+    <externalId>false</externalId>
+    <label>Outcome</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Process__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Customer Accepts New Date</fullName>
+                <default>false</default>
+                <label>Customer Accepts New Date</label>
+            </value>
+            <value>
+                <fullName>Customer Accepts Status</fullName>
+                <default>false</default>
+                <label>Customer Accepts Status</label>
+            </value>
+            <value>
+                <fullName>Customer Disputes Status</fullName>
+                <default>false</default>
+                <label>Customer Disputes Status</label>
+            </value>
+            <value>
+                <fullName>Customer Requests Cancellation</fullName>
+                <default>false</default>
+                <label>Customer Requests Cancellation</label>
+            </value>
+            <value>
+                <fullName>Information Not Obtained</fullName>
+                <default>false</default>
+                <label>Information Not Obtained</label>
+            </value>
+            <value>
+                <fullName>Information Obtained</fullName>
+                <default>false</default>
+                <label>Information Obtained</label>
+            </value>
+            <value>
+                <fullName>New ETA Provided</fullName>
+                <default>false</default>
+                <label>New ETA Provided</label>
+            </value>
+            <value>
+                <fullName>No Response/Pending Response</fullName>
+                <default>false</default>
+                <label>No Response/Pending Response</label>
+            </value>
+            <value>
+                <fullName>Approved</fullName>
+                <default>false</default>
+                <label>Request Approved</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Request Not Approved</label>
+            </value>
+            <value>
+                <fullName>Schedule Confirmed</fullName>
+                <default>false</default>
+                <label>Schedule Confirmed</label>
+            </value>
+            <value>
+                <fullName>Service Confirmed</fullName>
+                <default>false</default>
+                <label>Service Confirmed</label>
+            </value>
+            <value>
+                <fullName>Service Dispatched</fullName>
+                <default>false</default>
+                <label>Service Dispatched</label>
+            </value>
+            <value>
+                <fullName>Service Error</fullName>
+                <default>false</default>
+                <label>Service Error</label>
+            </value>
+            <value>
+                <fullName>Service Not Confirmed</fullName>
+                <default>false</default>
+                <label>Service Not Confirmed</label>
+            </value>
+            <value>
+                <fullName>Service Not Performed</fullName>
+                <default>false</default>
+                <label>Service Not Performed</label>
+            </value>
+            <value>
+                <fullName>Service Rescheduled</fullName>
+                <default>false</default>
+                <label>Service Rescheduled</label>
+            </value>
+            <value>
+                <fullName>Vendor Available</fullName>
+                <default>false</default>
+                <label>Vendor Available</label>
+            </value>
+            <value>
+                <fullName>Vendor Unavailable</fullName>
+                <default>false</default>
+                <label>Vendor Unavailable</label>
+            </value>
+            <value>
+                <fullName>Customer Notified of Decline</fullName>
+                <default>false</default>
+                <label>Customer Notified of Decline</label>
+            </value>
+            <value>
+                <fullName>No Response</fullName>
+                <default>false</default>
+                <label>No Response</label>
+            </value>
+            <value>
+                <fullName>Verified and Request Approved</fullName>
+                <default>false</default>
+                <label>Verified and Request Approved</label>
+            </value>
+            <value>
+                <fullName>Verified and Request Not Approved</fullName>
+                <default>false</default>
+                <label>Verified and Request Not Approved</label>
+            </value>
+            <value>
+                <fullName>Could not verify</fullName>
+                <default>false</default>
+                <label>Could not verify</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Service Date Change</fullName>
+                <default>false</default>
+                <label>Service Date Change</label>
+            </value>
+            <value>
+                <fullName>Vendor Accepts Work Order</fullName>
+                <default>false</default>
+                <label>Vendor Accepts Work Order</label>
+            </value>
+            <value>
+                <fullName>Not Reviewed</fullName>
+                <default>false</default>
+                <label>Not Reviewed</label>
+            </value>
+            <value>
+                <fullName>Reviewed - Action Required</fullName>
+                <default>false</default>
+                <label>Reviewed - Action Required</label>
+            </value>
+            <value>
+                <fullName>Reviewed - No Action Required</fullName>
+                <default>false</default>
+                <label>Reviewed - No Action Required</label>
+            </value>
+            <value>
+                <fullName>Validate Task</fullName>
+                <default>false</default>
+                <label>Validate Task</label>
+            </value>
+            <value>
+                <fullName>Service Performed</fullName>
+                <default>false</default>
+                <label>Service Performed</label>
+            </value>
+            <value>
+                <fullName>Follow Up Not Required</fullName>
+                <default>false</default>
+                <label>Follow Up Not Required</label>
+            </value>
+            <value>
+                <fullName>Alternate Contact Provided</fullName>
+                <default>false</default>
+                <label>Alternate Contact Provided</label>
+            </value>
+            <value>
+                <fullName>Emergency Service Required</fullName>
+                <default>false</default>
+                <label>Emergency Service Required</label>
+            </value>
+            <value>
+                <fullName>Schedule Recovery/Service Rescheduled</fullName>
+                <default>false</default>
+                <label>Schedule Recovery/Service Rescheduled</label>
+            </value>
+            <value>
+                <fullName>New Charges Needed/Vendor Disputes Cost/ Customer Disputes Resolution</fullName>
+                <default>false</default>
+                <label>New Charges Needed/Vendor Disputes Cost/ Customer Disputes Resolution</label>
+            </value>
+            <value>
+                <fullName>New Charges Needed/Vendor Disputes Cost/ Incorrect Hauler/Incorrect Service</fullName>
+                <default>false</default>
+                <label>New Charges Needed/Vendor Disputes Cost/ Incorrect Hauler/Incorrect Service</label>
+            </value>
+            <value>
+                <fullName>Information Update not Required</fullName>
+                <default>false</default>
+                <label>Information Update not Required</label>
+            </value>
+            <value>
+                <fullName>Auto Approval Email Sent</fullName>
+                <default>false</default>
+                <label>Auto Approval Email Sent</label>
+            </value>
+            <value>
+                <fullName>System Completed</fullName>
+                <default>false</default>
+                <label>System Completed</label>
+            </value>
+            <value>
+                <fullName>Service Evidence Received</fullName>
+                <default>false</default>
+                <label>Service Evidence Received</label>
+            </value>
+            <value>
+                <fullName>Escalation Needed</fullName>
+                <default>false</default>
+                <label>Escalation Needed</label>
+            </value>
+            <value>
+                <fullName>Return to Sender Required</fullName>
+                <default>false</default>
+                <label>Return to Sender Required</label>
+            </value>
+            <value>
+                <fullName>Task Completed</fullName>
+                <default>false</default>
+                <label>Task Completed</label>
+            </value>
+			 <value>
+                    <fullName>Final Email Sent</fullName>
+                    <default>false</default>
+                    <label>Final Email Sent</label>
+                </value>
+            <value>
+                <fullName>Future Date Request</fullName>
+                <default>false</default>
+                <label>Future Date Request</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Service Guarantees Approval</controllingFieldValue>
+            <controllingFieldValue>Obtain Service Approval</controllingFieldValue>
+            <controllingFieldValue>Corporate Contact Approval</controllingFieldValue>
+            <controllingFieldValue>Account Title Approval</controllingFieldValue>
+            <controllingFieldValue>Escalation Obtain Service Approval</controllingFieldValue>
+            <valueName>Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Guarantees Approval</controllingFieldValue>
+            <controllingFieldValue>Obtain Service Approval</controllingFieldValue>
+            <controllingFieldValue>Corporate Contact Approval</controllingFieldValue>
+            <controllingFieldValue>Account Title Approval</controllingFieldValue>
+            <controllingFieldValue>Escalation Obtain Service Approval</controllingFieldValue>
+            <valueName>Rejected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Guarantees Approval</controllingFieldValue>
+            <controllingFieldValue>Obtain Service Approval</controllingFieldValue>
+            <controllingFieldValue>Corporate Contact Approval</controllingFieldValue>
+            <controllingFieldValue>Account Title Approval</controllingFieldValue>
+            <valueName>Auto Approval Email Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rejected Work Order</controllingFieldValue>
+            <controllingFieldValue>Escalation Rejected Work Order</controllingFieldValue>
+            <controllingFieldValue>Resolve Service Issue</controllingFieldValue>
+            <controllingFieldValue>Obtain Customer Info</controllingFieldValue>
+            <controllingFieldValue>Accepted WorkOrder</controllingFieldValue>
+            <controllingFieldValue>Escalation Accepted WorkOrder</controllingFieldValue>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <controllingFieldValue>Service Follow up</controllingFieldValue>
+            <controllingFieldValue>Escalation Emergency Case</controllingFieldValue>
+            <controllingFieldValue>Escalation Obtain Customer Info</controllingFieldValue>
+            <valueName>Information Obtained</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rejected Work Order</controllingFieldValue>
+            <controllingFieldValue>Escalation Rejected Work Order</controllingFieldValue>
+            <controllingFieldValue>Obtain Schedule Confirmation</controllingFieldValue>
+            <controllingFieldValue>Accepted WorkOrder</controllingFieldValue>
+            <controllingFieldValue>Obtain Vendor Update</controllingFieldValue>
+            <controllingFieldValue>Escalation Accepted WorkOrder</controllingFieldValue>
+            <controllingFieldValue>Obtain Service Approval</controllingFieldValue>
+            <controllingFieldValue>Notify Customer of Decline</controllingFieldValue>
+            <controllingFieldValue>Confirm Service Completion with Location</controllingFieldValue>
+            <controllingFieldValue>Confirm Service Completion</controllingFieldValue>
+            <controllingFieldValue>Confirm Vendor Availability</controllingFieldValue>
+            <controllingFieldValue>Notify Customer Of Service Update</controllingFieldValue>
+            <valueName>No Response/Pending Response</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rejected Work Order</controllingFieldValue>
+            <controllingFieldValue>Escalation Rejected Work Order</controllingFieldValue>
+            <controllingFieldValue>Accepted WorkOrder</controllingFieldValue>
+            <controllingFieldValue>Escalation Accepted WorkOrder</controllingFieldValue>
+            <valueName>Information Update not Required</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validate Email Comments</controllingFieldValue>
+            <valueName>Not Reviewed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validate Email Comments</controllingFieldValue>
+            <valueName>Reviewed - Action Required</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validate Email Comments</controllingFieldValue>
+            <valueName>Reviewed - No Action Required</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Multi Case Approval Task</controllingFieldValue>
+            <valueName>Validate Task</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case Assignment</controllingFieldValue>
+            <valueName>Return to Sender Required</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case Assignment</controllingFieldValue>
+            <valueName>Task Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case Assignment</controllingFieldValue>
+            <valueName>Future Date Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Resolve Service Issue</controllingFieldValue>
+            <controllingFieldValue>Obtain Customer Info</controllingFieldValue>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <controllingFieldValue>Service Follow up</controllingFieldValue>
+            <controllingFieldValue>Escalation Emergency Case</controllingFieldValue>
+            <controllingFieldValue>Escalation Obtain Customer Info</controllingFieldValue>
+            <valueName>Information Not Obtained</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Resolve Service Issue</controllingFieldValue>
+            <controllingFieldValue>Pending Information</controllingFieldValue>
+            <controllingFieldValue>Service Follow up</controllingFieldValue>
+            <valueName>Escalation Needed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Escalation Unresponsive Contact Vendor</controllingFieldValue>
+            <valueName>Schedule Recovery/Service Rescheduled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Escalation Unresponsive Contact Vendor</controllingFieldValue>
+            <valueName>New Charges Needed/Vendor Disputes Cost/ Incorrect Hauler/Incorrect Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Escalation Unresponsive Contact Vendor</controllingFieldValue>
+            <controllingFieldValue>Obtain Vendor Update</controllingFieldValue>
+            <controllingFieldValue>Escalation Obtain Vendor Information</controllingFieldValue>
+            <valueName>Service Evidence Received</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Escalation Unresponsive Contact Customer</controllingFieldValue>
+            <valueName>Follow Up Not Required</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Escalation Unresponsive Contact Customer</controllingFieldValue>
+            <valueName>Alternate Contact Provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Obtain Schedule Confirmation</controllingFieldValue>
+            <valueName>Schedule Confirmed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Obtain Schedule Confirmation</controllingFieldValue>
+            <controllingFieldValue>Manually Dispatch</controllingFieldValue>
+            <valueName>Service Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Obtain Schedule Confirmation</controllingFieldValue>
+            <controllingFieldValue>Obtain Vendor Update</controllingFieldValue>
+            <controllingFieldValue>Confirm Service Completion with Location</controllingFieldValue>
+            <controllingFieldValue>Confirm Service Completion</controllingFieldValue>
+            <controllingFieldValue>Escalation Confirm Service Completion</controllingFieldValue>
+            <controllingFieldValue>Escalation Obtain Vendor Information</controllingFieldValue>
+            <valueName>Service Not Performed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Obtain Schedule Confirmation</controllingFieldValue>
+            <controllingFieldValue>Confirm Service Completion</controllingFieldValue>
+            <controllingFieldValue>Escalation Confirm Service Completion</controllingFieldValue>
+            <controllingFieldValue>Manually Dispatch</controllingFieldValue>
+            <valueName>Service Rescheduled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Obtain Schedule Confirmation</controllingFieldValue>
+            <valueName>Service Performed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Obtain Schedule Confirmation</controllingFieldValue>
+            <controllingFieldValue>Obtain Vendor Update</controllingFieldValue>
+            <controllingFieldValue>Confirm Service Completion with Location</controllingFieldValue>
+            <controllingFieldValue>Confirm Service Completion</controllingFieldValue>
+            <valueName>System Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Obtain Vendor Update</controllingFieldValue>
+            <controllingFieldValue>Escalation Obtain Vendor Information</controllingFieldValue>
+            <valueName>New ETA Provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notify Customer of Decline</controllingFieldValue>
+            <valueName>Customer Notified of Decline</valueName>
+        </valueSettings>
+		 <valueSettings>
+                <controllingFieldValue>Escalation Obtain Service Approval</controllingFieldValue>
+                <valueName>Final Email Sent</valueName>
+            </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Confirm Service Completion with Location</controllingFieldValue>
+            <controllingFieldValue>Confirm Service Completion</controllingFieldValue>
+            <controllingFieldValue>Escalation Confirm Service Completion</controllingFieldValue>
+            <valueName>Service Confirmed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Confirm Vendor Availability</controllingFieldValue>
+            <controllingFieldValue>Escalation Confirm Vendor Availability</controllingFieldValue>
+            <valueName>Vendor Available</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Confirm Vendor Availability</controllingFieldValue>
+            <controllingFieldValue>Escalation Confirm Vendor Availability</controllingFieldValue>
+            <valueName>Vendor Unavailable</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manually Dispatch</controllingFieldValue>
+            <valueName>Service Dispatched</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notify Customer Of Delay</controllingFieldValue>
+            <valueName>Customer Accepts New Date</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notify Customer Of Delay</controllingFieldValue>
+            <valueName>Customer Requests Cancellation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notify Customer Of Service Update</controllingFieldValue>
+            <valueName>Customer Accepts Status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notify Customer Of Service Update</controllingFieldValue>
+            <valueName>Customer Disputes Status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validate Email Approval Response</controllingFieldValue>
+            <valueName>Verified and Request Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validate Email Approval Response</controllingFieldValue>
+            <valueName>Verified and Request Not Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validate Email Approval Response</controllingFieldValue>
+            <valueName>Could not verify</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Set Customer&apos;s Service Guarantees</controllingFieldValue>
+            <valueName>Completed</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

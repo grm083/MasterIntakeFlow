@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Notify WM of needed relocation due to driver error</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Vendor: Driver Error Relocation - WM(DLLFAM)</name>
+    <style>freeForm</style>
+    <subject>Relocation Request: {!Case.Case_Type__c} &amp; {!Case.Case_Subtype_Email_Format__c}  - Ref# {!Case.Reference_Number__c}- {!Case.Location_Code__c} -MAS: {!Asset.MAS_Company_Account_Number__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

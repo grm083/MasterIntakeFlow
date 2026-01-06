@@ -1,0 +1,279 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+    controller="AssetHeadersForCaseController" access="global">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="selectedAssetHeaders" type="String[]" access="global" />
+    <aura:attribute name="selectedOptions" type="String[]" access="global" />
+    <aura:attribute name="relatedAssetList" type="String[]" access="Private" />
+    <aura:attribute name="preAssetSelections" type="String[]" access="PUBLIC" />
+    <aura:attribute name="assetHeaders" type="Object" access="global" />
+    <aura:attribute name="assetIdOnCase" type="String" access="global" />
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    <aura:attribute name="DoDisable" type="Boolean" default="false" />
+    <aura:attribute name="saveEnabled" type="Boolean" default="true" />
+    <aura:attribute name="firstElementOnList" type="String" />
+    <aura:attribute name="officetrax" type="Boolean" default="false" />
+    <aura:attribute name="isReplace" type="Boolean" default="true" />
+    <aura:attribute name="isMultiAsset" type="Boolean" default="false" />
+    <aura:attribute name="isMultiAssetCase" type="Boolean" default="false" />
+    <aura:attribute name="caseRecord" type="Object" />
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Replace Asset', 'value': 'Replace'},
+                                                        {'label': 'Create Multi Asset Cases', 'value': 'MultiAsset'}
+                                                        ]" />
+    <aura:attribute name="value" type="String" default="Replace" />
+    <aura:registerEvent name="assetSelectionEvent" type="c:AssetSelectionEvent" />
+    <aura:registerEvent name="SingleTabRefreshEvent" type="c:SingleTabComponentRefresh" />
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false" />
+    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" targetFields="{!v.caseRecord}"
+        fields="Id,CaseNumber,AssetId,Status,Case_Sub_Type__c,Case_Type__c" mode="VIEW" />
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:method name="updateAssetHeaders" action="{!c.doInit}"
+        description="Method to update asset header list after change" />
+    <aura:attribute name="contentClass" type="String" default="slds-scrollable_x" />
+    <aura:attribute name="contentStyle" type="String" default="" />   
+
+    <!--ACTIVE ASSET HEADER SECTION START-->
+    <div class="slds-is-relative">
+        <aura:if isTrue="{!v.loadingSpinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" variant="brand" />
+        </aura:if>
+        <div class="slds-section slds-is-open" aura:id="activeAssetHeaderSection">
+            <h3 class="slds-section__title">
+                <button aria-controls="activeAssetHeaderList" class="slds-button slds-section__title-action">
+                    <span onclick="{!c.toggleSection}" data-auraId="activeAssetHeaderSection">
+                        <lightning:icon iconName="utility:switch" size="x-small"
+                            class="slds-section__title-action-icon slds-button__icon_left"
+                            alternativeText="button icon" />
+                    </span>
+                    <span class="slds-truncate" title="Active And InActive Asset Headers">Active Asset Headers</span>
+                </button>
+            </h3>
+            <div class="slds-section__content" id="activeAssetHeaderList">
+                <div class="{!v.contentClass}" style="{!v.contentStyle}">
+                    <table id="caseassettable"
+                        class="slds-table slds-table--bordered slds-no-row-hover slds-text-title--caps">
+                        <thead>
+                            <tr class="slds-table slds-table--bordered">
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Select</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>Asset
+                                            Header</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Material</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Duration</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Occurrence</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Schedule</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>QTY</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>SID</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>CATEGORY</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>CONTAINER
+                                            POSITION</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>HAS
+                                            XPU</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>ACCOUNT
+                                            NAME</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>VENDOR
+                                            ID</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>S-CODE</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>VENDOR
+                                            ACCOUNT NUMBER</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>MAS
+                                            COMPANY # - ACCOUNT #</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>MAS UNIQUE
+                                            #</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>MAS
+                                            LIBRARY</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>Start
+                                            Date</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>END
+                                            DATE</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>EQUIPMENT
+                                            OWNER</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>PROJECT</b></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.assetHeaders}" var="AssetList" indexVar="idx">
+                                <aura:if isTrue="{!AssetList.isActiveAsset}">
+                                    <tr class="{!AssetList.highlightRow ? 'highlight' : 'nohighlight'}">
+                                        <td class="cell">
+                                            <aura:if isTrue="{!v.DoDisable}">
+                                                <div aura:id="checkbox" onchange="{!c.onSelectAsset}"
+                                                    data-value="{!AssetList.assetId}" data-record="{!idx}">
+                                                    <ui:inputCheckbox aura:id="multiSelect" disabled='true' />
+                                                </div>
+                                                <aura:set attribute="else">
+                                                    <aura:if isTrue="{!AssetList.highlightRow}">
+                                                        <div aura:id="checkbox" onchange="{!c.onSelectAsset}"
+                                                            data-value="{!AssetList.assetId}" data-record="{!idx}">
+                                                            <ui:inputCheckbox aura:id="multiSelect" value='true' />
+                                                        </div>
+                                                        <aura:set attribute="else">
+                                                            <div aura:id="checkbox" onchange="{!c.onSelectAsset}"
+                                                                data-value="{!AssetList.assetId}" data-record="{!idx}">
+                                                                <ui:inputCheckbox aura:id="multiSelect" />
+                                                            </div>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </aura:set>
+                                            </aura:if>
+                                        </td>
+                                        <aura:if isTrue="{!AssetList.assetId==v.firstElementOnList}">
+                                            <td class="slds-size_1-of-19 highlightBold">{!AssetList.assetName}</td>
+                                            <aura:set attribute="else">
+                                                <td class="slds-size_1-of-19">{!AssetList.assetName}</td>
+                                            </aura:set>
+                                        </aura:if>
+                                        <td class="slds-size_1-of-19">{!AssetList.Material_Type}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Duration}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Occurrence_Type}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Schedule}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Quantity}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Acorn_SID}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Category}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Container_Position}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Has_Extra_Pickup}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Supplier_Name}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Vendor_ID}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Sensitivity_Code}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Vendor_Account_Number}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.MAS_Company_Account_Number}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.MAS_Customer_Unique_Id}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.MAS_Library}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Start_Date}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.End_Date}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Equipment_Owner}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.isProjectActive}</td>
+                                    </tr>
+                                </aura:if>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="slds-section" aura:id="inactiveAssetHeaderSection">
+            <h3 class="slds-section__title">
+                <button aria-controls="inactiveAssetHeaderList" class="slds-button slds-section__title-action">
+                    <span onclick="{!c.toggleSection}" data-auraId="inactiveAssetHeaderSection">
+                        <lightning:icon iconName="utility:switch" size="x-small"
+                            class="slds-section__title-action-icon slds-button__icon_left"
+                            alternativeText="button icon" />
+                    </span>
+                    <span class="slds-truncate" title="Active And InActive Asset Headers">InActive Asset
+                        Headers</span>
+                </button>
+            </h3>
+            <div class="slds-section__content" id="inactiveAssetHeaderList">
+                <div class="{!v.contentClass}" style="{!v.contentStyle}">
+                    <table id="caseassettable" class="slds-table slds-table--bordered slds-text-title--caps">
+                        <thead>
+                            <tr class="slds-table slds-table--bordered">
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Select</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>Asset
+                                            Header</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Material</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Duration</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Occurrence</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>Schedule</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>QTY</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>SID</b></span></th>
+
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>CATEGORY</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>CONTAINER
+                                            POSITION</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>HAS
+                                            XPU</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>ACCOUNT
+                                            NAME</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>VENDOR
+                                            ID</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>S-CODE</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>VENDOR
+                                            ACCOUNT NUMBER</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>MAS
+                                            COMPANY # - ACCOUNT #</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>MAS UNIQUE
+                                            #</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>MAS
+                                            LIBRARY</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>Start
+                                            Date</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>END
+                                            DATE</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span class="slds-truncate"><b>EQUIPMENT
+                                            OWNER</b></span></th>
+                                <th scope="col" class="head slds-size_1-of-19"><span
+                                        class="slds-truncate"><b>PROJECT</b></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.assetHeaders}" var="AssetList" indexVar="idx">
+                                <aura:if isTrue="{!!AssetList.isActiveAsset}">
+                                    <tr class="{!AssetList.highlightRow ? 'highlight' : 'nohighlight'}">
+                                        <td class="cell">
+                                            <aura:if isTrue="{!or(v.DoDisable, AssetList.highlightRow)}">
+                                                <div aura:id="checkbox" onchange="{!c.onSelectAsset}"
+                                                    data-value="{!AssetList.assetId}" data-record="{!idx}">
+                                                    <ui:inputCheckbox aura:id="multiSelect" disabled='true' />
+                                                </div>
+                                                <aura:set attribute="else">
+                                                    <div aura:id="checkbox" onchange="{!c.onSelectAsset}"
+                                                        data-value="{!AssetList.assetId}" data-record="{!idx}">
+                                                        <ui:inputCheckbox aura:id="multiSelect" />
+                                                    </div>
+                                                </aura:set>
+                                            </aura:if>
+                                        </td>
+                                        <td class="slds-size_1-of-19">{!AssetList.assetName}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Material_Type}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Duration}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Occurrence_Type}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Schedule}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Quantity}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Acorn_SID}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Category}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Container_Position}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Has_Extra_Pickup}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Supplier_Name}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Vendor_ID}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Sensitivity_Code}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Vendor_Account_Number}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.MAS_Company_Account_Number}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.MAS_Customer_Unique_Id}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.MAS_Library}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Start_Date}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.End_Date}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.Equipment_Owner}</td>
+                                        <td class="slds-size_1-of-19">{!AssetList.isProjectActive}</td>
+                                    </tr>
+                                </aura:if>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="slds-m-vertical_xx-small" align="Center" draggable="false">
+            <lightning:button variant="brand" disabled="{!v.saveEnabled}" name="{!v.assetHeaders}" label="Save"
+                aura:id="saveButton" onclick="{!c.saveAssetInCase}" />
+        </div>
+    </div>
+</aura:component>

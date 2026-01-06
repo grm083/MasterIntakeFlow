@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_record_type_change_for_ACORN</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(  ISPICKVAL(Source_System__c, &apos;Acorn&apos;)  , ISCHANGED(RecordTypeId)  ,NOT($User.Bypass_Validation__c), $Profile.Name &lt;&gt; &apos;System Administrator&apos; )</errorConditionFormula>
+    <errorMessage>Record type cannot be changed for ACORN Cases</errorMessage>
+</ValidationRule>

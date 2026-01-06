@@ -1,0 +1,31 @@
+.heading {
+    text-align: center;
+    font-weight: bold !important;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color : black;
+}
+.slds-box thead th {
+    color : black !important;
+    border-bottom : 1.5px solid black !important;
+}
+.red{
+      color: red;
+}
+.highlight{
+      background-color: yellow;
+}
+.slds-box {
+    border: 5px solid rgb(230, 229, 228) !important;
+}
+
+td.slds-size_1-of-6{
+    white-space: normal !important;
+}
+td.slds-size_1-of-5{
+    white-space: normal !important;
+}
+th.head.slds-size_1-of-6 {
+    color : black !important;
+    border-bottom : 1.5px solid black !important;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_Change_From_Cancellation</fullName>
+    <active>true</active>
+    <description>For story SDT-23803, A user will not allow to change status once the quote is cancelled.</description>
+    <errorConditionFormula>AND( ISCHANGED( SBQQ__Status__c ) , 
+ ISPICKVAL(PRIORVALUE(SBQQ__Status__c),&quot;Cancelled&quot;) )</errorConditionFormula>
+    <errorMessage>Once the quote is canceled - it can not move to any other status</errorMessage>
+</ValidationRule>

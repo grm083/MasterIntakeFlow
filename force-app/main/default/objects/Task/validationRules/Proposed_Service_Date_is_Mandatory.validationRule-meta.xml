@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proposed_Service_Date_is_Mandatory</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(
+AND(
+ISPICKVAL(Process__c,&apos;Confirm Vendor Availability&apos;),
+ISPICKVAL(Outcome__c,&apos;Vendor Unavailable&apos;)
+),
+AND(
+ISPICKVAL(Process__c,&apos;Escalation Confirm Service Completion&apos;),
+ISPICKVAL(Outcome__c,&apos;Service Rescheduled&apos;)
+),
+AND(
+ISPICKVAL(Process__c,&apos;Manually Dispatch&apos;),
+ISPICKVAL(Outcome__c,&apos;Service Rescheduled&apos;)
+),
+AND(
+ISPICKVAL(Process__c,&apos;Obtain Vendor Update&apos;),
+ISPICKVAL(Outcome__c,&apos;New ETA Provided&apos;)
+),
+AND(
+ISPICKVAL(Process__c,&apos;Escalation Obtain Vendor Information&apos;),
+ISPICKVAL(Outcome__c,&apos;New ETA Provided&apos;)
+),
+AND(
+ISPICKVAL(Process__c,&apos;Obtain Schedule Confirmation&apos;),
+ISPICKVAL(Outcome__c,&apos;Service Rescheduled&apos;)
+),
+AND(
+ISPICKVAL(Process__c,&apos;Escalation Confirm Vendor Availability&apos;),
+ISPICKVAL(Outcome__c,&apos;Vendor Unavailable&apos;)
+),
+AND(
+ISPICKVAL(Process__c,&apos;Confirm Service Completion&apos;),
+ISPICKVAL(Outcome__c,&apos;Service Rescheduled&apos;)
+),AND(
+ISPICKVAL(Process__c,&apos;Rejected Work Order&apos;),
+ISPICKVAL(Outcome__c,&apos;Service Date Change&apos;)
+),AND(
+ISPICKVAL(Process__c,&apos;Escalation Rejected Work Order&apos;),
+ISPICKVAL(Outcome__c,&apos;Service Date Change&apos;)
+),AND(
+OR(ISPICKVAL(Process__c,&apos;Resolve Service Issue&apos;), ISPICKVAL(Process__c,&apos;Escalation Unresponsive Contact Vendor&apos;)),
+ISPICKVAL(Outcome__c,&apos;Schedule Recovery/Service Rescheduled&apos;)
+)),
+ISBLANK(Proposed_Service_Date__c),
+NOT($User.Bypass_Validation__c)
+)</errorConditionFormula>
+    <errorDisplayField>Proposed_Service_Date__c</errorDisplayField>
+    <errorMessage>Proposed Service date is required.</errorMessage>
+</ValidationRule>

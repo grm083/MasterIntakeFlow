@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Respond to customer when their request has been approved.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Customer: Request Approved (CE Email Templates)</name>
+    <style>freeForm</style>
+    <subject>Request Approved: {!Case.Case_Type__c} - {!Case.Location_Code__c} -  REF # {!Case.Reference_Number__c}</subject>
+    <textOnly>Hi Customer,
+We received your request for a pickup on your 8 yard dumpster. Details are below.
+
+Request Details
+Reference #: 9898890
+Location ID: ABC2345
+Location: 124 Bridge St, Mainetance, MA 03099
+Requested Service Date: 7/12/2020
+Container: 8 Yards - Compactor, Trash; Position: Default
+
+Thank you,
+AGENT NAME
+Role
+Email
+
+Address</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

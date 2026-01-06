@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Financial_Penalties_Comments_Required</fullName>
+    <active>true</active>
+    <description>Financial Penalities Comment should be mandatory if Financial Penalties checkbox is marked Yes.</description>
+    <errorConditionFormula>AND( Financial_Penalties__c , ISBLANK( Financial_Penalties_Comments__c ))</errorConditionFormula>
+    <errorMessage>Please Provide Financial Penalities Comments</errorMessage>
+</ValidationRule>

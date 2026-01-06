@@ -1,0 +1,19 @@
+<aura:component implements="lightning:availableForFlowScreens">
+    <aura:attribute name="allStages" type="String[]" />
+    <aura:attribute name="currentStage" type="String" />
+    <aura:attribute name="width" type="String" />
+	
+    <lightning:flexipageRegionInfo width="{!v.width}"/>
+	<aura:if isTrue="{!v.currentStage == 'Integration Error'}" >
+    	<lightning:progressIndicator currentStep="1" hasError="true" type="path" variant="base">
+            <lightning:progressStep label="Integration Error" value="1"/>
+    	</lightning:progressIndicator>
+    	<aura:set attribute="else">
+            <lightning:progressIndicator currentStep="{!v.currentStage}" type="path" variant="base">
+                <aura:iteration items="{!v.allStages}" var="stage">
+                    <lightning:progressStep label="{!stage}" value="{!stage}"/>
+                </aura:iteration>
+            </lightning:progressIndicator>
+        </aura:set>
+    </aura:if>
+</aura:component>

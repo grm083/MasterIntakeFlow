@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_Draft_Procure_Service_Status</fullName>
+    <active>false</active>
+    <description>Quote Line Items Cannot be Updated if Quote is not in Draft or Procure Service Status and Cost/Price Can only be Updated if Status is in Draft or Procure Service or Cost Configured</description>
+    <errorConditionFormula>AND( $User.FirstName &lt;&gt; &apos;Acorn&apos;, $User.FirstName &lt;&gt; &apos;Integration&apos;, (AND(NOT(ISNEW()), IF(ISCHANGED(SBQQ__UnitCost__c), NOT(OR(ISPICKVAL(SBQQ__Quote__r.SBQQ__Status__c, &apos;DRAFT&apos;), ISPICKVAL(SBQQ__Quote__r.SBQQ__Status__c, &apos;Product Configured&apos;), ISPICKVAL(SBQQ__Quote__r.SBQQ__Status__c, &apos;Cost Configured&apos;))),NOT(OR(ISPICKVAL(SBQQ__Quote__r.SBQQ__Status__c, &apos;DRAFT&apos;), ISPICKVAL(SBQQ__Quote__r.SBQQ__Status__c, &apos;Product Configured&apos;)))))))</errorConditionFormula>
+    <errorMessage>Quote Line Item Can Only Be Updated for Quote&apos;s Status is in Draft/Procure Service.
+Cost/Price Can only Be Updated, If Quote Status is in Draft/Procure Service/Configure Price</errorMessage>
+</ValidationRule>

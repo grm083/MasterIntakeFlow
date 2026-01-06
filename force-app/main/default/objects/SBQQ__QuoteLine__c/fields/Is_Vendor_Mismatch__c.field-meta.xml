@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Vendor_Mismatch__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is created for story SDT-30956. It will be checked only if Vendor on Quoteline is different than vendor returned from Pricing Response</description>
+    <externalId>false</externalId>
+    <label>Is Vendor Mismatch</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

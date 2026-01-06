@@ -1,0 +1,53 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+              				controller="TaskPopUpMessageController" access="global">
+    <aura:dependency resource="markup://force:navigateToSObject" type="EVENT"/>
+	<aura:attribute name="caseLst" type="Case[]" /> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- commented as part of SDT-8434 -->
+    <!-- <aura:handler event="force:refreshView" action="{!c.doInit}" /> -->
+    <div class="slds-truncate">
+    	<lightning:card>
+            <aura:if isTrue="{!v.caseLst.length>0}">
+                <div>
+                	<lightning:icon iconName="action:new_case" alternativeText="Related Cases" size="xx-small"/> <b>Related Cases</b>
+                </div>
+                
+                <table class="slds-table slds-table--bordered">
+                    <thead>
+                        <tr class="slds-table slds-table--bordered">                    
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Case Number</b></span></th>
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Tracking #</b></span></th>
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Case Type</b></span></th>
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Case Subtype</b></span></th>
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Asset</b></span></th>
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Material</b></span></th> 
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Service Date</b></span></th>
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>Status</b></span></th>
+                            <th scope="col" class="head slds-size_1-of-9"><span class="slds-truncate"><b>WorkOrder #</b></span></th>
+                        </tr>
+                    </thead>  
+                    <tbody>
+                        <aura:iteration items="{!v.caseLst}" var="case">
+                            <tr>
+                                <td class="slds-size_1-of-9"><a data-id="{!case.Id}" onclick="{!c.navigateToCase}"> {!case.CaseNumber}</a></td>
+                                <td class="slds-size_1-of-9">{!case.Tracking_Number__c}</td>
+                                <td class="slds-size_1-of-9">{!case.Case_Type__c}</td>
+                                <td class="slds-size_1-of-9">{!case.Case_Sub_Type__c}</td>
+                                <td class="slds-size_1-of-9">{!case.Asset.Name}</td>
+                                <td class="slds-size_1-of-9">{!case.Asset_Material__c}</td>
+                                <td class="slds-size_1-of-9">{!case.Service_Date_Text__c}</td>
+                                <td class="slds-size_1-of-9">{!case.Status}</td>
+                                <td class="slds-size_1-of-9">{!case.Work_Order__r.WorkOrderNumber}</td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+        		</table> 
+ 				<aura:set attribute="else">
+                    <div class="slds-text-heading_medium slds-text-color_error slds-text-align_center">
+                        <b>There are no additional cases related to this reference number.</b>
+                    </div>
+                </aura:set>
+            </aura:if>         
+        </lightning:card>
+    </div>
+</aura:component>

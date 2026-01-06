@@ -1,0 +1,74 @@
+<aura:component implements = "force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" Controller="NavisionNotesController">
+  <aura:attribute name="allNotes" type="Object"/>
+  <aura:attribute name="paginatedNotes" type="Object"/>
+  <aura:attribute name="columnNames" type="List"/>
+  <aura:attribute name="trackingNumber" type="String"/>
+  <aura:attribute name = "isModalOpen" type ="Boolean" default ="true" />
+  <aura:attribute name = 'pageSize' type ="Integer" default="3" />
+  <aura:attribute name = 'totalPages' type ="Integer"/>
+  <aura:attribute name = 'currentPageNumber' type ="Integer" default="1"/>
+  <aura:attribute name = 'totalRecords' type ="Integer"/>
+  <aura:attribute name="showSpinner" type="boolean" />
+  <aura:attribute name="noRecordsToShow" type="boolean" />
+
+  <aura:method name="loadNotesData" action="{!c.loadNotesData}" access="public" />
+  
+
+  <aura:if isTrue="{!v.isModalOpen}">
+    <section role="dialog" id="dialog_section" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open ">
+      <div class="slds-modal__container slds-text-align_center slds-m-top_medium" style="background: transparent;">
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+          <aura:set attribute="else">
+            <header class="slds-modal__header">
+              <lightning:buttonIcon iconName="utility:close"
+                                    onclick="{! c.closeNavisionModal}"
+                                    alternativeText="close"
+                                    variant="bare"
+                                    class="slds-modal__close"/>
+              <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Navision Notes</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+              <aura:if isTrue="{!v.noRecordsToShow}">
+                <div class="slds-text-heading_large">
+                   <h1 class="slds-align_absolute-center" style="color: red;">No records to show</h1>
+                </div>
+                
+                <aura:set attribute="else">
+                  <lightning:datatable 
+                  data="{!v.paginatedNotes}"
+                  columns="{!v.columnNames}"
+                  keyField="Id"
+                  hideCheckboxColumn="true"/>
+                </aura:set>
+              </aura:if>
+            </div>
+            <aura:if isTrue="{!NOT(v.noRecordsToShow)}">
+              <footer class="slds-modal__footer">
+                <div class="slds-grid slds-grid_align-spread">
+                  <div class="slds-col">
+                    <lightning:button label="Previous" disabled="{!v.currentPageNumber == 1}"  
+                                      onclick="{!c.previousPage}" variant="brand"
+                                      iconName='utility:back' iconPosition='left'>
+                    </lightning:button>
+                  </div>
+                  <div class="slds-col">
+                    <p class="slds-align_absolute-center">Displaying page {!v.currentPageNumber} of {!v.totalPages} </p>
+      
+                  </div>
+                  <div class="slds-col">
+                    <lightning:button label="Next" disabled="{!v.currentPageNumber == v.totalPages}" 
+                                      onclick="{!c.nextPage}" variant="brand"
+                                      iconName='utility:forward' iconPosition='right'>
+                    </lightning:button>
+                  </div>
+                </div>
+              </footer>
+            </aura:if>
+          </aura:set>
+        </aura:if>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;" ></div>
+  </aura:if>
+</aura:component>

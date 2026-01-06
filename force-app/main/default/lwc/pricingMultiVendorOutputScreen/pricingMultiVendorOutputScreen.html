@@ -1,0 +1,979 @@
+<template>
+    <div>
+        <div if:true={showSpinner} style="height: 600px; position:relative">
+            <lightning-spinner variant="base" size="medium"></lightning-spinner>
+          </div>
+          <div if:false={showSpinner}>
+    <template if:true={isAPIError}>
+        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <p>{label.errorHead}</p>
+        </div>
+        <div class=" slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_default">
+            <p style="width:100%;text-align: left;overflow-wrap: anywhere;">{APIErrorMsg}</p>
+        </div>
+    </template>
+
+    
+
+    <template if:false={isAPIError}>
+
+        <div class="headBox">
+
+            <h3 class="slds-section__title slds-theme_shade head">
+                <table style="width: 100%; height:40px;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 70%;">
+                                <div style="width: 100%;">
+                                    <span class="slds-truncate slds-p-horizontal_small" style="font-size: 13px;"
+                                        title="Section Title">
+                                        <b>{label.pricingRequestNumber} : {requestno}</b>
+                                    </span>
+                                </div>
+                            </td>
+                            <td style="width: 30%;">
+                                <template if:true={isPaginationRequired}>
+                                    <div style="display: flex;justify-content: center;">
+                                        <table style="align-self: center;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <lightning-button variant="neutral" label="Previous"
+                                                            onclick={previousPage}
+                                                            disabled={isFirstPage}></lightning-button>
+                                                    </td>
+                                                    <td>
+                                                        <span>Page {currentPage} of {totalPages}</span>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-button variant="neutral" label="Next"
+                                                            onclick={nextPage} disabled={isLastPage}></lightning-button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </h3>
+        </div>
+        <template if:true={isOutPutMsg}>
+            <div class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="Section Title">
+                        <b>{label.outputMessageDetails}</b>
+                    </span>
+                </h3>
+                <table class="slds-table slds-table_header-hidden slds-table_striped slds-var-p-vertical_x-small"
+                    style="table-layout: fixed;">
+                    <tbody>
+                        <tr>
+                            <th scope="row" style="width: 30%;">
+                                <div class="slds-truncate">
+                                    <p>
+                                        <b>{label.message}</b>
+                                    </p>
+                                </div>
+                            </th>
+                            <td>
+                                <div class="wraptext" title={outputmsg}>
+                                    :{outputmsg}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="slds-truncate">
+                                    <p>
+                                        <b>{label.market}</b>
+                                    </p>
+                                </div>
+                            </th>
+                            <td>
+                                <div class="wraptext" title={outputMarket}>
+                                    :{outputMarket}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="slds-truncate">
+                                    <p>
+                                        <b>{label.zoneName}</b>
+                                    </p>
+                                </div>
+                            </th>
+                            <td>
+                                <div class="wraptext" title={zoneName}>
+                                    :{zoneName}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="slds-truncate">
+                                    <p>
+                                        <b>{label.zoneDescription}</b>
+                                    </p>
+                                </div>
+                            </th>
+                            <td>
+                                <div class="wraptext" title={zoneDescription}>
+                                    :{zoneDescription}
+                                </div>
+                            </td>
+                        </tr>
+                        <template if:true={isfranchisePRLink}>
+                            <tr>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.franchiseLink}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext" title={francisePricingLink}>
+                                       <a>:{francisePricingLink}</a> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                        <template if:true={isGreenPagePRLink}>
+                            <tr>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.greenPageLink}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext" title={greenPagesLink}>
+                                        :{greenPagesLink}
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                        <tr>
+                            <th scope="row">
+                                <div class="slds-truncate">
+                                    <p>
+                                        <b>{label.notes}</b>
+                                    </p>
+                                </div>
+                            </th>
+                            <td>
+                                <div class="wraptext" title={zoneNote}>
+                                    :{zoneNote}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+        <template if:false={isOutPutMsg}>
+        <template if:true={isMessageValue}>
+            <table class="slds-table slds-table_header-hidden slds-table_striped slds-var-p-vertical_x-small"
+                style="table-layout: fixed;">
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">
+                                <p>
+                                    <b>Vendor Type</b>
+                                </p>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="wraptext" title={outputmsg}>
+                                :{costSource}
+                            </div>
+                        </td>
+                        <th></th><td></td>
+                    </tr>
+                </tbody>
+                </table>
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                <p>{label.errorHead}</p>
+            </div>
+            <div class=" slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_default">
+                <p style="width:100%;text-align: left;overflow-wrap: anywhere;">{showMessage}</p>
+            </div>
+        </template>
+
+        <template if:false={isMessageValue}>
+            <template for:each={paginatedSuppliers} for:item="supplier">
+                <div key={supplier.id} class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small">
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-truncate slds-p-horizontal_small" title="Section Title">
+                            <b>{label.serviceDetails}</b>
+                        </span>
+                        <span class="slds-truncate slds-p-horizontal_small" style="color: green; text-align: center; width: 65%;" title={supplier.supplierCode}>
+                            <b>{label.vendorId} : {supplier.supplierCode}</b>
+                        </span>
+                    </h3>
+                    <template if:true={isCostOnly}>
+                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+                            <h2>{costOnlyMessage}</h2>
+                        </div>
+                    </template>
+                    <table class="slds-table slds-table_header-hidden slds-table_striped slds-var-p-vertical_x-small"
+                        style="table-layout: fixed;">
+                        <tbody>
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.quoteIdentifier}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext" title={priceQuoteIdentifier}>
+                                        :{priceQuoteIdentifier}
+                                    </div>
+                                </td>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>Vendor Rank</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td data-label="" scope="row" style="width:20%">
+                                    <div class="wraptext" title={zoneRank}>
+                                        :{zoneRank}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.sourceCode}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{supplier.costSource}
+                                    </div>
+                                </td>
+                                <template lwc:if={isRollOff}>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.vendorName}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{supplier.supplierName}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:else>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.vendorName}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{supplier.supplierName}
+                                        </div>
+                                    </td>
+                                </template>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.quantity}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{quantity}
+                                    </div>
+                                </td>
+                                <template lwc:if={isRollOff}>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.rateTypeHaul}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{pricingMethodHaulingDescription}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:else>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.rateTypePickup}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{rateTypePickup}
+                                        </div>
+                                    </td>
+                                </template>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.containerCode}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{containerCode}
+                                    </div>
+                                </td>
+                                <!--Changes related to SDT-48526-->
+                                <!--<template lwc:if={isRollOff}> -->
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.disposition}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{supplier.disposalFacilityType}
+                                        </div>
+                                    </td>
+                                <!--Changes related to SDT-48526-->
+                                <!--</template> -->
+                                <template lwc:if={businessUnit}>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.businessUnit}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{businessUnit}
+                                        </div>
+                                    </td>
+                                </template>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                             
+                                <th scope="row" colspan="1">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.disposalFacility}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{supplier.disposalFacilityName}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.wastStream}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{supplier.wasteStreamName}
+                                    </div>
+                                </td>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.diversionPercentage}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{diversion}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <template lwc:if={isRollOff}>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.estTonPerHaul}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{estimatedVolumePerHaul}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:else>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.frequencyType}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{frequencytype}
+                                        </div>
+                                    </td>
+                                </template>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.isScaleAvailable}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{scaleAvailability}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <template lwc:if={isRollOff}>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.minimuTons}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{minimumTons}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:else>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.frequencyCount}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{frequencycount}
+                                        </div>
+                                    </td>
+                                </template>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.vendorcomments}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{feeComment}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.customerType}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{supplier.priceSource}
+                                    </div>
+                                </td>
+                                <!--<template lwc:if={isRollOff}>-->
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.baselineId}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{serviceBaselineId}
+                                        </div>
+                                    </td>
+                                <!--</template>
+                                <template lwc:else>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.marketAreaCode}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{marketAreaCode}
+                                        </div>
+                                    </td>
+                                </template>-->
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <template lwc:if={isRollOff}>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.haulRecId}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{haulRecordId}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:else>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.pickupRecId}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{pickupRecordId}
+                                        </div>
+                                    </td>
+                                </template>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.masLibrary}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{masLibrary}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <template lwc:if={isRollOff}>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.disposalRecId}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{disposalRecordId}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:else>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <p>
+                                                <b>{label.extraPickupRecId}</b>
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="wraptext">
+                                            :{extraPickupRecordId}
+                                        </div>
+                                    </td>
+                                </template>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.marketAreaName}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{marketAreaName}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.facilityId}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{fecilityId}
+                                    </div>
+                                </td>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.masUniqId}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{masUniqId}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <p>
+                                            <b>{label.siteId}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="wraptext">
+                                        :{siteId}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                
+
+                <div key={supplier.id} class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small">
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-truncate slds-p-horizontal_small" title="Section Title">
+                            <b>{label.pricingDetails}</b>
+                        </span>
+                    </h3>
+                    <template if:true={isThresholdMsg}>
+                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+                            <h2>
+                                {thresholdMsg}
+                            </h2>
+                        </div>
+                    </template>
+                    <table class="slds-table slds-table_header-hidden slds-table_striped slds-var-p-vertical_x-small"
+                        style="table-layout: fixed;">
+                        <tbody>
+
+                            <tr class="slds-line-height_reset">
+                                <th scope="col" style="width: 15%;">
+                                    <div class="slds-truncate wraptext"></div>
+                                </th>
+                                <th scope="col" style="width: 15%;">
+                                    <div class="slds-truncate wraptext slds-text-align_right">
+                                        <p>
+                                            <b>{label.costSteps}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <th scope="col" style="width: 10%;">
+                                    <div class="slds-truncate wraptext slds-text-align_right">
+                                        <p>
+                                            <b>{label.UOM}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <th scope="col" style="width: 8%;">
+                                    <div class="slds-truncate wraptext"></div>
+                                </th>
+                                <th scope="col" style="width: 10%;">
+                                    <div class="slds-truncate wraptext slds-text-align_right">
+                                        <p>
+                                            <b>{label.unitCost}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <th scope="col" style="width: 15%;">
+                                    <div class="slds-truncate wraptext slds-text-align_right">
+                                        <p>
+                                            <b>{label.priceSteps}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <th class="wraptext" scope="col" style="width: 10%;">
+                                    <div class="slds-truncate wraptext slds-text-align_right">
+                                        <p>
+                                            <b>{label.UOM}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                                <th scope="col" style="width: 7%;">
+                                    <div class="slds-truncate wraptext"></div>
+                                </th>
+                                <th scope="col" style="width: 10%;">
+                                    <div class="slds-truncate wraptext slds-text-align_right">
+                                        <p>
+                                            <b>{label.unitPrice}</b>
+                                        </p>
+                                    </div>
+                                </th>
+                            </tr>
+
+                            <template lwc:if={isRollOff}>
+                                <tr>
+                                    <td class="slds-truncate ">
+                                        <span class="slds-truncate wraptext">
+                                            <b>{label.priceRatePerHaul}</b>
+                                        </span>
+
+                                    </td>
+                                    <td class="wraptext"></td>
+                                    <td class="wraptext slds-text-align_right">{costUOM}</td>
+                                    <td class="wraptext slds-text-align_right">{currencyCode}</td>
+                                    <td class="wraptext slds-text-align_right">{haulCost}</td>
+                                    <td class="wraptext"></td>
+                                    <td class="wraptext slds-text-align_right">{priceUOM}</td>
+                                    <td class="wraptext slds-text-align_right">{currencyCode}</td>
+                                    <td class="wraptext slds-text-align_right">{haulPrice}</td>
+                                </tr>
+                            </template>
+                            <template lwc:else>
+                                <tr>
+                                    <td class="slds-truncate wraptext">
+                                        <span class="slds-truncate">
+                                            <b>{label.pickup}</b>
+                                        </span>
+
+                                    </td>
+                                    <td class="wraptext"></td>
+                                    <td class="wraptext slds-text-align_right">{costUOM}</td>
+                                    <td class="wraptext slds-text-align_right">{pickupCostSymbol}</td>
+                                    <td class="wraptext slds-text-align_right">{pickupUnitCost}</td>
+                                    <td class="wraptext"></td>
+                                    <td class="wraptext slds-text-align_right">{priceUOM}</td>
+                                    <td class="wraptext slds-text-align_right">{pickupPriceSymbol}</td>
+                                    <td class="wraptext slds-text-align_right">{pickupUnitPrice}</td>
+                                </tr>
+                            </template>
+                            <template lwc:if={isRollOff}>
+                                <template for:each={displayStepDisposals} for:item="dis">
+                                    <tr key={dis.id}>
+                                        <th data-label="" scope="row" class="wraptext">
+                                            <div class="slds-truncate2" style="white-space: normal;" title="Disposal">
+                                                <p><b>{label.disposal}</b></p>
+                                            </div>
+                                        </th>
+                                        <td class="wraptext slds-text-align_right">{dis.costRange}</td>
+                                        <td class="wraptext slds-text-align_right">{dis.costUOM}</td>
+                                        <td class="wraptext slds-text-align_right">{dis.costSymbol}</td>
+                                        <td class="wraptext slds-text-align_right">{dis.pricingFieldCost}</td>
+                                        <td class="wraptext slds-text-align_right">{dis.priceRange}</td>
+                                        <td class="wraptext slds-text-align_right">{dis.priceUOM}</td>
+                                        <td class="wraptext slds-text-align_right">{dis.priceSymbol}</td>
+                                        <td class="wraptext slds-text-align_right">{dis.pricingFieldPrice}</td>
+                                    </tr>
+                                </template>
+                            </template>
+                            <template lwc:else>
+                                    <tr>
+                                        <th data-label="" scope="row" class="wraptext">
+                                            <div class="slds-truncate2" style="white-space: normal;" title="Disposal">
+                                                <p><b>{label.extraPickup}</b></p>
+                                            </div>
+                                        </th>
+                                        <td class="wraptext"></td>
+                                        <td class="wraptext slds-text-align_right"></td>
+                                        <td class="wraptext slds-text-align_right">{extraPickupCostSymbol}</td>
+                                        <td class="wraptext slds-text-align_right">{extraPickupCost}</td>
+                                        <td class="wraptext"></td>
+                                        <td class="wraptext slds-text-align_right"></td>
+                                        <td class="wraptext slds-text-align_right">{extraPickupPriceSymbol}</td>
+                                        <td class="wraptext slds-text-align_right">{extraPickupPrice}</td>
+                                    </tr>
+                            </template>
+
+
+                            <template for:each={serviceChargesPerVendor} for:item="srvch">
+                                <tr key={srvch.id}>
+                                    <th data-label="" scope="row" class="wraptext">
+                                        <div class="slds-truncate2" style="white-space: normal;" title={srvch.name}>
+                                            <p><b>{srvch.name}</b></p>
+                                        </div>
+                                    </th>
+                                    <td class="wraptext"></td>
+                                    <td class="wraptext slds-text-align_right">{srvch.costUOM}</td>
+                                    <td class="wraptext slds-text-align_right">{srvch.costSymbol}</td>
+                                    <td class="wraptext slds-text-align_right">{srvch.cost}</td>
+                                    <td class="wraptext"></td>
+                                    <td class="wraptext slds-text-align_right">{srvch.priceUOM}</td>
+                                    <td class="wraptext slds-text-align_right">{srvch.priceSymbol}</td>
+                                    <td class="wraptext slds-text-align_right">{srvch.price}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+
+            <template if:true={isRegulatoryFee}>
+                <table class="slds-table slds-table_header-hidden slds-table_striped slds-var-p-vertical_x-small" style="table-layout: fixed;">
+                    <tbody>
+                        <tr class="slds-hint-parent">
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate" title={label.lblName}>
+                                    <p><b>{label.lblName}</b></p>
+                                </div>
+                            </th>
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate" title={label.lblCost}>
+                                    <p><b>{label.lblCost}</b></p>
+                                </div>
+                            </th>
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate slds-cell-wrap" title={label.lblPercent_Base_or_Compounded}>
+                                    <p><b>{label.lblPercent_Base_or_Compounded}</b></p>
+                                </div>
+                            </th>
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate slds-cell-wrap" title={label.lblApplies_to_Disposal}>
+                                    <p><b>{label.lblApplies_to_Disposal}</b></p>
+                                </div>
+                            </th>
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate slds-cell-wrap" title={label.lblApplies_to_Haul}>
+                                    <p><b>{label.lblApplies_to_Haul}</b></p>
+                                </div>
+                            </th>
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate slds-cell-wrap" title={label.lblApplies_to_Rental}>
+                                    <p><b>{label.lblApplies_to_Rental}</b></p>
+                                </div>
+                            </th>
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate" title={label.lblBasis}>
+                                    <p><b>{label.lblBasis}</b></p>
+                                </div>
+                            </th>
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate" title={label.lblUOM}>
+                                    <p><b>{label.lblUOM}</b></p>
+                                </div>
+                            </th>
+                            <th data-label="" scope="row">
+                                <div class="slds-truncate" title={label.lblOrder}>
+                                    <p><b>{label.lblOrder}</b></p>
+                                </div>
+                            </th>
+                        </tr>
+                        <template for:each={regulatoryFeeDetails} for:item="rfd">
+                        <tr class="slds-hint-parent" key={rfd.id}>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfName}>{rfd.rfName}</div>
+                            </td>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfCost}>{rfd.rfCost}</div>
+                            </td>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfPercentageBasedOrCompounded}>{rfd.rfPercentageBasedOrCompounded}</div>
+                            </td>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfAppliesToDisposal}>{rfd.rfAppliesToDisposal}</div>
+                            </td>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfAppliesToHaul}>{rfd.rfAppliesToHaul}</div>
+                            </td>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfAppliesToRental}>{rfd.rfAppliesToRental}</div>
+                            </td>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfBasis}>{rfd.rfBasis}</div>
+                            </td>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfUOM}>{rfd.rfUOM}</div>
+                            </td>
+                            <td data-label="">
+                                <div class="slds-truncate slds-cell-wrap" title={rfd.rfOrder}>{rfd.rfOrder}</div>
+                            </td>
+                        </tr>
+                        <template if:true={isrfdComment}>
+                        <tr class="slds-hint-parent" key={rfd.id}>
+                            <td colspan="2" data-label="">
+                                <div class="slds-truncate" title={rfd.rfName}><p><b>{rfd.rfName} Comments: </b></p></div>
+                            </td>
+                            <td colspan="2" data-label="">
+                                <div class="slds-truncate" title={rfd.rfComment}><p><b>{rfd.rfComment}</b></p></div>
+                            </td>
+                        </tr>
+                    </template>
+                    </template>
+                    </tbody>
+                </table>
+
+            </template>
+
+            
+        </template>
+        
+    </template>
+    <div class="slds-section slds-is-open slds-theme_default slds-table slds-p-bottom_x-small">
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-truncate slds-p-horizontal_small" title="Section Title">
+                <b>{label.systemInformation}</b>
+            </span>
+        </h3>
+        <table class="slds-table slds-table_header-hidden slds-table_striped">
+            <tbody>
+                <tr class="slds-hint-parent">
+                    <th data-label="" scope="row">
+                        <div class="slds-truncate" title="Created By">
+                            <p><b>{label.createBy}</b></p>
+                        </div>
+                    </th>
+                    <td data-label="">
+                        <div class="slds-truncate" title="Created By">: {createdby}</div>
+                    </td>
+                    <th data-label="" scope="row">
+                        <div class="slds-truncate" title="Created Date">
+                            <p><b>{label.createdDate}</b></p>
+                        </div>
+                    </th>
+                    <td data-label="">
+                        <div class="slds-truncate" title="Created Date">: {createddate}</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    </template>
+</div>
+</div>
+</template>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Obtain PO From Customer</name>
+    <style>none</style>
+    <subject>Case Number [{!Case.CaseNumber}] - Requesting Approval</subject>
+    <textOnly>{!Contact.Name},
+
+We have recently received the following request: 
+
+Case Number - {!Case.CaseNumber}
+Request Date - {!Case.CreatedDate}
+Requester - {!Contact.Name} – {!Contact.Title}
+Request - {!Case.Case_Type__c} – {!Case.Case_Sub_Type__c} – {!Case.Reason}
+Service Date - {!Case.Service_Date__c}
+Service Details - {!Case.Product_Information__c}
+Location - {!Account.ShippingAddress}
+
+Per your corporate authorization requirements a Purchase Order is required to place this request. If this request is approved please respond to this email with the Purchase Order you would like referenced on this request. If this request is not approved please respond letting us know that the request is unapproved and should not be processed.
+
+If you have any questions regarding this request please feel free to respond to this email, or you can call us at the number listed below.
+
+Thank you,
+
+&lt;b&gt;{!Case.CreatedBy}&lt;/b&gt;
+WM (888) 625-5323
+
+WM
+415 Day Hill Road
+Windsor, CT 06095
+
+Work with WM to help make your business operations more profitable and sustainable. See how at www.wm.com.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>46.0</apiVersion>
+    <description>The child modal component fired by the SearchExistingContact component</description>
+    <packageVersions>
+        <majorNumber>3</majorNumber>
+        <minorNumber>78</minorNumber>
+        <namespace>cwbtool</namespace>
+    </packageVersions>
+</AuraDefinitionBundle>

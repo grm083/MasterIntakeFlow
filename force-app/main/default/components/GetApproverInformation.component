@@ -1,0 +1,10 @@
+<!--
+GetApproverInformation
+-->
+<apex:component controller="GetDeclinedApproverLogData" access="global">
+   <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!quoteId}"/>
+
+    <p><apex:outputText style="text-align: center;font-family:Arial" value=" The following request you submitted has been declined by the approver {!ApprovalData.Actual_Approver__r.Name}{!ApprovalData.Actual_Approver_Contact__r.Name} {!ApprovalData.Email__c}"/><br/></p>
+    <apex:outputText style="font-family:Arial; font-weight: bold;" value="Comment:"/><br/>
+    <apex:outputText style="text-align: center;font-family:Arial;" value="{!ApprovalData.Approval_Comments__c}"/>
+</apex:component>

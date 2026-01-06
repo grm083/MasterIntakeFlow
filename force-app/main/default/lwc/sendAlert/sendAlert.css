@@ -1,0 +1,25 @@
+.slds-form-element__label{
+  font-size: 16px;
+  font-weight:600;
+  margin-bottom: auto;
+  margin-top: auto;
+  max-width: 50%;
+}
+.input-field{
+  width: 50%;
+}
+.custom-textarea {
+--sds-c-textarea-sizing-min-height:150px;
+}
+
+.btnClass{
+width: 120px;
+display: inline-grid;
+--sds-c-button-text-color: #000305;
+}
+
+.custom-combobox::slotted(.slds-form-element__help) {
+  color: grey;
+  border-color: grey;
+  background-color: grey;
+}

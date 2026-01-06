@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Material_Code__c</fullName>
+    <externalId>false</externalId>
+    <label>Material Code</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Line_of_Business__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>T</fullName>
+                <default>false</default>
+                <label>Trash</label>
+            </value>
+            <value>
+                <fullName>C</fullName>
+                <default>false</default>
+                <label>Cardboard</label>
+            </value>
+            <value>
+                <fullName>C&amp;D</fullName>
+                <default>false</default>
+                <label>Construction / Demolition</label>
+            </value>
+            <value>
+                <fullName>SSR</fullName>
+                <default>false</default>
+                <label>Single Stream Recycling</label>
+            </value>
+            <value>
+                <fullName>ORGANIC</fullName>
+                <default>false</default>
+                <label>Organic Waste</label>
+            </value>
+            <value>
+                <fullName>ME</fullName>
+                <default>false</default>
+                <label>Metal</label>
+            </value>
+            <value>
+                <fullName>FDW</fullName>
+                <default>false</default>
+                <label>Food Waste</label>
+            </value>
+            <value>
+                <fullName>CNCR</fullName>
+                <default>false</default>
+                <label>Concrete</label>
+            </value>
+            <value>
+                <fullName>WD</fullName>
+                <default>false</default>
+                <label>Wood</label>
+            </value>
+            <value>
+                <fullName>No Mapping</fullName>
+                <default>false</default>
+                <label>No Mapping</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>T</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>C</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>C&amp;D</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>SSR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>ORGANIC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>ME</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <controllingFieldValue>Commercial</controllingFieldValue>
+            <valueName>FDW</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>CNCR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rolloff</controllingFieldValue>
+            <valueName>WD</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

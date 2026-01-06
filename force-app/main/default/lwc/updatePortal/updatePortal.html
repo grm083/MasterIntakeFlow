@@ -1,0 +1,115 @@
+<template>
+
+  <!--### showing spinner conditionally ###-->
+  <template if:true={showSpinner}>
+    <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+  </template>
+  <div class="slds-form" role="list">
+    <div class="slds-form__row">
+      <div class="slds-form__item" role="listitem">
+        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+          <label class="slds-form-element__label">Select the new status : </label>
+          <div >
+            <lightning-combobox data-id="cmbNewStatus" class="custom-combobox" name="selectStatus"
+              placeholder="Select Status" options={combooptions} value={selectedStatus} 
+              onchange={statusChangeEvent}></lightning-combobox>
+          </div>
+        </div>
+      </div>
+     <!-- SDT-40151 -->
+      <div class="slds-form__item" role="listitem">
+        <template if:false = {serviceStatusVisible}>
+         <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+          <label class="slds-form-element__label">Current status :</label>
+          <label class="slds-form-element__label"><b>{getPortalData.serviceStatus}</b></label>
+        </div> 
+        </template>
+      </div>
+    </div>
+
+    <div class="slds-form__row">
+      <div class="slds-form__item" role="listitem">
+        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+          <label class="slds-form-element__label">Enter new service date :</label>
+          <div class="slds-form-element__control">
+            <lightning-input type="date" name="input2"
+              onchange={serviceDateChangeEvent}></lightning-input> 
+          </div>
+        </div>
+      </div>
+
+      <div class="slds-form__item" role="listitem">
+        <!-- <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+          <label class="slds-form-element__label" >Current service date :</label>
+          <p><lightning-formatted-date-time 
+            class="slds-form-element__label"
+            value={currentServiceDate}
+            style="font-weight: bold;"></lightning-formatted-date-time></p>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="slds-form__row">
+      <div class="slds-form__item" role="listitem">
+          <div class="slds-align_absolute-center slds-p-top_small">
+            <lightning-button class="btnClass" variant="brand" label="Submit"
+              onclick={handleButtonClick}></lightning-button>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>
+
+    <div class="slds-form__row">
+      <div class="slds-form__item" role="listitem">
+        <div class="slds-form-element">
+          <div id="23" class="slds-text-heading_small">
+            <lightning-icon icon-name="action:announcement" alternative-text="Connected" variant="inverse" size="small"
+              title="small size">
+            </lightning-icon>
+            <div class="slds-text-color_success slds-text-heading_medium">To send alert or comment please select
+              appropriate tab.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="slds-p-top_x-large slds-border_bottom"></div>
+  <label class="slds-form-element__label" for="single-form-element-id-02">Change History : </label>
+  <template if:false={noRecordsToShow}>
+    <div class="slds-var-m-around_medium">
+      <div class="slds-var-m-around_medium" id="lightning_table_a">
+        <lightning-datatable key-field="Id" column-widths-mode="auto" min-column-width="180" data={tableData}
+          hide-checkbox-column columns={columns}>
+        </lightning-datatable>
+      </div>
+      <div class="slds-var-m-around_medium">
+        <lightning-layout horizontal-align="space">
+          <lightning-layout-item padding="around-small" size="3">
+            <lightning-layout horizontal-align="space">
+              <lightning-layout-item  padding="around-small">
+                <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler}
+                  disabled={disablePrevious}></lightning-button>
+              </lightning-layout-item>
+              <lightning-layout-item padding="around-small">
+                <h1 class="slds-text-heading_small slds-p-top_x-small slds-text-title_caps">{shownPageNumber}</h1>
+              </lightning-layout-item>
+              <lightning-layout-item padding="around-small">
+                <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={nextHandler}
+                  disabled={disableNext}></lightning-button>
+              </lightning-layout-item>
+            </lightning-layout>
+          </lightning-layout-item>
+        </lightning-layout>
+       
+      </div>
+    </div>
+  </template>
+
+  <template if:true={noRecordsToShow}>
+    <div class="slds-text-heading_large">
+      <h1 class="slds-align_absolute-center" style="padding-top:14%;">No records to show</h1>
+    </div>
+  </template>
+
+</template>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The designations and teams responsible for working specific statuses of the Quote Lifecycle</description>
+    <label>Quote Teams Framework</label>
+    <pluralLabel>Quote Teams Frameworks</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

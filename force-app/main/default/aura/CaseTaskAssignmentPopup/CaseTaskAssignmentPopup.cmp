@@ -1,0 +1,86 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="showPopup" type="Boolean" default="True" />
+    <aura:attribute name="taskdata" type="Object"/>    
+    <aura:attribute name="assingneeName" type="String"/>
+   
+    <aura:attribute name="index" type="List"/>
+    
+    <!-- Modal visible on click of Initiate Work Order Button -->
+    <aura:if isTrue="{!v.showPopup}">
+        <!--###### MODAL BOX Start From Here ######--> 
+        <div role="dialog" id="modal" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <!--###### MODAL BOX HEADER Start From Here ######-->
+                <div id="closeBtn" class="slds-modal__header" style="width: 800px !important;">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Open Activities</h2>
+                </div>
+                <!--###### MODAL BOX HEADER End From Here ######-->
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width: 800px !important;">                    
+                    <!-- the container element determine the height of the datatable -->
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Activity">Activity</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Date">Date</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Assignee">Assignee</div>
+                                </th>
+                                  <th scope="col">
+                                    <div class="slds-truncate" title="Comments">Comments</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <aura:iteration items="{!v.taskdata}" var="tsk" indexVar="idx">
+                                <tr>
+                                    <td data-label= "Activity">
+                                        <div class="slds-truncate slds-form-element__control" title="Cloudhub">
+                                            <p class="slds-tile__title slds-truncate">
+                                            <a onclick="{!c.navigateRecord}" target="_self" data-recordid="{!tsk.Id}"><p class="slds-truncate" data-recordid="{!tsk.Id}" ><aura:unescapedHtml value="{!tsk.Subject}" /></p></a>
+                                        </p>
+                                          <!-- <a href="{!'/' + tsk.Id}">{!tsk.Process__c}</a>  -->                                         
+                                        </div>
+                                    </td>
+                                <td data-label="Date">
+                                        <div class="slds-truncate slds-form-element__control" title="Cloudhub">
+                                            <ui:outputDate value="{!tsk.CreatedDate }"/>
+                                        </div>
+                                    </td>
+                                    <td data-label="Assignee">
+                                        <div class="slds-truncate slds-form-element__control" title="Cloudhub">
+                                             <p class="slds-hyphenate">{!v.assingneeName}</p>
+                                        </div>
+                                    </td> 
+                                     <td data-label="Comments">
+                                        <div class="slds-wrap slds-cell-wrap slds-form-element__control" title="Comments">
+                                             <p class="slds-hyphenate">{!tsk.Description__c}</p>
+                                        </div>
+                                    </td> 
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                <!--###### MODAL BOX BODY Part End######-->
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer" style="width: 800px !important;">
+                </footer>
+            </div>
+        </div>
+        <!--###### MODAL BOX FOOTER END Start ######-->
+         <div id="backDrop" class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+    </aura:if>
+</aura:component>

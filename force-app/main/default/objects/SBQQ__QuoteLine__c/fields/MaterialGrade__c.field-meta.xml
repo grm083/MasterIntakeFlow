@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MaterialGrade__c</fullName>
+    <externalId>false</externalId>
+    <label>MaterialGrade</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No Grade</fullName>
+                <default>false</default>
+                <label>No Grade</label>
+            </value>
+            <value>
+                <fullName>International Trash</fullName>
+                <default>false</default>
+                <label>International Trash</label>
+            </value>
+            <value>
+                <fullName>WTEND</fullName>
+                <default>false</default>
+                <label>WTE Non-Diverted</label>
+            </value>
+            <value>
+            <fullName>Waxed OCC</fullName>
+            <default>false</default>
+            <label>Waxed OCC</label>
+            </value>
+            <value>
+            <fullName>Cardboard 36&quot; Bales</fullName>
+            <default>false</default>
+            <label>Cardboard 36&quot; Bales</label>
+            </value>
+            <value>
+            <fullName>Cardboard 42&quot; Bales</fullName>
+            <default>false</default>
+            <label>Cardboard 42&quot; Bales</label>
+            </value>
+            <value>
+            <fullName>Cardboard 48&quot; Bales</fullName>
+            <default>false</default>
+            <label>Cardboard 48&quot; Bales</label>
+            </value>
+            <value>
+            <fullName>Cardboard 60&quot; Bales</fullName>
+            <default>false</default>
+            <label>Cardboard 60&quot; Bales</label>
+            </value>
+            <value>
+            <fullName>Cardboard 64&quot; Bales</fullName>
+            <default>false</default>
+            <label>Cardboard 64&quot; Bales</label>
+            </value>
+            <value>
+            <fullName>Cardboard 72&quot; Bales</fullName>
+            <default>false</default>
+            <label>Cardboard 72&quot; Bales</label>
+            </value>
+            <value>
+            <fullName>Cardboard Compacted</fullName>
+            <default>false</default>
+            <label>Cardboard Compacted</label>
+            </value>
+            <value>
+            <fullName>Cardboard Flattened Loose</fullName>
+            <default>false</default>
+            <label>Cardboard Flattened Loose</label>
+            </value>
+            <value>
+            <fullName>Cardboard Reusable Boxes</fullName>
+            <default>false</default>
+            <label>Cardboard Reusable Boxes</label>
+            </value>
+            <value>
+            <fullName>Cardboard Reusable Boxes - Large</fullName>
+            <default>false</default>
+            <label>Cardboard Reusable Boxes - Large</label>
+            </value>
+            <value>
+            <fullName>Cardboard Reusable Boxes - Medium</fullName>
+            <default>false</default>
+            <label>Cardboard Reusable Boxes - Medium</label>
+            </value>
+            <value>
+            <fullName>Cardboard Reusable Boxes - Small</fullName>
+            <default>false</default>
+            <label>Cardboard Reusable Boxes - Small</label>
+            </value>
+            <value>
+            <fullName>Cardboard Strapped to Pallet</fullName>
+            <default>false</default>
+            <label>Cardboard Strapped to Pallet</label>
+            </value>
+            <value>
+            <fullName>Cardboard Whole Loose</fullName>
+            <default>false</default>
+            <label>Cardboard Whole Loose</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

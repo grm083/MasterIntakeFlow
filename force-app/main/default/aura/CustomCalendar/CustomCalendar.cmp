@@ -1,0 +1,52 @@
+<aura:component controller="CaseController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+ <aura:attribute name="selectedDate" type="String" default="" />
+    <aura:attribute name="caseRecord" type="Object"/>
+    <aura:attribute name="Message" type="String" default="" />
+    <aura:attribute name="NotReturn" type="Boolean" default="false" />
+    <aura:attribute name="recordLoadError" type="String"/>
+     <aura:attribute name="servicedate" type="String" default="" />
+     <aura:attribute name="closeParent" type="Boolean" />
+     <aura:attribute name="Create_AM_and_PM_Pickups" type="Boolean" default="false" />
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    <aura:handler name="CloseParent" event="c:CloseParentContainerEvent" action="{!c.closeParentContainer}" />
+    <aura:attribute name="parentId" type="String" access="global"/>
+    <lightning:messageChannel type="SetServiceDate__c" aura:id="lmschannel" onMessage="{!c.handleReceiveMessage}" scope="APPLICATION"/>
+    
+    <ltng:require scripts="{!join(',',$Resource.jquerydatepicker + '/jquery.js',$Resource.jquerydatepicker + '/jquery-ui.min.js',$Resource.jquerydatepicker + '/jquery-ui.multidatespicker.js')}"
+                  afterScriptsLoaded="{!c.loadJquery}" />
+    
+    <ltng:require styles="{!join(',',$Resource.jquerydatepicker + '/jquery-ui.css',$Resource.jquerydatepicker + '/jquery-ui.multidatespicker.css')}"/>
+    
+	<aura:attribute name="showModal" type="Boolean" default="false" />
+    
+    <aura:html tag="style">
+    .cust_cal {
+     width:20% !important;
+    }
+</aura:html> 
+    
+    <aura:if isTrue="{!v.showModal}">
+        <div class="  slds-is-relative">
+          <aura:if isTrue="{!v.loadingSpinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" variant="brand" />
+        </aura:if>
+                    
+                        
+                        <label class="slds-form-element__label slds-align_absolute-center">Please select dates</label>
+                        <div id="mdp-demo" class="slds-align_absolute-center"></div>                        
+                        <button label="Calendar" id="multiple-date-select1" class="slds-button"/>
+            <div class="padding" >
+                   <lightning:input type="checkbox" label="Empty and do not return" style="padding-left:16px !important" class="slds-size_small" checked="{!v.NotReturn}"/>
+                    </div>                    
+            <div class="customfooter">
+                <div class="padding" >
+					<lightning:input type="checkbox" label="Create AM/PM Pickup" style="text-align:left" class="slds-size_small" checked="{!v.Create_AM_and_PM_Pickups }"/>
+               </div>  
+                <div class="footer-button">                
+                    <lightning:button label="Copy Case" onclick="{!c.createCase}"/>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+    <div aura:id="dupComp"></div>
+ </aura:component>

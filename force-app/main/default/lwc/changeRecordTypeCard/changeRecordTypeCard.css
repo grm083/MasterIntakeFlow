@@ -1,0 +1,12 @@
+.layoutSelector {
+    background-color: #f4f6f9;
+}
+.slds-modal__content{
+    overflow: initial;
+}
+.requiredField{
+    color: Red;
+    text-align: Left;
+    font-size: Larger;
+    line-height:40px;
+}

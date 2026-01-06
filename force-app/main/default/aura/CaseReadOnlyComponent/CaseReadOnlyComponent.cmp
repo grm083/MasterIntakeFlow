@@ -1,0 +1,26 @@
+<aura:component controller="CaseDetailHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"> 
+    <aura:attribute name="recordId" type="string" access="GLOBAL"/>
+     <aura:attribute name="renderRefresh" type="boolean" access="GLOBAL" default="true"/>
+    <lightning:workspaceAPI aura:id="workspace1"/>
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}" 
+                      layoutType="FULL"
+                      targetRecord="{!v.case}"
+                      targetFields="{!v.caseRecord}"
+                      fields="Id,CaseNumber,AssetId,Case_Type__c,Case_Sub_Type__c,Client__c,Location__c,ContactId,Status,Case_Sub_Status__c" 
+                      mode="VIEW"
+                      recordUpdated="{!c.updateRecordView}"
+                      />
+    <!--aura:handler event="c:RefreshEvent" action="{!c.updateRecordView}"/-->
+  <!--  <aura:handler event="force:refreshView" action="{!c.onRefreshView}" /> -->
+    <div  class="slds slds-card" style="background: rgb(216, 237, 255);">
+        <div Class="slds-page-header borderStyle" >
+        </div>
+        <div Class="slds-page-header borderStyle" >
+            
+            <div aura:id="container" class="slds-form slds-form_stacked" >
+                <force:recordView recordId="{!v.recordId}" type="FULL"/>-->
+            </div>
+        </div>
+    </div>
+</aura:component>

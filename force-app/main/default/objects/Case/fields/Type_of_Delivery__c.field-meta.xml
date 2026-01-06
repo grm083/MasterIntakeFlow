@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Delivery__c</fullName>
+    <description>Description of the type of new service.</description>
+    <externalId>false</externalId>
+    <label>Type of Delivery</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Grand Opening</fullName>
+                <default>false</default>
+                <label>Grand Opening</label>
+            </value>
+            <value>
+                <fullName>Remodel</fullName>
+                <default>false</default>
+                <label>Remodel</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

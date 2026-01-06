@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Accounting_System__c</fullName>
+    <description>Account System Used</description>
+    <externalId>false</externalId>
+    <label>Accounting System</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>OAKGP</fullName>
+                <default>false</default>
+                <label>Oakleaf</label>
+            </value>
+            <value>
+                <fullName>OAKCA</fullName>
+                <default>false</default>
+                <label>Oakleaf Canada</label>
+            </value>
+            <value>
+                <fullName>WMNAT</fullName>
+                <default>false</default>
+                <label>WMI National Accounts</label>
+            </value>
+            <value>
+                <fullName>WMCAN</fullName>
+                <default>false</default>
+                <label>WMI National Accounts Canada</label>
+            </value>
+            <value>
+                <fullName>IEMGP</fullName>
+                <default>false</default>
+                <label>International Environmental Management</label>
+            </value>
+            <value>
+                <fullName>OAKWL</fullName>
+                <default>false</default>
+                <label>Wasteless Environmental Services</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

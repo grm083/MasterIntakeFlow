@@ -1,0 +1,43 @@
+.THIS {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 75vh;
+}
+.THIS .fancyButton {
+    background-color: green;
+}
+.THIS .fancyButton:hover {
+    background-color: yellowgreen;
+}
+.THIS .maxHeight {
+    max-height: 55vh;
+    width: 100%;
+}
+.THIS .favHeight {
+    max-height: 30vh;
+    width: 100%;
+}
+.THIS .selectionBox {
+    border-style: solid;
+    border-width: thin;
+    border-radius: 15px;
+    border-color: black;
+    background-color: white;
+    color: black;
+    text-indent: 5%;
+    min-height: 35px;
+}
+.THIS .selectionBox:hover {
+    border-color: white;
+    background-color: rgb(0,105,60);
+    color: white;
+}
+.THIS .selectionBox .productName {
+    font-size: 110%;
+}
+.THIS .greenBox {
+    background-color: rgb(122,184,0);
+}
+.THIS .stretchedButton {
+    display: grid;
+    width: 100%;
+}

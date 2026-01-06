@@ -1,0 +1,46 @@
+<aura:component controller="ContactSearchandCreate">
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="accountTitle" type="String" />
+    <aura:attribute name="titleVal" type="String" />
+    <aura:attribute name="newTitle" type="String" />
+    
+    <aura:registerEvent name="createNewAccountTitleEvt" type="c:createNewAccountTitleEvt" />
+    
+    <div style="height: 600px;">
+    	<section role="dialog" aria-labelledby="modal-heading-01"
+                 aria-modal="true" aria-describedby="modal-content-id-1"
+                 class="slds-modal slds-fade-in-open" style="position:fixed !important;">
+        	<div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" 
+                                      class="slds-modal__close"
+                                      variant="brand"
+                                      alternativeText="Close"
+                                      onclick="{!c.closeModal}" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                        Add New Customer Account Title
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:input name="acctTitle"
+                                     required="true"
+                                     placeholder="Enter the new account title"
+                                     label="Customer Account Title"
+                                     value="{!v.titleVal}"
+                                     maxlength="80"/>
+                </div>
+                <footer class="slds-modal__footer">
+                	<lightning:button variant="brand"
+                                      label="Save"
+                                      title="Save"
+                                      onclick="{!c.handleSave}" />
+                    <lightning:button variant="brand"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{!c.closeModal}" />                    
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </div>
+</aura:component>

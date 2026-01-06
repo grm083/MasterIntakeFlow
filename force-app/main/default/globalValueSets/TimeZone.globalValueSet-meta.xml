@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Alaskan Standard</fullName>
+        <default>false</default>
+        <label>Alaskan Standard</label>
+    </customValue>
+    <customValue>
+        <fullName>Atlantic (Puerto Rico)</fullName>
+        <default>false</default>
+        <label>Atlantic (Puerto Rico)</label>
+    </customValue>
+    <customValue>
+        <fullName>Central</fullName>
+        <default>false</default>
+        <label>Central</label>
+    </customValue>
+    <customValue>
+        <fullName>Chamorro (Guam)</fullName>
+        <default>false</default>
+        <label>Chamorro (Guam)</label>
+    </customValue>
+    <customValue>
+        <fullName>Eastern</fullName>
+        <default>false</default>
+        <label>Eastern</label>
+    </customValue>
+    <customValue>
+        <fullName>Hawaii-Aleutian</fullName>
+        <default>false</default>
+        <label>Hawaii-Aleutian</label>
+    </customValue>
+    <customValue>
+        <fullName>Mountain</fullName>
+        <default>false</default>
+        <label>Mountain</label>
+    </customValue>
+    <customValue>
+        <fullName>Pacific</fullName>
+        <default>false</default>
+        <label>Pacific</label>
+    </customValue>
+    <masterLabel>TimeZone</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

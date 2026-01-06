@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_New_Work_Order_Needed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Is_a_New_Work_Order_Needed__c,
+OR(ISPICKVAL(Process__c,&apos;Resolve Service Issue&apos;), ISPICKVAL(Process__c,&apos;Escalation Unresponsive Contact Vendor&apos;)),
+NOT(OR(ISPICKVAL(Outcome__c,&apos;Schedule Recovery/Service Rescheduled&apos;),ISPICKVAL(Outcome__c,&apos;Emergency Service Required&apos;))),
+NOT($User.Bypass_Validation__c)
+)</errorConditionFormula>
+    <errorMessage>Is New Work Order Needed checkbox cannot be checked at the selected outcome</errorMessage>
+</ValidationRule>

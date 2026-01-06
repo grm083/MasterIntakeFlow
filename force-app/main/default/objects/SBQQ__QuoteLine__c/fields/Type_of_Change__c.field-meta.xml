@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Change__c</fullName>
+    <description>Classification Changes</description>
+    <externalId>false</externalId>
+    <label>Type of Change</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Position Change</fullName>
+                <default>false</default>
+                <label>Position Change</label>
+            </value>
+            <value>
+                <fullName>Billing Administration Change</fullName>
+                <default>false</default>
+                <label>Billing Administration Change</label>
+            </value>
+            <value>
+                <fullName>Start Date Change</fullName>
+                <default>false</default>
+                <label>Start Date Change</label>
+            </value>
+            <value>
+                <fullName>End Date Change</fullName>
+                <default>false</default>
+                <label>End Date Change</label>
+            </value>
+            <value>
+                <fullName>Market Restriction Change</fullName>
+                <default>false</default>
+                <label>Market Restriction Change</label>
+            </value>
+            <value>
+                <fullName>Equipment Change</fullName>
+                <default>false</default>
+                <label>Equipment Change</label>
+            </value>
+            <value>
+                <fullName>Ownership Change</fullName>
+                <default>false</default>
+                <label>Ownership Change</label>
+            </value>
+            <value>
+                <fullName>MAS Change</fullName>
+                <default>false</default>
+                <label>MAS Change</label>
+            </value>
+            <value>
+                <fullName>Change Quantity</fullName>
+                <default>false</default>
+                <label>Change Quantity</label>
+            </value>
+            <value>
+                <fullName>Change Size</fullName>
+                <default>false</default>
+                <label>Change Size</label>
+            </value>
+            <value>
+                <fullName>Change Schedule Type</fullName>
+                <default>false</default>
+                <label>Change Schedule Type</label>
+            </value>
+            <value>
+                <fullName>Change Frequency</fullName>
+                <default>false</default>
+                <label>Change Frequency</label>
+            </value>
+            <value>
+                <fullName>Change Vendor</fullName>
+                <default>false</default>
+                <label>Change Vendor</label>
+            </value>
+            <value>
+                <fullName>Price Increase</fullName>
+                <default>false</default>
+                <label>Price Increase</label>
+            </value>
+            <value>
+                <fullName>Price Decrease</fullName>
+                <default>false</default>
+                <label>Price Decrease</label>
+            </value>
+            <value>
+                <fullName>Cost Increase</fullName>
+                <default>false</default>
+                <label>Cost Increase</label>
+            </value>
+            <value>
+                <fullName>Cost Decrease</fullName>
+                <default>false</default>
+                <label>Cost Decrease</label>
+            </value>
+            <value>
+                <fullName>Quantity Increase</fullName>
+                <default>false</default>
+                <label>Quantity Increase</label>
+            </value>
+            <value>
+                <fullName>Quantity Decrease</fullName>
+                <default>false</default>
+                <label>Quantity Decrease</label>
+            </value>
+            <value>
+                <fullName>Size Increase</fullName>
+                <default>false</default>
+                <label>Size Increase</label>
+            </value>
+            <value>
+                <fullName>Size Decrease</fullName>
+                <default>false</default>
+                <label>Size Decrease</label>
+            </value>
+            <value>
+                <fullName>Frequency Increase</fullName>
+                <default>false</default>
+                <label>Frequency Increase</label>
+            </value>
+            <value>
+                <fullName>Frequency Decrease</fullName>
+                <default>false</default>
+                <label>Frequency Decrease</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Holding</fullName>
+        <default>false</default>
+        <label>Holding</label>
+    </customValue>
+    <customValue>
+        <fullName>NEWSRV</fullName>
+        <default>false</default>
+        <label>New Service</label>
+    </customValue>
+    <customValue>
+        <fullName>CANSER</fullName>
+        <default>false</default>
+        <label>Cancelled Service</label>
+    </customValue>
+    <customValue>
+        <fullName>CONREN</fullName>
+        <default>false</default>
+        <label>Contract Renewal</label>
+    </customValue>
+    <customValue>
+        <fullName>EQACC</fullName>
+        <default>false</default>
+        <label>Equipment Accessories</label>
+    </customValue>
+    <customValue>
+        <fullName>SEASON</fullName>
+        <default>false</default>
+        <label>Seasonal</label>
+    </customValue>
+    <customValue>
+        <fullName>PERMEND_CANSER</fullName>
+        <default>false</default>
+        <label>Cancelled Service - Permanently End</label>
+    </customValue>
+    <customValue>
+        <fullName>PERMEND_SDNONEED</fullName>
+        <default>false</default>
+        <label>No Longer Needed - Permanently End</label>
+    </customValue>
+    <customValue>
+        <fullName>SERCHG</fullName>
+        <default>false</default>
+        <label>Service Change (Freq, qty, size, sch)</label>
+    </customValue>
+    <customValue>
+        <fullName>CLTCPI</fullName>
+        <default>false</default>
+        <label>Client CPI</label>
+    </customValue>
+    <customValue>
+        <fullName>CLTLOCLAU</fullName>
+        <default>false</default>
+        <label>Client/Location Launch</label>
+    </customValue>
+    <customValue>
+        <fullName>CLTPROIMP</fullName>
+        <default>false</default>
+        <label>Client Profitability Improvements</label>
+    </customValue>
+    <customValue>
+        <fullName>DERRFIX</fullName>
+        <default>false</default>
+        <label>Data Error Fix</label>
+    </customValue>
+    <customValue>
+        <fullName>DIV</fullName>
+        <default>false</default>
+        <label>Diversion</label>
+    </customValue>
+    <customValue>
+        <fullName>REBID</fullName>
+        <default>false</default>
+        <label>Rebid</label>
+    </customValue>
+    <customValue>
+        <fullName>RGTSIZ</fullName>
+        <default>false</default>
+        <label>Right Sizing</label>
+    </customValue>
+    <customValue>
+        <fullName>STMREC</fullName>
+        <default>false</default>
+        <label>Short Term Margin Recovery</label>
+    </customValue>
+    <customValue>
+        <fullName>VCCON</fullName>
+        <default>false</default>
+        <label>Vendor/Client Contract Expired</label>
+    </customValue>
+    <customValue>
+        <fullName>VILPAY</fullName>
+        <default>false</default>
+        <label>Vendor Invoice Lower than Payable</label>
+    </customValue>
+    <customValue>
+        <fullName>VNCOM</fullName>
+        <default>false</default>
+        <label>Vendor Non Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>TIER23</fullName>
+        <default>false</default>
+        <label>TIER 2 and 3 Swap Out</label>
+    </customValue>
+    <customValue>
+        <fullName>TOPREVCLIENT</fullName>
+        <default>false</default>
+        <label>Top Revenue Client</label>
+    </customValue>
+    <customValue>
+        <fullName>PERMEND_DERRFIX</fullName>
+        <default>false</default>
+        <label>Data Error Fix - Permanently End</label>
+    </customValue>
+    <customValue>
+        <fullName>PERMEND_VNCOM</fullName>
+        <default>false</default>
+        <label>Vendor Non Compliance - Permanently End</label>
+    </customValue>
+    <customValue>
+        <fullName>PERMEND_VCCON</fullName>
+        <default>false</default>
+        <label>Vendor/Client Contract Expired - Permanently End</label>
+    </customValue>
+    <customValue>
+        <fullName>TOPREVCLIENT_PH2</fullName>
+        <default>false</default>
+        <label>Top Revenue Client - Phase 2</label>
+    </customValue>
+    <customValue>
+        <fullName>LFINC</fullName>
+        <default>false</default>
+        <label>Landfill Increase</label>
+    </customValue>
+    <customValue>
+        <fullName>MERACQ</fullName>
+        <default>false</default>
+        <label>Merge/Acquisition</label>
+    </customValue>
+    <customValue>
+        <fullName>REGFEE</fullName>
+        <default>false</default>
+        <label>Regulatory Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>RTINC</fullName>
+        <default>false</default>
+        <label>Rate Increase</label>
+    </customValue>
+    <customValue>
+        <fullName>RTDEC</fullName>
+        <default>false</default>
+        <label>Rate Decrease</label>
+    </customValue>
+    <customValue>
+        <fullName>LFDEC</fullName>
+        <default>false</default>
+        <label>Landfill Decrease</label>
+    </customValue>
+    <customValue>
+        <fullName>WRONG_VENDOR</fullName>
+        <default>false</default>
+        <label>Wrong Vendor</label>
+    </customValue>
+    <customValue>
+        <fullName>MISUSED_PAYABLE</fullName>
+        <default>false</default>
+        <label>Misused Payable</label>
+    </customValue>
+    <customValue>
+        <fullName>INACTV_SPEC_LOC_CLNT</fullName>
+        <default>false</default>
+        <label>Inactive spec loc or client</label>
+    </customValue>
+    <customValue>
+        <fullName>UTILITY_BILLED</fullName>
+        <default>false</default>
+        <label>Utility Billed</label>
+    </customValue>
+    <customValue>
+        <fullName>CAM_BILLED</fullName>
+        <default>false</default>
+        <label>CAM Billed</label>
+    </customValue>
+    <customValue>
+        <fullName>SERVICE_NEVER_OCC</fullName>
+        <default>false</default>
+        <label>Service Never Occured</label>
+    </customValue>
+    <customValue>
+        <fullName>WRONG_SERVICE_SELEC</fullName>
+        <default>false</default>
+        <label>Wrong service selected</label>
+    </customValue>
+    <customValue>
+        <fullName>VENDOR_DID_NOT_CHARG</fullName>
+        <default>false</default>
+        <label>Vendor did not charge</label>
+    </customValue>
+    <customValue>
+        <fullName>WRONG_SERVICE_DATE</fullName>
+        <default>false</default>
+        <label>Wrong service date</label>
+    </customValue>
+    <customValue>
+        <fullName>CLIENT_CAN_REQUEST</fullName>
+        <default>false</default>
+        <label>Client Cancelled Request</label>
+    </customValue>
+    <customValue>
+        <fullName>SPEC_WRONG</fullName>
+        <default>false</default>
+        <label>Spec Wrong</label>
+    </customValue>
+    <customValue>
+        <fullName>RECYLING_BILING_ONLY</fullName>
+        <default>false</default>
+        <label>Recycling–billing only</label>
+    </customValue>
+    <customValue>
+        <fullName>SCHEDULE_ERROR</fullName>
+        <default>false</default>
+        <label>Schedule Error</label>
+    </customValue>
+    <customValue>
+        <fullName>MISSED_SERVICE</fullName>
+        <default>false</default>
+        <label>Missed Service</label>
+    </customValue>
+    <customValue>
+        <fullName>SERDECR</fullName>
+        <default>false</default>
+        <label>Service Decrease</label>
+    </customValue>
+    <customValue>
+        <fullName>PARTREV</fullName>
+        <default>false</default>
+        <label>Partial Revert</label>
+    </customValue>
+    <customValue>
+        <fullName>FULLREV</fullName>
+        <default>false</default>
+        <label>Full Revert</label>
+    </customValue>
+    <customValue>
+        <fullName>SERINCR</fullName>
+        <default>false</default>
+        <label>Service Increase</label>
+    </customValue>
+    <customValue>
+        <fullName>SERCAN</fullName>
+        <default>false</default>
+        <label>Cancel Service</label>
+    </customValue>
+    <customValue>
+        <fullName>ADDCAN</fullName>
+        <default>false</default>
+        <label>Add Can</label>
+    </customValue>
+    <customValue>
+        <fullName>REMCAN</fullName>
+        <default>false</default>
+        <label>Remove Can</label>
+    </customValue>
+    <customValue>
+        <fullName>DUP_PAYABLE</fullName>
+        <default>false</default>
+        <label>Duplicate Payable</label>
+    </customValue>
+    <masterLabel>Exception Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Notification_Associated_Count__c</fullName>
+    <externalId>false</externalId>
+    <label>Notification Associated Count</label>
+    <summaryForeignKey>Contact_Notification_Preference__c.Contact_Name__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="This Event is used to update the Multi-Case Task Table once Save button is clicked on the Pop-Up" >
+    <!--<aura:attribute name="wrapperlist" type="Object"/>
+    <aura:attribute name="taskId" type="String"/>-->
+</aura:event>

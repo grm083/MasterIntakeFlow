@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Notification_Layout</fullName>
+    <fields>Alias__c</fields>
+    <fields>AssetId__c</fields>
+    <fields>Project_Code__c</fields>
+    <fields>Active__c</fields>
+    <label>Business Notification Layout</label>
+</CompactLayout>

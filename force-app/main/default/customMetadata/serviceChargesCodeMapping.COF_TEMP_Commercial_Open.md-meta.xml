@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>COF-TEMP-Commercial-Open</label>
+    <protected>false</protected>
+    <values>
+        <field>Line_of_business__c</field>
+        <value xsi:type="xsd:string">Commercial</value>
+    </values>
+    <values>
+        <field>Market_area_code__c</field>
+        <value xsi:type="xsd:string">Open</value>
+    </values>
+    <values>
+        <field>Product_code__c</field>
+        <value xsi:type="xsd:string">COF</value>
+    </values>
+    <values>
+        <field>Product_name__c</field>
+        <value xsi:type="xsd:string">Contamination Fee</value>
+    </values>
+    <values>
+        <field>Service_charge_code__c</field>
+        <value xsi:type="xsd:string">CTMF_C_TEMP_OPEN</value>
+    </values>
+    <values>
+        <field>Service_charge_name__c</field>
+        <value xsi:type="xsd:string">Contamination Fee</value>
+    </values>
+    <values>
+        <field>Service_type__c</field>
+        <value xsi:type="xsd:string">TEMP</value>
+    </values>
+</CustomMetadata>

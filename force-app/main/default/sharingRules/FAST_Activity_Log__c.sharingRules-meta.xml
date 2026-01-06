@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Read_Write_Activity_Log</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Edit, and view records in the &quot;FAST Activity Log,&quot; regardless of the record owner.</description>
+        <label>Read &amp; Write Activity Log</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Launch_team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Launch_team</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

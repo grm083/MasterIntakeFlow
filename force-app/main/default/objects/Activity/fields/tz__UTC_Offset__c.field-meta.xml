@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>tz__UTC_Offset__c</fullName>
+    <deprecated>false</deprecated>
+    <description>UTC timezone offset for the related record (Lead, Contact etc.).</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Shows the UTC timezone offset of the Lead / Contact associated with the task.</inlineHelpText>
+    <label>UTC Offset</label>
+    <precision>5</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

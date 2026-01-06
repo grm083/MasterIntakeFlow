@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Task_Assignment_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT($User.Bypass_Validation__c),
+NOT(ISNEW()),  
+ISCHANGED(OwnerId),
+$Profile.Name = &apos;Customer Service&apos;,
+Owner:User.FirstName = &apos;Group&apos;,
+Owner:User.LastName = &apos;User&apos;)</errorConditionFormula>
+    <errorMessage>Task cannot be assigned to Group user</errorMessage>
+</ValidationRule>

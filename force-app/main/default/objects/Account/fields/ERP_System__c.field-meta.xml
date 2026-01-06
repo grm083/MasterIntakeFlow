@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ERP_System__c</fullName>
+    <description>ERP system that vendor uses</description>
+    <externalId>false</externalId>
+    <label>ERP System</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AS 400</fullName>
+                <default>false</default>
+                <label>AS 400</label>
+            </value>
+            <value>
+                <fullName>Core</fullName>
+                <default>false</default>
+                <label>Core</label>
+            </value>
+            <value>
+                <fullName>Custom Program</fullName>
+                <default>false</default>
+                <label>Custom Program</label>
+            </value>
+            <value>
+                <fullName>DAC</fullName>
+                <default>false</default>
+                <label>DAC</label>
+            </value>
+            <value>
+                <fullName>Delta Waste Systems</fullName>
+                <default>false</default>
+                <label>Delta Waste Systems</label>
+            </value>
+            <value>
+                <fullName>DesertMicro</fullName>
+                <default>false</default>
+                <label>DesertMicro</label>
+            </value>
+            <value>
+                <fullName>Dilloware</fullName>
+                <default>false</default>
+                <label>Dilloware</label>
+            </value>
+            <value>
+                <fullName>DMAS</fullName>
+                <default>false</default>
+                <label>DMAS</label>
+            </value>
+            <value>
+                <fullName>Encore</fullName>
+                <default>false</default>
+                <label>Encore</label>
+            </value>
+            <value>
+                <fullName>Haulmark</fullName>
+                <default>false</default>
+                <label>Haulmark</label>
+            </value>
+            <value>
+                <fullName>Infopro</fullName>
+                <default>false</default>
+                <label>Infopro</label>
+            </value>
+            <value>
+                <fullName>JWS</fullName>
+                <default>false</default>
+                <label>JWS</label>
+            </value>
+            <value>
+                <fullName>MASS</fullName>
+                <default>false</default>
+                <label>MASS</label>
+            </value>
+            <value>
+                <fullName>Orion</fullName>
+                <default>false</default>
+                <label>Orion</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>PC Scale</fullName>
+                <default>false</default>
+                <label>PC Scale</label>
+            </value>
+            <value>
+                <fullName>Peachtree</fullName>
+                <default>false</default>
+                <label>Peachtree</label>
+            </value>
+            <value>
+                <fullName>PROS 2000</fullName>
+                <default>false</default>
+                <label>PROS 2000</label>
+            </value>
+            <value>
+                <fullName>Quickbooks</fullName>
+                <default>false</default>
+                <label>Quickbooks</label>
+            </value>
+            <value>
+                <fullName>RAMs</fullName>
+                <default>false</default>
+                <label>RAMs</label>
+            </value>
+            <value>
+                <fullName>SAP</fullName>
+                <default>false</default>
+                <label>SAP</label>
+            </value>
+            <value>
+                <fullName>Shared Logic</fullName>
+                <default>false</default>
+                <label>Shared Logic</label>
+            </value>
+            <value>
+                <fullName>SoftPak</fullName>
+                <default>false</default>
+                <label>SoftPak</label>
+            </value>
+            <value>
+                <fullName>Tower</fullName>
+                <default>false</default>
+                <label>Tower</label>
+            </value>
+            <value>
+                <fullName>Trash Flow</fullName>
+                <default>false</default>
+                <label>Trash Flow</label>
+            </value>
+            <value>
+                <fullName>TRUX</fullName>
+                <default>false</default>
+                <label>TRUX</label>
+            </value>
+            <value>
+                <fullName>Vovio</fullName>
+                <default>false</default>
+                <label>Vovio</label>
+            </value>
+            <value>
+                <fullName>WAM</fullName>
+                <default>false</default>
+                <label>WAM</label>
+            </value>
+            <value>
+                <fullName>Waste Books</fullName>
+                <default>false</default>
+                <label>Waste Books</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

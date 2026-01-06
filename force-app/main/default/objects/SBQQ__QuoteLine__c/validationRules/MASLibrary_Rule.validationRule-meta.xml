@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MASLibrary_Rule</fullName>
+    <active>true</active>
+    <description>This validation will check that MAS Library must begin with &quot;ARDTA.&quot;</description>
+    <errorConditionFormula>OR(NOT(BEGINS(MASLibrary__c , &apos;ARDTA.&apos;)), CONTAINS(MASLibrary__c , &apos; &apos;) )</errorConditionFormula>
+    <errorDisplayField>MASLibrary__c</errorDisplayField>
+    <errorMessage>MAS Library must begin with &quot;ARDTA.&quot; followed by the library name. Example: ARDTA.268</errorMessage>
+</ValidationRule>

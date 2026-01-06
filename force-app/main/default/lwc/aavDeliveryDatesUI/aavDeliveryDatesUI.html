@@ -1,0 +1,19 @@
+<template>
+    <lightning-accordion allow-multiple-sections-open>
+        <lightning-spinner lwc:if={showInnerSpinner} alternative-text="Loading" size="small"></lightning-spinner>
+        <template for:each={deliveries} for:item="product">
+            <lightning-accordion-section key={product.equipmentName} name={product.equipmentName}
+                label={product.equipmentName}>
+                <div class="slds-text-align_center scroll-bar slds-scrollable">
+                    <template for:each={product.dates} for:item="item">
+                        <div key={item.date} data-size={product.equipmentSizeCode} data-date={item.date} class="box"
+                            onclick={handleContainerChange}>
+                            <div class="top-section">{item.date}</div>
+                            <div class={item.cssClass}>{item.dayName}</div>
+                        </div>
+                    </template>
+                </div>
+            </lightning-accordion-section>
+        </template>
+    </lightning-accordion>
+</template>

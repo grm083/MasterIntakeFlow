@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Work Order Dry Run</label>
+    <protected>false</protected>
+    <values>
+        <field>Comment__c</field>
+        <value xsi:type="xsd:string">&lt;Acorn_WorkOrder_Number__c&gt; - &lt;Status&gt; &lt;b&gt;Dry Run Cost:&lt;/b&gt; &lt;Dry_Run_Cost__c&gt; &lt;b&gt;Dry Run Root Cause:&lt;/b&gt; &lt;Dry_Run_Root_Cause__c&gt; &lt;b&gt;Dry Run Price:&lt;/b&gt; &lt;Dry_Run_Price__c&gt; &lt;b&gt;Dry Run Description:&lt;/b&gt; &lt;Dry_Run_Description__c&gt;</value>
+    </values>
+    <values>
+        <field>Object__c</field>
+        <value xsi:type="xsd:string">WorkOrder</value>
+    </values>
+</CustomMetadata>

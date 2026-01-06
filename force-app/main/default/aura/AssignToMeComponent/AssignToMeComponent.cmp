@@ -1,0 +1,33 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" Controller = "AssignToMeCntrl">
+    <aura:html tag="style">
+        .slds-backdrop {
+        background: rgba(43, 40, 38, 0) !important;
+        }
+        .slds-spinner_container{
+        background: transparent !important;
+        }
+        
+        .modal-body {
+        background: transparent !important;
+        box-shadow: none !important;
+        }
+        .slds-modal__header--empty {
+        display: none !important;
+        }
+</aura:html>
+
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> 
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false"/> 
+     <!--lightning:workspaceAPI aura:id="workspace" --> 
+	      
+        <div class="slds-is-relative" style="color:green;text-align:center;">
+       
+
+            <aura:if isTrue="{!v.loadingSpinner}">
+       <lightning:spinner class="spins" variant="brand" size="Large" alternativeText="Processing,Please Wait..."/>
+        </aura:if>
+        <!--div style="font-size:24px;">Task assignment in progress...div-->
+     </div>
+
+</aura:component>

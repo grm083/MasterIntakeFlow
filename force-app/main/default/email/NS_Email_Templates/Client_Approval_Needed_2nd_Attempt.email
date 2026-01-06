@@ -1,0 +1,26 @@
+<messaging:emailTemplate subject="Approval Needed 2nd Attempt - {!relatedTo.SBQQ__Account__r.Name} - {!relatedTo.Name}"  recipientType="Contact" relatedToType="SBQQ__Quote__c">
+<messaging:htmlEmailBody > 
+<div style="align=right">
+        <apex:variable value="{!LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260))}" var="hostUrl"/>
+        <apex:variable value="servlet/servlet.ImageServer?id=" var="staticUrl_1"/>
+        <apex:variable value="&oid=" var="staticUrl_2"/>
+        <apex:variable value="{!$Organization.Id}" var="orgId"/>
+    </div>
+    <html>
+    <body contenteditable="true">
+    <style type="text/css">
+    body {font-size: 11pt;}
+    </style>
+<!--<br><apex:image id="WMLogo" value="{!$Setup.ApprovalImages__c.WM_Logo__c}" width="104" height="28"/></br>-->
+<br><apex:image height="28" width="104" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.DocumentId__c}{!staticUrl_2}{!orgId}"/></br>
+<br><apex:outputText style="font-family:Arial;" value="Hello,"/> </br><br/>
+<c:GetQuoteDetailsForApproval2ndAttempt quoteDetail="{!relatedTo}"/>  
+<a href="{!$Setup.QuoteApproval__c.QuoteApprovalRejectionLink__c}?subject=Approved:{!relatedTo.Id}&body={!relatedTo.Quote_Thread_Id__c}">Approve</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{!$Setup.QuoteApproval__c.QuoteApprovalRejectionLink__c}?subject=Declined:{!relatedTo.Id}&body=I am declining this request for the following reason(s): %0D%0A%0D%0A {!relatedTo.Quote_Thread_Id__c}">Reject</a><br/> 
+
+<br><c:signatureNSEmailTemplates /></br>
+{!relatedTo.Quote_Thread_Id__c}
+</body>
+</html>            
+</messaging:htmlEmailBody>  
+</messaging:emailTemplate>

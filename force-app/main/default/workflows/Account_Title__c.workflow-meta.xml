@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Title_Duplicate_Field</fullName>
+        <field>Duplicate_Title__c</field>
+        <formula>Name +  CASESAFEID(Account__r.Id)</formula>
+        <name>Update Title Duplicate Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Avoid duplicate account title</fullName>
+        <actions>
+            <name>Update_Title_Duplicate_Field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>It will update the text field on account title which is unique.</description>
+        <formula>NOT(OR(ISNULL(Account__c),ISBLANK(Account__c)))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

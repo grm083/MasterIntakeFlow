@@ -1,0 +1,28 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" 
+                access="global" controller="TaskRelatedListAura">
+    
+    <!--Aura Attributes-->
+    <aura:attribute name="relatedObjWrapper" type="object"/>
+    <aura:attribute name="icon" type="String"/>
+    <aura:attribute name="objFields" type="List" />
+    
+    <!--Aura handler-->    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:card iconName="{!v.icon}" title="{!v.relatedObjWrapper.objectName}"> 
+        
+        <div class="slds-p-left_large slds-p-right_medium">
+            <aura:if isTrue="{!v.relatedObjWrapper.recordId != null}">
+                
+                <lightning:recordForm aura:id="relatedRecordForm"
+                                      recordId="{!v.relatedObjWrapper.recordId}"
+                                      objectApiName="{!v.relatedObjWrapper.objectName}"
+                                      fields="{!v.objFields}"
+                                      columns="2"
+                                      mode="readonly" 
+                                      />             
+            </aura:if>
+            
+        </div>    
+    </lightning:card>
+</aura:component>

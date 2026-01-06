@@ -1,0 +1,37 @@
+<aura:component controller="CaseController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:attribute name="workorders" type="Object"/>
+    <aura:attribute name="caseList" type="Object"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="showModal" type="Boolean" default="false"/>
+    <aura:registerEvent name="CloseParent" type="c:CloseParentContainerEvent"/>
+    
+    <aura:if isTrue="{!v.showModal}">
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium" style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <!--<lightning:buttonIcon iconName="utility:close"
+                                          onclick="{!c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>-->
+                    <span><b> Duplicates found for the selected Service Dates </b></span>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-align_absolute-center"><lightning:formattedText value="Select the service dates and click Continue if you wish to close the created cases with those service dates. Duplicates will be ignored for the unselected service dates." /></div>
+                    <div class="slds-align_absolute-center">
+                        <lightning:datatable data="{!v.data }" 
+                                             columns="{!v.columns }" keyField="id"
+                                             aura:id="table"/>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button label="Continue" onclick="{!c.getSelectedData}"/>
+                </footer>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
+    
+</aura:component>

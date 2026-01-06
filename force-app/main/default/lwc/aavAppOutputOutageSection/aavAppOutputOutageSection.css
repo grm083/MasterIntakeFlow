@@ -1,0 +1,18 @@
+tbody > tr:nth-child(even) this.backgroundColorClass {
+  background: gray;
+}
+h3{
+  background-color: #E3F0E3;
+}
+.warning-text {
+  color: black;
+  font-weight: 550;
+  margin: 7px 7px;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+}
+.outer-section {
+  background: white;
+  text-align: center;
+  padding: 2%;
+}

@@ -1,0 +1,21 @@
+.dummy{
+	color : black;
+}
+.slds-scrollable_x{
+	overflow: hidden;
+	background: white;
+
+}
+.myTable{
+	background-color: aliceblue;
+}
+.slds-tabs_default{
+	height: 100%;
+}
+.slds-tabs_default__content{
+	height: 80%;
+}
+.slds-table_header-fixed_container{
+	background-color: white;
+	min-height: 12rem;
+}

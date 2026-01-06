@@ -1,0 +1,20 @@
+.THIS .slds-modal__container {
+    max-width: 50rem !important;
+    width: 50% !important;
+}
+.THIS .border-radius{
+    border-radius: 0px;
+}
+.THIS .border-1px{
+    border: 1px solid #e0dedd !important;
+}
+.THIS .padding-0px{
+    padding:0px;
+}
+.THIS .productContainerRecords{
+    text-align:center;
+    font-weight:bold;
+}
+.THIS .padding-2{
+    padding:2%;  
+}

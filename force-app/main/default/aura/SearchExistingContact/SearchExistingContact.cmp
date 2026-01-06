@@ -1,0 +1,685 @@
+<aura:component controller="ContactSearchandCreate"
+                implements="force:hasRecordId,flexipage:availableForAllPageTypes">
+	
+    <!--Workspace API for programatic refresh of components-->
+    <lightning:workspaceAPI aura:id="workspace" />
+    
+    <!--Initialization procedure and lightning events-->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler name="createNewAccountTitleEvt" event="c:createNewAccountTitleEvt" action="{!c.newTitleCreated}" />
+    <!--<aura:registerEvent name="RefreshEvent" type="c:RefreshEvent"/>-->
+    <aura:registerEvent name="SingleTabRefreshEvent" type="c:SingleTabComponentRefresh"/>
+    <!--Stateful button variables-->
+    <aura:attribute name="boolCustomer" type="Boolean" default="true" />
+    <aura:attribute name="boolVendor" type="Boolean" default="false" />
+    <aura:attribute name="boolInternal" type="Boolean" default="false" />
+    <aura:attribute name="caseObj" type="Case" default="false" />
+    
+    <!-- Bool for Search Button -->
+    <aura:attribute name="BoolSearchButton" type="Boolean" default="false" />
+    <aura:attribute name="eventKey" type="Integer" />
+    
+    <!--Form display variable-->
+    <aura:attribute name="boolNewContact" type="Boolean" default="false" />
+    <aura:attribute name="boolSOSL" type="Boolean" default="false" />
+    <aura:attribute name="showSearch" type="Boolean" default="false" />
+    <aura:attribute name="boolShowNew" type="Boolean" default="false" />
+    <aura:attribute name="boolEdit" type="Boolean" default="false" />
+    <aura:attribute name="boolShowUser" type="Boolean" default="false" />
+    <aura:attribute name="boolReadOnly" type="Boolean" default="false" />
+    
+    <!--Case derived variables-->
+    <aura:attribute name="caseAccount" type="String" />
+    <aura:attribute name="locAccount" type="String" />
+    <aura:attribute name="caseContact" type="String" />
+    <aura:attribute name="caseUser" type="String" />
+    <aura:attribute name="caseStatus" type="String" />
+    <aura:attribute name="recordId" type="String" description="ID of the record."/>
+    <aura:attribute name="vendorAcc" type="String" />
+    
+
+    
+    <!--Method derived variables-->
+    <aura:attribute name="vendorAccount" type="String" />
+    <aura:attribute name="vendorName" type="String" />
+    <aura:attribute name="searchString" type="String" default=""/>
+    <aura:attribute name="userString" type="String" />
+    
+    <!--Object Collection Variable-->
+    <aura:attribute name="listVendor" type="Account[]" />
+    <aura:attribute name="soslRows" type="String[]" default="[]" />
+    <aura:attribute name="soslContacts" type="Object" default="[]"/>
+    <aura:attribute name="dupContacts" type="Object" default="[]"/>
+    <aura:attribute name="vendorAccts" type="Object" />
+    <aura:attribute name="soslFields" type="List" />
+    <aura:attribute name="dupFields" type="List" default="[
+                {label: 'Name',  fieldName: 'Name', type: 'text'},
+                {label: 'Title', fieldName: 'Title', type: 'text'},
+                {label: 'Phone', fieldName: 'Phone', type: 'text'},
+                {label: 'Email', fieldName: 'Email', type: 'text'},
+                {label: 'BR Association', fieldName: 'BusinessRuleAssociation', type: 'text'},
+                {label: 'Last Activity', fieldName: 'LastActivityDate', type: 'Datetime'}                                           
+        ]"/> 
+    <!--SDT-10964 Change the Grid Column-->
+    <!--<aura:attribute name="soslFields" type="List" default="[
+                {label: 'Name', fieldName: 'Name', type: 'text'},
+                {label: 'Email', fieldName: 'Email', type: 'text'}
+                {label: 'Phone', fieldName: 'Phone', type: 'text'},
+                {label: 'Mobile', fieldName: 'MobilePhone', type: 'text'}
+        ]"/>-->
+    <aura:attribute name="vendorFields" type="List" default="[
+            {label: 'Name', fieldName: 'Name', type: 'text'},
+            {label: 'VID', fieldName: 'VID', type: 'text'}
+        ]" />
+    <aura:attribute name="accountTitles" type="List" />
+    <aura:attribute name="selTitle" type="String" />
+    <aura:attribute name="accountDepts" type="List" />
+    <aura:attribute name="selDept" type="String" default="" />
+    <aura:attribute name="vendorRoles" type="List" />
+    <aura:attribute name="selVendorRoles" type="List" default="[]"/>
+    <aura:attribute name="searchPlaceholder" type="String" default="Search all account contacts..." />
+    <aura:attribute name="searchLabel" type="String" default="Search for your contact below, and press enter when you're ready to search" />
+    
+    <!--Search Contact Record for SDT-10964-->
+    <aura:attribute name="searchContact" type="String[]" default="[]" />
+    <aura:attribute name="searchFirstName" type="String" default="" />
+    <aura:attribute name="searchLastName" type="String" default="" />
+    <aura:attribute name="searchEmail" type="String" default="" />
+    <aura:attribute name="searchPhone" type="String" default="" />
+    <aura:attribute name="searchMobile" type="String" default="" />
+    
+    <!--Selected Contact Record-->
+    <aura:attribute name="contactId" type="String" default=""/>
+    <aura:attribute name="userId" type="String" default=""/>
+    
+    <!--Create a new contact fields-->
+    <aura:attribute name="firstName" type="String" default="" />
+    <aura:attribute name="lastName" type="String" default="" />
+    <aura:attribute name="phone" type="String" default="" />
+    <aura:attribute name="email" type="String" default="" />
+    <aura:attribute name="title" type="String" default="" />
+    <aura:attribute name="preferred" type="String" default="" />
+    <aura:attribute name="conType" type="String" default="Customer"/>
+    
+    <aura:attribute name="extension" type="String" default=""/>
+    
+    <aura:attribute name="isNewRow" type="Boolean" default="false"/>
+    
+    <!--Contact display fields-->
+    <aura:attribute name="displayContFields" type="String[]" 
+                    default="['Name','Account_Title__c','Phone','Phone_Extension__c','MobilePhone','Email','Preferred_Method__c','Email_Validated__c','Date_Validated__c']"/>
+
+    <aura:attribute name="displayUserFields" type="String[]" 
+                    default="['Name', 'Title', 'Phone', 'Email','AboutMe']" />
+    <aura:attribute name="showForm" type="Boolean" default="true"/>
+    <aura:attribute name="recordTypeId" type="String"/>  
+
+      <aura:attribute name="showPriorSearchResult" type="Boolean" default="false" />
+    <aura:attribute name="isModalOpenContact" type="boolean" default="true" />
+
+     <aura:attribute name="isVendor" type="Boolean" default="false" />
+    <aura:attribute name="isClient" type="Boolean" default="false" />
+    <aura:attribute name="isLocation" type="Boolean" default="false" />
+    
+    
+    <!--Represents the component header where we would select the
+	type of contact that the user wishes to select.  This component will also
+	work in tandem with the add contact component - if a user selects a certain type
+	of contact, the relationships will be properly built to reflect that -->
+    
+    <aura:if isTrue="{!v.showForm}"> 
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium" style="position:fixed !important; padding-top:10rem;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:dash" 
+                                          variant="bare-inverse" 
+                                          onclick="{!c.minimizeModal }" 
+                                          alternativeText="Minimize"
+                                          class="minimizeIcon"
+                                          title="Minimize" />
+                    <!--/aura:if -->
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"
+                                          onclick="{!c.closeModel }"/>
+                    <h2 class="slds-text-heading_medium">Contact</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+     <aura:if isTrue="{!and(v.isClient , and(not(v.caseObj.Case_Sub_Type__c == 'New Client'), empty(v.caseAccount)))}">
+    	<div>
+        	Prior to selecting a contact through this component you must select your Client.  Please 
+            navigate to the "Client Search" tab and search and set your client.  If a client needs
+            to be created, please engage the appropriate parties to have the client created prior to 
+            using this interface.
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!and(v.isVendor ,  and(not(v.caseObj.Case_Sub_Type__c == 'New Vendor'), empty(v.vendorAcc)))}">
+    	<div>
+        	Prior to selecting a contact through this component you must select your vendor.  Please 
+            navigate to the "Vendor Search" tab and search and set your vendor.  If a vendor needs
+            to be created, please engage the appropriate parties to have the vendor created prior to 
+            using this interface.
+        </div>
+    </aura:if>            
+    <aura:if isTrue="{!and( v.isLocation , and(not(v.caseObj.Case_Sub_Type__c == 'New Location') , empty(v.locAccount))) }">
+    	<div>
+        	Prior to selecting a contact through this component you must select your location. Please  
+            navigate to the "Location Search" tab and search and set your location.  If a location needs
+            to be created, please engage the appropriate parties to have the location created prior to 
+            using this interface.
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!or(and(empty(v.caseContact), or(or( and(v.isClient , or(not(empty(v.caseAccount)) , v.caseObj.Case_Sub_Type__c == 'New Client')) , and(v.isVendor , or(not(empty(v.vendorAcc)) , v.caseObj.Case_Sub_Type__c == 'New Vendor'))) , and( v.isLocation , or( not(empty(v.locAccount)) , v.caseObj.Case_Sub_Type__c == 'New Location') ) ) ), v.boolEdit)}">
+    	<lightning:layout multipleRows="true" class="ridgedBorder">
+            <lightning:layoutItem size="3" padding="around-medium">
+                <div class="slds-align_absolute-center">
+                    <strong>Contact type:</strong><br/>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" class="slds-align_absolute-center" padding="around-medium">
+                <lightning:buttonStateful
+                                          labelWhenOff="Customer"
+                                          variant="brand"
+                                          labelWhenOn="Customer"
+                                          labelWhenHover="Customer"
+                                          iconNameWhenOff="utility:add"
+                                          iconNameWhenOn="utility:check"
+                                          iconNameWhenHover="utility:close"
+                                          state="{! v.boolCustomer }"
+                                          onclick="{!c.handleCusClick}"
+                                          />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" class="slds-align_absolute-center" padding="around-medium">
+                <lightning:buttonStateful
+                                          variant="brand"
+                                          labelWhenOff="Vendor"
+                                          labelWhenOn="Vendor"
+                                          labelWhenHover="Vendor"
+                                          iconNameWhenOff="utility:add"
+                                          iconNameWhenOn="utility:check"
+                                          iconNameWhenHover="utility:close"
+                                          state="{! v.boolVendor }"
+                                          onclick="{! c.handleVenClick }"
+                                          />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" class="slds-align_absolute-center" padding="around-medium">
+                <lightning:buttonStateful
+                                          variant="brand"
+                                          labelWhenOff="Internal"
+                                          labelWhenOn="Internal"
+                                          labelWhenHover="Internal"
+                                          iconNameWhenOff="utility:add"
+                                          iconNameWhenOn="utility:check"
+                                          iconNameWhenHover="utility:close"
+                                          state="{! v.boolInternal }"
+                                          onclick="{! c.handleIntClick }"
+                                          />
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        <!--The below is presented when the user selects "Customer" or "Vendor" as their contact type-->
+        <aura:if isTrue="{!or(v.boolCustomer, v.boolVendor)}">    
+            <div class="slds-grid slds-var-p-around_small">
+                <div class="slds-col slds-size_1-of-2 ridgedBorder">
+                    <lightning:layout multipleRows="true">
+                        <aura:if isTrue="{!v.boolCustomer}">
+                            <lightning:layoutItem size="12" padding="around-small">
+                                <div class="slds-wrap">
+                                    Contacts associated to this location are provided below (if any).  
+                                    If your contact is not listed below, use the below search 
+                                    function to search across the entire account for contacts.  You may 
+                                    search by name, email address, or phone number.
+                                </div>
+                            </lightning:layoutItem>
+                        </aura:if>
+                        <aura:if isTrue="{!v.boolVendor}">
+                        	<lightning:layoutItem size="12" padding="around-small">
+                                <div class="slds-wrap">
+                                    Below are the active vendors who are currently providing or have provided 
+                                    services to assets at this location.  Please select the vendor to be presented
+                                    all contacts associated with that vendor.
+                                </div>
+                            </lightning:layoutItem>
+                        </aura:if>
+                        <!--  <lightning:layout SDT-10964> -->
+                        <aura:if isTrue="{!v.boolVendor}">
+                        <lightning:layoutItem size="12" padding="around-small">
+                            <div onkeyup="{!c.searchAll}">
+                                <lightning:input aura:id="contactName"
+                                                 name="contactName"
+                                                 label="{!v.searchLabel}"
+                                                 type="search"
+                                                 value="{!v.searchString}"
+                                                 placeholder="{!v.searchPlaceholder}"
+                                                 onchange="{!c.searchAll}"
+                                                 />
+                                
+                            </div>
+                          </lightning:layoutItem>
+                        </aura:if>
+                        <!--Search Lighting Component for SDT-10964-->
+                        <aura:if isTrue="{!v.boolCustomer}">
+                          <lightning:layoutItem size="6" padding="around-small">
+                              <span onkeyup="{!c.searchAllContact}">  
+                              <lightning:input name="contfirstName"
+                                                 value="{!v.searchFirstName}"
+                                                 placeholder="First Name"
+                                                 label="First Name"
+                                                 />
+                              </span>  
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <span onkeyup="{!c.searchAllContact}"> 
+                            	<lightning:input name="contlastName"
+                                                 value="{!v.searchLastName}"
+                                                 placeholder="Last Name"
+                                                 label="Last Name"
+                                                 />
+                                </span>     
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4" padding="around-small">
+                                <span onfocusout="{!c.searchAllContact}"> 
+                            	<lightning:input type="email" 
+                                                 name="contEmailAddress"
+                                                 value="{!v.searchEmail}"
+                                                 label="Email Address"
+                                                 placeholder="address@example.com" />
+                                </span>    
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4" padding="around-small">
+                                <span onfocusout="{!c.searchAllContact}"> 
+                            	<lightning:input type="tel"
+                                                 label="Phone Number"
+                                                 value="{!v.searchPhone}"
+                                                 placeholder="Enter number with no spaces"
+                                                 pattern="[0-9]{10}"
+                                                 />
+                                </span>     
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4" padding="around-small">
+                                <span onfocusout="{!c.searchAllContact}"> 
+                            	<lightning:input type="tel"
+                                                 label="Mobile Number"
+                                                 value="{!v.searchMobile}"
+                                                 placeholder="Enter number with no spaces"
+                                                 pattern="[0-9]{10}"
+                                                 /> 
+                                </span>    
+                            </lightning:layoutItem>
+                            
+                        <!--<lightning:layoutItem size="3" class="slds-align_absolute-left" padding="around-small">
+                        <lightning:button
+                                          variant="brand"
+                                          label="Search"
+                                          title="Search"
+                                          iconName="utility:search"
+                                          onclick="{!c.searchAllContact}"
+                                          />
+                    	</lightning:layoutItem>-->
+                      </aura:if>
+                          <!--
+                        <lightning:layoutItem size="3" class="slds-align_absolute-center" padding="around-small">
+                            <br/>
+            				<lightning:button onclick="{!c.SearchButton}"
+                              variant="brand"
+                              label="Search"
+                              value="{!v.searchString}"
+                              iconName="utility:search"/> 
+        				</lightning:layoutItem> 
+    					</lightning:layout>-->
+                        <aura:if isTrue="{!v.boolVendor}">
+                            <lightning:layoutItem size="12" padding="around-small" class="bigBoxVert">
+                            	<lightning:datatable aura:id="vendorTable"
+                                                     columns="{!v.vendorFields}"
+                                                     data="{!v.vendorAccts}"
+                                                     resizeColumnDisabled="true"
+                                                     keyField="id"
+                                                     maxRowSelection="1"
+                                                     onrowselection="{!c.selectVenAccount}"
+                                                     />
+                            </lightning:layoutItem>
+                        </aura:if> 
+                        <aura:if isTrue="{!or(v.boolCustomer, v.showSearch)}">
+                             
+                            <lightning:layoutItem padding="around-large" class="bigBoxVert slds-truncate">
+                                <lightning:datatable aura:id="soslTable"
+                                                    data="{!v.soslContacts}" 
+        											columns="{!v.soslFields}" 
+                                                    onrowselection="{!c.selectContact}" 
+                                                    keyField="id"
+                                                    maxRowSelection="1"
+                                                    selectedRows="{!v.soslRows}"/>
+                                 
+                            </lightning:layoutItem> 
+                            
+                            
+                            <lightning:layoutItem padding="around-small" size="12">
+                                <aura:if isTrue="{!v.boolShowNew}">
+                                    <lightning:button variant="brand" label="New" title="New Contact" iconName="utility:new" onclick="{!c.newContact}" />
+                                </aura:if>
+                            </lightning:layoutItem>
+                        </aura:if>
+                        
+                    </lightning:layout>
+                </div>
+                <div class="slds-col slds-size_1-of-2 ridgedBorder">
+                    <lightning:layout multipleRows="true" verticalAlign="end">
+                        <aura:if isTrue="{!v.contactId != ''}">
+                            <aura:if isTrue="{!v.boolReadOnly}">
+                                <lightning:layoutItem size="12" padding="around-small" class="bigBoxVert selectContactEdit">
+                                    <lightning:recordForm recordId="{!v.contactId}"
+                                                          objectApiName="Contact"
+                                                          fields="{!v.displayContFields}"
+                                                          density="comfy"
+                                                          columns="2"
+                                                          mode="readOnly" 
+                                                          />
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" padding="around-small" class="bigBoxVert">
+                                	<div class="slds-wrap">
+                                    	This is an issue contact for this vendor account.  If changes need to be made 
+                                        to this record, please contact the Vendor Client Code team to make those changes.
+                                    </div>
+                                </lightning:layoutItem>
+                                <aura:set attribute="else">
+                                    <lightning:layoutItem size="12" padding="around-small" class="bigBoxVert selectContactEdit">
+                                        <lightning:recordForm recordId="{!v.contactId}"
+                                                              objectApiName="Contact"
+                                                              fields="{!v.displayContFields}"
+                                                              density="comfy"
+                                                              columns="2"
+                                                              mode="view" 
+                                                              />
+                                    </lightning:layoutItem>
+
+                                </aura:set>
+                            </aura:if>
+                            <lightning:layoutItem size="6" padding="around-large">
+                                <lightning:button variant="brand" 
+                                                  label="Select Contact" 
+                                                  title="Select" 
+                                                  iconName="utility:contact_request" 
+                                                  onclick="{!c.saveExistingContact}" />
+                            </lightning:layoutItem>
+                        </aura:if>
+                        <aura:if isTrue="{!v.boolNewContact}">
+                        	<lightning:layoutItem size="6" padding="around-small">
+                            	<lightning:input name="firstName"
+                                                 value="{!v.firstName}"
+                                                 placeholder="First Name"
+                                                 label="First Name"
+                                                 required="true"
+                                                 onchange="{!c.setUserInputValues}"
+                                                 />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="around-small">
+                            	<lightning:input name="lastName"
+                                                 value="{!v.lastName}"
+                                                 placeholder="Last Name"
+                                                 label="Last Name"
+                                                 required="true"
+                                                 onchange="{!c.setUserInputValues}"
+                                                 />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4" padding="around-small">
+                            	<lightning:input type="email" 
+                                                 name="emailAddress"
+                                                 value="{!v.email}"
+                                                 label="Email Address"
+                                                 placeholder="address@example.com"
+                                                 onchange="{!c.setUserInputValues}"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4" padding="around-small">
+                            	<lightning:input type="tel"
+                                                 label="Preferred Phone Number"
+                                                 value="{!v.phone}"
+                                                 placeholder="Enter number with no spaces"
+                                                 pattern="[0-9]{10}"
+                                                onchange="{!c.setUserInputValues}"
+                                                 />
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem size="3" padding="around-small">
+                            	<lightning:input name="extension"
+                                                 label="Phone Number Extension"
+                                                 value="{!v.extension}"
+                                                 placeholder="Enter extension with no spaces"
+                                                 pattern = ".{0,6}"
+                                                 messageWhenPatternMismatch="Must be below 6 characters!"
+                                                 />
+                            </lightning:layoutItem>
+                            
+                            
+                            <lightning:layoutItem size="12" padding="around-small">
+                            	If WM needs to notify this contact of anything related to service at this location, please 
+                                note how they would prefer to be contacted.
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" class="slds-p-left_small slds-p-right_small">
+                            	<lightning:select name="preferredContactMethod"
+                                                  label="Preferred Contact Method"
+                                                  aura:id="preferredContactMethod"
+                                                  value="{!v.preferred}"
+                                                  required="true" >
+                                    <option text="" value="" />
+                                    <option text="Email" value="Email" />
+                                    <option text="Phone" value="Phone" />
+                                    <option text="Mobile" value="MobilePhone" />
+                                </lightning:select>
+                            </lightning:layoutItem>
+                            <aura:if isTrue="{!v.boolCustomer}">
+                                <lightning:layoutItem size="12" padding="around-small">
+                                    <div>
+                                        The below fields are for the contact's role or title within 
+                                        their organization, or as they relate to the location specifically.
+                                    </div>
+                                </lightning:layoutItem>
+                            </aura:if>                                
+                            <aura:if isTrue="{!v.boolCustomer}">
+                            	<lightning:layoutItem size="6" class="slds-p-left_small slds-p-bottom_small slds-p-right_small">
+                                	<lightning:select name="accountTitleList"
+                                                      label="title"
+                                                      aura:id="accountTitleList"
+                                                      value="{!v.title}"
+                                                      required="true"  
+                                                      >
+                                        <option value="">-- None --</option>
+                                    	<aura:iteration items="{!v.accountTitles}" var="title">
+                                            <option value="{!title.value}" selected="{!title.value == v.title}">{!title.label}</option> 
+                                    	</aura:iteration>
+                                    </lightning:select> 
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="6" class="slds-p-left_small slds-p-bottom_small slds-p-right_small">
+                                    <lightning:button label="Add New Title" 
+                                                      iconName="utility:add" 
+                                                      iconPosition="left" 
+                                                      variant="brand"
+                                                      onclick="{!c.addNewTitle}"/>
+                                </lightning:layoutItem>
+                                <div aura:id="titleModal"></div>
+                                <lightning:layoutItem size="6" class="slds-p-left_small slds-p-bottom_small slds-p-right_small">
+                                	<lightning:select name="accountDepts"
+                                                      label="Department (if available)"
+                                                      aura:id="accountDepts"
+                                                      value="{!v.selDept}" 
+                                                      >
+                                    	<option value="">-- None --</option>
+                                        <aura:iteration items="{!v.accountDepts}" var="dept">
+                                        	<option value="{!dept.value}" selected="{!dept.value == v.selDept}">{!dept.label}</option> 
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </lightning:layoutItem>
+                            </aura:if>
+                            <lightning:layoutItem size="6" padding="around-small" >
+                                <lightning:button variant="brand" 
+                                                  label="Save Contact" 
+                                                  iconName="utility:save" 
+                                                  onclick="{!c.saveNewContact}" />
+                            </lightning:layoutItem>
+                        </aura:if>
+                    </lightning:layout>
+                </div>
+            </div>
+        </aura:if>
+        
+        <!--The below is used when the user selects an internal type of contact-->
+        <aura:if isTrue="{!v.boolInternal}">
+			<div class="slds-grid slds-var-p-around_small">
+                <div class="slds-col slds-size_1-of-2 ridgedBorder">
+                    <lightning:layout multipleRows="true">  
+                        <lightning:layoutItem size="12" padding="around-small">
+                        	Below are the members of the Customer Account Team.  If the case is being opened 
+                            on behalf of one of the Customer Account Team members, please select their name below.  
+                            Otherwise please search for the user below.
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" padding="around-small">
+                            <div onkeyup="{!c.searchUsers}">
+                                <lightning:input aura:id="userName"
+                                                 name="userName"
+                                                 label="Search for your user below, and press enter when you're ready to search"
+                                                 type="search"
+                                                 value="{!v.userString}"
+                                                 placeholder="Search all users..."
+                                                 />
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" padding="around-small" class="bigBoxVert">
+                        	<lightning:datatable aura:id="atmTable"
+                                                 columns="{!v.soslFields}"
+                                                 data="{!v.soslContacts}"
+                                                 resizeColumnDisabled="true"
+                                                 keyField="id"
+                                                 maxRowSelection="1"
+                                                 class="slds-cell-wrap"
+                                                 onrowselection="{!c.getUserDetails}"
+                                                 />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" padding="around-small">
+                        	
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="slds-col slds-size_1-of-2 ridgedBorder">
+                     <lightning:layout multipleRows="true"> 
+                         <aura:if isTrue="{!v.userId != ''}">
+                            <lightning:layoutItem size="12" padding="around-small" class="bigBoxVert">
+                                <lightning:recordForm recordId="{!v.userId}"
+                                          objectApiName="User"
+                                          fields="{!v.displayUserFields}"
+                                          density="comfy"
+                                          columns="2"
+                                          mode="readonly" 
+                                          />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="12" padding="around-small">
+                            	 <lightning:button variant="brand" 
+                                                  label="Select User" 
+                                                  title="Select" 
+                                                  iconName="utility:adduser" 
+                                                  onclick="{!c.saveUser}" />
+                            </lightning:layoutItem>
+                         </aura:if>
+                    </lightning:layout>
+                </div>
+            </div>
+        </aura:if>
+    </aura:if>
+    <aura:if isTrue="{! and(not(empty(v.caseContact)), not(v.boolEdit))}">
+    	<lightning:layout multipleRows="true" class="ridgedBorder">
+            <lightning:layoutItem size="12" padding="around-small" >
+            	<div>
+                	Below is the contact associated to this case.  If
+                    you need to edit this contact you may do so directly from this view.
+                </div>
+            </lightning:layoutItem>
+            <aura:if isTrue="{!v.caseStatus == 'New'}">
+            	<lightning:layoutItem size="12" padding="around-small">
+                	<div>
+                    	If you need to change the contact associated to the case, please press the "Change 
+                        Contact" button found below.
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+            <aura:renderIf isTrue="{!v.boolShowUser}">
+                <lightning:layoutItem size="12" padding="around-medium" >
+                    <lightning:recordForm recordId="{!v.caseUser}"
+                                          objectApiName="User"
+                                          fields="{!v.displayUserFields}"
+                                          density="comfy"
+                                          columns="2"
+                                          mode="readonly" 
+                                          />
+                </lightning:layoutItem>
+                <aura:set attribute="else">
+                    <lightning:layoutItem size="12" padding="around-medium" >
+                        <lightning:recordForm recordId="{!v.caseContact}"
+                                              objectApiName="Contact"
+                                              fields="{!v.displayContFields}"
+                                              density="comfy"
+                                              columns="2"
+                                              mode="readonly" 
+                                              />
+                    </lightning:layoutItem>
+                </aura:set>
+            </aura:renderIf>
+            <aura:if isTrue="{!v.caseStatus == 'New'}">
+                <lightning:layoutItem size="12" padding="around-medium" >
+                    <lightning:button variant="brand" 
+                                      label="Change Contact" 
+                                      iconName="utility:change_owner" 
+                                      onclick="{!c.changeContact}" />
+                </lightning:layoutItem>
+            </aura:if>
+        </lightning:layout>
+    </aura:if>
+  </div>
+        </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
+    
+    <!-- Modal Start -->
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    
+    	<div class="slds-m-around_xx-large">
+        <aura:if isTrue="{!v.isOpen}"> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                   <header class="slds-modal__header">
+                        <!--changes related to SDT-41639-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeModelForDuplicate}"
+                                              alternativeText="close"
+                                              variant="bare"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Potential Duplicate Contacts</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning:layout multipleRows="true"> 
+                        <lightning:layoutItem padding="around-medium" class="bigBoxVert">
+                                <lightning:datatable class="highlightedNewRow"
+                                                    aura:id="dupConTable"
+                                                    data="{!v.dupContacts}" 
+        											columns="{!v.dupFields}" 
+                                                    onrowselection="{!c.selectContact}" 
+                                                    keyField="id"
+                                                    maxRowSelection="1"
+                                                    selectedRows="{!v.dupContacts}"/>
+                                </lightning:layoutItem> 
+							 	<lightning:layoutItem size="3" class="slds-align_absolute-left" padding="around-small">
+                                <lightning:button variant="brand"
+                                                  label="Continue"
+                                                  title="Continue"
+                                                  onclick="{!c.closeModelForDuplicate}"
+                                                  />
+                                </lightning:layoutItem>                               
+                        </lightning:layout>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+    <!-- Modal Stop  -->
+</aura:component>

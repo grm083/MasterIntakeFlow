@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Work_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Work Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Admin</fullName>
+                <default>false</default>
+                <label>Admin</label>
+            </value>
+            <value>
+                <fullName>Benefits Analysis</fullName>
+                <default>false</default>
+                <label>Benefits Analysis</label>
+            </value>
+            <value>
+                <fullName>Business Process Reengineering</fullName>
+                <default>false</default>
+                <label>Business Process Reengineering</label>
+            </value>
+            <value>
+                <fullName>Change Management</fullName>
+                <default>false</default>
+                <label>Change Management</label>
+            </value>
+            <value>
+                <fullName>Data &amp; Requirements Gathering</fullName>
+                <default>false</default>
+                <label>Data &amp; Requirements Gathering</label>
+            </value>
+            <value>
+                <fullName>Data Conversion</fullName>
+                <default>false</default>
+                <label>Data Conversion</label>
+            </value>
+            <value>
+                <fullName>Data Optimization</fullName>
+                <default>false</default>
+                <label>Data Optimization</label>
+            </value>
+            <value>
+                <fullName>Design Review</fullName>
+                <default>false</default>
+                <label>Design Review</label>
+            </value>
+            <value>
+                <fullName>Detailed Functional Specifications &amp; System Documentation</fullName>
+                <default>false</default>
+                <label>Detailed Functional Specifications &amp; System Documentation</label>
+            </value>
+            <value>
+                <fullName>Development</fullName>
+                <default>false</default>
+                <label>Development</label>
+            </value>
+            <value>
+                <fullName>Mgmt of Dev Activities during portions of the project which are capitalizable</fullName>
+                <default>false</default>
+                <label>Mgmt of Dev Activities during portions of the project which are capitalizable</label>
+            </value>
+            <value>
+                <fullName>Planning &amp; Scheduling of Deferrable Work</fullName>
+                <default>false</default>
+                <label>Planning &amp; Scheduling of Deferrable Work</label>
+            </value>
+            <value>
+                <fullName>PTO</fullName>
+                <default>false</default>
+                <label>PTO</label>
+            </value>
+            <value>
+                <fullName>QA</fullName>
+                <default>false</default>
+                <label>QA</label>
+            </value>
+            <value>
+                <fullName>Requirements</fullName>
+                <default>false</default>
+                <label>Requirements</label>
+            </value>
+            <value>
+                <fullName>Solutioning</fullName>
+                <default>false</default>
+                <label>Solutioning</label>
+            </value>
+            <value>
+                <fullName>Training</fullName>
+                <default>false</default>
+                <label>Training</label>
+            </value>
+            <value>
+                <fullName>UAT</fullName>
+                <default>false</default>
+                <label>UAT</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

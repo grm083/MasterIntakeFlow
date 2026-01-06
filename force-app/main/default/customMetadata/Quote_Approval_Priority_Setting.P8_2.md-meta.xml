@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>P8.2</label>
+    <protected>false</protected>
+    <values>
+        <field>Destination_API_Field__c</field>
+        <value xsi:type="xsd:string">Request_Type__c</value>
+    </values>
+    <values>
+        <field>Is_Deactivated__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Priority__c</field>
+        <value xsi:type="xsd:double">8.0</value>
+    </values>
+    <values>
+        <field>Source_API_Field__c</field>
+        <value xsi:type="xsd:string">SBQQ__Opportunity2__r.Case__r.Case_Type__c</value>
+    </values>
+</CustomMetadata>

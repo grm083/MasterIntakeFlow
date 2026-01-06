@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Refresh ShowPriceOnQuote Component">  
+    <aura:attribute name="recordId" type="Id"/>
+</aura:event>

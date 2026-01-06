@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_Date_Local_Time__c</fullName>
+    <description>Status Date formula field  for local date time</description>
+    <externalId>false</externalId>
+    <formula>IF(OR(  ISBLANK(  Service_StatusId__r.Location__r.tz__UTC_Offset_F__c ),ISBLANK(Status_Date__c) ),
+&quot;&quot;,
+MID( TEXT( Status_Date__c +  Service_StatusId__r.Location__r.tz__UTC_Offset_F__c  /24 ), 6, 2 ) &amp; &quot;/&quot; &amp;
+MID( TEXT( Status_Date__c +  Service_StatusId__r.Location__r.tz__UTC_Offset_F__c  /24 ), 9, 2 ) &amp; &quot;/&quot; &amp;
+LEFT( TEXT( Status_Date__c +  Service_StatusId__r.Location__r.tz__UTC_Offset_F__c  /24 ), 4 ) &amp; &quot; &quot; &amp;
+TEXT(
+IF(
+OR(
+VALUE( MID( TEXT( Status_Date__c +  Service_StatusId__r.Location__r.tz__UTC_Offset_F__c  /24 ), 12, 2 ) ) = 0,
+VALUE( MID( TEXT( Status_Date__c + Service_StatusId__r.Location__r.tz__UTC_Offset_F__c  /24 ), 12, 2 ) ) = 12
+),
+12,
+VALUE( MID( TEXT( Status_Date__c + Service_StatusId__r.Location__r.tz__UTC_Offset_F__c  /24 ), 12, 2 ) )
+-
+IF(
+VALUE( MID( TEXT( Status_Date__c +  Service_StatusId__r.Location__r.tz__UTC_Offset_F__c /24 ), 12, 2 ) ) &lt; 12,
+0,
+12
+)
+)
+)
+&amp;&quot;:&quot;&amp;
+MID( TEXT( Status_Date__c +  Service_StatusId__r.Location__r.tz__UTC_Offset_F__c  /24 ), 15, 2 )
+&amp;&quot; &quot;&amp;
+IF(
+VALUE( MID( TEXT( Status_Date__c +  Service_StatusId__r.Location__r.tz__UTC_Offset_F__c  /24 ), 12, 2 ) ) &lt; 12,
+&quot;AM&quot;,
+&quot;PM&quot;
+)
+&amp; &quot; &quot; &amp;
+IF( NOT(ISBLANK( Service_StatusId__r.Location__r.tz__Timezone_F__c )), Service_StatusId__r.Location__r.tz__Timezone_F__c ,&quot;&quot;)
+)</formula>
+    <label>Status Date Local Time</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

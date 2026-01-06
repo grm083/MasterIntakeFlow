@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case__c</fullName>
+    <description>For SDT-21237 - To navigate from a Quote to the case from which it is originated</description>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(
+&quot;/&quot; &amp; SBQQ__Opportunity2__r.Case__c,SBQQ__Opportunity2__r.Case__r.CaseNumber, &quot;_self&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Case</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,212 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+   <tr valign="top" height="400" >
+      <td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+         <![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+            <p class="MsoNoSpacing" style="margin: 0in 27pt 0.0001pt;"><span style="font-family: Arial, sans-serif; font-size: 12pt;">&nbsp;</span></p>
+            <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+               <span style="font-family: Arial, sans-serif;">
+                  Escalation is requested for the following case task:
+                  <o:p></o:p>
+               </span>
+            </p>
+            <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;"><span style="font-family: Arial, sans-serif;">&nbsp;</span></p>
+            <h6 style="margin: 0in 27pt 0.0001pt;">
+               <span style="font-size: 14pt; font-family: Arial, sans-serif;">
+                  Case Details
+                  <o:p></o:p>
+               </span>
+            </h6>
+            <p class="MsoNormal"><span style="font-family: Arial, sans-serif;">&nbsp;</span></p>
+            <table class="MsoTable15Plain4" border="1" cellspacing="0" cellpadding="0" width="546" style="width: 409.5pt; margin-left: 27pt; border-collapse: collapse; border: none;">
+               <tbody>
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Service Requested:
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><font face="Arial, sans-serif" style="font-size: 16px; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Case.Case_Type__c} -&nbsp;</span></font><font face="Arial, sans-serif" style="font-size: 16px; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Case.Case_Sub_Type__c}</span></font></p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Escalation Type:
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><span style="font-family: Arial, sans-serif; font-size: 12pt;"><br></span></p>
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><span style="font-family: Arial, sans-serif; font-size: 12pt;">Escalation – Obtain Service Approval</span></p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Asset:
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><font style="font-size: 12pt; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Asset.Equipment_Size__c}&nbsp;</span></font><font style="font-size: 12pt; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Asset.Material_Type__c}&nbsp;</span></font><font face="Arial, sans-serif" style="font-size: 16px; background-color: rgb(255, 255, 255);"><span style="font-size: 14.6667px;">{!Asset.Equipment_Type__c}</span></font></p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Asset Position:
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><span style="font-family: Arial, sans-serif; font-size: 14.6667px; background-color: rgb(255, 255, 255);">{!Asset.Container_Position__c}</span></p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Requested By:
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><span style="font-size: 12pt; background-color: rgb(255, 255, 255);">{!Case.Contact}</span><span style="font-size: 12pt; color: rgb(87, 88, 79); font-family: Arial, sans-serif; background-color: rgb(255, 255, 255);">,&nbsp;</span><span style="font-size: 12pt; background-color: rgb(255, 255, 255);">{!Case.Contact_Title__c}</span></p>
+                     </td>
+                  </tr>
+
+                  <tr>
+                        <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                           <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                              <b>
+                                 <span style="font-family: Arial, sans-serif;">
+                                    Location Id:
+                                    <o:p></o:p>
+                                 </span>
+                              </b>
+                           </p>
+                        </td>
+                        <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                           <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><span style="font-size: 12pt; line-height: 17.12px; font-family: Arial, sans-serif; background: white;">{!Case.Location__c}</span></p></td>
+               </tr>
+
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Location Details:
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><span style="font-size: 16px; background-color: rgb(255, 255, 255);">{!Case.Tech_Location_Details__c}</span></p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Service Date:
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><span style="font-size: 16px; background-color: rgb(255, 255, 255);">{!Case.Service_Date__c}</span></p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Case Number
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><span style="font-family: Arial, sans-serif; font-size: 16px; background-color: rgb(255, 255, 255);">{!Case.Reference_Number__c}</span></p>
+                     </td>
+                  </tr>
+
+                  <tr>
+                        <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                           <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                              <b>
+                                 <span style="font-family: Arial, sans-serif;">
+                                    Acorn Ticket Number
+                                    <o:p></o:p>
+                                 </span>
+                              </b>
+                           </p>
+                        </td>
+                        <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                           <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;"><font face="Arial, sans-serif">{!Case.Tracking_Number__c}</font></p>
+                        </td>
+                </tr>
+
+                  <tr>
+                     <td width="270" valign="top" style="width: 202.5pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;">
+                           <b>
+                              <span style="font-family: Arial, sans-serif;">
+                                 Comments:
+                                 <o:p></o:p>
+                              </span>
+                           </b>
+                        </p>
+                     </td>
+                     <td width="276" valign="top" style="width: 207pt; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;">
+                        <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt 3.5pt;">
+                           <span style="font-family: Arial, sans-serif;">
+                              N/A-OSA-sj
+                              <o:p></o:p>
+                           </span>
+                        </p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <p class="MsoNormal" style="margin: 0in 27pt 0.0001pt;"><span style="font-family: Arial, sans-serif;">&nbsp;</span></p>
+            <span style="font-size: 11pt; font-family: Arial, sans-serif;">&nbsp; &nbsp; &nbsp; &nbsp; Click on the link to complete the task and obtain case details.</span>
+         </div>
+         <div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+            <div style="font-size: 12pt;"><font face="arial"><br></font></div>
+            <div style="font-size: 12pt;"><font face="arial">&nbsp; &nbsp; &nbsp; &nbsp;{!Case.Flow_URL__c}</font></div>
+            <div style="font-size: 12pt;"><br></div>
+            <div style="font-size: 12pt;"><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;Thank you.</span></div>
+            <div style="font-size: 12pt;"><span style="font-size: 12pt;"><br></span></div>
+            <div style="font-size: 12pt;"><span style="font-size: 12pt;"><br></span></div>
+            <div style="font-size: 12pt;"><font face="arial"><br></font></div>
+         </div>
+      ]]></td>
+   </tr>
+</table>

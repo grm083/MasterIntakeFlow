@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Snapshot – Contamination</fullName>
+        <default>false</default>
+        <label>Snapshot – Contamination</label>
+    </customValue>
+    <customValue>
+        <fullName>Snapshot – Overage</fullName>
+        <default>false</default>
+        <label>Snapshot – Overage</label>
+    </customValue>
+    <customValue>
+        <fullName>On Our Way</fullName>
+        <default>false</default>
+        <label>On Our Way</label>
+    </customValue>
+    <customValue>
+        <fullName>Negative HOC</fullName>
+        <default>false</default>
+        <label>Negative HOC</label>
+    </customValue>
+    <customValue>
+        <fullName>Delivery En Route</fullName>
+        <default>false</default>
+        <label>Delivery En Route</label>
+    </customValue>
+    <customValue>
+        <fullName>Delivery Confirmation</fullName>
+        <default>false</default>
+        <label>Delivery Confirmation</label>
+    </customValue>
+    <description>Global picklist value set for Notification types</description>
+    <masterLabel>Notification Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

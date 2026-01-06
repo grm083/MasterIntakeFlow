@@ -1,0 +1,495 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller="SupervisorDashboardCls">
+    <!-- attributes -->
+    <aura:attribute name="workflowTaskList" type="Object"/>
+    <aura:attribute name="taskList" type="Object"/>
+    <aura:attribute name="caseList" type="Object"/>
+    <aura:attribute name="ticketList" type="Object"/>
+    <aura:attribute name="workflowTaskUpdateList" type="List"/>
+    <aura:attribute name="taskUpdateList" type="List"/>
+    <aura:attribute name="ticketUpdateMap" type="Map"/>
+    <aura:attribute name="caseUpdateList" type="List"/>
+    <aura:attribute name="ticketUpdateList" type="List"/>
+    <aura:attribute name="originalWorkflowTaskList" type="Object"/>
+    <aura:attribute name="originalCaseList" type="Object"/>
+    <aura:attribute name="originalTaskList" type="Object"/>
+    <aura:attribute name="originalTicketList" type="Object"/>
+    <aura:attribute name="enableInfiniteLoading" type="Boolean" default="true"/>
+    <aura:attribute name="workflowCount" type="Integer" default="50"/>
+    <aura:attribute name="taskCount" type="Integer" default="50"/>
+    <aura:attribute name="caseCount" type="Integer" default="50"/>
+    <aura:attribute name="ticketCount" type="Integer" default="50"/>
+    <aura:attribute name="workflowTotalCount" type="Integer" default="0"/>
+    <aura:attribute name="taskTotalCount" type="Integer" default="0"/>
+    <aura:attribute name="caseTotalCount" type="Integer" default="0"/>
+    <aura:attribute name="ticketTotalCount" type="Integer" default="0"/>
+    <aura:attribute name="workflowSelectedCount" type="Integer" default="0"/>
+    <aura:attribute name="taskSelectedCount" type="Integer" default="0"/>
+    <aura:attribute name="caseSelectedCount" type="Integer" default="0"/>
+    <aura:attribute name="ticketSelectedCount" type="Integer" default="0"/>
+    <aura:attribute name="searchText" type="String"/>
+    <aura:attribute name="workflowTaskColumns" type="List"/>
+    <aura:attribute name="taskColumns" type="List"/>
+    <aura:attribute name="ticketColumns" type="List"/>
+    <aura:attribute name="caseColumns" type="List"/>
+    <aura:attribute name="listAgentCSR" type="List" />
+    <aura:attribute name="allActiveUser" type="List" />
+    <aura:attribute name="QueueList" type="String[]" default=""/>
+    <aura:attribute name="teamQueueName" type="String[]" default=""/>
+    <aura:attribute name="taskPriorityOptions" type="List" default="[
+                                                                    {'label': 'Low (End Of Day)', 'value': 'low'},
+                                                                    {'label': 'High(4hrs)', 'value': 'high'}
+                                                                    ]"/>
+    <aura:attribute name="selectedTaskPriority" type="String" default="low"/>
+    <aura:attribute name="taskComment" type="String"/>
+    <aura:attribute name="selectedCSRUser" type="Id" default=""/>
+    <aura:attribute name="selectedTeamQueue" type="String" default=""/>
+    <aura:attribute name="selectedTeamName" type="String" default=""/>
+    <aura:attribute name="isOpen" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenSubModal" type="Boolean" default="false"/>
+    <aura:attribute name="workflowLEXTable" type="Boolean" default="false" access="GLOBAL"/>
+    <aura:attribute name="taskLEXTable" type="Boolean" default="false" access="GLOBAL"/>
+    <aura:attribute name="ticketLEXTable" type="Boolean" default="false" access="GLOBAL"/>
+    <aura:attribute name="modalPopupHeaderName" type="String" default=""/>
+    <aura:attribute name="workflowdashboardFilterMap" type="List" default="" />
+    <aura:attribute name="ticketdashboardFilterMap" type="List" default="" />
+    <aura:attribute name="taskdashboardFilterMap" type="List" default="" />
+    <aura:attribute name="showCaseDashboard" type="Boolean" default="false" access="GLOBAL"/>
+    <aura:attribute name="showTaskDashboard" type="Boolean" default="false" access="GLOBAL"/>
+    <aura:attribute name="Task_Assigned_Dashboard" type="String" default="Task_Assigned_Dashboard"/>
+    <aura:attribute name="showWorkflowTaskDashboard" type="Boolean" default="true" access="GLOBAL"/>
+    <aura:attribute name="Workflow_Tasks_Unassigned" type="String" default="Workflow_Tasks_Unassigned"/>
+	<aura:attribute name="Task_Assignment_Dashboard" type="String"  access="global" default = "Task_Assignment_Dashboard" />
+	<aura:attribute name="TaskGroupingDashboard" type="String"  access="global" default = "TaskGroupingDashboard" />
+	<aura:attribute name="Ticket_Grouping_Dashboard" type="String"  access="global" default = "Ticket_Grouping_Dashboard" />
+	<aura:attribute name="WorkflowTaskGrouping" type="String"  access="global" default = "WorkflowTaskGrouping" />
+    <aura:attribute name="Ticket_Assigned_Dashboard" type="String" default="Ticket_Assigned_Dashboard"/>
+    <aura:attribute name="showTicketDashboard" type="Boolean" default="false" access="GLOBAL"/>
+    <aura:attribute name="workflowDashboardFilter" type="String" />
+    <aura:attribute name="taskDashboardFilter" type="String" />
+    <aura:attribute name="ticketDashboardFilter" type="String" />
+    <aura:attribute name="workflowLoggedInUserKPIFilter" type="String" />
+    <aura:attribute name="caseLoggedInUserKPIFilter" type="String" />
+    <aura:attribute name="ticketLoggedInUserKPIFilter" type="String" />
+    <aura:attribute name="superVisorLoggedInKPI" type="String" access="GLOBAL"/>
+    <aura:attribute name="workflowTaskTypeSelected" type="String" />
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String"/>
+    <aura:attribute name="defaultSortDirection" type="String"/>
+    <aura:attribute name="taskbody" type="String"/>
+    <aura:attribute name="body" type="String"/>
+    <aura:attribute name="datetime" type="DateTime" />
+    <aura:attribute name="radioUserSelected" type="String" default="yourteam"/>
+    <aura:attribute name="userRadioValues" type="List" default="[
+    {'label': 'Your Team', 'value': 'yourteam'},
+    {'label': 'All', 'value': 'all'}
+    ]"/>
+    
+    <!-- NLTCS-154 : Ticket tabs toggle for different cases-->
+    <aura:attribute name="radioCaseSelected" type="String" default="UnassignedCases"/>
+    <aura:attribute name="caseRadioValues" type="List" default="[
+    {'label': 'Unassigned Cases', 'value': 'UnassignedCases'},
+    {'label': 'All Cases', 'value': 'allCases'}
+    ]"/>
+    
+    <!-- aura attributes-->  
+    <aura:attribute name="listControllingValues" type="list" default="[]" description="to store controller field values"/>
+    <aura:attribute name="listDependingValues" type="list" default="['--- None ---']" description="to store dependent field values"/>
+    <aura:attribute name="depnedentFieldMap" type="map" description="map to store dependent values with controlling value"/>
+    <aura:attribute name="bDisabledDependentFld" type="boolean" default="true"/> 
+    <aura:attribute name="objDetail" type="Task" default="{'sobjectType' : 'Task'}"/>
+    <aura:attribute name="controllingFieldAPI" type="string" default="Task_Team_Name__c" description="store field API name of Controller field"/>
+    <aura:attribute name="dependingFieldAPI" type="string" default="Task_Team_Queue__c" description="store field API name of dependent field"/>
+    
+    <aura:handler event="c:AnalyticsApplicationEvent" action="{!c.handleApplicationEvent}"/>
+    <aura:handler event="wave:selectionChanged" action="{!c.handleSelectionChanged}"/>
+    <aura:registerEvent name="update" type="wave:update"/>
+
+    <!--aura handler with waiting and donewaiting events-->
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+     
+    <!--component attributs -->
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+    
+    <aura:attribute name="totalRecordsCount" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="4"
+                    description="number of records to be display on per page"/>
+    <aura:attribute name="currentPage" type="integer" default="1"/>
+    <aura:attribute name="totalPagesCount" type="integer"/>
+    <aura:attribute name="bNoRecordsFound" type="boolean"/>
+     
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <!-- Loading spinner end-->  
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.showWorkflowTaskDashboard}">
+        <div style="height: 100%;background-color: white;">
+            {!v.taskbody}
+            <div style="height: 100px;">
+                <lightning:layout horizontalAlign="center">
+                    <lightning:layoutItem class="slds-p-bottom_large slds-p-top_medium slds-p-left_small">
+                        <lightning:select aura:id="selectWorkflow" onchange="{!c.onUserSelect}">
+                            <option value="None">None</option>
+                            <aura:iteration items="{!v.listAgentCSR}" var ="agent">
+                                <option value="{!agent.value}" text="{!agent.label}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" label="Assign" title="Assign" onclick="{!c.assignmentModalPopup}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" label="Close" title="Close" onclick="{!c.handleCloseTask}"/>
+                    </lightning:layoutItem >
+                    <lightning:layoutItem class="slds-size_1-of-12" padding="around-small">            
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_large slds-p-top_medium slds-p-left_small">
+                        <lightning:select label="Task Type" aura:id="workflowTaskType" onchange="{!c.onTaskTypeSelect}">
+                            <option value="All">All</option>
+                            <option value="Project Services">Project Services</option>
+                            <option value="Customer Services">Customer Services</option>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-size_1-of-12" padding="around-small">            
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small" >
+                        <lightning:button variant="brand-outline" label="Remove All Filter" title="Remove All Filter" onclick="{!c.removeSelectedFilter}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-size_1-of-12" padding="around-small">            
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_large slds-p-top_medium slds-p-left_small">
+                        <lightning:input value="{!v.searchText}" class="fontwhite"
+                                            placeholder="Case Number.."
+                                            aura:id="searchField"
+                                            label="" autocomplete = "off"/>            
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" label="Search" title="Search" onclick="{!c.searchWorkflowTaskCase}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+            <p class="slds-m-around_small">
+                <span class="slds-badge slds-badge_lightest" style="display:inline-block">
+                    Total Records : {!v.workflowSelectedCount > 0 ? v.workflowSelectedCount + '/' : '0/'} {!v.workflowTotalCount} 
+                </span>
+            </p>
+            <div style="height: 500px">   
+                <lightning:datatable
+                                        columns="{!v.workflowTaskColumns}"
+                                        data="{!v.workflowTaskList}"
+                                        keyField="TaskId"
+                                        onrowselection="{!c.getSelectedRow}"
+                                        enableInfiniteLoading="{!v.enableInfiniteLoading}"
+                                        onloadmore="{!c.loadMoreData}"
+                                        sortedBy="{! v.sortedBy }"
+                                        sortedDirection="{! v.sortedDirection }"
+                                        defaultSortDirection="{! v.defaultSortDirection }"
+                                        onsort="{! c.updateColumnSorting }"
+                                        />
+            </div>
+            <!--<wave:waveDashboard developerName="{!v.WorkflowTaskGrouping}" filter="{!v.workflowLoggedInUserKPIFilter}" showHeader="true" showTitle="true" height="1000px"/>-->
+            {!v.body}
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showTaskDashboard}">
+        <div style="height: 100%;background-color: white;">
+            {!v.taskbody}
+            <div style="height: 100px;">
+                <lightning:layout horizontalAlign="center">
+                    <lightning:layoutItem class="slds-p-bottom_large slds-p-top_medium slds-p-left_small">
+                        <lightning:select aura:id="selectTask" onchange="{!c.onUserSelect}">
+                            <option value="None">None</option>
+                            <aura:iteration items="{!v.listAgentCSR}" var ="agent">
+                                <option value="{!agent.value}" text="{!agent.label}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" label="Assign" title="Assign" onclick="{!c.assignmentModalPopup}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-size_2-of-12" padding="around-small">            
+                    </lightning:layoutItem>
+                    <!--<lightning:layoutItem class="slds-p-bottom_large slds-p-top_medium slds-p-left_small">
+                        <lightning:select aura:id="taskFilter" onchange="{!c.onFilterSelect}">
+                            <option value="None">None</option>
+                            <aura:iteration items="{!v.taskdashboardFilterMap}" var ="filters">
+                                <option value="{!filters.fieldName}" text="{!filters.label}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>-->
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" label="Remove All Filter" title="Remove All Filter" onclick="{!c.removeSelectedFilter}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+            <p class="slds-m-around_small">
+                <span class="slds-badge slds-badge_lightest" style="display:inline-block">
+                    Total Records : {!v.taskSelectedCount > 0 ? v.taskSelectedCount + '/' : '0/'} {!v.taskTotalCount} 
+                </span>
+            </p>
+            <div style="height: 500px">   
+                <lightning:datatable
+                                        columns="{!v.taskColumns}"
+                                        data="{!v.taskList}"
+                                        keyField="TaskId"
+                                        onrowselection="{!c.getSelectedRow}"
+                                        enableInfiniteLoading="{!v.enableInfiniteLoading}"
+                                        onloadmore="{!c.loadMoreData}"
+                                        sortedBy="{! v.sortedBy }"
+                                        sortedDirection="{! v.sortedDirection }"
+                                        defaultSortDirection="{! v.defaultSortDirection }"
+                                        onsort="{! c.updateColumnSorting }"
+                                        />
+            </div>
+            {!v.body}
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showCaseDashboard}">
+        <div style="height: 100%;background-color: white;">
+            <wave:waveDashboard developerName="{!v.Task_Assigned_Dashboard}" filter="{!v.workflowLoggedInUserKPIFilter}" showHeader="false" showTitle="false" height="400px"/>
+            <div style="height: 100px;width: 700px ">
+                <lightning:layout horizontalAlign="center">
+                    <lightning:layoutItem class="slds-p-bottom_large slds-p-top_medium slds-p-left_small">
+                        <lightning:select aura:id="selectCase" onchange="{!c.onUserSelect}">
+                            <option value="None">None</option>
+                            <aura:iteration items="{!v.listAgentCSR}" var ="agent">
+                                <option value="{!agent.value}" text="{!agent.label}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-size_2-of-12" padding="around-small">            
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" name="Assign" label="Assign" title="Assign" onclick="{!c.assignmentModalPopup}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" name="Assign To Owner" label="Assign To Owner" title="Assign To Owner" onclick="{!c.assignmentModalPopup}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-size_2-of-12" padding="around-small">            
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+            <p class="slds-m-around_small">
+                <span class="slds-badge slds-badge_lightest" style="display:inline-block">
+                    Total Records : {!v.caseSelectedCount > 0 ? v.caseSelectedCount + '/' : '0/'} {!v.caseTotalCount} 
+                </span>
+            </p>
+            <div style="height: 500px">   
+                <lightning:datatable
+                                    columns="{!v.caseColumns}"
+                                    data="{!v.caseList}"
+                                    keyField="Id"
+                                    onrowselection="{!c.getSelectedRow}"
+                                    enableInfiniteLoading="{!v.enableInfiniteLoading}"
+                                    onloadmore="{!c.loadMoreData}"
+                                    sortedBy="{! v.sortedBy }"
+                                    sortedDirection="{! v.sortedDirection }"
+                                    defaultSortDirection="{! v.defaultSortDirection }"
+                                    onsort="{! c.updateColumnSorting }"
+                                    />
+            </div>
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showTicketDashboard}">
+        <div style="height: 100%;background-color: white;">
+            <div>
+                {!v.taskbody}
+            </div>
+            <div style="height: 130px;">
+                <lightning:layout horizontalAlign="center">
+                    <lightning:layoutItem class="slds-size_3-of-12 slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:radioGroup aura:id="userRadio" 
+                                              name="radioButtonGroup" 
+                                              label="USER" 
+                                              options="{! v.userRadioValues }" 
+                                              value="{! v.radioUserSelected }"
+                                              onchange="{! c.userRadioselected }"
+                                              variant="label-inline" 
+                                              style="display:inline-block !important"
+                                              type="button"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-size_2-of-12 slds-p-bottom_large slds-p-top_medium slds-p-left_small">
+                          <aura:if isTrue="{!v.radioUserSelected == 'yourteam'}">
+                            <!--<lightning:button variant="brand-outline" label="Assign Agent" title="Assign Agent" onclick="{!c.assignmentModalPopup}"/>-->
+                            <lightning:select aura:id="selectTicketTeamUser" label="My Team" onchange="{!c.onUserSelect}">
+                                <option value="None">None</option>
+                                <aura:iteration items="{!v.listAgentCSR}" var ="agent">
+                                    <option value="{!agent.value}" text="{!agent.label}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:set attribute="else">
+                                <!--<lightning:button variant="brand-outline" label="Assign User" title="Assign User" onclick="{!c.assignmentModalPopup}"/>-->
+                                <lightning:select aura:id="selectTicketAllUser" label="All User" onchange="{!c.onUserSelect}">
+                                    <option value="None">None</option>
+                                    <aura:iteration items="{!v.allActiveUser}" var ="aUser">
+                                        <option value="{!aUser.value}" text="{!aUser.label}"/>
+                                    </aura:iteration>
+                                </lightning:select>  
+                            </aura:set>
+                          </aura:if>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" label="Assign User" title="Assign User" onclick="{!c.assignmentModalPopup}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-size_3-of-12 slds-p-bottom_large  slds-p-top_medium slds-p-left_small">  
+                        <!--<lightning:select aura:id="selectTicketTeam" onchange="{!c.onTeamSelect}">
+                            <option value="None">None</option>
+                            <aura:iteration items="{!v.teamQueueName}" var ="team">
+                                <option value="{!team}" text="{!team}"/>
+                            </aura:iteration>
+                        </lightning:select> -->
+                        <lightning:select aura:id="selectTicketTeam" name="controllerFld" label="Task Team" onchange="{!c.onControllerFieldChange}">
+                            <aura:iteration items="{!v.listControllingValues}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                        <lightning:select aura:id="selectTicketQueue" name="dependentFld" label="Task Queue" disabled="{!v.bDisabledDependentFld}" onchange="{!c.onTeamSelect}">
+                            <aura:iteration items="{!v.listDependingValues}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                        <!--<lightning:button variant="brand-outline" label="Assign Team" title="Assign Team" onclick="{!c.assignmentTeamPopup}"/> -->
+                    </lightning:layoutItem >
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" label="Assign Team" title="Assign Team" onclick="{!c.assignmentTeamPopup}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-bottom_x-large slds-p-top_x-large slds-p-left_small">
+                        <lightning:button variant="brand-outline" label="Remove All Filter" title="Remove All Filter" onclick="{!c.removeSelectedFilter}"/>
+                    </lightning:layoutItem>
+                    <!--<lightning:layoutItem class="slds-size_2-of-12 slds-p-bottom_large slds-p-top_medium slds-p-left_small">
+                        <lightning:select aura:id="Queue" name="Queue" onchange="{!c.onQueueSelect}">
+                            <aura:iteration items="{!v.QueueList}" var ="queue">
+                                <option text="{!queue}" value="{!queue}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>-->
+                </lightning:layout>
+            </div>
+            <p class="slds-m-around_small">
+                <span class="slds-badge slds-badge_lightest" style="display:inline-block">
+                    Total Records : {!v.ticketSelectedCount > 0 ? v.ticketSelectedCount + '/' : '0/'} {!v.ticketTotalCount} 
+                </span>
+            </p>
+            <div style="height: 500px">   
+                <lightning:radioGroup aura:id="caseRadio" 
+                                              name="caseRadioButtonGroup"
+                                              options="{! v.caseRadioValues }" 
+                                              value="{! v.radioCaseSelected }"
+                                              onchange="{! c.caseRadioSelected }"
+                                              variant="label-inline" 
+                                              style="display:inline-block; padding-left: 0; !important"
+                                              type="button"/>
+                <lightning:datatable
+                                        columns="{!v.ticketColumns}"
+                                        data="{!v.ticketList}"
+                                        keyField="CaseId"
+                                        onrowselection="{!c.getSelectedRow}"
+                                        enableInfiniteLoading="{!v.enableInfiniteLoading}"
+                                        onloadmore="{!c.loadMoreData}"
+                                        sortedBy="{! v.sortedBy }"
+                                        sortedDirection="{! v.sortedDirection }"
+                                        defaultSortDirection="{! v.defaultSortDirection }"
+                                        onsort="{! c.updateColumnSorting }"
+                                        />
+            </div>
+            <!--<wave:waveDashboard developerName="{!v.Ticket_Grouping_Dashboard}" filter="{!v.workflowLoggedInUserKPIFilter}" showHeader="true" showTitle="true" height="1000px"/>-->
+            {!v.body}
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.isOpen}">
+        <!--###### MODAL BOX Start######--> 
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{!c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.modalPopupHeaderName}</h2>
+                </header>
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:radioGroup
+                                          aura:id="radioId"
+                                          variant="label-hidden"
+                                          name="TaskPriorityOption"
+                                          label="Task Priority Option"
+                                          options="{!v.taskPriorityOptions}"
+                                          value="{!v.selectedTaskPriority}"
+                                          onchange="{!c.selectPriority}"/>
+                    <ui:inputDateTime required="true" aura:id="today" label="Time" class="field" value="{!v.datetime}" displayDatePicker="true" />
+                    <lightning:textarea name="input4" value="{!v.taskComment}" label="Description" />
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" 
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{!c.closeModel}"/>
+                    <lightning:button variant="brand" 
+                                      label="Submit"
+                                      title="Submit"
+                                      onclick="{!c.saveAndClose}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+        
+    </aura:if>
+    
+    <aura:if isTrue="{!v.isOpenSubModal}">
+        <!--###### MODAL BOX Start######--> 
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{!c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.modalPopupHeaderName}</h2>
+                </header>
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>
+                        Closing this task will cancel the automatic prioritization and routing. Are you sure you want to continue?
+                    </p>
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" 
+                                      label="No, keep these Tasks Open"
+                                      title="No, keep these Tasks Open"
+                                      onclick="{!c.closeModel}"/>
+                    <lightning:button variant="brand" 
+                                      label="Yes, I want to close these Tasks"
+                                      title="Yes, I want to close these Tasks"
+                                      onclick="{!c.saveAndCloseWorkFlowTask}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,37 @@
+<messaging:emailTemplate subject="WM: Your Approval Required: {!relatedTo.Case_Type__c} at {!relatedTo.Location_Code__c}, Ref. #: {!relatedTo.Reference_Number__c}" recipientType="Contact" relatedToType="Case">
+<messaging:htmlEmailBody >
+        <div style="align=right">
+        <apex:variable value="{!LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260))}" var="hostUrl"/>
+        <apex:variable value="servlet/servlet.ImageServer?id=" var="staticUrl_1"/>
+        <apex:variable value="&oid=" var="staticUrl_2"/>
+        <apex:variable value="{!$Organization.Id}" var="orgId"/>
+        </div> 
+        <html>
+            <style type="text/css">
+            body {font-size: 11pt;}
+            </style>
+        <body>
+          <br><apex:image height="30" width="100" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.DocumentId__c}{!staticUrl_2}{!orgId}"/></br>   
+          <br><apex:outputText style="font-family:Arial;" value="Dear Customer,"/></br>
+          
+          <br><apex:outputText style="font-family:Arial;" value="Your approval is required for the following services requested by {!relatedTo.Contact_Name__c}. Please review the details and either Approve or Decline by clicking the links below." /></br>
+          <apex:outputText style="font-family:Arial;" value="If you are both accepting and declining services,  Please click the Approve/Decline button and indicate which Cases to approve and which to Decline in your reply email." /><br/>
+          <br><apex:outputText style="font-family:Arial;" value="Your reference number for all cases is: "/><b><apex:outputText style="font-family:Arial;" value="{!relatedTo.Reference_Number__c}"/></b></br>
+          <br>
+          <apex:image value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.TruckId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <b><apex:outputText style="text-align: center;font-family:Arial;font-size:11pt;" value="Service Details"/></b></br><br/>
+          <c:GetChildCaseDetails parentcase="{!relatedTo}" /><br/>
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Approved:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Approve All</apex:outputlink>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Rejected:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Decline All</apex:outputlink>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Mixed:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Approve/Decline</apex:outputlink><br/>
+          <br><apex:outputText style="text-align: center;font-family:Arial;" value="Thank you for choosing WM."/></br>
+          <c:LoggedInUserDetails />
+        </body> 
+        </html>
+           
+</messaging:htmlEmailBody>    
+
+</messaging:emailTemplate>

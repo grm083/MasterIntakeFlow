@@ -1,0 +1,53 @@
+<template>
+    <lightning-spinner lwc:if={showSpinner} alternative-text="Loading" size="small"></lightning-spinner>
+    <article class="slds-card" lwc:if={showContainer}>
+        <div class="slds-page-header slds-text-title slds-text-title_bold">
+            Available Products <span class="small-text"> &#11091; {activeTabId}</span>
+        </div>
+        <!-- SDT-31609 -->
+        <div lwc:if={lbl_noContainerAvailable} class="warning-text">
+            {lbl_noContainerAvailable}
+        </div>
+        <lightning-accordion lwc:else allow-multiple-sections-open>
+            <lightning-spinner lwc:if={showInnerSpinner} alternative-text="Loading" size="small"></lightning-spinner>
+            <template for:each={allAvailableDeliveries} for:item="product">
+                <lightning-accordion-section key={product.equipmentName} name={product.equipmentName}
+                    label={product.equipmentName}>
+                    <div class="slds-text-align_center scroll-bar slds-scrollable">
+                        <template for:each={product.dates} for:item="item">
+                            <div key={item.date} data-size={product.equipmentSizeCode} data-date={item.date} class="box"
+                                onclick={handleContainerChange}>
+                                <div class="top-section">{item.date}</div>
+                                <div class={item.cssClass}>{item.dayName}</div>
+                            </div>
+                        </template>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+    </article>
+    <template lwc:if={confirmationDialogue}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Container Update</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium slds-text-align_center slds-text-heading_small"
+                    id="modal-content-id-1">
+                    <p>Are you sure you want to update the product from
+                        <strong>&nbsp;{product.equipmentSize}</strong> to
+                        <strong>&nbsp;{newContainerSize}</strong> for <strong><u>{newContainerDate}</u></strong> ?
+                    </p>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close"
+                        onclick={handleDialogueClick} value='No'> No </button>
+                    <button class="slds-button slds-button_brand" onclick={handleDialogueClick} value='Yes'> Yes
+                    </button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

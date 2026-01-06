@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MAS__c</fullName>
+    <externalId>false</externalId>
+    <label>WM Market Areas</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>K00185</fullName>
+                <default>false</default>
+                <label>Capitol Area</label>
+            </value>
+            <value>
+                <fullName>K00129</fullName>
+                <default>false</default>
+                <label>Great Lakes Area</label>
+            </value>
+            <value>
+                <fullName>K00117</fullName>
+                <default>false</default>
+                <label>Heartland Area</label>
+            </value>
+            <value>
+                <fullName>K00136</fullName>
+                <default>false</default>
+                <label>Upper Midwest Area</label>
+            </value>
+            <value>
+                <fullName>K00199</fullName>
+                <default>false</default>
+                <label>WM of Canada</label>
+            </value>
+            <value>
+                <fullName>K00114</fullName>
+                <default>false</default>
+                <label>WM of Florida</label>
+            </value>
+            <value>
+                <fullName>K00125</fullName>
+                <default>false</default>
+                <label>WM of Four Corners</label>
+            </value>
+            <value>
+                <fullName>K00152</fullName>
+                <default>false</default>
+                <label>WM of Greater Mid Atlantic</label>
+            </value>
+            <value>
+                <fullName>K00149</fullName>
+                <default>false</default>
+                <label>WM of Gulf Coast</label>
+            </value>
+            <value>
+                <fullName>K00181</fullName>
+                <default>false</default>
+                <label>WM of Mid-South</label>
+            </value>
+            <value>
+                <fullName>K00113</fullName>
+                <default>false</default>
+                <label>WM of New England</label>
+            </value>
+            <value>
+                <fullName>K00164</fullName>
+                <default>false</default>
+                <label>WM of Northern California and Nevada</label>
+            </value>
+            <value>
+                <fullName>K00133</fullName>
+                <default>false</default>
+                <label>WM of Pacific Northwest BC</label>
+            </value>
+            <value>
+                <fullName>K00126</fullName>
+                <default>false</default>
+                <label>WM of South Atlantic</label>
+            </value>
+            <value>
+                <fullName>K00175</fullName>
+                <default>false</default>
+                <label>WM of Southern California</label>
+            </value>
+            <value>
+                <fullName>K00139</fullName>
+                <default>false</default>
+                <label>WM of Texas Oklahoma</label>
+            </value>
+            <value>
+                <fullName>K00069</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Consolidations</label>
+            </value>
+            <value>
+                <fullName>K00033</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Corporate Office</label>
+            </value>
+            <value>
+                <fullName>K00232</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Energy and Environmental Services</label>
+            </value>
+            <value>
+                <fullName>K00070</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Environmental Legacy Management Group</label>
+            </value>
+            <value>
+                <fullName>K00087</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Inactives</label>
+            </value>
+            <value>
+                <fullName>K00226</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Investments and Other Business</label>
+            </value>
+            <value>
+                <fullName>K00089</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Legal Entity</label>
+            </value>
+            <value>
+                <fullName>K00244</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Other Corporate</label>
+            </value>
+            <value>
+                <fullName>K00215</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Recycle America Services</label>
+            </value>
+            <value>
+                <fullName>K00072</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WM Renewable Energy</label>
+            </value>
+            <value>
+                <fullName>K00236</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WM SBS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

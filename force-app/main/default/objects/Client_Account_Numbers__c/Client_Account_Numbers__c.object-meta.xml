@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>This custom settings is used to store client location codes to make use in IVR Story SDT-9532</description>
+    <enableFeeds>false</enableFeeds>
+    <label>Client Account Numbers</label>
+    <visibility>Public</visibility>
+</CustomObject>

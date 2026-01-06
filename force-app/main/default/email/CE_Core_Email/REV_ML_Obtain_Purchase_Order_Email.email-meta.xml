@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Confirm the PO number for the request</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X2022WMlogo</letterhead>
+    <name>Customer: Request PO from the Customer(CE Core Email)</name>
+    <style>freeForm</style>
+    <subject>Waste Management PO Needed: {!Case.Case_Type__c} at {!Case.Location_Code__c}, Ref. #: {!Case.Reference_Number__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

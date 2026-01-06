@@ -1,0 +1,84 @@
+.THIS .border-radius{
+    border-radius: 0px;
+}
+.THIS .buttonMenuHeadingCls{
+    text-align:center;
+    font-weight:bold;
+}
+.THIS .border-1px{
+    border: 1px solid #e0dedd !important;
+}
+.THIS .padding-0px{
+    padding:0px;
+}
+.THIS .font-size{
+    font-size: 14px;
+}
+.THIS .padding-2{
+  	padding:1.25%;  
+}
+.THIS .slds-radio {  
+    display: inline !important;  
+}
+.THIS .daysText{
+    margin: 0.5rem 0;
+    
+}
+.THIS .serviceOverrideCommentError{
+    color:red !important;
+}
+/* SDT-29100 */
+.THIS .overrideText{
+    margin: 0.7% 8.5%;
+    font-size: 11px ;
+    letter-spacing: 0.1px ;
+    font-weight: 500 ;
+    background: #F9F9F9 ;
+}
+/* SDT-31583 :START*/
+.THIS .warning-box{
+    display: flex;
+    padding: 0px 10px 10px 10px;
+    align-items: center;
+    justify-content: center;
+    gap: 2%;
+    width: 100%;
+}
+.THIS .warning-text{
+    color: rgb(221, 2, 2);
+    border: 2px solid black;
+    font-size: 12px;
+    background: rgb(252 225 0);
+    padding: 1%;
+    letter-spacing: 0.25px;
+    font-weight: 500;
+    line-height: 1.5;
+    border-radius: 5px;
+    max-width: 70%;
+    width: auto;
+}
+.THIS .warning-text-list{
+    list-style-type: disc;
+    margin-left: 1.5em;
+}
+.THIS .warning-text-single{
+    list-style-type: none;
+    margin-left: 1em;
+    margin-right: 2em;
+}
+.THIS .warning-text-heading{
+    font-weight: 700;
+    color: black;
+}
+/* SDT-31583 :END*/
+/* SDt-38285 Start*/
+.THIS .size-70{
+    width : 70px;
+}
+.THIS .size-120{
+    width : 120px;
+}
+.THIS .display-block{
+    display : block !important;
+}
+/* SDt-38285 End*/

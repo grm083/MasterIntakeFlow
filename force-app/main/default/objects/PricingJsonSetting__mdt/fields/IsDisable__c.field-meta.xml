@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsDisable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To disable any attribute of JSON this flag can be used.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>IsDisable</label>
+    <type>Checkbox</type>
+</CustomField>

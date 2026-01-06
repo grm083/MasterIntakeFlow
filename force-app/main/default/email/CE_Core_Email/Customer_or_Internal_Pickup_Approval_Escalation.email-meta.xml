@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Confirm approval for an E/R, DNR, XPU pickup request.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Customer or Internal: Pickup Approval Escalation</name>
+    <style>none</style>
+    <subject>Final Request Approval Needed: {!Case.Case_Type__c}- {!Case.Case_Subtype_Email_Format__c} - {!Case.Location_Code__c} - Ref. #: {!Case.Reference_Number__c}</subject>
+    <textOnly>Customer or Internal Pickup Approval CE Core Email
+
+Hi,
+Your approval is required for the {!Case.Case_Subtype_Email_Format__c}  {!Case.Contact} requested at {!Case.Location_Code__c}.{!Case.EmailTemplateAdditionalComments__c}.
+
+
+Please click &quot;Approve&quot; or &quot;Decline&quot; as soon as possible to help us process this request.
+
+Approve
+
+Decline
+
+Service Details
+
+Requester: {!Case.Contact} {!Case.contact_Title}
+
+Reference #: {!Case.Reference_Number__c}
+
+Requested Service Date: {!Case.Service_Date__c}
+
+Service: {!Case.Service_Date__c}
+
+Location ID: {!Case.Location_Code__c}
+
+Service Address: {!Case.Location_Name_Email_Temp__c} {!Case.Tech_Location_Details__c}
+
+Container: {!Asset.Name}, {!Asset.Material_Type__c} {!Asset.Container_Position__c}
+
+Please let us know if you need to change or cancel this request, or have any questions.
+
+
+
+Thank you,
+
+Waste Management
+
+1 Griffin Road N
+
+Suite 4C
+
+Windsor, CT 06095
+
+
+{!Case.Thread_Id} : {!Case.Reference_Number__c}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

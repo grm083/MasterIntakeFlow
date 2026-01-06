@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_a_New_Work_Order_Needed__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To be checked if a new WO is required after this task is completed</description>
+    <externalId>false</externalId>
+    <label>Is a New Work Order Needed?</label>
+    <type>Checkbox</type>
+</CustomField>

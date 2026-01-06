@@ -1,0 +1,5 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride" 
+                access="global" >
+	<!-- Call LWC from Aura -->
+    <c:maintainVendorEscalationContact></c:maintainVendorEscalationContact>
+</aura:component>

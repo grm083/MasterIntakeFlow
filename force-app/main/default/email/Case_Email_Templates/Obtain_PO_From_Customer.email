@@ -1,0 +1,29 @@
+{!Contact.Name},
+
+We have recently received the following request: 
+
+Case Number - {!Case.CaseNumber}
+Request Date - {!Case.CreatedDate}
+Requester - {!Contact.Name} – {!Contact.Title}
+Request - {!Case.Case_Type__c} – {!Case.Case_Sub_Type__c} – {!Case.Reason}
+Service Date - {!Case.Service_Date__c}
+Service Details - {!Case.Product_Information__c}
+Location - {!Account.ShippingAddress}
+
+Per your corporate authorization requirements a Purchase Order is required to place this request. If this request is approved please respond to this email with the Purchase Order you would like referenced on this request. If this request is not approved please respond letting us know that the request is unapproved and should not be processed.
+
+If you have any questions regarding this request please feel free to respond to this email, or you can call us at the number listed below.
+<br><br/>
+Thank you,
+<br><br/>
+<b>{!Case.CreatedBy}</b><br/>
+WM <br/>
+(888) 625-5323<br/>
+<br><br/>
+WM <br/>
+415 Day Hill Road<br/>
+Windsor, CT 06095<br/>
+<br></br>
+<img src="https://wmsbs.file.force.com/servlet/servlet.ImageServer?oid=00D1I000001V0eB&id=0153u000002Omy8" alt="WM Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;width:1.1in;height: 0.3in;"  title="WM Logo">
+<br></br>
+<i>Work with WMt to help make your business operations more profitable and sustainable. See how at <a href="https:// www.wm.com"> www.wm.com</a>.<i>

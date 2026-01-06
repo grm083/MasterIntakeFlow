@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsExtraPickup__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To check if ExtraPickup is present in Dumpster.
+True in case present in Dumpster.</description>
+    <externalId>false</externalId>
+    <label>IsExtraPickup</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

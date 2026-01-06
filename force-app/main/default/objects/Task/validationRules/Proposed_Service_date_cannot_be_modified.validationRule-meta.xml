@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proposed_Service_date_cannot_be_modified</fullName>
+    <active>true</active>
+    <description>Proposed Service date cannot be modified.</description>
+    <errorConditionFormula>AND(NOT($User.Bypass_Validation__c), 
+OR(
+ISPICKVAL(Process__c,&apos;Notify Customer Of Delay&apos;),
+ISPICKVAL(Process__c,&apos;Notify Customer Of Service Update&apos;)
+),
+ISCHANGED(Proposed_Service_Date__c))</errorConditionFormula>
+    <errorDisplayField>Proposed_Service_Date__c</errorDisplayField>
+    <errorMessage>Proposed Service date cannot be modified.</errorMessage>
+</ValidationRule>

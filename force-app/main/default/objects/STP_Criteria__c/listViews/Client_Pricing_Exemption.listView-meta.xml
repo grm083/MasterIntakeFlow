@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Pricing_Exemption</fullName>
+    <columns>Active__c</columns>
+    <columns>NAME</columns>
+    <columns>Parent_Account__c</columns>
+    <columns>Zero_Cost_Price_Allowed__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>STP_Criteria__c.Client_Pricing_Exemption</value>
+    </filters>
+    <label>Client Pricing Exemption</label>
+</ListView>

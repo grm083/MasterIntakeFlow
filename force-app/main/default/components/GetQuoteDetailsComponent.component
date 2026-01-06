@@ -1,0 +1,96 @@
+<apex:component controller="GetDetails" access="global">
+    
+     <apex:attribute name="quoteDetail" type="SBQQ__Quote__c" description="Quote from which Email is invoked" assignTo="{!objQuote}"/>
+    <apex:outputText style="color:black;font-family:Arial;" value="Hi"/>&nbsp;<apex:outputText style="font-family:Arial;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Contact_Name__c}"/>,<br/><br/>
+    <apex:outputText style="color:black;font-family:Arial;" value=" Below is a summary of your new service request."/>
+ 	<b><apex:outputText style="color:red;font-family:Arial;" value="[If there is an urgent need for service, what are we doing to escalate the request?]
+                                                                   [If a follow up is needed: What is the next step? Who will follow up with them? When will we contact them next?]" /></b><br/>
+    
+    <br/>
+    <table width = "50%">
+       
+        <tr>
+            <td > 
+                <b>Location ID: </b>
+            </td>        
+            <td>
+                {!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Code__c}<br/>
+            </td>     
+        </tr>  
+        <tr >
+            <td >   
+                <b>Service Address:</b>
+            </td>
+            <td width = "30%">     
+                <apex:outputText style="text-align: Top;" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Location_Name_Email_Temp__c}">  </apex:outputText> &nbsp;<apex:outputText escape="false" value="{!QuoteFields.SBQQ__Opportunity2__r.Case__r.Tech_Location_Details__c}"></apex:outputText><br/><br/>
+            </td>   
+        </tr>
+          
+  
+        <apex:repeat value="{!WrapperData}" var="fieldKey"><!-- Looping Keys-->
+       
+        <tr>
+            <td width = "50%" colspan = "2"> 
+                <hr/>
+                <b>Request :   {!mapCount[fieldKey]} </b>                 
+            </td>        
+             
+        </tr> 
+            
+            <tr>
+                <td width="50%">
+                    <b>Container:</b>   
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLI[fieldKey].SBQQ__Product__r.Name}"/>
+                </td>
+            </tr>
+             <tr>
+                <td width="50%">
+                    <b>Duration:</b>   
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLI[fieldKey].Duration__c}"/>
+                </td>
+            </tr>
+            <tr>    
+                <td>
+                    <b>Size:</b>
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLI[fieldKey].Equipment_Size__c}"/>
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <b>Material:</b>
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLIMaterialCode[fieldKey]}"/> 
+                </td>
+            </tr>
+            <tr>  
+                <td>
+                    <b>Service Type:</b> 
+                </td>
+                <td>
+                    <apex:outputText value="{!mQLI[fieldKey].Occurrence_Type__c}, {!mQLI[fieldKey].Schedule_Frequency__c}"/>
+                </td>
+                
+            </tr>
+            <tr>
+                <td width="50%"><b>Requested Start Date:</b> </td>
+                <td><apex:outputText value="{0,Date, MM/dd/yyyy}"> 
+                    <apex:param value="{!mQLI[fieldKey].SBQQ__EffectiveStartDate__c}"/>
+                 
+                    </apex:outputText>    
+                </td>
+            </tr>      
+        </apex:repeat>
+      
+    </table>    
+    <br/>
+    <br/>
+    
+     <apex:outputText style="color:black;font-family:Arial;" value="Please let us know if you need to change or cancel this request, or have any questions."/><br/>
+</apex:component>

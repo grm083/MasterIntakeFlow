@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>tz__Local_Time_Contact_Btn</fullName>
+    <availability>online</availability>
+    <description>Find Local Time is a button that can be placed in the Contacts Page Layout. Displays the local time for the current record. The Mailing Country, Mailing State, and Mailing City fields need to be properly filled in order for this button to function properly. Else the value &quot;Unknown&quot; is shown.</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Find Local Time</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;https://success-software.biz/localtime/js/json3.min.js&quot;)} 
+
+function calcTime(sOffset,sFrequency,sEnd,sObject) {
+    tbutton=document.getElementsByName(sObject);
+
+    if(sOffset == &apos;N/A&apos;) {
+        for(i=0;i&lt;tbutton.length;i++) {
+            tbutton[i].value=&apos;Unknown&apos;;
+        }
+    }
+    else {
+        var args1={offset:sOffset};
+        cttime=sforce.apex.execute(&quot;tz.LocalTime&quot;,&quot;getLocalTimeString&quot;,args1);
+        for(i=0;i&lt;tbutton.length;i++) {
+            tbutton[i].value=cttime +  &quot; &quot; + sEnd;
+        }
+    }
+
+    self.status=tbutton[0].value;
+    setTimeout(&apos;tbutton[0].click();&apos;,sFrequency);
+
+}
+
+onError=null;
+
+if(typeof sOffset==&apos;undefined&apos;) {
+    sOffset=&apos;N/A&apos;;
+    sEnd=&apos;N/A&apos;;
+
+    try { 
+        var args={objId:&quot;{!JSENCODE(Contact.Id)}&quot;};
+        var jsontext=sforce.apex.execute(&quot;tz.LocalTime&quot;,&quot;FindLocalTime&quot;,args);
+
+        if(jsontext != null &amp;&amp; jsontext != &apos;&apos; &amp;&amp; jsontext.length &gt; 0) {
+            var lt=JSON.parse(jsontext);
+            sOffset=lt.offset;
+            sEnd=lt.abbreviation;
+            if(&quot;{!$Setup.tz__lt_app_settings__c.tz__Abbreviation__c}&quot; == &quot;false&quot;) sEnd = &apos;&apos;; 
+        }
+    }
+    catch(err) {alert(err);}
+}
+
+if(typeof freq==&apos;undefined&apos;) {
+    freq=sforce.apex.execute(&quot;tz.LocalTime&quot;,&quot;getFrequency&quot;,{});
+}
+
+calcTime(sOffset,freq,sEnd,&quot;tz__local_time_contact_btn&quot;);</url>
+</WebLink>

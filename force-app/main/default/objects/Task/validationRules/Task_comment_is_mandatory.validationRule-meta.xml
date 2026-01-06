@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Task_comment_is_mandatory</fullName>
+    <active>true</active>
+    <description>Task comment is mandatory when Task Process is &apos;Escalation Obtain Customer Info&apos; and Outcome is &apos;Request Not Approved&apos;</description>
+    <errorConditionFormula>IF( AND(ISPICKVAL( Process__c , &apos;Escalation Obtain Customer Info&apos;),ISPICKVAL( Outcome__c , &apos;Information Not Obtained&apos;),ISBLANK(Description )) ,true,false)</errorConditionFormula>
+    <errorMessage>Please provide the Comments</errorMessage>
+</ValidationRule>

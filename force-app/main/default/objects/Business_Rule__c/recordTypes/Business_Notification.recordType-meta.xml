@@ -1,0 +1,1775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Notification</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Business_Rule_Compact_Layout</compactLayoutAssignment>
+    <label>Business Notification</label>
+    <picklistValues>
+        <picklist>Case_Reason__c</picklist>
+        <values>
+            <fullName>Additional Keys</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>All Other Inquiries</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary/Regulatory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baler Repair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mailback Box</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onsite Pickup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bale Wire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Billing Discrepancies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bill Not Received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancel Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Clean Up External</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Clean Up Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed/Closing Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communication Channel Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compactor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compactor/Baler/Vertical CMP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compactor Accessories</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compactor Repair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Construction and Demolition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contaminated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost/Price</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Portal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Reported</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Days of Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dig-Out</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dumpster/Toter/Port-o-let</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electronic Recycling Collection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Short Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipment Questions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exchange Container</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fixture Updates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Frequency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Billing Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Fees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hauler Reported</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Keys</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Landfill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lids</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location Closing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location Opening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location Relocation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location Sold-New Owner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Locks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LOW/NOW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing Component</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Portal User</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOW/LOW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Top</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Vendor Account Updates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Vendor Billing Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Vendor Profile Updates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Overloaded Container</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Power Outage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Power Wash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quantity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Question on Charges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Question on Charges (Default)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Question on Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recycling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relocate Container</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relocation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remodel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove End Dates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reset Portal Password</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seasonal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Not Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Size</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Snapshot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supplier Portal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temp Upload</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Universal Waste Collection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Update Address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Sold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weather</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wheels</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Who is my hauler?</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Award Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Address/Remit To</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone/Fax Number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email Address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Client Launch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legacy- Spec Needs to be updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National- Spec Needs to be updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Spec needs to be updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National- Hauler needs to be updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National- Spec Amount needs to be updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legacy- Service Date needs to be updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National- Service Date needs to be updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Spec Date needs to be updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WMSSC Wrong Hauler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cannot identify Location or Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National- Spec Qty/Unit Needs to be updated</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Category_Type__c</picklist>
+        <values>
+            <fullName>Brand</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Division%2FDepartment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Geography</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location Type</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Channel__c</picklist>
+        <values>
+            <fullName>BaseCamp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Big Sky</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corrigo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FixIt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maximo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEST Facilitate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OfficeTrax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Old Seville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RealSuite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Channel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Staples IQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VX Maintain%2F Verisae</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WM Portal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>fmPilot</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Container__c</picklist>
+        <values>
+            <fullName>Accessory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Haul Away Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compactor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dumpster</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entitlement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>License</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maintenance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Top</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subscription</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Surcharge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Toter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tracker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wallet</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Material__c</picklist>
+        <values>
+            <fullName>ABS Parts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ABS Sheets</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agricultural Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aluminum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Architectural Glass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asbestos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ash - Bottom Ash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ash - Fly Ash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asphalt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bag in Box</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bags for Mixed Recyclables</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bags for Shredded Cans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bags for Shredded Plastic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bale Wire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ballast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Batteries</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Biodegradable Food Utensils</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bottles%2FCans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boxboard Cuttings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brick</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bulk Material</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cans and Plastic Bottles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carbon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cardboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carpet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ceiling Tiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ceramic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Co-Mingle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compact Flourescent Lights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Computers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Concrete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Concrete Slurry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Concrete Washout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Construction %2F Demolition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contaminated %28Paper%2C C%2C ETC%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cooking Oil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Debris</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dental</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dirt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dry Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Drywall Byproduct</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dust</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electronic Recycling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiber Cores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiberglass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filter Cake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flourescent Lights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Foam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GPPS %28general purpose polystyrene%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Glass Bottles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Glass Veil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grease</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grease Trap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Green Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gypsum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HDPE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HDPE Drums</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HDPE Jugs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HDPE Shells</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insulation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LDPE Closures</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LDPE Film</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LDPE Stretch%2FShrink Film loose</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lead Batteries</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liquid Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loose Glass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lot Sweepings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MATTRESSES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Magazines</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Metal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mixed Metals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mixed Plastics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mixed Recyclables</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Municipal Solid Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Newspaper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Hazardous Solvent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Haz Class3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Applicable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Paper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Paper - Mixed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Paper - Shredded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Paper - White</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oily Water</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organic Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PC %28Polycarbonate%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PET Clear %28Beverage containers only%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PET Clear and Green</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PET Green %28Beverage containers only%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PET Mixed Bottles Compacted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PET Mixed Bottles Loose</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PET Strapping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PP Film</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PP Parts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PP Strapping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pallets</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paper - General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paper Mill - Sludge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plastic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pole</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Printed Material</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Printer Cartridges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Process Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Profiled Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recovered Materials</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refractory Brick</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected Product</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rendering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Roofing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rubber</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sand Blast Grit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sediment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Septage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shingles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shot %26 Rag Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shrink Wrap Film</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Single Stream Recycling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sludge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Soft Mixed Paper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solid Bleached Sulfate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stainless Steel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Steel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Storage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tires</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Totes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Treated Wood</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Universal Waste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Used Brown Kraft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VCT Tile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wallboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Water</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Water Treatment Sludge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wood</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wood Block</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yard Waste</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Object_Type__c</picklist>
+        <values>
+            <fullName>Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quote</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Process__c</picklist>
+        <values>
+            <fullName>Account Title Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confirm Service Completion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confirm Vendor Availability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate Contact Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Confirm Service Completion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Confirm Vendor Availability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Emergency Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Obtain Customer Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Obtain Service Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Obtain Vendor Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Unresponsive Contact Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation Unresponsive Contact Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manually Dispatch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notify Customer Of Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notify Customer Of Service Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notify Customer of Decline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Obtain Customer Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Obtain Schedule Confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Obtain Service Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Obtain Vendor Update</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Request_Type__c</picklist>
+        <values>
+            <fullName>Add</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Billing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Activate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deactivate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FAST Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hauler Damage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inoperable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruption</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Operable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Inquiries</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pickup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portal Declines</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Procurement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Replace</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Site Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supplies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Adding Services</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Required_Information__c</picklist>
+        <values>
+            <fullName>PO Number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PSI</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Role__c</picklist>
+        <values>
+            <fullName>Customer Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Account Role</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Schedule_Type__c</picklist>
+        <values>
+            <fullName>Permanent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seasonal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporary</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Service__c</picklist>
+        <values>
+            <fullName>Accessories</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Additional Keys</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Award Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bale Wire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancel Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change/Correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compactor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compactor Accessories</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Decrease</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dumpster Fresh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>eBusiness Portal Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty and Return</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty and Do NOT Return</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipment/Property</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ETA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Event Box(es)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra Pickup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fee(s)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Supplies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect Service Level</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Increase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Increase/Decrease</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lamptracker/Batterytracker/MedWaste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lids</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Locks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing Container</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Hauler No Delivery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Old Hauler No Removal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bulk/Got Junk/Junk King</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bale(s)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Past Due</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permanent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potential Stop Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Power Wash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relocate Container</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rightsizing/Load Max</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule A Declines</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled On Call Pickup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Not Performed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electronic Recycling (Computers, Laptops, etc.)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Universal Waste (Lamps, Batteries, etc.)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stop Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Account Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Cost Increase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waste Stream</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wheels</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra Loose Yards</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bulk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Haul Away - No Equipment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong Hauler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internally Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancel Locations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancel Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location Record</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Record</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Record</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deactivate Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deactivate Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deactivate Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hauler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor or Client Identification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hauler of Record</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice Charge Dispute</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

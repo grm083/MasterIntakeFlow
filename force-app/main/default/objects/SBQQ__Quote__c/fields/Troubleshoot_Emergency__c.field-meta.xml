@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Troubleshoot_Emergency__c</fullName>
+    <externalId>false</externalId>
+    <formula>DateTimeValue(SBQQ__StartDate__c + (SBQQ__Account__r.tz__UTF_Offset__c /24)) -  (NOW() + SBQQ__Account__r.tz__UTF_Offset__c /24)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Troubleshoot Emergency</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>4</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

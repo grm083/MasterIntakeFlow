@@ -1,0 +1,508 @@
+<aura:component implements="lightning:availableForFlowScreens">
+	
+    <!--Daily Frequency Attributes-->
+    <aura:attribute name="EDbuttonstate" type="Boolean" default="false"/>
+    <aura:attribute name="EWDbuttonstate" type="Boolean" default="false"/>
+    <aura:attribute name="DailyFreq" type="integer" default="1"/>
+    
+    <!--Weekly Frequency Attributes-->
+    <aura:attribute name="Wbuttonstate" type="Boolean" default="true"/>
+    <aura:attribute name="WeeklyFreq" type="integer" default="1"/>
+    <aura:attribute name="WeekNums" type="integer" default="1"/>
+    <aura:attribute name="selectedDays" type="List" default="[]"/>
+    <aura:attribute name="numDaysSelected" type = "integer" default="0"/>
+    <aura:attribute name="chkMWF" type="boolean" default="false"/>
+    <aura:attribute name="chkTR" type="boolean" default="false"/>
+    <aura:attribute name="chkWeekdays" type="boolean" default="false"/>
+    
+    <!--Monthly Frequency Attributes-->
+    <aura:attribute name="SWMbuttonstate" type="Boolean" default="false"/>
+    <aura:attribute name="SMDbuttonstate" type="Boolean" default="false"/>
+    <aura:attribute name="EMbuttonstate" type="Boolean" default="false"/>
+    <aura:attribute name="MonthlyFreq" type="integer" default="1"/>
+    <aura:attribute name="SpecificDayMonthFreq" type="integer" default="1"/>
+    <aura:attribute name="EveryMonths" type="integer" default="1"/>
+    
+    <!--Yearly Frequency Attributes-->
+    <aura:attribute name="EYbuttonstate" type="Boolean" default="false"/>
+    <aura:attribute name="SMDYbuttonstate" type="Boolean" default="false"/>
+    <aura:attribute name="SRMYbuttonstate" type="Boolean" default="false"/>
+    <aura:attribute name="YearlyFreq" type="Integer" default ="1" />
+    <aura:attribute name="YearlyDayNum" type="Integer" default="1" />
+    
+    <!--Design elements exposed to the flow as outputs-->
+    <aura:attribute name="FrequencyNote" type="String" />
+    <aura:attribute name="occurrenceCode" type="string" />
+    <aura:attribute name="frequency" type="decimal" />
+    <aura:attribute name="chkSunday" type="boolean" default="false"/>
+    <aura:attribute name="chkMonday" type="boolean" default="false"/>
+    <aura:attribute name="chkTuesday" type="boolean" default="false"/>
+    <aura:attribute name="chkWednesday" type="boolean" default="false"/>
+    <aura:attribute name="chkThursday" type="boolean" default="false"/>
+    <aura:attribute name="chkFriday" type="boolean" default="false"/>
+    <aura:attribute name="chkSaturday" type="boolean" default="false"/>
+    
+    <!--UI attributes-->
+    <aura:attribute name="fullyConfigured" type="boolean" default="false" />
+    <aura:attribute name="frequencyGroup" type="string" />
+    <aura:attribute name="servicePerFreq" type="string" />
+    <aura:attribute name="addNotes" type="string" />
+ 
+    <!--Start Confirmation Screen-->
+    <div class="{! v.fullyConfigured ? 'slds-show' : 'slds-hide'}">
+        <lightning:tile label="Selected Schedule Configuration">
+        	<aura:set attribute="media">
+                <lightning:icon iconName="utility:answer"/>
+            </aura:set>
+            <dl class="slds-dl_horizontal">
+                <dt class="slds-dl_horizontal__label">
+                    <p class="slds-truncate" title="FrequencyGroup">Frequency Group:</p>
+                </dt>
+                <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                	<p class="slds-truncate" title="SelectFreqGroup">
+                        <ui:outputText value="{!v.frequencyGroup}" />
+                    </p>
+            	</dd>
+                <dt class="slds-dl_horizontal__label">
+                    <p class="slds-truncate" title="NumberofServices">Number of Services:</p>
+                </dt>
+                <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                	<p class="slds-truncate" title="ServicePerFrequency">
+                        <ui:outputText value="{!v.servicePerFreq}" />
+                    </p>
+            	</dd>
+                <dt class="slds-dl_horizontal__label">
+                    <p class="slds-truncate" title="AdditionalNote">Additional Notes:</p>
+                </dt>
+                <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                	<p class="slds-truncate" title="ServicePerFrequency">
+                        <ui:outputText value="{!v.FrequencyNote}" />
+                    </p>
+            	</dd>
+            </dl>
+        </lightning:tile>
+    </div>
+    <!--End Confirmation Screen-->
+    
+    <!--Begin selection interface-->
+	<lightning:accordion aura:id="accordion" activeSectionName="W">
+        
+        <!--Start daily accordion selection-->
+		<lightning:accordionSection name="D" label="Daily" >
+        	<p>Please select the daily frequency below:</p>
+            <lightning:card variant="Narrow" title="Every Day(s)" iconName="utility:picklist_type">
+				<aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.EDbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add"  
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleEDClick }" />
+				</aura:set>
+				<p>This is used for every day service, or service on every X days</p>
+                <div class="{! v.EDbuttonstate ? 'slds-show' : 'slds-hide'}">
+                    <p class="slds-grid slds-grid_vertical">
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.DailyFreq}" label="Every ___ Days: " updateOn="keyup"/>
+                        </div>
+                    </p>
+                </div>
+			</lightning:card>
+            <lightning:card variant="Narrow" title="Every Weekday" iconName="utility:picklist_type">
+				<aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.EWDbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add" 
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleEWDClick }" />
+				</aura:set>
+				<p>This is used for service every weekday</p>
+			</lightning:card>
+            <lightning:button label="Submit" iconName="utility:check" onclick="{! c.handleDSubmit }" aura:id="dailyButton"/>
+        </lightning:accordionSection>
+        <!--End Daily accordion selection-->
+        
+        <!--Start Weekly accordion selection-->
+		<lightning:accordionSection name="W" label="Weekly">
+            <p>Please select the weekly frequency below:</p>
+            <lightning:card variant="Narrow" title="Weekly Schedule" iconName="utility:picklist_type">
+                <aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.Wbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add"  
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleWClick }" />
+				</aura:set>
+                <p>This is used for weekly frequencies, or service every X weeks.</p>
+                <div class="{! v.Wbuttonstate ? 'slds-show' : 'slds-hide'}">
+                    <p class="slds-grid slds-grid_vertical slds-p-around_xx-small">
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.WeeklyFreq}" label="Frequency: " updateOn="keyup"/>
+                        </div>
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.WeekNums}" label="Every ___ Weeks: " updateOn="keyup"/>
+                        </div>
+                        <div class="slds-col">
+                            <p>Please select the requested day(s) of the week below</p>
+                        </div>
+                        <div class="slds-col">
+                        	<div class="slds-grid slds-grid_align-space slds-p-around_small">
+                            	<div class="slds-col">
+                                	<lightning:buttonStateful state="{! v.chkMWF }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Mon/Wed/Fri" 
+                                                          labelWhenOn="Mon/Wed/Fri" 
+                                                          labelWhenHover="Mon/Wed/Fri" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleMWFClick }" />
+                                </div>
+                                <div class="slds-col">
+                                	<lightning:buttonStateful state="{! v.chkTR }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Tue/Thu" 
+                                                          labelWhenOn="Tue/Thu" 
+                                                          labelWhenHover="Tue/Thu" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleTRClick }" />
+                                </div>
+                                <div class="slds-col">
+                                	<lightning:buttonStateful state="{! v.chkWeekdays }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Weekdays" 
+                                                          labelWhenOn="Weekdays" 
+                                                          labelWhenHover="Weekdays" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleWeekdaysClick }" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col">
+                            <div class="slds-grid slds-grid_align-space slds-p-around_small">
+                                <div class="slds-col">
+                                    <lightning:buttonStateful state="{! v.chkSunday }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Sun" 
+                                                          labelWhenOn="Sun" 
+                                                          labelWhenHover="Sun" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleSuClick }" />
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:buttonStateful state="{! v.chkMonday }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Mon" 
+                                                          labelWhenOn="Mon" 
+                                                          labelWhenHover="Mon" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleMoClick }" />
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:buttonStateful state="{! v.chkTuesday }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Tue" 
+                                                          labelWhenOn="Tue" 
+                                                          labelWhenHover="Tue" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleTuClick }" />
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:buttonStateful state="{! v.chkWednesday }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Wed" 
+                                                          labelWhenOn="Wed" 
+                                                          labelWhenHover="Wed" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleWEClick }" />
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:buttonStateful state="{! v.chkThursday }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Thu" 
+                                                          labelWhenOn="Thu" 
+                                                          labelWhenHover="Thu" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleTHClick }" />
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:buttonStateful state="{! v.chkFriday }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Fri" 
+                                                          labelWhenOn="Fri" 
+                                                          labelWhenHover="Fri" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleFRClick }" />
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:buttonStateful state="{! v.chkSaturday }" 
+                                                          variant="brand" 
+                                                          labelWhenOff="Sat" 
+                                                          labelWhenOn="Sat" 
+                                                          labelWhenHover="Sat" 
+                                                          iconNameWhenOff="utility:add" 
+                                                          iconNameWhenOn="utility:check" 
+                                                          iconNameWhenHover="utility:close" 
+                                                          onclick="{! c.handleSAClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+			</lightning:card>
+			<lightning:button label="Submit" iconName="utility:check" onclick="{! c.handleWSubmit }" aura:id="weeklyButton"/>
+        </lightning:accordionSection>
+        <!--End Weekly accordion selection-->
+        
+        <!--Start monthly accordion selection-->
+		<lightning:accordionSection name="M" label="Monthly">
+            <p>Please select the monthly frequency below:</p>
+            <lightning:card variant="Narrow" title="Every Month(s)" iconName="utility:picklist_type">
+				<aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.EMbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add"  
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleEMClick }" />
+				</aura:set>
+				<p>This is used for service every month, or service every X months</p>
+				<div class="{! v.EMbuttonstate ? 'slds-show' : 'slds-hide'}">
+                    <p class="slds-grid slds-grid_vertical">
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.MonthlyFreq}" label="Every ___ Month(s): " updateOn="keyup"/>
+                        </div>
+                    </p>
+                </div>
+			</lightning:card>
+            <lightning:card variant="Narrow" title="On a Specific Day of the Month" iconName="utility:picklist_type">
+				<aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.SMDbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add" 
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleSMDClick }" />
+				</aura:set>
+                <p>This is used to specify the day number that service should occur, such as "On Day 10 of every 1 month"</p>
+                <div class="{! v.SMDbuttonstate ? 'slds-show' : 'slds-hide'}">    
+                	<p class="slds-grid slds-grid_vertical">
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.SpecificDayMonthFreq}" label="On Day: " updateOn="keyup"/>
+                        </div>
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.MonthlyFreq}" label="Of Every ___ Month(s): " updateOn="keyup"/>
+                        </div>
+                    </p>
+                </div>
+			</lightning:card>
+			<lightning:card variant="Narrow" title="On a Specific Week or Day Number of the Month" iconName="utility:picklist_type">
+				<aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.SWMbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add" 
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleSWMClick }" />
+				</aura:set>
+                <p>This is used to specify the day or week number in which the service should occur, such as "On the last Friday of every month"</p>
+				<div class="{! v.SWMbuttonstate ? 'slds-show' : 'slds-hide'}">
+                    <p class="slds-grid slds-grid_vertical">
+                        <div class="slds-col">
+                            <p>On the...</p>
+                            <ui:inputSelect class="true" aura:id="OnTheMonthNumber">
+                                <ui:inputSelectOption text="First" />
+                                <ui:inputSelectOption text="Second" />
+                                <ui:inputSelectOption text="Third" />
+                                <ui:inputSelectOption text="Fourth" />
+                                <ui:inputSelectOption text="Last" />
+                            </ui:inputSelect>
+                        </div>
+                        <div class="slds-col">
+                            <ui:inputSelect class="true" aura:id="OnTheMonthType">
+                                <ui:inputSelectOption text="Day" />
+                                <ui:inputSelectOption text="Sunday" />
+                                <ui:inputSelectOption text="Monday" />
+                                <ui:inputSelectOption text="Tuesday" />
+                                <ui:inputSelectOption text="Wednesday" />
+                                <ui:inputSelectOption text="Thursday" />
+                                <ui:inputSelectOption text="Friday" />
+                                <ui:inputSelectOption text="Saturday" />
+                                <ui:inputSelectOption text="Weekday" />
+                                <ui:inputSelectOption text="Weekend Day" />
+                            </ui:inputSelect>
+                        </div>
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.MonthlyFreq}" label="Of Every ___ Month(s): " updateOn="keyup"/>
+                        </div>
+                    </p>
+                </div>
+			</lightning:card>
+            <lightning:button label="Submit" iconName="utility:check" onclick="{! c.handleMSubmit }" aura:id="monthlyButton"/>
+        </lightning:accordionSection>
+        <!--End monthly accordion selection-->
+        
+        <!--Start yearly accordion selection-->
+		<lightning:accordionSection name="Y" label="Yearly">
+            <p>Please select the monthly frequency below:</p>
+            <lightning:card variant="Narrow" title="Every Year(s)" iconName="utility:picklist_type">
+				<aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.EYbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add"  
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleEYClick }" />
+				</aura:set>
+				<p>This is used for service every month, or service every X months</p>
+				<div class="{! v.EYbuttonstate ? 'slds-show' : 'slds-hide'}">
+                    <p class="slds-grid slds-grid_vertical">
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.YearlyFreq}" label="Every ___ Year(s): " updateOn="keyup"/>
+                        </div>
+                    </p>
+                </div>
+			</lightning:card>
+            <lightning:card variant="Narrow" title="On a Specific Month and Day" iconName="utility:picklist_type">
+				<aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.SMDYbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add" 
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleSMDYClick }" />
+				</aura:set>
+                <p>This is used to specify month and day of the year that service should occur, such as "On January 17 every year"</p>
+                <div class="{! v.SMDYbuttonstate ? 'slds-show' : 'slds-hide'}">    
+                	<p class="slds-grid slds-grid_vertical">
+                        <div class="slds-col">
+							<p>Service to be performed on:</p>
+                            <ui:inputSelect class="true" aura:id="YearSpecificMonth">
+                                <ui:inputSelectOption text="January" />
+                                <ui:inputSelectOption text="February" />
+                                <ui:inputSelectOption text="March" />
+                                <ui:inputSelectOption text="April" />
+                                <ui:inputSelectOption text="May" />
+                                <ui:inputSelectOption text="June" />
+                                <ui:inputSelectOption text="July" />
+                                <ui:inputSelectOption text="August" />
+                                <ui:inputSelectOption text="September" />
+                                <ui:inputSelectOption text="October" />
+								<ui:inputSelectOption text="November" />
+								<ui:inputSelectOption text="December" />
+                            </ui:inputSelect>
+                        </div>
+                        <div class="slds-col">
+                            <ui:inputnumber value="{!v.YearlyDayNum}" updateOn="keyup"/>
+                        </div>
+                    </p>
+                </div>
+			</lightning:card>
+			<lightning:card variant="Narrow" title="On a Specific Relative Day of a Specific Month" iconName="utility:picklist_type">
+				<aura:set attribute="actions">
+					<lightning:buttonStateful state="{! v.SRMYbuttonstate }" 
+                                              variant="brand" 
+                                              labelWhenOff="Select" 
+                                              labelWhenOn="Selected" 
+                                              labelWhenHover="De-select" 
+                                              iconNameWhenOff="utility:add" 
+                                              iconNameWhenOn="utility:check" 
+                                              iconNameWhenHover="utility:close" 
+                                              onclick="{! c.handleSRMYClick }" />
+				</aura:set>
+                <p>This is used to specify the day or week number in which the service should occur, such as "On the last Friday of April"</p>
+				<div class="{! v.SRMYbuttonstate ? 'slds-show' : 'slds-hide'}">
+                    <p class="slds-grid slds-grid_vertical">
+                        <div class="slds-col">
+                            <p>On the:</p>
+                            <ui:inputSelect class="true" aura:id="YearSpecificTypeofDay">
+                                <ui:inputSelectOption text="First" />
+                                <ui:inputSelectOption text="Second" />
+                                <ui:inputSelectOption text="Third" />
+                                <ui:inputSelectOption text="Fourth" />
+                                <ui:inputSelectOption text="Last" />
+                            </ui:inputSelect>
+                        </div>
+                        <div class="slds-col">
+                            <ui:inputSelect class="true" aura:id="YearSpecificDay">
+                                <ui:inputSelectOption text="Day" />
+                                <ui:inputSelectOption text="Sunday" />
+                                <ui:inputSelectOption text="Monday" />
+                                <ui:inputSelectOption text="Tuesday" />
+                                <ui:inputSelectOption text="Wednesday" />
+                                <ui:inputSelectOption text="Thursday" />
+                                <ui:inputSelectOption text="Friday" />
+                                <ui:inputSelectOption text="Saturday" />
+                                <ui:inputSelectOption text="Weekday" />
+                                <ui:inputSelectOption text="Weekend Day" />
+                            </ui:inputSelect>
+                        </div>
+						<div class="slds-col">
+							<p>Of Month:</p>
+                            <ui:inputSelect class="true" aura:id="YearSpecificMonth">
+                                <ui:inputSelectOption text="January" />
+                                <ui:inputSelectOption text="February" />
+                                <ui:inputSelectOption text="March" />
+                                <ui:inputSelectOption text="April" />
+                                <ui:inputSelectOption text="May" />
+                                <ui:inputSelectOption text="June" />
+                                <ui:inputSelectOption text="July" />
+                                <ui:inputSelectOption text="August" />
+                                <ui:inputSelectOption text="September" />
+                                <ui:inputSelectOption text="October" />
+								<ui:inputSelectOption text="November" />
+								<ui:inputSelectOption text="December" />
+                            </ui:inputSelect>
+                        </div>
+                    </p>
+                </div>
+			</lightning:card>
+            <lightning:button label="Submit" iconName="utility:check" onclick="{! c.handleYSubmit }" aura:id="yearlyButton"/>
+        </lightning:accordionSection>
+        <!--End yearly accordion selection-->
+	</lightning:accordion>
+    <!--End selection interface-->
+    
+</aura:component>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Text_Notification_opt_in</fullName>
+        <description>For updating text notification opt in field on mobile phone number change.</description>
+        <field>Text_Notifications_Opt_In__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Text Notification opt-in</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_contact_status_is_Active</fullName>
+        <field>Contact_Status__c</field>
+        <literalValue>Active</literalValue>
+        <name>Update contact status is Active</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Contact status updated</fullName>
+        <actions>
+            <name>Update_contact_status_is_Active</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>IF(AND($Profile.Name == &apos;System Administrator&apos;, ISPICKVAL(Corporate_Contact_Status__c, &apos;Approved&apos;),  ISPICKVAL(Account_Title__r.Status__c, &apos;Active&apos; )),TRUE,FALSE)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Text notification opt-out on number change</fullName>
+        <actions>
+            <name>Update_Text_Notification_opt_in</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Text notification opt-out on Mobile Phone number change.</description>
+        <formula>ISCHANGED( MobilePhone )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

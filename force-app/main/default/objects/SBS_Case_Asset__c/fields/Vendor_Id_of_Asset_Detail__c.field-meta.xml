@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vendor_Id_of_Asset_Detail__c</fullName>
+    <description>Holds Vendor Id</description>
+    <externalId>false</externalId>
+    <formula>AssetId__r.Supplier__c</formula>
+    <label>Vendor Id of Asset Detail</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

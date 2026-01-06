@@ -1,0 +1,4 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,lightning:actionOverride" access="global" >
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <lightning:workspaceAPI aura:id="workspace"/>
+</aura:component>

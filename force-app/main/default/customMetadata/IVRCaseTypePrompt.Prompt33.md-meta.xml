@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Prompt33</label>
+    <protected>false</protected>
+    <values>
+        <field>Case_Reason__c</field>
+        <value xsi:type="xsd:string">Days of Service</value>
+    </values>
+    <values>
+        <field>Case_Sub_Type__c</field>
+        <value xsi:type="xsd:string">Change/Correction</value>
+    </values>
+    <values>
+        <field>Case_Type_IVR_Key__c</field>
+        <value xsi:type="xsd:string">Change Service_Change/Correction_Days of Service</value>
+    </values>
+    <values>
+        <field>Case_Type__c</field>
+        <value xsi:type="xsd:string">Change Service</value>
+    </values>
+    <values>
+        <field>Read_In_IVR__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Service_Prompt_Id__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

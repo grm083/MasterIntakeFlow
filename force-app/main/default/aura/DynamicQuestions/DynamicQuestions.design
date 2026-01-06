@@ -1,0 +1,10 @@
+<design:component>
+    <design:attribute name="QuestionId" label="Question Id" description="The previous question" />
+    <design:attribute name="CaseId" label="Case Id" description="The case for initialization" />
+    <design:attribute name="caseRecord" label="Case Record" description="The current case sObject, input only" />
+    <design:attribute name="NextQuestionId" label="Next Question Id" description="Output only for the next question" />
+    <design:attribute name="boolEnd" label="End Step" description="True/False to identify if we're at the end of the flow" />
+    <design:attribute name="EndStatement" label="End Statement" description="Output Only - End String to be displayed to user" />
+    <design:attribute name="QuestionAnswer" label="Question/Answer" description="Output Only - Comment to be created" />
+    <design:attribute name="FinalOutcome" label="Final Outcome" description="Id of the Final Outcome" />
+</design:component>

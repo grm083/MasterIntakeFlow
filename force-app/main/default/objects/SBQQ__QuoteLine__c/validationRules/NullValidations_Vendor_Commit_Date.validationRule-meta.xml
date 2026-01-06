@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NullValidations_Vendor_Commit_Date</fullName>
+    <active>true</active>
+    <description>SDT-32136-Validation created to run check on Vendor Commit Date is not null to null</description>
+    <errorConditionFormula>AND( NOT( ISBLANK( PRIORVALUE( Vendor_Commit_Date__c ) ) ) , ISBLANK(Vendor_Commit_Date__c))</errorConditionFormula>
+    <errorDisplayField>Vendor_Commit_Date__c</errorDisplayField>
+    <errorMessage>Vendor Commit Date cannot be set to null when it is not null</errorMessage>
+</ValidationRule>

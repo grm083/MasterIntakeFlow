@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>tz__UTF_Offset__c</fullName>
+    <deprecated>false</deprecated>
+    <description>UTC Offset when the DST is off. This is a hidden field and should not be added to the page layouts.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Shows the current UTC timezone offset of the Lead.</inlineHelpText>
+    <label>UTC Offset Standard</label>
+    <precision>5</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

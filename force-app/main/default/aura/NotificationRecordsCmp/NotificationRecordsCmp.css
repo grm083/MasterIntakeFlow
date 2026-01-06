@@ -1,0 +1,28 @@
+.THIS .customfooter{
+  border-top: 2px solid #dddbda;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+    width:100%;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+}
+.THIS .custom-footer{
+     border-top: 2px solid #dddbda;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+    text-align:center;
+    font-size:14px
+}
+.THIS .selection{
+    margin:left;
+    
+}
+.THIS .left-align{
+    text-align: left;
+    margin-right: auto;
+    height: 75%;
+}
+.THIS .label-hidden > label {
+    display: none;
+}

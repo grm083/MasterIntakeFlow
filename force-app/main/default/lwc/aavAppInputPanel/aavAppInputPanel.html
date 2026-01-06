@@ -1,0 +1,80 @@
+<template>
+    <lightning-card>
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </template>
+        <lightning-record-edit-form object-api-name="AAV_Asset_Availability__c" density="comfy" record-id={recordId}
+            onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError} onload={handleonload}>
+            <div class="slds-grid slds-wrap slds-gutters slds-m-around_xxx-small">
+                <br><br>
+                <div class="slds-col slds-size_1-of-1 slds-m-top_small">
+                    <b class="slds-text-heading_small">Service Address</b>
+                    <lightning-button lwc:if={recordId} class="btn-align" variant="brand" label="Clone"
+                        onclick={handleCloneClick}>
+                    </lightning-button>
+                    <hr>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AAV_Location__c" data-name="location" label="Location"
+                        onchange={handleLocationChange} required="true" disabled={diabledInput}></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input label="Account" value={accountName} disabled="true"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input label="Service Street Address" value={locationData.ShippingStreet}
+                        disabled=true></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input label="Service City" value={locationData.ShippingCity} disabled="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input label="Service State" value={locationData.ShippingState} disabled="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input label="Service Country" value={locationData.ShippingCountry} disabled="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input label="Service Postal Code" value={locationData.ShippingPostalCode}
+                        disabled="true"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-m-top_large">
+                    <b class="slds-text-heading_small">Container Details</b>
+                    <hr>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AAV_Line_of_Business__c" data-name="lineOfBusiness"
+                        disabled={diabledInput} onchange={handleLOBChange} required="true"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AAV_Container_Type__c" data-name="containerType"
+                        disabled={diabledInput} required="true">
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AAV_Delivery_Date__c" data-name="deliveryDate"
+                        disabled={diabledInput} required="true">
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AAV_MaterialCode__c" data-name="materialCode"
+                        disabled={diabledInput} required="true">
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AAV_Service_Type__c" data-name="serviceType"
+                        disabled={diabledInput} required="true">
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-text-align_center slds-m-top_medium">
+                    <lightning-button variant="brand" type="submit" name="save" disabled={diabledInput}
+                        label="Get Availability">
+                    </lightning-button>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

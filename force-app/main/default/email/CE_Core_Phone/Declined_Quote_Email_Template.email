@@ -1,0 +1,30 @@
+<messaging:emailTemplate subject="WM Request Denied: {!relatedTo.Case_Type__c} at {!relatedTo.SBQQ__Account__r.Name}, {!relatedTo.Name}" recipientType="Contact" relatedToType="SBQQ__Quote__c">
+<messaging:htmlEmailBody >
+    <html>
+    <style type="text/css">
+    body {font-size: 11pt;}
+    </style>
+<br><apex:outputText style="font-family:Arial;" value="Dear {!relatedTo.SBQQ__PrimaryContact__r.FirstName}"/> </br>
+
+<br><c:GetApproverInformation quoteDetail="{!relatedTo}"/></br>
+
+
+<br><apex:outputText style="font-family:Arial; font-weight: bold;" value="Service Details"/></br>
+<br><table><tr><td><apex:outputText style="font-family:Arial; font-weight: bold;" value="Requester:"/></td><td><apex:outputText style="font-family:Arial; font-weight: bold;" value="Location Id:"/></td></tr>
+<tr><td><apex:outputText style="font-family:Arial;" value="{!relatedTo.SBQQ__PrimaryContact__r.FirstName} {!relatedTo.SBQQ__PrimaryContact__r.LastName}"/></td><td><apex:outputText style="font-family:Arial;" value="{!relatedTo.SBQQ__Account__r.Name}"/></td></tr>
+<tr><td><apex:outputText style="font-family:Arial; font-weight: bold;" value="Reference Number:"/></td><td><apex:outputText style="font-family:Arial; font-weight: bold;" value="Service Address:"/></td></tr>
+<tr><td><apex:outputText style="font-family:Arial;" value="{!relatedTo.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}"/></td><td><apex:outputText style="font-family:Arial;" value="{!relatedTo.SBQQ__ShippingStreet__c},"/></td></tr>
+<tr><td></td><td><apex:outputText style="font-family:Arial;" value="{!relatedTo.SBQQ__ShippingCity__c},"/></td></tr>
+<tr><td></td><td><apex:outputText style="font-family:Arial;" value="{!relatedTo.SBQQ__ShippingState__c},"/></td></tr>
+<tr><td></td><td><apex:outputText style="font-family:Arial;" value="{!relatedTo.SBQQ__ShippingPostalCode__c}"/></td></tr>
+<tr><td><apex:outputText style="font-family:Arial; font-weight: bold;" value="Requested Service Date:"/></td><td></td></tr>
+<tr><td><apex:outputText style="font-family:Arial;" value="{!relatedTo.SBQQ__StartDate__c}"/></td><td></td></tr>
+</table></br>
+<br><apex:outputText style="font-family:Arial; font-weight: bold;" value="Services:"/></br>
+<c:GetQuoteDetailsForDecline quoteDetail="{!relatedTo}"/>
+<br><apex:outputText style="font-family:Arial;" value="Please contact your corporate office if you have any questions regarding why this request was declined."/></br>
+<br><c:LoggedInUserDetailsForDecline /></br>
+<br><apex:outputText style="font-family:Arial;" value="{!relatedTo.Quote_Thread_Id__c} : {!relatedTo.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}"/></br>
+</html>
+</messaging:htmlEmailBody> 
+</messaging:emailTemplate>

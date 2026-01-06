@@ -1,0 +1,13 @@
+.THIS .nohighlight{
+    background-color : white;
+}
+.THIS .highlight{
+    background-color : lightgreen;
+}
+.THIS .leftPadding{
+    padding-left: 8px;
+}
+.THIS .highlightBold{
+	font-weight: bold;
+    color: red;
+}

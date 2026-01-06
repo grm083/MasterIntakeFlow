@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Group_Location_Project_Asset__c</fullName>
+    <description>This field is a combination of 5 lookup fields of Business rule - Account; Group; Location;Project; Asset. The field is created for backend tracking purpose to identify the duplicate business rule. Hence, the field will not be visible in any of the page layout or to the UI of Business rule.</description>
+    <label>Account_Group_Location_Project_Asset</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

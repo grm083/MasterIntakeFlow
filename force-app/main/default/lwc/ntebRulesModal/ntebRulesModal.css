@@ -1,0 +1,11 @@
+.slds-modal__container {
+    max-width: 50rem !important;
+    width: 50% !important;;
+}
+
+.popUp {
+    position: fixed;
+	top : 20%;
+    left : 25%;
+    height: 80%;
+}

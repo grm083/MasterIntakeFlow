@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <outboundMessages>
+        <fullName>Send_Indico_Email_Message</fullName>
+        <apiVersion>50.0</apiVersion>
+        <endpointUrl>https://qa.sf.wmsbs.wm.com/SalesforceOutboundmessage/Services/CaseIndicoEmailService.svc</endpointUrl>
+        <fields>EmailMessageId__c</fields>
+        <fields>Id</fields>
+        <fields>SFDCEmailMessageCcAddress__c</fields>
+        <fields>SFDCEmailMessageFromAddress__c</fields>
+        <fields>SFDCEmailMessageParentCaseNumber__c</fields>
+        <fields>SFDCEmailMessageParentId__c</fields>
+        <fields>SFDCEmailMessageParentReferenceNumber__c</fields>
+        <fields>SFDCEmailMessageSubject__c</fields>
+        <fields>SFDCEmailMessageTextBody__c</fields>
+        <fields>SFDCEmailMessageToAddress__c</fields>
+        <fields>SFDCEmailMessageType__c</fields>
+        <includeSessionId>true</includeSessionId>
+        <integrationUser>api.user@wm.com</integrationUser>
+        <name>Send Indico Email Message</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>true</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Send to Indico</fullName>
+        <actions>
+            <name>Send_Indico_Email_Message</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>SFDCEmailMessage__c.CreatedDate</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

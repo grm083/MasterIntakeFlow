@@ -1,0 +1,45 @@
+<messaging:emailTemplate subject="Final Request Approval Needed: {!relatedTo.Case_Type__c}- {!relatedTo.Case_Subtype_Email_Format__c} - {!relatedTo.Location_Code__c} - Ref. #: {!relatedTo.Reference_Number__c}" recipientType="Contact" relatedToType="Case">
+<messaging:htmlEmailBody >
+        <div style="align=right">
+        <apex:variable value="{!LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260))}" var="hostUrl"/>
+        <apex:variable value="servlet/servlet.ImageServer?id=" var="staticUrl_1"/>
+        <apex:variable value="&oid=" var="staticUrl_2"/>
+        <apex:variable value="{!$Organization.Id}" var="orgId"/>
+        </div> 
+        <html>
+            <style type="text/css">
+            body {font-size: 11pt;}
+            </style>
+        <body>
+          <br><apex:image value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.DocumentId__c}{!staticUrl_2}{!orgId}"/></br>   
+          <br><apex:outputText style="font-family:Arial;" value="Hi,"/></br>
+          
+          <br><apex:outputText style="font-family:Arial;" value="Your approval is required for the following services requested by {!relatedTo.Contact_Name__c}. Please review the details and either Approve or Decline by clicking the links below." /></br>
+          <apex:outputText style="font-family:Arial;" value="If you are both accepting and declining services,  Please click the Approve/Decline button and indicate which Cases to approve and which to Decline in your reply email." /><br/>
+          <br><apex:outputText style="font-family:Arial;" value="Your reference number for all cases is: "/><b><apex:outputText style="font-family:Arial;" value="{!relatedTo.Reference_Number__c}"/></b></br>
+          <br>
+          <b><apex:outputText style="text-align: center;font-family:Arial;font-size:11pt;" value="Service Details"/></b></br><br/>
+          <c:GetChildCaseDetails parentcase="{!relatedTo}" /><br/>
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Approved:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Approve All</apex:outputlink>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Rejected:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Decline All</apex:outputlink>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:image style="align=right" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.LineId__c}{!staticUrl_2}{!orgId}"/>&nbsp;&nbsp;
+          <apex:outputlink style="font-family:Arial;font-size:11pt; align:center;" value="{!$Setup.EmailTemplateLogoId__c.Approve_and_Reject_link__c}?subject=Mixed:{!relatedTo.Id}:{!relatedTo.Reference_Number__c}:{!relatedTo.Case_Type__c}&body=****Please add any additional comments below. PLEASE NOTE your comments will be reviewed separately.****">Approve/Decline</apex:outputlink><br/>
+          <br><apex:outputText style="text-align: center;font-family:Arial;" value="If your approval is not received by 24 business hours, this request will be closed"/></br>
+          <br><apex:outputText style="text-align: center;font-family:Arial;" value="Thank you,"/></br>
+          <c:LoggedInUserDetails />
+          <div style=""><font face="Arial, sans-serif" style="font-family: arial; font-size: 12pt;"><img src="https://wmsbs--dev03.sandbox.file.force.com/servlet/servlet.ImageServer?id=0158A000001AafN&oid=00D8A000000MkaH" border="0" align="left" alt=""></img></font><p class="MsoNormal" style="font-family: arial; margin-bottom: 0in; line-height: normal; vertical-align: baseline;"><b style=""><span style="font-family: Arial, sans-serif;margin: 5px; ">Want to save time? Try our ChatNow app!</span></b><span style="font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin: 0pt 0in 0in; line-height: normal; vertical-align: baseline; margin-left: 80px; width: 475px;"><font face="Arial, 
+sans-serif" style="" size="2">Use our self-
+service options to order a pickup or new container, and
+check a status in minutes. You can also connect to a live
+agent when you need to. Click <a href="https://chatnow.wmsbs.wm.com/" style=""><span style="color: rgb(2, 71, 48);">ChatNow</span></a>
+or scan the code to get started.</font><span style="font-family: Arial, sans-serif; font-size: 13pt;"></span></p></div>
+        </body> 
+        </html>
+           
+</messaging:htmlEmailBody>    
+
+</messaging:emailTemplate>

@@ -1,0 +1,12 @@
+.THIS.row {
+    width:250px;
+    Padding:100px;
+    height: 100px;
+}
+.THIS .CseDtls {
+    text-align: center;
+    background-color: rgb(11, 134, 11);
+    font-weight: bold;
+    font-size: 1.3rem;
+    line-height: 1.5;
+}

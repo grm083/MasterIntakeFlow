@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integration_Type__c</fullName>
+    <description>Type of vendor integration</description>
+    <externalId>false</externalId>
+    <label>Integration Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>WM Integration</fullName>
+                <default>false</default>
+                <label>WM Integration</label>
+            </value>
+            <value>
+                <fullName>Third Party Integration</fullName>
+                <default>false</default>
+                <label>Third Party Integration</label>
+            </value>
+            <value>
+                <fullName>Supplier Portal</fullName>
+                <default>false</default>
+                <label>Supplier Portal</label>
+            </value>
+            <value>
+                <fullName>FTP</fullName>
+                <default>false</default>
+                <label>FTP</label>
+            </value>
+            <value>
+                <fullName>Flat File</fullName>
+                <default>false</default>
+                <label>Flat File</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Fax</fullName>
+                <default>false</default>
+                <label>Fax</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

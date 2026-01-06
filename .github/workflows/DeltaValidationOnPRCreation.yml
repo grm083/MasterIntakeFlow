@@ -1,0 +1,84 @@
+name: DeltaValidationOnPRCreation
+on:
+  
+  pull_request:
+    branches: [ 2025qabranch ]
+    paths:
+      - 'force-app/**'         
+
+jobs:
+  ValidatePRAgainstQASandbox:
+   runs-on: [self-hosted, AWS, Node]
+   steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.ref }}
+        fetch-depth: 0
+      if: github.event.action == 'opened' || github.event.action == 'synchronize' || github.event_name == 'push'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '21'
+        #check-latest: true
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu' # for sfdx code scanner
+        java-version: '11'
+        
+    - name: Install Salesforce CLI
+      run: |
+        echo %JAVA_HOME%
+        rm -rf node_modules
+        npm cache clean --force
+        npm config set registry https://registry.npmjs.org
+        npm install sfdx-cli --legacy-peer-deps
+        node_modules/sfdx-cli/bin/run plugins --core
+        echo y | node_modules/sfdx-cli/bin/run plugins:install sfdx-git-delta
+        node_modules/sfdx-cli/bin/run plugins:install @salesforce/sfdx-scanner@3.17.0 
+    
+    - name: Generate package.xml
+      run: |
+        #Creating a temp dir for scanner 
+        mkdir delta-files
+        #Generate package.xml between the current branch &
+        node_modules/sfdx-cli/bin/run sgd:source:delta --to "HEAD" --from "HEAD~1" --output delta-files/ --generate-delta -i .gitignore 
+        echo "--- package.xml generated with added and modified metadata ---"
+        cat delta-files/package/package.xml
+    - name: 'Display Username'
+      run:
+          echo ${{secrets.SFDX_USERNAME_QA02}} | sed 's/./& /g'
+
+    - name: 'Populate auth file with SFDX_URL secret'
+      run: 
+          'echo ${{ secrets.SFDX_AUTH_URL_QA02}} > token.txt'
+      env: 
+          SFDX_USE_GENERIC_UNIX_KEYCHAIN: ${{secrets.SFDX_TRUE}}
+    
+
+    - name: 'Authenticate against dev hub'
+      run:
+        node_modules/sfdx-cli/bin/run force:auth:sfdxurl:store -f token.txt -s -a testSandbox
+      env: 
+          SFDX_USE_GENERIC_UNIX_KEYCHAIN: ${{secrets.SFDX_TRUE}}
+
+    - name: 'SFDX Code Scan Run'
+      run:
+        node_modules/sfdx-cli/bin/run scanner:run --outfile results.csv --target "delta-files/force-app/main/default" 
+      env: 
+          SFDX_USE_GENERIC_UNIX_KEYCHAIN: ${{secrets.SFDX_TRUE}}        
+        
+    - name: Upload Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: results.csv
+        path: ./results.csv
+      env:
+        NODE_EXTRA_CA_CERTS: "/etc/pki/tls/certs/ca-bundle.crt"      
+
+    - name: Validate source
+      id: Validate
+      #if: github.event_name == 'push'
+      run:
+        node_modules/sfdx-cli/bin/run force:source:deploy --checkonly -x delta-files/package/package.xml -u "$sfdx_username_qa"
+      env:
+        SFDX_USE_GENERIC_UNIX_KEYCHAIN: ${{secrets.SFDX_TRUE}}
+        sfdx_username_qa: ${{secrets.SFDX_USERNAME_QA02}}

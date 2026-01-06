@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Case_Reason_Mandatory</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT($User.Bypass_Validation__c),IF(AND( Close_Irrelevant_Case__c ,OR(ISBLANK(TEXT(Close_Case_Reason__c)), ISNULL(TEXT(Close_Case_Reason__c )))),true,false))</errorConditionFormula>
+    <errorDisplayField>Close_Case_Reason__c</errorDisplayField>
+    <errorMessage>Please enter reason for closing the case</errorMessage>
+</ValidationRule>

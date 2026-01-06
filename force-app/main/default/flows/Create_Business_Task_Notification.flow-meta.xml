@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Fetch SA&apos;s Email RecordTypeId</description>
+        <name>Fetch_SA_RecordType</name>
+        <label>Fetch SA RecordType</label>
+        <locationX>956</locationX>
+        <locationY>360</locationY>
+        <actionName>GetSobjectRecordTypeId</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Create_Service_Approver</targetReference>
+        </connector>
+        <inputParameters>
+            <name>inputParameter</name>
+            <value>
+                <elementReference>varSARecordType</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varSARecordTypeId</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>Get Business Notification Record Type</description>
+        <name>Get_Business_Notification_Record_Type</name>
+        <label>Get Business Notification Record Type</label>
+        <locationX>154</locationX>
+        <locationY>50</locationY>
+        <actionName>GetSobjectRecordTypeId</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Fetched_RecordType</targetReference>
+        </connector>
+        <inputParameters>
+            <name>inputParameter</name>
+            <value>
+                <elementReference>VarBusinessNotification</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>VarRecordTypeId</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <description>Assign Process</description>
+        <name>Assign_Process</name>
+        <label>Assign Process</label>
+        <locationX>673</locationX>
+        <locationY>86</locationY>
+        <assignmentItems>
+            <assignToReference>VarBusinessRuleProcess</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>VarBr.Process__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>check_on_VarProcess</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>If Process Contains Service Guarantees Approval then make it as false</description>
+        <name>Assign_varCreateBr</name>
+        <label>Assign varCreateBr</label>
+        <locationX>858</locationX>
+        <locationY>253</locationY>
+        <assignmentItems>
+            <assignToReference>varCreateBr</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Br</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>whether BR are available or not</description>
+        <name>Check_Br</name>
+        <label>Check Br</label>
+        <locationX>488</locationX>
+        <locationY>255</locationY>
+        <defaultConnector>
+            <targetReference>Check_on_Creating_Business_Rule</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_BR_available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VarBusinessRulelst</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Br</targetReference>
+            </connector>
+            <label>Is BR available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create Business Rule</description>
+        <name>Check_on_Creating_Business_Rule</name>
+        <label>Check on Creating Business Rule</label>
+        <locationX>668</locationX>
+        <locationY>364</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Create_BR</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varCreateBr</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Business_Rule</targetReference>
+            </connector>
+            <label>Create BR</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>whether Process Contains Service Guarantees Approval.</description>
+        <name>check_on_VarProcess</name>
+        <label>check on VarProcess</label>
+        <locationX>852</locationX>
+        <locationY>95</locationY>
+        <defaultConnector>
+            <targetReference>Iterate_Br</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>VarProcess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VarProcessCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varCreateBr</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_varCreateBr</targetReference>
+            </connector>
+            <label>VarProcess</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Whether RecordTypeId is fetched or not.</description>
+        <name>Fetched_RecordType</name>
+        <label>Fetched RecordType</label>
+        <locationX>253</locationX>
+        <locationY>52</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_RecordType_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VarRecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fetch_Business_Rule</targetReference>
+            </connector>
+            <label>Is RecordType Available</label>
+        </rules>
+    </decisions>
+    <description>When Account is activate Create Task Notification and Service Approver.</description>
+    <formulas>
+        <description>Input Parameter for Business Notification Record Type</description>
+        <name>VarBusinessNotification</name>
+        <dataType>String</dataType>
+        <expression>&apos;Business_Rule__c;Task_Notification&apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Whether Br Process contains Service Guarantees Approval</description>
+        <name>VarProcessCheck</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(INCLUDES( {!VarBusinessRuleProcess}, &quot;Service Guarantees Approval&quot;),true,false)</expression>
+    </formulas>
+    <formulas>
+        <description>Service Approver RecordTypeId InputParameter</description>
+        <name>varSARecordType</name>
+        <dataType>String</dataType>
+        <expression>&apos;Service_Approver__c;Email&apos;</expression>
+    </formulas>
+    <interviewLabel>Create Business Task Notification {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Business Task Notification</label>
+    <loops>
+        <description>Iterate Fetched Br and identify whether</description>
+        <name>Iterate_Br</name>
+        <label>Iterate Br</label>
+        <locationX>673</locationX>
+        <locationY>245</locationY>
+        <assignNextValueToReference>VarBr</assignNextValueToReference>
+        <collectionReference>VarBusinessRulelst</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Process</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Check_on_Creating_Business_Rule</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create Business Rule</description>
+        <name>Create_Business_Rule</name>
+        <label>Create Business Rule</label>
+        <locationX>847</locationX>
+        <locationY>360</locationY>
+        <assignRecordIdToReference>VarBrId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Fetch_SA_RecordType</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId__c</field>
+            <value>
+                <elementReference>VarAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Active__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Process__c</field>
+            <value>
+                <stringValue>Service Guarantees Approval</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>VarRecordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Business_Rule__c</object>
+    </recordCreates>
+    <recordCreates>
+        <description>Create Service Approver</description>
+        <name>Create_Service_Approver</name>
+        <label>Create Service Approver</label>
+        <locationX>1058</locationX>
+        <locationY>360</locationY>
+        <inputAssignments>
+            <field>Business_Rule__c</field>
+            <value>
+                <elementReference>VarBrId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <stringValue>dsekar@wm.com</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>varSARecordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Service_Approver__c</object>
+    </recordCreates>
+    <recordLookups>
+        <description>Fetch Business Rule based on the Account.</description>
+        <name>Fetch_Business_Rule</name>
+        <label>Fetch Business Rule</label>
+        <locationX>496</locationX>
+        <locationY>49</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Br</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>VarAccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>VarRecordTypeId</elementReference>
+            </value>
+        </filters>
+        <object>Business_Rule__c</object>
+        <outputReference>VarBusinessRulelst</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Process__c</queriedFields>
+    </recordLookups>
+    <startElementReference>Get_Business_Notification_Record_Type</startElementReference>
+    <status>Active</status>
+    <variables>
+        <description>Account Id is passed as input Parameter.</description>
+        <name>VarAccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>VarBr</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Rule__c</objectType>
+    </variables>
+    <variables>
+        <description>Created Business Rule Id</description>
+        <name>VarBrId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Identified Business Rule</description>
+        <name>VarBusinessRulelst</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Rule__c</objectType>
+    </variables>
+    <variables>
+        <description>Business Rule Process Field</description>
+        <name>VarBusinessRuleProcess</name>
+        <dataType>Multipicklist</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>whether Br already exist for Service Guarantees Approval or not.</description>
+        <name>varCreateBr</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Business Task Notification Record Type Id</description>
+        <name>VarRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Service Approver RecordType Id</description>
+        <name>varSARecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

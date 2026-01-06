@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dumpster_Style__c</fullName>
+    <description>To capture dumpster styles on the Asset product - this should be deprecated with CPQ - This should either be considered an attribute or standalone product types</description>
+    <externalId>false</externalId>
+    <label>Dumpster Style</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Flat Top</fullName>
+                <default>false</default>
+                <label>Flat Top</label>
+            </value>
+            <value>
+                <fullName>Slant Top</fullName>
+                <default>false</default>
+                <label>Slant Top</label>
+            </value>
+            <value>
+                <fullName>Cathedral</fullName>
+                <default>false</default>
+                <label>Cathedral</label>
+            </value>
+            <value>
+                <fullName>No Preference</fullName>
+                <default>false</default>
+                <label>No Preference</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

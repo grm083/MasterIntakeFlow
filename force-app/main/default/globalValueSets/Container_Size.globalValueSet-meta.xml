@@ -1,0 +1,1175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>96 Gallons</fullName>
+        <default>false</default>
+        <label>96 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>0.5 Gallons</fullName>
+        <default>false</default>
+        <label>0.5 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>4 Gallons</fullName>
+        <default>false</default>
+        <label>4 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>5 Gallons</fullName>
+        <default>false</default>
+        <label>5 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>8 Gallons</fullName>
+        <default>false</default>
+        <label>8 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>10 Gallons</fullName>
+        <default>false</default>
+        <label>10 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>14 Gallons</fullName>
+        <default>false</default>
+        <label>14 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>15 Gallons</fullName>
+        <default>false</default>
+        <label>15 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>16 Gallons</fullName>
+        <default>false</default>
+        <label>16 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>18 Gallons</fullName>
+        <default>false</default>
+        <label>18 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>20 Gallons</fullName>
+        <default>false</default>
+        <label>20 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>21 Gallons</fullName>
+        <default>false</default>
+        <label>21 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>22 Gallons</fullName>
+        <default>false</default>
+        <label>22 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>25 Gallons</fullName>
+        <default>false</default>
+        <label>25 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>28 Gallons</fullName>
+        <default>false</default>
+        <label>28 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>30 Gallons</fullName>
+        <default>false</default>
+        <label>30 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>32 Gallons</fullName>
+        <default>false</default>
+        <label>32 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>33 Gallons</fullName>
+        <default>false</default>
+        <label>33 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>34 Gallons</fullName>
+        <default>false</default>
+        <label>34 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>35 Gallons</fullName>
+        <default>false</default>
+        <label>35 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>36 Gallons</fullName>
+        <default>false</default>
+        <label>36 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>39 Gallons</fullName>
+        <default>false</default>
+        <label>39 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>40 Gallons</fullName>
+        <default>false</default>
+        <label>40 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>44 Gallons</fullName>
+        <default>false</default>
+        <label>44 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>45 Gallons</fullName>
+        <default>false</default>
+        <label>45 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>48 Gallons</fullName>
+        <default>false</default>
+        <label>48 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>50 Gallons</fullName>
+        <default>false</default>
+        <label>50 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>54 Gallons</fullName>
+        <default>false</default>
+        <label>54 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>55 Gallons</fullName>
+        <default>false</default>
+        <label>55 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>60 Gallons</fullName>
+        <default>false</default>
+        <label>60 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>63 Gallons</fullName>
+        <default>false</default>
+        <label>63 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>64 Gallons</fullName>
+        <default>false</default>
+        <label>64 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>65 Gallons</fullName>
+        <default>false</default>
+        <label>65 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>68 Gallons</fullName>
+        <default>false</default>
+        <label>68 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>70 Gallons</fullName>
+        <default>false</default>
+        <label>70 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>75 Gallons</fullName>
+        <default>false</default>
+        <label>75 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>80 Gallons</fullName>
+        <default>false</default>
+        <label>80 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>85 Gallons</fullName>
+        <default>false</default>
+        <label>85 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>86 Gallons</fullName>
+        <default>false</default>
+        <label>86 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>90 Gallons</fullName>
+        <default>false</default>
+        <label>90 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>92 Gallons</fullName>
+        <default>false</default>
+        <label>92 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>94 Gallons</fullName>
+        <default>false</default>
+        <label>94 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>95 Gallons</fullName>
+        <default>false</default>
+        <label>95 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>97 Gallons</fullName>
+        <default>false</default>
+        <label>97 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>98 Gallons</fullName>
+        <default>false</default>
+        <label>98 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>100 Gallons</fullName>
+        <default>false</default>
+        <label>100 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>101 Gallons</fullName>
+        <default>false</default>
+        <label>101 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>103 Gallons</fullName>
+        <default>false</default>
+        <label>103 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>105 Gallons</fullName>
+        <default>false</default>
+        <label>105 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>109 Gallons</fullName>
+        <default>false</default>
+        <label>109 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>200 Gallons</fullName>
+        <default>false</default>
+        <label>200 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>225 Gallons</fullName>
+        <default>false</default>
+        <label>225 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>250 Gallons</fullName>
+        <default>false</default>
+        <label>250 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>300 Gallons</fullName>
+        <default>false</default>
+        <label>300 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>350 Gallons</fullName>
+        <default>false</default>
+        <label>350 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>400 Gallons</fullName>
+        <default>false</default>
+        <label>400 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>420 Gallons</fullName>
+        <default>false</default>
+        <label>420 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>440 Gallons</fullName>
+        <default>false</default>
+        <label>440 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>1200 Gallons</fullName>
+        <default>false</default>
+        <label>1200 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>1500 Gallons</fullName>
+        <default>false</default>
+        <label>1500 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>2500 Gallons</fullName>
+        <default>false</default>
+        <label>2500 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>3000 Gallons</fullName>
+        <default>false</default>
+        <label>3000 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>19 Gallons</fullName>
+        <default>false</default>
+        <label>19 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>3 Gallons</fullName>
+        <default>false</default>
+        <label>3 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>175 Gallons</fullName>
+        <default>false</default>
+        <label>175 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>3.5 Gallons</fullName>
+        <default>false</default>
+        <label>3.5 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>13 Gallons</fullName>
+        <default>false</default>
+        <label>13 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>5000 Gallons</fullName>
+        <default>false</default>
+        <label>5000 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>6 Gallons</fullName>
+        <default>false</default>
+        <label>6 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>52 Gallons</fullName>
+        <default>false</default>
+        <label>52 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>150 Gallons</fullName>
+        <default>false</default>
+        <label>150 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>1000 Gallons</fullName>
+        <default>false</default>
+        <label>1000 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>240 Gallons</fullName>
+        <default>false</default>
+        <label>240 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>2000 Gallons</fullName>
+        <default>false</default>
+        <label>2000 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>7 Gallons</fullName>
+        <default>false</default>
+        <label>7 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>500 Gallons</fullName>
+        <default>false</default>
+        <label>500 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>25 Pounds</fullName>
+        <default>false</default>
+        <label>25 Pounds</label>
+    </customValue>
+    <customValue>
+        <fullName>50 Pounds</fullName>
+        <default>false</default>
+        <label>50 Pounds</label>
+    </customValue>
+    <customValue>
+        <fullName>850 Pounds</fullName>
+        <default>false</default>
+        <label>850 Pounds</label>
+    </customValue>
+    <customValue>
+        <fullName>10 Pounds</fullName>
+        <default>false</default>
+        <label>10 Pounds</label>
+    </customValue>
+    <customValue>
+        <fullName>60 Pounds</fullName>
+        <default>false</default>
+        <label>60 Pounds</label>
+    </customValue>
+    <customValue>
+        <fullName>0.5 Tons</fullName>
+        <default>false</default>
+        <label>0.5 Tons</label>
+    </customValue>
+    <customValue>
+        <fullName>10 Tons</fullName>
+        <default>false</default>
+        <label>10 Tons</label>
+    </customValue>
+    <customValue>
+        <fullName>40 Yards</fullName>
+        <default>false</default>
+        <label>40 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>30 Yards</fullName>
+        <default>false</default>
+        <label>30 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>20 Yards</fullName>
+        <default>false</default>
+        <label>20 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>8 Yards</fullName>
+        <default>false</default>
+        <label>8 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>6 Yards</fullName>
+        <default>false</default>
+        <label>6 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>4 Yards</fullName>
+        <default>false</default>
+        <label>4 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>3 Yards</fullName>
+        <default>false</default>
+        <label>3 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>2 Yards</fullName>
+        <default>false</default>
+        <label>2 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.05 Yards</fullName>
+        <default>false</default>
+        <label>0.05 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.1 Yards</fullName>
+        <default>false</default>
+        <label>0.1 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.18 Yards</fullName>
+        <default>false</default>
+        <label>0.18 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.2 Yards</fullName>
+        <default>false</default>
+        <label>0.2 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.3 Yards</fullName>
+        <default>false</default>
+        <label>0.3 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.4 Yards</fullName>
+        <default>false</default>
+        <label>0.4 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.45 Yards</fullName>
+        <default>false</default>
+        <label>0.45 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.5 Yards</fullName>
+        <default>false</default>
+        <label>0.5 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.7 Yards</fullName>
+        <default>false</default>
+        <label>0.7 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>0.75 Yards</fullName>
+        <default>false</default>
+        <label>0.75 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>1 Yards</fullName>
+        <default>false</default>
+        <label>1 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>1.25 Yards</fullName>
+        <default>false</default>
+        <label>1.25 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>1.3 Yards</fullName>
+        <default>false</default>
+        <label>1.3 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>1.33 Yards</fullName>
+        <default>false</default>
+        <label>1.33 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>1.5 Yards</fullName>
+        <default>false</default>
+        <label>1.5 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>1.6 Yards</fullName>
+        <default>false</default>
+        <label>1.6 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>2.5 Yards</fullName>
+        <default>false</default>
+        <label>2.5 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>3.5 Yards</fullName>
+        <default>false</default>
+        <label>3.5 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>4.5 Yards</fullName>
+        <default>false</default>
+        <label>4.5 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>5 Yards</fullName>
+        <default>false</default>
+        <label>5 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>7 Yards</fullName>
+        <default>false</default>
+        <label>7 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>9 Yards</fullName>
+        <default>false</default>
+        <label>9 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>10 Yards</fullName>
+        <default>false</default>
+        <label>10 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>11 Yards</fullName>
+        <default>false</default>
+        <label>11 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>12 Yards</fullName>
+        <default>false</default>
+        <label>12 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>13 Yards</fullName>
+        <default>false</default>
+        <label>13 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>14 Yards</fullName>
+        <default>false</default>
+        <label>14 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>15 Yards</fullName>
+        <default>false</default>
+        <label>15 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>16 Yards</fullName>
+        <default>false</default>
+        <label>16 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>17 Yards</fullName>
+        <default>false</default>
+        <label>17 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>18 Yards</fullName>
+        <default>false</default>
+        <label>18 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>19 Yards</fullName>
+        <default>false</default>
+        <label>19 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>19.5 Yards</fullName>
+        <default>false</default>
+        <label>19.5 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>21 Yards</fullName>
+        <default>false</default>
+        <label>21 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>22 Yards</fullName>
+        <default>false</default>
+        <label>22 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>23 Yards</fullName>
+        <default>false</default>
+        <label>23 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>24 Yards</fullName>
+        <default>false</default>
+        <label>24 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>25 Yards</fullName>
+        <default>false</default>
+        <label>25 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>26 Yards</fullName>
+        <default>false</default>
+        <label>26 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>27 Yards</fullName>
+        <default>false</default>
+        <label>27 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>28 Yards</fullName>
+        <default>false</default>
+        <label>28 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>29 Yards</fullName>
+        <default>false</default>
+        <label>29 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>31 Yards</fullName>
+        <default>false</default>
+        <label>31 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>32 Yards</fullName>
+        <default>false</default>
+        <label>32 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>33 Yards</fullName>
+        <default>false</default>
+        <label>33 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>34 Yards</fullName>
+        <default>false</default>
+        <label>34 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>35 Yards</fullName>
+        <default>false</default>
+        <label>35 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>36 Yards</fullName>
+        <default>false</default>
+        <label>36 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>37 Yards</fullName>
+        <default>false</default>
+        <label>37 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>38 Yards</fullName>
+        <default>false</default>
+        <label>38 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>39 Yards</fullName>
+        <default>false</default>
+        <label>39 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>41 Yards</fullName>
+        <default>false</default>
+        <label>41 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>42 Yards</fullName>
+        <default>false</default>
+        <label>42 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>43 Yards</fullName>
+        <default>false</default>
+        <label>43 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>44 Yards</fullName>
+        <default>false</default>
+        <label>44 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>45 Yards</fullName>
+        <default>false</default>
+        <label>45 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>46 Yards</fullName>
+        <default>false</default>
+        <label>46 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>47 Yards</fullName>
+        <default>false</default>
+        <label>47 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>48 Yards</fullName>
+        <default>false</default>
+        <label>48 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>50 Yards</fullName>
+        <default>false</default>
+        <label>50 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>53 Yards</fullName>
+        <default>false</default>
+        <label>53 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>55 Yards</fullName>
+        <default>false</default>
+        <label>55 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>57 Yards</fullName>
+        <default>false</default>
+        <label>57 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>60 Yards</fullName>
+        <default>false</default>
+        <label>60 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>87 Yards</fullName>
+        <default>false</default>
+        <label>87 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>100 Yards</fullName>
+        <default>false</default>
+        <label>100 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>120 Yards</fullName>
+        <default>false</default>
+        <label>120 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>300 Yards</fullName>
+        <default>false</default>
+        <label>300 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>330 Yards</fullName>
+        <default>false</default>
+        <label>330 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>430 Yards</fullName>
+        <default>false</default>
+        <label>430 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>2.3 Yards</fullName>
+        <default>false</default>
+        <label>2.3 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>80 Yards</fullName>
+        <default>false</default>
+        <label>80 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>69 Yards</fullName>
+        <default>false</default>
+        <label>69 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>89 Yards</fullName>
+        <default>false</default>
+        <label>89 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>2.6 Yards</fullName>
+        <default>false</default>
+        <label>2.6 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>52 Yards</fullName>
+        <default>false</default>
+        <label>52 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>28.5 Yards</fullName>
+        <default>false</default>
+        <label>28.5 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>400 Yards</fullName>
+        <default>false</default>
+        <label>400 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>105 Yards</fullName>
+        <default>false</default>
+        <label>105 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>125 Yards</fullName>
+        <default>false</default>
+        <label>125 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>90 Yards</fullName>
+        <default>false</default>
+        <label>90 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>96 Yards</fullName>
+        <default>false</default>
+        <label>96 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>71 Yards</fullName>
+        <default>false</default>
+        <label>71 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>340 Yards</fullName>
+        <default>false</default>
+        <label>340 Yards</label>
+    </customValue>
+    <customValue>
+        <fullName>1 Feet</fullName>
+        <default>false</default>
+        <label>1 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>4 Feet</fullName>
+        <default>false</default>
+        <label>4 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>5 Feet</fullName>
+        <default>false</default>
+        <label>5 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>6 Feet</fullName>
+        <default>false</default>
+        <label>6 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>8 Feet</fullName>
+        <default>false</default>
+        <label>8 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>12 Feet</fullName>
+        <default>false</default>
+        <label>12 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>15 Feet</fullName>
+        <default>false</default>
+        <label>15 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>20 Feet</fullName>
+        <default>false</default>
+        <label>20 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>21 Feet</fullName>
+        <default>false</default>
+        <label>21 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>22 Feet</fullName>
+        <default>false</default>
+        <label>22 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>24 Feet</fullName>
+        <default>false</default>
+        <label>24 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>26 Feet</fullName>
+        <default>false</default>
+        <label>26 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>30 Feet</fullName>
+        <default>false</default>
+        <label>30 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>36 Feet</fullName>
+        <default>false</default>
+        <label>36 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>40 Feet</fullName>
+        <default>false</default>
+        <label>40 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>42 Feet</fullName>
+        <default>false</default>
+        <label>42 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>45 Feet</fullName>
+        <default>false</default>
+        <label>45 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>48 Feet</fullName>
+        <default>false</default>
+        <label>48 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>53 Feet</fullName>
+        <default>false</default>
+        <label>53 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>60 Feet</fullName>
+        <default>false</default>
+        <label>60 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>80 Feet</fullName>
+        <default>false</default>
+        <label>80 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>27 Feet</fullName>
+        <default>false</default>
+        <label>27 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>10 Feet</fullName>
+        <default>false</default>
+        <label>10 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>3 Feet</fullName>
+        <default>false</default>
+        <label>3 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>100 Feet</fullName>
+        <default>false</default>
+        <label>100 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>38 Feet</fullName>
+        <default>false</default>
+        <label>38 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>50 Feet</fullName>
+        <default>false</default>
+        <label>50 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>14 Feet</fullName>
+        <default>false</default>
+        <label>14 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>16 Feet</fullName>
+        <default>false</default>
+        <label>16 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>4x4 Feet</fullName>
+        <default>false</default>
+        <label>4x4 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>65 Feet</fullName>
+        <default>false</default>
+        <label>65 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>72 Feet</fullName>
+        <default>false</default>
+        <label>72 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>58 Feet</fullName>
+        <default>false</default>
+        <label>58 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>2 Feet</fullName>
+        <default>false</default>
+        <label>2 Feet</label>
+    </customValue>
+    <customValue>
+        <fullName>14 Inches</fullName>
+        <default>false</default>
+        <label>14 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>30 Inches</fullName>
+        <default>false</default>
+        <label>30 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>32 Inches</fullName>
+        <default>false</default>
+        <label>32 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>36 Inches</fullName>
+        <default>false</default>
+        <label>36 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>40 Inches</fullName>
+        <default>false</default>
+        <label>40 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>42 Inches</fullName>
+        <default>false</default>
+        <label>42 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>48 Inches</fullName>
+        <default>false</default>
+        <label>48 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>53 Inches</fullName>
+        <default>false</default>
+        <label>53 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>60 Inches</fullName>
+        <default>false</default>
+        <label>60 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>64 Inches</fullName>
+        <default>false</default>
+        <label>64 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>72 Inches</fullName>
+        <default>false</default>
+        <label>72 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>96 Inches</fullName>
+        <default>false</default>
+        <label>96 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>3.5 Inches</fullName>
+        <default>false</default>
+        <label>3.5 Inches</label>
+    </customValue>
+    <customValue>
+        <fullName>Unknown</fullName>
+        <default>false</default>
+        <label>Unknown</label>
+    </customValue>
+    <customValue>
+        <fullName>TB04</fullName>
+        <default>false</default>
+        <label>TB04</label>
+    </customValue>
+    <customValue>
+        <fullName>TB06</fullName>
+        <default>false</default>
+        <label>TB06</label>
+    </customValue>
+    <customValue>
+        <fullName>Large</fullName>
+        <default>false</default>
+        <label>Large</label>
+    </customValue>
+    <customValue>
+        <fullName>Medium</fullName>
+        <default>false</default>
+        <label>Medium</label>
+    </customValue>
+    <customValue>
+        <fullName>Small</fullName>
+        <default>false</default>
+        <label>Small</label>
+    </customValue>
+    <customValue>
+        <fullName>Mini</fullName>
+        <default>false</default>
+        <label>Mini</label>
+    </customValue>
+    <customValue>
+        <fullName>1 Case - Plastic</fullName>
+        <default>false</default>
+        <label>1 Case - Plastic</label>
+    </customValue>
+    <customValue>
+        <fullName>1 Case - Cans</fullName>
+        <default>false</default>
+        <label>1 Case - Cans</label>
+    </customValue>
+    <customValue>
+        <fullName>1 Case - Voucher Paper</fullName>
+        <default>false</default>
+        <label>1 Case - Voucher Paper</label>
+    </customValue>
+    <customValue>
+        <fullName>31 Gallons</fullName>
+        <default>false</default>
+        <label>31 Gallons</label>
+    </customValue>
+    <customValue>
+        <fullName>1 Case - Mixed</fullName>
+        <default>false</default>
+        <label>1 Case - Mixed</label>
+    </customValue>
+    <masterLabel>Container Size</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

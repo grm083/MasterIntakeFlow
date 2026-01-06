@@ -1,0 +1,30 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="GetServiceApprover">
+    <!--<aura:attribute name="serviceApproverlst" type="Service_Approver__c[]" default=""/> -->
+    <aura:attribute name="serviceApproverlst" type="GetServiceApprover.ServiceApproverWrapper[]" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<lightning:card title="Service Approvers">
+        <p class="slds-p-horizontal_small">
+       <table class="slds-table slds-table_bordered " aura:Id="tableid">
+        <thead>
+        	<tr>
+                <th>Approver</th>
+                <th>Approver Type</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+            </tr>
+        </thead>
+        <tbody>
+           <aura:iteration var="sa" items="{!v.serviceApproverlst}">
+               <tr>
+               	   <td><aura:unescapedHtml value="{!sa.Approver}" /></td>
+                   <td>{!sa.ApproverType}</td>
+                   <td>{!sa.ApproverEmail}</td>
+                   <td>{!sa.ApproverPhone}</td>
+               </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+
+        </p>
+    </lightning:card>
+</aura:component>

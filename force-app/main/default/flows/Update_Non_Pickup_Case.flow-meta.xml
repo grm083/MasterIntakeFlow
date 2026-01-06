@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <name>Add_to_CaseList</name>
+        <label>Add to CaseList</label>
+        <locationX>405</locationX>
+        <locationY>548</locationY>
+        <assignmentItems>
+            <assignToReference>updateCaseLst</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>caseRec</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_Pending_Additional_Research</name>
+        <label>Assign Pending Additional Research</label>
+        <locationX>761</locationX>
+        <locationY>533</locationY>
+        <assignmentItems>
+            <assignToReference>caseRec.Case_Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pending Additional Research</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_CaseList</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Pending_Service_Recovery</name>
+        <label>Assign Pending Service Recovery</label>
+        <locationX>679</locationX>
+        <locationY>406</locationY>
+        <assignmentItems>
+            <assignToReference>caseRec.Case_Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pending Service Recovery</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRec.Service_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>taskRec.Proposed_Service_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_CaseList</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Recovery_Not_Performed</name>
+        <label>Assign Recovery Not Performed</label>
+        <locationX>397</locationX>
+        <locationY>332</locationY>
+        <assignmentItems>
+            <assignToReference>caseRec.Case_Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Recovery Not Performed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRec.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_CaseList</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Recovery_Scheduled</name>
+        <label>Assign Recovery Scheduled</label>
+        <locationX>598</locationX>
+        <locationY>244</locationY>
+        <assignmentItems>
+            <assignToReference>caseRec.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRec.Case_Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Recovery Scheduled</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_CaseList</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update Case Sub status to Pending Additional Research on Updating of outcome Service Evidence Received RSI task</description>
+        <name>Update_Case_Sub_satus_For_RSI_Task_Service_Evidence_Received</name>
+        <label>Update Case Sub-satus For RSI Task Service Evidence Received</label>
+        <locationX>1034</locationX>
+        <locationY>314</locationY>
+        <assignmentItems>
+            <assignToReference>caseRec.Case_Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pending Additional Research</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_CaseList</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Criterias_to_Update_Case_Details</name>
+        <label>Criterias to Update Case Details</label>
+        <locationX>390</locationX>
+        <locationY>51</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Pending_Service_Recovery</name>
+            <conditionLogic>(1 OR 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>taskRec.Process__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolve Service Issue</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>taskRec.Process__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Unresponsive Contact Vendor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>taskRec.Outcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Schedule Recovery/Service Rescheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>caseRec.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Pending_Service_Recovery</targetReference>
+            </connector>
+            <label>Pending Service Recovery</label>
+        </rules>
+        <rules>
+            <name>Recovery_Scheduled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>taskRec.Process__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolve Service Issue</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>taskRec.Outcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency Service Required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>caseRec.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Recovery_Scheduled</targetReference>
+            </connector>
+            <label>Recovery Scheduled</label>
+        </rules>
+        <rules>
+            <name>Recovery_Not_Performed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>taskRec.Process__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Unresponsive Contact Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>taskRec.Outcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Follow Up Not Required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>caseRec.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Recovery_Not_Performed</targetReference>
+            </connector>
+            <label>Recovery Not Performed</label>
+        </rules>
+        <rules>
+            <name>Pending_Additional_Research</name>
+            <conditionLogic>(1 AND 2) OR (3 AND 4 ) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>taskRec.Process__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolve Service Issue</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>taskRec.Outcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Charges Needed/Vendor Disputes Cost/ Customer Disputes Resolution</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>taskRec.Process__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalation Unresponsive Contact Vendor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>taskRec.Outcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Charges Needed/Vendor Disputes Cost/ Incorrect Hauler/Incorrect Service</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>caseRec.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Pending_Additional_Research</targetReference>
+            </connector>
+            <label>Pending Additional Research</label>
+        </rules>
+        <rules>
+            <name>Service_Evidence_Received_RSI_Task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>taskRec.Process__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolve Service Issue</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>taskRec.Outcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Service Evidence Received</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Sub_satus_For_RSI_Task_Service_Evidence_Received</targetReference>
+            </connector>
+            <label>Service Evidence Received RSI Task</label>
+        </rules>
+    </decisions>
+    <description>This will invoked from main flow &quot;Process of Non Pickup Task framework&quot; for update case scenario</description>
+    <interviewLabel>Update Non Pickup Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Non Pickup Case</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>17</locationX>
+        <locationY>31</locationY>
+        <connector>
+            <targetReference>Criterias_to_Update_Case_Details</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>caseRec</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>taskRec</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>updateCaseLst</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

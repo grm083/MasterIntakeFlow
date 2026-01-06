@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <available>true</available>
+    <description>Vendor</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Quote Vendor Availability - Third Party</name>
+    <packageVersions>
+        <majorNumber>254</majorNumber>
+        <minorNumber>0</minorNumber>
+        <namespace>SBQQ</namespace>
+    </packageVersions>
+    <style>none</style>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

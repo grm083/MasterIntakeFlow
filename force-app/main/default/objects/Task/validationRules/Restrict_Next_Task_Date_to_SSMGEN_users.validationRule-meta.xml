@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Next_Task_Date_to_SSMGEN_users</fullName>
+    <active>false</active>
+    <description>This validation is to prevent non SSM team users to edit Next Task Due Date Time field.</description>
+    <errorConditionFormula>AND(
+					NOT(TEXT($User.User_categorization_code__c) = &quot;SSMGEN&quot;),
+					 ISCHANGED(Next_Task_Due_Date_Time__c), ISPICKVAL(Outcome__c, &quot;Future Date Request&quot;) 
+					)</errorConditionFormula>
+    <errorMessage>You do not have access to change Next Task Due Date Time</errorMessage>
+</ValidationRule>

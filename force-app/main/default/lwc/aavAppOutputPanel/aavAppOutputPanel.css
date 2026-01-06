@@ -1,0 +1,36 @@
+.warning-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2%;
+    width: 100%;
+    padding: 2%;
+}
+.warning-text{
+    color: rgb(221, 2, 2);
+    border: 2px solid black;
+    font-size: 12px;
+    background: rgb(252 225 0);
+    padding: 1%;
+    letter-spacing: 0.25px;
+    font-weight: 500;
+    line-height: 1.5;
+    border-radius: 5px;
+    width: auto;
+}
+.warning-text-list{
+    list-style-type: disc;
+    margin-left: 1.5em;
+}
+.warning-text-single{
+    list-style-type: none;
+    margin-left: 1em;
+    margin-right: 2em;
+}
+.outer-section{
+    background: white;
+    border-radius: 2px;
+}
+.outerbox{
+    margin-top: 10px;
+}

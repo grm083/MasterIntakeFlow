@@ -1,0 +1,154 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style=""><font face="Arial, sans-serif"><br></font><table border="0" cellpadding="0" cellspacing="0" width="741" style="border-collapse: collapse; width: 556pt;">
+ <colgroup><col width="362" style="mso-width-source:userset;width:272pt">
+ <col width="33" style="mso-width-source:userset;width:25pt">
+ <col width="346" style="mso-width-source:userset;width:260pt">
+ </colgroup><tbody><tr height="91" style="mso-height-source:userset;height:38.57pt">
+  <td colspan="3" height="91" class="oa1" width="741" style="height:38.57pt;width:556pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><font face="Arial, sans-serif"><span style="color: rgb(87, 87, 79);">Dear Vendor Client Code Team</span><span style="color: rgb(87, 87, 79);">,</span></font></p><p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font face="Arial, sans-serif"><font color="#57574f">	<br></font></font></p><p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font color="#57574f" style="font-family: Arial, sans-serif; text-indent: 0in; font-size: 12pt;"><b>Please create a new shell for the new location below</b> </font><font color="#cc0000" style="font-family: Arial, sans-serif; text-indent: 0in; font-size: 12pt; font-weight: bold;">[insert address]</font></p><p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font color="#cc0000" style="font-family: Arial, sans-serif; text-indent: 0in; font-size: 12pt; font-weight: bold;"><br></font></p>
+  </td>
+ </tr>
+ 	
+ <tr height="48" style="mso-height-source:userset;height:36.0pt">
+  <td colspan="3" height="48" class="oa1" width="741" style="height:36.0pt;width:556pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><b style="text-indent: 0in; font-size: 12pt;"><font color="#666666" face="Arial, sans-serif"><img src="{!$Label.Truck_Image}" border="0" align="left" alt=""></font></b></p><p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><b style="text-indent: 0in; font-size: 12pt;"><font color="#666666" face="Arial, sans-serif"><br></font></b></p><p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><b style="font-family: Arial, sans-serif; color: rgb(87, 87, 79); font-weight: bold; text-indent: 0in; font-size: 12pt;"><span style="font-family: Arial, sans-serif; color: rgb(87, 87, 79); font-weight: bold; text-indent: 0in; font-size: 12pt;">Service Details</span></b></p>
+  </td>
+ </tr>
+ <tr height="36" style="mso-height-source:userset;height:27.0pt">
+  <td height="36" class="oa3" width="362" style="height:27.0pt;width:272pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="font-family: Arial, sans-serif; color: rgb(87, 87, 79); font-size: 11pt; font-weight: bold; text-indent: 0in;">Reference Number:&nbsp;</span></p>
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font color="#57574f" face="Arial, sans-serif"><span style="font-size: 14.6667px;">{!Case.Reference_Number__c}</span></font></p>
+  </td>
+  <td class="oa3" width="33" style="width:25pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+  <td rowspan="3" class="oa3" width="346" style="width:260pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:10.8pt">
+  <td height="14" class="oa3" width="362" style="height:10.8pt;width:272pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+  <td class="oa3" width="33" style="width:25pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="48" style="mso-height-source:userset;height:36.0pt">
+  <td height="48" class="oa3" width="362" style="height:36.0pt;width:272pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="font-size: 11pt; color: rgb(87, 87, 79); font-weight: bold;"><font face="Arial, sans-serif">Service Address:</font></span></p>
+  <p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#57574f" face="Arial, sans-serif"><span style="font-size: 14.6667px;">{!Case.Location_Name_Email_Temp__c}</span></font></p><p style="margin: 0pt 0in; text-indent: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><font color="#57574f" face="Arial, sans-serif"><span style="font-size: 14.6667px;">{!Case.Tech_Location_Details__c}</span></font></p>
+  </td>
+  <td class="oa3" width="33" style="width:25pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="19" style="mso-height-source:userset;height:14.4pt">
+  <td colspan="3" height="19" class="oa1" width="741" style="height:14.4pt;width:556pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="29" style="mso-height-source:userset;height:21.6pt">
+  <td colspan="3" height="29" class="oa1" width="741" style="height:21.6pt;width:556pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><font face="Arial, sans-serif"><span style="font-size: 11pt; color: rgb(87, 87, 79);">Thank </span><span style="font-size: 11pt; color: rgb(87, 87, 79);">you for your help.</span></font></p>
+  </td>
+ </tr>
+ <tr height="24" style="mso-height-source:userset;height:18.0pt">
+  <td colspan="3" height="24" class="oa1" width="741" style="height:18.0pt;width:556pt">
+  <p style="language:en-US;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
+  margin-right:0in;text-indent:0in;text-align:left;direction:ltr;unicode-bidi:
+  embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="58" style="mso-height-source:userset;height:43.2pt">
+  <td colspan="3" height="58" class="oa1" width="741" style="height:43.2pt;width:556pt">
+  <div style="box-sizing: border-box; font-family: &quot;Segoe UI&quot;, system-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif; font-size: 16px; font-weight: 700;"><b style="color: rgb(59, 138, 46); font-family: Arial, sans-serif; font-size: medium; background-color: rgb(255, 255, 255);">{!User.FirstName} {!User.LastName}</b></div>
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><span style="font-size: 11pt; font-variant: normal; color: rgb(87, 87, 79); text-transform: none; letter-spacing: 0pt; font-weight: normal; font-style: normal; vertical-align: baseline;"><font face="Arial, sans-serif">Customer Service Representative</font></span></p>
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><a href="mailto:{!User.Department_Email__c}" style="font-family: Arial, sans-serif; background-color: rgb(255, 255, 255);">{!User.Department_Email__c}</a></p>
+  </td>
+ </tr>
+ <tr height="24" style="mso-height-source:userset;height:18.0pt">
+  <td colspan="3" height="24" class="oa1" width="741" style="height:18.0pt;width:556pt">
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"></p>
+  </td>
+ </tr>
+ <tr height="89" style="mso-height-source:userset;height:66.84pt">
+  <td colspan="3" height="89" class="oa1" width="741" style="height:66.84pt;width:556pt">
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><span style="font-size: 11pt; font-variant: normal; color: rgb(59, 138, 46); text-transform: none; letter-spacing: 0pt; font-weight: bold; font-style: normal; vertical-align: baseline;"><font face="Arial, sans-serif">Waste Management</font></span></p>
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><span style="font-size: 11pt; font-variant: normal; color: rgb(87, 87, 79); text-transform: none; letter-spacing: 0pt; font-weight: normal; font-style: normal; vertical-align: baseline;"><font face="Arial, sans-serif">Strategic Business Solutions</font></span></p>
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><span style="font-size: 11pt; font-variant: normal; color: rgb(87, 87, 79); text-transform: none; letter-spacing: 0pt; font-weight: normal; font-style: normal; vertical-align: baseline;"><font face="Arial, sans-serif">415 Day Hill Rd</font></span></p>
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><span style="font-size: 11pt; font-variant: normal; color: rgb(87, 87, 79); text-transform: none; letter-spacing: 0pt; font-weight: normal; font-style: normal; vertical-align: baseline;"><font face="Arial, sans-serif">Windsor, CT 06095</font></span></p>
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><span style="font-size: 11pt; font-variant: normal; color: rgb(87, 87, 79); text-transform: none; letter-spacing: 0pt; font-weight: normal; font-style: normal; vertical-align: baseline;"><font face="Arial, sans-serif">(888) 625&nbsp;–&nbsp;5323</font></span></p>
+  </td>
+ </tr>
+ <tr height="38" style="mso-height-source:userset;height:28.8pt">
+  <td colspan="3" height="38" class="oa1" width="741" style="height:28.8pt;width:556pt">
+  <p style="language:en-US;line-height:normal;margin-top:0pt;margin-bottom:
+  0pt;margin-left:0in;margin-right:0in;text-indent:0in;text-align:left;
+  direction:ltr;unicode-bidi:embed;mso-vertical-align-alt:auto;mso-line-break-override:
+  none;word-break:normal;punctuation-wrap:hanging"><font color="#57574f" face="Arial, sans-serif" style="background-color: rgb(255, 255, 255);">{!Case.Thread_Id}</font><font face="Arial, sans-serif" style="background-color: rgb(255, 255, 255);"><span style="color: rgb(87, 87, 79);">&nbsp;:&nbsp;</span></font><font color="#57574f" face="Arial, sans-serif" style="background-color: rgb(255, 255, 255);">{!Case.Reference_Number__c}</font></p>
+  </td>
+ </tr>
+</tbody></table></div>]]></td>
+</tr>
+</table>

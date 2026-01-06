@@ -1,0 +1,1007 @@
+<aura:component controller="CaseDetailHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction">
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="recordtypeList" type="List"/>
+    <aura:attribute name="recordTypeName" type="String"/>
+    <aura:attribute name="pickUp" type="boolean" default ="false"/>
+    <aura:attribute name="repair" type="boolean" default ="false"/>
+    <aura:attribute name="newService" type="boolean" default ="false"/>
+    <aura:attribute name="changeAssetCase" type="boolean" default="false"/>
+    <aura:attribute name="siteSurveyCase" type="boolean" default = "false"/>
+    <aura:attribute name="standardCase" type="boolean" default="false"/>
+    <aura:attribute name="loadCmp" type="boolean" default="true"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="spinner" type="boolean" default="true" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:registerEvent name="closeModalBoxEvent" type="c:closeModalBoxEvent" />
+    <aura:registerEvent name="BoxEvent" type="c:closeModalBoxEvent" />
+    
+     <aura:if isTrue="{!v.spinner}">
+        <lightning:spinner aura:id="spinnerId" variant="brand" alternativeText="Loading" size="Medium" />
+    </aura:if>
+    
+     <lightning:navigation aura:id="navService"/>
+    <!--<aura:handler name="onSaveSuccess" event="force:recordSaveSuccess" action="{!c.saveResult}"/> -->
+    <div class="slds">
+        <ui:scrollerWrapper class="scrollerSize">
+            
+            <div class="slds-form slds-form_stacked" style="padding:10px">
+                <div class="slds-col slds-size_2-of-2" style="padding:10px">
+                    <div class="slds-modal__header slds-theme--info" style="background-color:#00693c!Important">
+                        <h2 class="slds-text-heading--medium">Case Details</h2>
+                    </div>
+                    <lightning:recordEditForm aura:id="edit" onload="{!c.handleLoad}" recordTypeId="{!v.recordTypeId}" onsubmit="{!c.save}" onsuccess="{!c.saveResult}" recordId="{!v.recordId}" objectApiName="Case">
+                        <lightning:messages />
+                        <div class="slds-page-header" style="cursor: pointer;" >
+                            <section class="slds-clearfix">
+                                <div class="slds-float--left ">
+                                    <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                    <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                </div>
+                                <div class="slds-m-left--large"  style="font-weight:bolder;">Case Information</div>
+                            </section>           
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:select label="Case Record Type" aura:id="recordtypeId" onchange="{!c.recordTypeChange}" value="{!v.recordTypeName}">
+                                            <aura:iteration items="{!v.recordtypeList}" var="item">
+                                                <ui:inputSelectOption text="{!item}" label="{!item}" />
+                                            </aura:iteration>
+                                        </lightning:select>
+                                        
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField class="slds-hide" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField fieldName="Client__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField fieldName="Status" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Location__c" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Case_Sub_Status__c" />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="ContactId" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Source_System__c" />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Contact_Title__c" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Origin" />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="AssetId" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Reference_Number__c" />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Case_Type__c" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField class="slds-hide"  />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Case_Sub_Type__c" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Is_Monitored__c" />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Case_Reason__c" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Quantity_Override__c" />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField fieldName="Backdated_Case__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField fieldName="Quote_Only__c" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField fieldName="MarkToDelete__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField fieldName="Temp_Asset_needed__c" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-page-header" style="cursor: pointer;" >
+                            <section class="slds-clearfix">
+                                <div class="slds-float--left ">
+                                    <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                    <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                </div>
+                                <div class="slds-m-left--large"  style="font-weight:bolder;">Vendor Details</div>
+                            </section>      
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField fieldName="Site_Contact__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element">
+                                        <lightning:inputField fieldName="Work_Order_Instructions__c" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField fieldName="Site_Contact_Phone__c" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <aura:if isTrue="{!v.pickUp}">
+                            <lightning:icon iconName="utility:case" size="x-medium" /> 
+                            <div class="slds-m-left--large columnName" >PickUp Case</div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">SLA - Service Date</div>
+                                </section>                  
+                                
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="SLA_Service_Date_Time__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="SLA_Override_Reason__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Service_Date__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="SLA_Override_Comment__c" />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Dispatch Details</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Site_Contact__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Supplier__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Site_Contact_Phone__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="SalesMeet_Container_Position__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Work_Order_Instructions__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Customer PO#</div>
+                                </section>   
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="PurchaseOrder_Number__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Override_PO_Create_Task__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Compactor PSI</div>
+                                </section>   
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="PSI__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="PSI_Comments__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="PSI_Override_Reason__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.repair}">
+                            <lightning:icon iconName="utility:case" size="x-medium" /> 
+                            <div class="slds-m-left--large columnName" >Repair Case</div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Product Section</div>
+                                </section>                  
+                                
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Does_the_container_need_to_be_emptied__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Service_Start_Date__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Temp_Asset_needed__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Service_End_Date__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Does_the_container_have_power__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Is_the_door_closed_and_sealed__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="PurchaseOrder_Number__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Is_the_compactor_leaking__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Where_is_the_leak_coming__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Type_of_Liquid__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.newService}">
+                            <lightning:icon iconName="utility:case" size="x-medium" /> 
+                            <div class="slds-m-left--large columnName"  >New Service Case</div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Product Selection</div>
+                                </section>                  
+                                
+                                
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Equipment_Type_Code__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Delivery_Date__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="SalesMeet_Quantity__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Removal_Date__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Equipment_Size_Code__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Material__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="Emergency__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="SalesMeet_Duration__c" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning:inputField fieldName="SalesMeet_Occurance__c" />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Add Accessories</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Is_With_Wheel__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Is_With_Lock__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Portalet</div>
+                                </section>   
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Standard_Portable_Count__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Hand_Wash_Station_Type__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Handicapped_Portable_Count__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Is_Electrical_Workers__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Workers_Per_Shift_Count__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Bladder_Mount_Location__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Frequency</div>
+                                </section>   
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Frequency__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Monday__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Weekly_Frequency__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Tuesday__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Wednesday__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Container_For__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Thursday__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Disposed_Of__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Friday__c" />
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.standardCase}">
+                            <lightning:icon iconName="utility:case" size="x-medium" /> 
+                            <div class="slds-m-left--large columnName" >Standard Case</div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Comments</div>
+                                </section>                  
+                                
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Case_Information__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Case Assignment Details</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Team_Name__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="User_Name__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Team_Queue__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </aura:if>
+                        <aura:if isTrue="{!v.changeAssetCase}">
+                            <lightning:icon iconName="utility:case" size="x-medium" /> 
+                            <div class="slds-m-left--large columnName">Add/Change Asset Case</div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Product Section</div>
+                                </section>                  
+                                
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="SalesMeet_Duration__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Service_Start_Date__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Material__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Service_End_Date__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="SalesMeet_Occurance__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="SalesMeet_Quantity__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Change Service</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Acorn_Location_Id__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Change - Cancel Location</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Acorn_Parent_Issue_Id__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Change - Correction</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Acorn_SUser_Id__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Change - Vendor</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Acorn_Update_Datetime__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Change - Waste Stream</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Acorn_Issue_Id__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Increase/Decrease</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="AccountId" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Add Accessories</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Authorization_Channel__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Add Equipment</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Authorization_Status__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Add Fee(s)</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Authorization_Notes__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Additional Information</div>
+                                </section>      
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Case_Information__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Approval_Status__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Same_Next_Day__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="PurchaseOrder_Number__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="IsEscalated" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Service_Date__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Emergency__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="SLA_Service_Date_Time__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </aura:if>
+                        <aura:if isTrue="{!v.siteSurveyCase}">
+                            <lightning:icon iconName="utility:case" size="x-medium" /> 
+                            <div class="slds-m-left--large columnName" >Site Survey Case</div>
+                            <div class="slds-page-header" style="cursor: pointer;" >
+                                <section class="slds-clearfix">
+                                    <div class="slds-float--left ">
+                                        <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:chevrondown" size="x-small" alternativeText="Indicates add"/>
+                                        <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:chevronright" size="x-small" alternativeText="Indicates dash"/>
+                                    </div>
+                                    <div class="slds-m-left--large"  style="font-weight:bolder;">Site Survey Questions</div>
+                                </section>                  
+                                
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Reason_for_site_survey__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="Client_to_meet_the_vendor_driver__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="When_is_the_contact_available__c" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form-element">
+                                            <lightning:inputField fieldName="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <lightning:layout horizontalAlign="center" class="slds-m-top_large">
+                            <lightning:button variant="brand" label="Submit to Save" title="Submit" type="submit"/>
+                            <lightning:button variant="brand" label="Cancel" onclick="{!c.cancelBtn}" />
+                        </lightning:layout>
+                    </lightning:recordEditForm>
+                </div>
+            </div>
+            {!v.body}
+        </ui:scrollerWrapper>
+    </div>
+    
+</aura:component>

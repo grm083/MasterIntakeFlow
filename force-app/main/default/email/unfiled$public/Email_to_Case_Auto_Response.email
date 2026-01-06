@@ -1,0 +1,9 @@
+Hi {!Contact.FirstName}, 
+
+Thank you for contacting the Customer Experience Team at WM. 
+
+Your request {!Case.Reference_Number__c} has been received and is being reviewed by our team. We strive to address your request for support as quickly as possible. 
+
+Thank you, 
+WMSBS Customer Experience 
+{!Case.Thread_Id}

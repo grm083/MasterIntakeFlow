@@ -1,0 +1,13 @@
+.THIS .selectwidth{
+    margin:auto;
+    width:100%;
+}
+.THIS .slds-datepicker .slds-day {
+    display : contents;
+    position: absolute;
+    z-index: 7000;
+    left: -0.71875px;    
+}
+.THIS .slds-datepicker td.slds-is-selected>.slds-day {
+    color : red;
+}

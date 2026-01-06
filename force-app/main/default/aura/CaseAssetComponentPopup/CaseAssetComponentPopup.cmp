@@ -1,0 +1,148 @@
+<aura:component controller="CaseAssetControllerPopUp" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">	  
+    <aura:attribute name="recordId" type="String" description="ID of the record." />
+    <aura:attribute name="AvailableCaseAssetList" type="object[]"/>
+    <aura:attribute name="selectedCaseAssetList" type="object[]"/>
+    <aura:attribute name="caseAssetList" type="object[]"/>
+    <aura:attribute name="DeleteAssetList" type="object[]"/>
+    <aura:attribute name="isSelectAll" type="boolean" default="false"/>
+    <aura:attribute name="isSelectAllAsset" type="boolean" default="false"/>
+    <aura:attribute name="spinner" type="boolean" default="false" />
+    <aura:attribute name="selectAsset" type="boolean" default="false" />
+    <aura:attribute name="renderAsset" type="boolean" default="false" />
+    <aura:attribute name="error" type="String" description ="Error Message" />
+    <aura:attribute name="showSave" type="boolean" default="true" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name = "caseRecordId" type="String" description = "Id of Case Record"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:if isTrue="{!v.spinner}">
+        <lightning:spinner aura:id="spinnerId" variant="brand" alternativeText="Loading" size="large" />
+    </aura:if>
+    <div class="slds">
+        <div class="slds-m-around_medium">
+            <aura:if isTrue="{!v.selectAsset}">             
+                <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open slds-modal_small"
+            style="position:fixed !important;width:100 %">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"
+                                          onclick="{!c.closeModel }"/>                  
+                   
+                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Service Detail</h2>                   
+                </div>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium slds-scrollable_x" id="modal-content-id-1">
+                    <table class="slds-table slds-table--bordered" style= "width:100%; padding: 0px !important">      
+                        <thead>  
+                            <tr class="slds-text-title--caps" style= "font-Size:9px; padding: 0px !important">
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox value="{!v.isSelectAllAsset}" change="{!c.handleSelectAllAsset}" aura:id="assetSelectAll"/>
+                                        <span class="slds-checkbox--faux" />
+                                        <span class="slds-form-element__label"></span>
+                                    </label>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Name">Asset Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="asset">Asset Service Type</div>
+                                </th>
+                                
+                                <th scope="col">
+                                    <div class="slds-truncate" title="servicetype">Material Type</div>
+                                </th>
+                                
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Duration">Duration</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="occurance">Occurance Type</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="schedule">Schedule</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="quantity">Quantity</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="vendorId">Vendor Id</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="accountId">Supplier Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="startDate">Start Date</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="endDate">End Date</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.AvailableCaseAssetList}" var="asset">
+                                <tr>
+                                    <td>
+                                        <label class="slds-checkbox">
+                                            <ui:inputCheckbox aura:id="availableAsset" value="" text="{!asset.Id}" change="{!c.onChangeSave}"/>
+                                            <span class="slds-checkbox--faux" />
+                                            <span class="slds-form-element__label"></span>
+                                        </label>
+                                    </td>
+                                    <td scope="row">
+                                        <div class="slds-truncate" title="{!asset.Name}">{!asset.Name}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.Service_Type__c}">{!asset.Service_Type__c}</div>
+                                    </td>
+                                    <td scope="row">
+                                        <div class="slds-truncate" title="{!asset.Material_Type__c}">{!asset.Material_Type__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.Duration__c}">{!asset.Duration__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.Occurrence_Type__c}">{!asset.Occurrence_Type__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.Schedule__c}">{!asset.Schedule__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.Quantity__c}">{!asset.Quantity__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.Vendor_ID__c}">{!asset.Vendor_ID__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.Supplier__r.Name}">{!asset.Supplier__r.Name}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.Start_Date__c}">{!asset.Start_Date__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!asset.End_Date__c}">{!asset.End_Date__c}</div>
+                                    </td>
+                                    
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                         
+                    </table>
+                </div>
+                <footer class="slds-modal__footer">
+                                        
+                    <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />                     
+                    <lightning:button variant="brand" label="Add to Case Asset" class="slds-button_brand slds-m-right_small" onclick="{!c.handleSelectedAsset }"  disabled="{!v.showSave }"/>
+                   
+                </footer>
+                </div>               
+               </div>
+              <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div> 
+            </aura:if>            
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Null_When_All_is_True</fullName>
+    <active>true</active>
+    <description>Customer should not be blank in case All is Unchecked</description>
+    <errorConditionFormula>AND( Customer_All__c  = true,  Customer__c  != null,  RecordType.Name = &apos;STP Eligibility&apos;)</errorConditionFormula>
+    <errorMessage>If All US Customers is checked, then US Listed Customers must be blank.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>Edit</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <description>India Customer Experience Representative</description>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>India Customer Experience Representative</name>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>Customer_Experience_Supervisor</parentRole>
+</Role>

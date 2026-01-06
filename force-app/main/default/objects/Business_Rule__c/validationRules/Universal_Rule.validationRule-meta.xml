@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Universal_Rule</fullName>
+    <active>true</active>
+    <description>Universal Rule checkbox can only be checked if &quot;Universal Account DO NOT USE&quot; is the related Account.</description>
+    <errorConditionFormula>AccountId__r.Name &lt;&gt; &quot;Universal Account DO NOT USE&quot; &amp;&amp;  Universal_Rule__c = True</errorConditionFormula>
+    <errorDisplayField>Universal_Rule__c</errorDisplayField>
+    <errorMessage>Account must be Universal Account DO NOT USE in order for the Universal Rule to be checked.</errorMessage>
+</ValidationRule>

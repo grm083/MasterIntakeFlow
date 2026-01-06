@@ -1,0 +1,63 @@
+<template>
+    <template if:false={noRecordsToShow}>
+        <div class="slds-var-m-around_medium">
+             <div class = "slds-text-align_right">
+             <!-- SDT-36481 -->
+                 <lightning-formatted-rich-text  class="slds-align_absolute-right" value={location}></lightning-formatted-rich-text>
+                 
+            </div>
+            <div class="slds-var-m-around_medium">
+                <div class="slds-var-m-around_medium" id="lightning_table_a" style="min-height: 17rem;">
+                    <lightning-datatable
+                    key-field="Id"  
+                    column-widths-mode = "auto"
+                    min-column-width="180"
+                    data={tableData}
+                    columns={columns}
+                    hide-checkbox-column
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
+                    onsort={handleSortData}>
+                    </lightning-datatable>
+                </div>
+            </div>
+            
+            <div class="slds-var-m-around_medium"> 
+                <lightning-layout>
+                    <lightning-layout-item>
+                        <lightning-button label="Previous" 
+                        icon-name="utility:chevronleft"
+                        onclick={previousHandler}
+                        disabled={disablePrevious}></lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="grow">
+                        <p class="slds-text-align_center">Displaying Page:  {shownPageNumber} </p>
+                    </lightning-layout-item>
+                    <lightning-layout-item>
+                        <lightning-button label="Next" 
+                        icon-name="utility:chevronright"
+                        icon-position="right"
+                        onclick={nextHandler}
+                        disabled={disableNext}></lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </div> 
+
+    </template>
+  
+
+
+<!--### adding next and previous buttons ###--> 
+    
+<!--### showing spinnser conditionally ###-->
+<template if:true={showSpinner}>
+    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+</template>
+<!--### showing no records page  conditionally ###-->
+<template if:true={noRecordsToShow}>
+    <div class="slds-text-heading_large">
+       <h1 class="slds-align_absolute-center" style="padding-top:14%;">No records to show</h1>
+    </div>
+</template>
+</template>

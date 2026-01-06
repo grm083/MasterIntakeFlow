@@ -1,0 +1,31 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller = "MultiCaseTaskPopuCntrl">
+    <aura:attribute name="showPopup" type="Boolean" default="false" />
+    <aura:attribute name="tasklist" type="Object"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="draftValues" type="Object" default="[]"/>
+    <aura:attribute name="errors" type="Object" default="[]"/>
+    <!--<aura:handler event="force:refreshView" action="{!c.doInit}" />-->
+    <aura:handler event="c:updateMultiTaskTable" action="{!c.doInit}"/>
+    <!-- Modal visible on click of View Case Summary Button -->
+    <aura:attribute name="record" type="Object"
+                    description="The record object to be displayed"/>
+    <aura:attribute name="recordError" type="String"
+                    description="An error message bound to force:recordData"/>
+    <aura:attribute name="taskRecord" type="String"
+                    description="A simplified view record object to be displayed" default = "Approval Task"/>
+    
+    <aura:if isTrue="{!and (v.showPopup, not(empty(v.tasklist)))}">
+        <lightning:card title="Multi-Case Tasks">
+        <lightning:datatable
+                             columns="{!v.columns}"
+                             data="{!v.tasklist}"
+                             keyField="id"
+                             hideCheckboxColumn = "true"
+                             errors="{!v.errors}"
+                             draftValues="{!v.draftValues}"
+                             onsave="{!c.handleSaveEdition}"
+                             />
+        </lightning:card>
+    </aura:if>
+</aura:component>

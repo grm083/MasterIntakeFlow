@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <outboundMessages>
+        <fullName>Send_Work_Order</fullName>
+        <apiVersion>45.0</apiVersion>
+        <endpointUrl>https://qa.sf.wmsbs.wm.com/SalesforceOutboundMessage/Services/WorkOrderService.svc</endpointUrl>
+        <fields>Id</fields>
+        <fields>WorkOrderNumber</fields>
+        <includeSessionId>true</includeSessionId>
+        <integrationUser>api.user@wm.com</integrationUser>
+        <name>Send Work Order</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Integrate Work Order with Acorn</fullName>
+        <actions>
+            <name>Send_Work_Order</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>true</active>
+        <description>SDT-3192:Integrate Work Order with Acorn</description>
+        <formula>AND($User.Bypass_Validation__c = False, ISBLANK( Acorn_WorkOrder_Id__c ) )</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

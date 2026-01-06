@@ -1,0 +1,162 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller = "GetCaseInformation">
+    <aura:attribute name="showForm" type="Boolean" default="true"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <aura:attribute name="options" type="List" default="[]"/>
+    <aura:attribute name="value" type="String" default=""/>
+    <aura:attribute name="label" type="String" default=""/>
+    <aura:attribute name="selectedLabel" type="String" default=""/>
+    <aura:attribute name="isHaulAwayChecked" type="boolean" default="false"/> <!-- SDT-41473-->
+    <aura:attribute name="vendorIdRequired" type="boolean" default="false"/> <!-- SDT-41473-->
+    <aura:attribute name="haulAwayBookedRequired" type="boolean" default="false"/> <!-- SDT-42886-->
+    <aura:attribute name="vendorSelected"  type="String" default=""/> <!-- SDT-42651-->
+    <aura:attribute name="isHaulAwayUIEnable" type="boolean" default="false"/><!--SDT 45074-->
+    <aura:attribute name="isBillingInvoiceChargeDispute" type="boolean" default="false"/><!--SDT 39047-->
+    
+    <aura:if isTrue="{!v.showForm}">
+        <div class="slds-modal slds-fade-in-open" style="position:fixed !important;padding-top:10rem;">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <!--changes related to SDT-41639-->
+                    <lightning:buttonIcon iconName="utility:close"
+                                          alternativeText="close"
+                                          variant="bare"
+                                          class="slds-modal__close"
+                                          onclick="{!c.closeModel }"/>
+                    <h2 class="slds-text-heading_medium">Required Actions</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning:recordEditForm aura:id="recordViewForm"
+                                              recordId="{!v.recordId}"
+                                              recordTypeId="{!v.recordTypeId}"
+                                              onsuccess="{!c.handleSuccess}"
+                                              onsubmit="{!c.handleOnSave}"
+                                              objectApiName="Case"
+                                              >
+                        <lightning:messages />
+                        
+                        <lightning:layout multipleRows="true">
+                            
+                            <lightning:layoutItem padding="around-small" size="6">
+                                <lightning:inputField fieldName="PurchaseOrder_Number__c" />
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem padding="around-small" size="6">
+                                <lightning:inputField fieldName="Override_PO_Create_Task__c" />
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem size="6" class="slds-p-around_xxx-small">
+                                <!--  <lightning:layoutItem size="12" class="slds-p-around_xxx-small slds-is-relative">
+                                   Company Category 
+                                </lightning:layoutItem>
+                                <aura:if isTrue="{! not(empty(v.options))}">
+                                    <c:reusableCustomDropdownWithSearchLwc options="{!v.options }" value="{!v.value }" label="{!v.label }" onchange="{! c.handleOnChange }"/>
+                                </aura:if>
+                                 -->
+                                <div class="slds-p-top_small">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label" style="margin-right: 0.5rem; padding-top: 1px; padding-left: 14px;">Company Category</label>
+                                        </div>
+                                        <div style="padding-left: 7px; width: 308px;">                    
+                                            <div>
+                                                <aura:if isTrue="{! not(empty(v.options))}">
+                                                    <c:reusableCustomDropdownWithSearchLwc options="{!v.options}" value="{!v.value}" label="{!v.label}" onchange="{!c.handleOnChange}"/>
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning:layoutItem>
+                            
+                            
+                            <lightning:layoutItem padding="around-small" size="6">
+                                <lightning:inputField fieldName="Override_Company_Category_Create_Task__c" />
+                            </lightning:layoutItem>
+
+                             <!-- SDT-41473--><!--SDT 45074-->
+                            <aura:if isTrue="{! not(v.isHaulAwayUIEnable)}">
+                                <lightning:layoutItem padding="around-small" size="6">   
+                                    <lightning:inputField fieldName="Is_Haul_Away_Service__c" onchange="{!c.handleHaulAwayChange}"/>
+                                </lightning:layoutItem>
+                            </aura:if>
+
+                            <!--SDT 45074-->
+                            <aura:if isTrue="{! not(v.isHaulAwayUIEnable)}">
+                            <lightning:layoutItem padding="around-small" size="6">
+                                   
+                                    <lightning:inputField fieldName="Haul_Away_Vendor__c" required = "{!v.isHaulAwayChecked}" onchange="{!c.handleHaulAwayVendorChange}"/>
+                                    
+                            </lightning:layoutItem>
+                            </aura:if>
+                       
+                            <!-- SDT-42650 end-->
+
+                            
+                            <lightning:layoutItem padding="around-small" size="6">   
+                                <lightning:inputField fieldName="Chargeable__c" required = "{!v.isHaulAwayChecked}"/>
+                            </lightning:layoutItem>
+
+                            
+                            <!--SDT 45074-->
+                            <aura:if isTrue="{! not(v.isHaulAwayUIEnable)}">
+                            <lightning:layoutItem padding="around-small" size="6">
+                                   
+                                    <lightning:inputField fieldName="Vendor_Service_Id__c" required = "{!v.vendorIdRequired}"/>
+                                    
+                            </lightning:layoutItem>
+                            </aura:if>
+                       
+                            <!-- SDT-42651-->
+
+                            
+                            <!-- SDT-42650 -->
+                            
+                            <!--SDT 45074-->
+                            <aura:if isTrue="{! not(v.isHaulAwayUIEnable)}">
+                            <lightning:layoutItem padding="around-small" size="6">
+                                   
+                                    <lightning:inputField fieldName="Haul_Away_Service_Booked__c" required = "{!v.haulAwayBookedRequired}"/>
+                                    
+                            </lightning:layoutItem>
+                            </aura:if>
+                       
+                            <!-- SDT-42650 end-->
+                            <!-- SDT-33431 START -->
+                            <lightning:layoutItem padding="around-small" size="6">   
+                                <lightning:inputField fieldName="PSI_Override_Reason__c" />
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem padding="around-small" size="6">    
+                                <lightning:inputField fieldName="PSI__c" />
+                            </lightning:layoutItem>
+                            <!--SDT-33431 END -->
+                           
+                            
+                            <lightning:layoutItem padding="around-small" size="6">    
+                                <lightning:inputField fieldName="PSI_Comments__c" />
+                            </lightning:layoutItem> 
+                            
+                            <!--SDT-39047 isBillingInvoiceChargeDispute will be true if case type ='Billing' and subtype = 'Invoice Charge Dispute'-->
+                            <aura:if isTrue="{!(v.isBillingInvoiceChargeDispute)}">
+                                <lightning:layoutItem padding="around-small" size="6">    
+                                    <lightning:inputField fieldName="Invoice_Number__c" required = "true"/>
+                                </lightning:layoutItem>                           
+                                
+                                <lightning:layoutItem padding="around-small" size="6">    
+                                    <lightning:inputField fieldName="Disputed_Amount__c" required = "true"/>
+                                </lightning:layoutItem> 
+                            </aura:if>
+                            
+                        </lightning:layout>
+                        
+                        <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium slds-align_absolute-center" />
+                    </lightning:recordEditForm>
+                </div>
+                
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
+</aura:component>

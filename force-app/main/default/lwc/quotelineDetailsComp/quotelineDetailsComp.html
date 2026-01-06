@@ -1,0 +1,306 @@
+<!--
+Author: Rishiraj Singh
+Requirement Id/Story: SDT-21793 & SDT-21795(QO Comp)
+FC: Rahul Rana
+Module: Asset Management/Quote Summary on Case Page
+
+Description: quotelineDetailsComp to show quoteline level info on quoteDetailsComp.
+
+-->
+
+<template>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12">
+            <lightning-tabset variant="scoped" active-tab-value={selectedTabValue}>
+                <lightning-tab key={bundle.requestServiceConfigObj.tabName} label={bundle.requestServiceConfigObj.tabName} value={bundle.requestServiceConfigObj.tabName} onactive={tabChangeHandler}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Selected Service:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.selectedService}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Waste Stream:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.wasteStream}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Size:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.size}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Requested Delivery/Start Date:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.startDate}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Requested Removal/End Date: </lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.endDate}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <!--Added Original Quantity for Update Asset Case as part of SDT-29792-->
+                        <template if:true={bundle.requestServiceConfigObj.isUpdateAssetCase}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Original Quantity:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.originalQuantity}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Description of waste Provided:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.descriptionOfWaste}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Quantity requested:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.quantity}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Additional Accessories Or Ancillary Services:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.additionalAccessories}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Service Schedule:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.serviceSchedule}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Quote Only Request:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.quoteOnly}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <template if:true={bundle.requestServiceConfigObj.compactorType}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Compactor Type:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.compactorType}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                        <template if:true={bundle.requestServiceConfigObj.compactorSize}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Compactor Size:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.compactorSize}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                        <template if:true={bundle.requestServiceConfigObj.equipmentStyle}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Equipment Style:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.equipmentStyle}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                        <template if:true={bundle.requestServiceConfigObj.equipmentSideDoors}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Equipment Side Doors:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.equipmentSideDoors}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                        <template if:true={bundle.requestServiceConfigObj.serviceStyle}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Service Style:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.serviceStyle}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                        <template if:true={bundle.requestServiceConfigObj.typeofLid}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Type of Lid:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.typeofLid}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                        <template if:true={bundle.requestServiceConfigObj.understructure}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Understructure:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.understructure}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                        <template if:true={bundle.requestServiceConfigObj.ownership}>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Ownership:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.requestServiceConfigObj.ownership}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-tab>
+                <lightning-tab key={bundle.deliveryInstructionsObj.tabName} label={bundle.deliveryInstructionsObj.tabName} value={bundle.deliveryInstructionsObj.tabName} onactive={tabChangeHandler}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Onsite Contact Name:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.deliveryInstructionsObj.contactName}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Onsite Phone Number:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.deliveryInstructionsObj.phoneNumber}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Customer Purchase Order Number:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.deliveryInstructionsObj.customerPurchaseNumber}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Placement Instructions:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.deliveryInstructionsObj.placementInstructions}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-tab>
+                <lightning-tab key={bundle.specialDisposalObj.tabName} label={bundle.specialDisposalObj.tabName} value={bundle.specialDisposalObj.tabName} onactive={tabChangeHandler}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Certificate of Disposal:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.specialDisposalObj.certificateOfDisposal}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Certificate of Destruction:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.specialDisposalObj.certificateOfDestruction}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Profile Number:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.specialDisposalObj.profileNumber}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Landfill Tickets Requested:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.specialDisposalObj.landfillRequested}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Special Disposal Instructions:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.specialDisposalObj.specialDisposalInstructions}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-tab>
+                <lightning-tab key={bundle.serviceRestrictionsObj.tabName} label={bundle.serviceRestrictionsObj.tabName} value={bundle.serviceRestrictionsObj.tabName} onactive={tabChangeHandler}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Earliest Service Time:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.serviceRestrictionsObj.earliestServiceTime}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Latest Service Time:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.serviceRestrictionsObj.latestServiceTime}</lightning-layout-item>
+                            </lightning-layout> 
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Gate Codes:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.serviceRestrictionsObj.gateCodes}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Driver Instructions: </lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.serviceRestrictionsObj.driverInstructions}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-tab>
+                <lightning-tab key={bundle.containerPositionsObj.tabName} label={bundle.containerPositionsObj.tabName} value={bundle.containerPositionsObj.tabName} onactive={tabChangeHandler}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="12" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Selected Position:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.containerPositionsObj.selectedPosition}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-tab>
+                <lightning-tab key={bundle.projectServicesObj.tabName} label={bundle.projectServicesObj.tabName} value={bundle.projectServicesObj.tabName} onactive={tabChangeHandler}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">This is part of a project (Y/N):</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.projectServicesObj.partOfProject}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item size="6" class="details">Selected Project name:</lightning-layout-item>
+                                <lightning-layout-item size="6">{bundle.projectServicesObj.selectedProjectName}</lightning-layout-item>
+                            </lightning-layout>
+                            <hr class="solid">
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-tab>
+            </lightning-tabset>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

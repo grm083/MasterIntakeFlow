@@ -1,0 +1,38 @@
+.THIS.slds-modal__content {
+    overflow: scroll !important;
+}
+.THIS .slds-modal__container {
+}
+.THIS .slds-modal__footer {
+}
+
+.THIS .slds-modal__header {
+    margin-top:120px; 
+}
+.THIS .datepicker {
+}
+.THIS .spinnerHolder {
+    
+position: relative;
+display: inline-block;
+width: 80px;
+height: 80px;
+  
+}
+
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+
+.THIS .slds-datepicker table {
+    table-layout: fixed;
+}
+.THIS .teamName {
+  margin-right: 70px;
+}
+.THIS .disableDiv {
+  pointer-events: none;
+  opacity: 0.4;
+  
+}

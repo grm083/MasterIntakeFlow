@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Zero_Cost_Price_Allowed__c</fullName>
+    <externalId>false</externalId>
+    <label>Zero Cost/Price Allowed</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Delivery</fullName>
+                <default>false</default>
+                <label>Delivery</label>
+            </value>
+            <value>
+                <fullName>Container Service Charge</fullName>
+                <default>false</default>
+                <label>Container Service Charge</label>
+            </value>
+            <value>
+                <fullName>Disposal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Disposal</label>
+            </value>
+            <value>
+                <fullName>Extra Pickup</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Extra Pickup</label>
+            </value>
+            <value>
+                <fullName>Haul</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Haul</label>
+            </value>
+            <value>
+                <fullName>Pickup</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Pickup</label>
+            </value>
+            <value>
+                <fullName>Relocation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Relocation</label>
+            </value>
+            <value>
+                <fullName>Removal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Removal</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

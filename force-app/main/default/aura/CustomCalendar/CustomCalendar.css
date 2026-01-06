@@ -1,0 +1,23 @@
+.THIS.slds-modal__container{
+  width:20% !important;
+}
+
+.THIS.slds-p-around_medium {
+     padding-left: 2.5rem !important;
+}
+.THIS .padding{
+    padding-left:30rem !important;
+    line-height:1.5rem;
+}
+.THIS .customfooter{
+  border-top: 2px solid #dddbda;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  background-color: #f3f2f2;
+  text-align: center;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+}
+.THIS .footer-button{
+    padding-left: 17rem!important;
+}

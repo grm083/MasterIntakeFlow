@@ -1,0 +1,89 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller='MyTaskListController'
+                access="global" >
+    
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="TaskData" type="Object"/>
+    <aura:attribute name="columns" type="List"/> 
+    <aura:attribute name="isSending" type="boolean" />
+    <aura:attribute name="PaginationList" type="Task"/>
+    <aura:attribute name="hideNoRecordSection" type="boolean" default = "true"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="OpenTaskTabUrl" type="String" />
+    <aura:attribute name="sortDirection" type="String" default="asc" />
+    <aura:attribute name="defaultSortDirection" type="String" default="asc" />
+    <aura:attribute name="sortedBy" type="String" />
+    <aura:attribute name="OpenTaskTabName" type="String" default = "SFDC Team Task" />
+    <aura:attribute name="userTimezone" type="String" default="America/New_York" />
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    
+    
+    <aura:if isTrue="{!v.isSending}">
+        <div class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <div style="background-color:white">
+        <div class="slds-page-header">
+            <div class="slds-media">
+                
+                <div class="slds-media__body">
+                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>Salesforce Team Open Tasks </b></h1>
+                    
+                </div>
+                
+                <div>
+                    <a class="slds-button" href="javascript:void(0);" onclick="{!c.openTab}"><u><b>View All</b></u></a>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div style="height: 225px">
+            <div class="slds-m-top_small" >
+                <aura:if isTrue="{!v.hideNoRecordSection}">
+                    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+                        <span class="slds-assistive-text">No Records</span>
+                        <h2>No record found.</h2>       
+                    </div>
+                    <aura:set attribute="else">
+                        
+                        <lightning:datatable data="{! v.PaginationList }" class="slds-m-top_Large"
+                                             columns="{! v.columns }" 
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             sortedBy="{! v.sortedBy }"
+                                             defaultSortDirection="{!v.defaultSortDirection}"
+                                             sortedDirection="{!v.sortDirection}"
+                                             onsort="{!c.updateColumnSorting}"
+                                             />
+                        <br/>
+                        <lightning:buttonGroup class="slds-align_absolute-center" >
+                            <lightning:button label="Previous" disabled="{!v.startPage == 0}"  
+                                              onclick="{!c.previous}" variant="brand"
+                                              iconName='utility:back'/>
+                            &nbsp; &nbsp; &nbsp;
+                            <lightning:button label="Next" disabled="{!v.endPage >= v.totalRecords}" 
+                                              onclick="{!c.next}" variant="brand"
+                                              iconName='utility:forward' iconPosition='right'/>
+                        </lightning:buttonGroup>
+                    </aura:set>
+                </aura:if>   
+            </div>  
+            
+        </div>
+        
+        <br/>
+        
+    </div>
+    
+</aura:component>

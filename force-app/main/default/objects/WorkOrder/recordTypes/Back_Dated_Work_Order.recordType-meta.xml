@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Back_Dated_Work_Order</fullName>
+    <active>true</active>
+    <description>To display certain fields as read only when the service date is back dated</description>
+    <label>Back Dated Work Order</label>
+    <picklistValues>
+        <picklist>Channel__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External System</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manual Delivery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Exception_Reason__c</picklist>
+        <values>
+            <fullName>Blocked Can</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client%27s Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contamination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dry Run</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Duplicate Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipment Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect Container Selected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect Hauler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect Service Date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect Work-Order Description</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule Change - Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule Change - Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor did not perform service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weather Conditions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work Order Cleanup</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Integration_Status__c</picklist>
+        <values>
+            <fullName>Accept</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dry Run</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resend</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Update</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>Critical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Send_Status__c</picklist>
+        <values>
+            <fullName>Accepted by MAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delivered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failed %28Send Manually%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failed %28System will Retry%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OnHold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Accepted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Issued</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Pending%2FDraft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Released for Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work Complete</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Verify_Service_Task__c</picklist>
+        <values>
+            <fullName>ATN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SRI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WGS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WRC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WRV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WTS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

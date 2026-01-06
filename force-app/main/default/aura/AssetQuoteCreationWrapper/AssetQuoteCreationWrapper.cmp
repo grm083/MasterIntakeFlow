@@ -1,0 +1,116 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes,lightning:availableForFlowScreens"
+controller="AssetQuoteProcurementController">
+    <!--TCS-pkulkarn-Added below line temporarily for SOQL 101 POC -->
+    <!--aura:attribute name="results" type="Object[]" default="[]" /-->
+    <!--SDT 33101 new-->
+    <aura:attribute name = "isCalledFromQuoteSummaryConfirmation" type="boolean" default="false"/>
+    <aura:attribute name="assetProductsAll" type="Object" default="[]" />
+    <aura:attribute name="data" type="Object"/>
+    <aura:method name="checkQuotelines" action="{!c.checkQuotelines}" 
+                 description="This fuction will get call from AddMoreQuoteOnlyService button of QuoteSummaryConfirmation Component. It shouldnt be used for other purposes"> 
+        <aura:attribute name="cmp" type="Aura.Component" />
+    </aura:method>
+    <aura:handler  event="c:RefreshConfiguredProducts" action="{!c.doInit}"/>
+    <!--SDT 33101 new end-->
+    <aura:attribute name="pricingAvailable" type="boolean" default="false" />
+    <aura:attribute name="quoteStatus" type="string" default="Draft" />
+    <aura:attribute name="currentState" type="string" default="Product" />
+    <aura:attribute name="retainState" type="string" default="Product" />
+    <aura:attribute name="progressBar" type="integer" default="0" />
+    <aura:attribute name="currentProductId" type="string" default="" />
+    <aura:attribute name="currentProduct" type="Object" default="[]" />
+    <aura:attribute name="CaseId" type="String" default="" />
+    <aura:attribute name="selectedAccessoryList" type="Object[]" default="[]" />
+    <aura:attribute name="keyQuantityList" type="List" default="[]"/>
+    <aura:attribute name="procuredStatus" type="string" default="" />
+    <aura:attribute name="caseType" type="string" default="" />
+	<!--Changes related to SDT-39632-->
+    <!--<aura:handler name="change" value="{!v.currentState}" action="{!c.handleStateChange}" /> -->
+    <aura:handler name="change" value="{!v.progressBar}" action="{!c.fullBar}" />
+    <aura:handler name="UpdateWrapperState" event="c:UpdateWrapperStateEvent" action="{!c.updateDetails}" />
+    <aura:registerEvent name="UpdateWrapperState" type="c:UpdateWrapperStateEvent" />
+    <aura:registerEvent name="refreshConfiguredProducts" type="c:RefreshConfiguredProducts" />
+    <aura:handler name="pricingAvailable" event="c:PassPricingResult" action="{!c.updatePricing}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:attribute name="extraParams" type="object"/>
+    <aura:attribute name="isAssetAvailable" type="boolean" default="false" />
+    <aura:attribute name="isQuoteLineCreationCalled" type="boolean" default="false" />
+    <aura:attribute name="assetProducts" type="Object" default="[]" />
+    <aura:attribute name="assetActiveTabId" type="String" default="" />
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    <aura:attribute name="tabCount" type="integer" default="0" />
+    <aura:attribute name="istabsAvailable" type="boolean" default="false" />
+    <aura:handler name="UpdateQuoteProducts" event="c:updateQuoteProductsEvent" action="{!c.updateQuoteProductList}" />
+
+    <lightning:card>
+        <lightning:layout verticalAlign="stretch">
+            <aura:if isTrue="{!v.loadingSpinner}">
+                <lightning:spinner alternativeText="Loading" size="medium" variant="brand" />
+                </aura:if>
+            <lightning:layoutItem size="2" class="slds-p-around_xxx-small">
+                <lightning:verticalNavigation selectedItem="{!v.currentState}" shaded="true" onselect="{!c.preventSelect}" compact="true">
+                    <lightning:verticalNavigationSection label="Product Configuration">
+                        <lightning:verticalNavigationItem label="Product Selection" name="Product" />
+                        <lightning:verticalNavigationItem label="Overview" name="Overview" />
+                        <lightning:verticalNavigationItem label="Order Configuration" name="Service" />
+                        <lightning:verticalNavigationItem label="Summary" name="Summary" />
+                    </lightning:verticalNavigationSection>
+                    <lightning:verticalNavigationSection label="Vendor Procurement">
+                        <lightning:verticalNavigationItem label="Pricing Response" name="Pricing" />
+                    </lightning:verticalNavigationSection>
+                </lightning:verticalNavigation>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="10" class="slds-p-around_xxx-small">
+                <aura:if isTrue="{!v.isAssetAvailable}">
+                    <lightning:tabset variant="scoped" onselect="{! c.handleActive }" selectedTabId="{!v.assetActiveTabId}">
+                            <aura:iteration items="{!v.assetProducts}" indexVar="i" var="ap">
+                                <!--SDT 33101 lightning:tab label="{!ap.productName}" id="{!ap.productName}" aura:id="{!ap.productName}"-->
+                                <lightning:tab label="{!ap.productName}" id="{!ap.tabIndex}" aura:id="{!ap.tabIndex}">
+                                    <aura:if isTrue="{!ap.currentState == 'Product'}">
+                                        <c:QuoteFavorites recordId="{!ap.quoteId}" 
+                                                        selectedProductId="{!ap.targetProductId}"
+                                                        selectedProduct="{!ap.targetProduct}"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!ap.currentState == 'Overview'}">
+                                        <c:QuoteOverview recordId="{!ap.quoteId}" 
+                                                        targetProductId="{!ap.targetProductId}"
+                                                        isAssetAvailable="{!v.isAssetAvailable}" 
+                                                        selectedAccessoryList = "{!ap.selectedAccessoryList}"
+                                                        selectedProduct = "{!ap.targetProduct}"
+                                                        keyQuantityList = "{!ap.keyQuantityList}"
+                                                        assetProducts= "{!v.assetProducts}"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!ap.currentState == 'Service'}">
+                                        <c:QuoteOrderDetails recordId="{!ap.quoteId}" 
+                                                            targetProduct="{!ap.targetProduct}"
+                                                            isAssetAvailable="{!v.isAssetAvailable}" 
+                                                            targetProductId ="{!ap.targetProductId}"
+                                                            extraParams="{!ap.extraParams}" />
+                                    </aura:if>
+                                    <aura:if isTrue="{!ap.currentState == 'Summary'}">
+                                        <c:QuoteSummaryConfirmation recordId="{!ap.quoteId}"
+                                                                    targetProduct="{!ap.targetProduct}"
+                                                                    targetProductId ="{!ap.targetProductId}"
+                                                                    caseId="{!v.CaseId}"
+                                                                    isAssetAvailable="{!v.isAssetAvailable}"
+                                                                    assetProducts="{!v.assetProducts}"
+                                                                    selectedAccessoryList = "{!ap.selectedAccessoryList}"
+                                                                    extraParams="{!ap.extraParams}" 
+                                                                    assetActiveTabId ="{!v.assetActiveTabId}"
+                                                                    tabCount = "{!v.tabCount}" 
+                                                                    parent = "{!this}"/><!--SDT33101 New Added parent = "{!this}"-->
+                                    </aura:if>
+                                </lightning:tab>
+                            </aura:iteration>
+                    </lightning:tabset>
+                </aura:if>
+                <aura:if isTrue="{!v.currentState == 'Pricing'}">
+                    <c:GetQuoteSTPPricing recordId="{!v.recordId}"
+                    procuredStatus = "{!v.procuredStatus}"
+                    caseType = "{!v.caseType}" />
+                </aura:if>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+</aura:component>

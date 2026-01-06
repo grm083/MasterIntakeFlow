@@ -1,0 +1,31 @@
+<!--<messaging:emailTemplate subject="Add Service Request for : {!relatedTo.Name}" recipientType="Contact" relatedToType="SBQQ__Quote__c">-->
+<messaging:emailTemplate subject="Approval Needed: NTE Quote Approval – {!relatedTo.SBQQ__Opportunity2__r.Case__r.Location_Code__c} – {!relatedTo.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}" recipientType="Contact" relatedToType="SBQQ__Quote__c">
+
+
+<messaging:htmlEmailBody > 
+    <div style="align=right">
+        <apex:variable value="{!LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260))}" var="hostUrl"/>
+        <apex:variable value="servlet/servlet.ImageServer?id=" var="staticUrl_1"/>
+        <apex:variable value="&oid=" var="staticUrl_2"/>
+        <apex:variable value="{!$Organization.Id}" var="orgId"/>
+    </div> 
+    <html>
+    <body contenteditable="true">
+    <style type="text/css">
+    body {font-size: 11pt;}
+    </style>
+
+<br><apex:image height="50" width="100" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.DocumentId__c}{!staticUrl_2}{!orgId}"/></br>
+
+<br><apex:outputText style="font-family:Arial;" value="Hello,"/> </br>
+
+<c:GetQuoteDetails_NTE quoteDetail="{!relatedTo}"/>  
+<!--<a href="{!$Setup.QuoteApproval__c.QuoteApprovalRejectionLink__c}?subject=Approved:{!relatedTo.Id}&body={!relatedTo.Quote_Thread_Id__c}">Approve</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{!$Setup.QuoteApproval__c.QuoteApprovalRejectionLink__c}?subject=Declined:{!relatedTo.Id}&body=I am declining this request for the following reason(s): %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A %0D%0A%0D%0A {!relatedTo.Quote_Thread_Id__c}">Reject</a><br/> 
+--><!--<br> <b><apex:outputText style="" value="If you have any questions, please free to contact us at "/></b> <span style="background-color: #eeff00;color: #FF0000"><b>999-998-9098</b></span></br>-->
+<br><c:loggedinuserdetailsforapproval /></br>
+{!relatedTo.Quote_Thread_Id__c}
+</body>
+</html>            
+</messaging:htmlEmailBody>  
+</messaging:emailTemplate>

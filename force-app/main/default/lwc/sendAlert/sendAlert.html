@@ -1,0 +1,58 @@
+<template>
+  <div class="slds-m-around_medium" id="sendAlertwrapperdiv">
+    <div class="slds-form-element slds-form-element_horizontal">
+      <label class="slds-form-element__label" >Recipients</label>
+        <div class="input-field">
+          <lightning-combobox data-id="combobox" class="custom-combobox" name="selectRecipients" placeholder="Select Recipients" options={combooptions} value={selectedValue} onchange={handleSelect}></lightning-combobox>
+          
+        </div>
+    </div>
+    <div class="slds-form-element slds-form-element_horizontal">
+      <label class="slds-form-element__label"></label>
+      <div class="input-field" style="padding-left: 200px;" >
+        <div style="display: inline-block;">
+          <template for:each={selectedValues} for:item="val">
+            <lightning-pill key={val} name={val} label={val} onremove={handleRemoveForPicklist}></lightning-pill>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <template if:true={showEmailContainer}>
+    <div class="slds-form-element slds-form-element_horizontal">
+      <label class="slds-form-element__label">Email Address</label>
+      <div class="input-field">
+        <lightning-input type="text" id="emailinput" class="email-input" name="typeRecipients" placeholder="Enter the email address and press enter." value={typedValue} onkeypress={checkEnter}></lightning-input>
+      </div>
+    </div>
+    <div class="slds-form-element slds-form-element_horizontal">
+      <label class="slds-form-element__label"></label>
+       <div class="input-field" style="padding-left: 200px;" >
+        <div style="display: inline-block;">
+          <template for:each={typedValues} for:item="val">
+            <lightning-pill key={val} name={val} label={val} onremove={handleRemoveForTextBox}></lightning-pill>
+          </template>
+        </div>
+      </div> 
+    </div> 
+    </template>
+  
+    <div class="slds-form-element slds-form-element_horizontal">
+      <label class="slds-form-element__label">Type Message</label>
+      <div class="input-field">
+        <lightning-textarea  id="sendAlertArea" class="custom-textarea" type="text" name="Type Message" onchange={getMessage} style="min-height:150px;"></lightning-textarea>
+        <!-- <p error message = {errorMessage}></p> -->
+        
+      </div>
+    </div>
+    <div class="slds-float_left slds-var-m-bottom_large" style="padding-left: 200px;">
+      <lightning-button class="btnClass" variant="brand" label="Send" onclick={handleButtonClick} ></lightning-button>
+      <lightning-button class="slds-p-left_x-small btnClass" variant="neutral" label="Cancel" onclick={handleClick}></lightning-button>
+    </div>
+  
+  </div>
+  <!--### showing spinner conditionally ###-->
+  <template if:true={showSpinner}>
+    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+  </template>
+</template>

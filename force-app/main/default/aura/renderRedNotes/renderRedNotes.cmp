@@ -1,0 +1,46 @@
+<aura:component controller="RedNoteController"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    
+    <!-- The attributes to be consumed or defined within the component
+	The types are "cval" which is the full HTML string and title for the card
+	component-->
+    <aura:attribute name="cval" type = "String"/>
+    <aura:attribute name="title" type="String"/>
+    
+    <aura:handler name="init" value ="{!this}" action="{!c.init}"/>
+    
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+	<aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+	<aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    
+    <!-- Card details below-->
+    <lightning:card>
+        
+        <!-- Button Control, and the on-click functionality to relaunch the 
+		initialization procedures 
+        <button class="slds-button_brand" click="{!c.doInit}" >
+           Refresh
+        </button> -->
+        
+        <!-- Title and icon -->
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:action_list_component" alternativeText="Approval/SLA Rules" size="Small" />
+        	Acorn Authorization Notes
+        </aura:set>
+        
+        <aura:renderIf isTrue="{!v.HideSpinner}">
+            <div class="slds-spinner_container" >
+                <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                    <span class="slds-assistive-text">Loading, Please Wait...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:renderIf>
+        
+																	  
+        <p class="slds-scrollable_x">
+            	<aura:unescapedHtml value="{!v.cval}"/>
+        </p>
+    </lightning:card>
+</aura:component>

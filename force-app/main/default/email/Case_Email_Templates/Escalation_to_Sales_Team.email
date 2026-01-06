@@ -1,0 +1,30 @@
+<messaging:emailTemplate subject=" {!relatedTo.Name} - {!relatedTo.SBQQ__Opportunity2__r.Case__r.Location_Code__c} - Sales Team Escalation Requested" recipientType="Contact" relatedToType="SBQQ__Quote__c">
+<messaging:htmlEmailBody >
+<div style="align=right">
+        <apex:variable value="{!LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260))}" var="hostUrl"/>
+        <apex:variable value="servlet/servlet.ImageServer?id=" var="staticUrl_1"/>
+        <apex:variable value="&oid=" var="staticUrl_2"/>
+        <apex:variable value="{!$Organization.Id}" var="orgId"/>
+    </div>
+    
+<html>
+<body contenteditable="true">
+<div class="redText" contenteditable="true">
+<style type="text/css">
+    body {font-size: 11pt;}
+</style>
+
+<br><apex:image height="28" width="104" value="{!hostUrl}{!staticUrl_1}{!$Setup.EmailTemplateLogoId__c.DocumentId__c}{!staticUrl_2}{!orgId}"/></br>
+
+
+<br></br>
+<br></br>
+<c:GetQuoteEscalationDetail quoteDetail="{!relatedTo}"/>
+<apex:image id="theImage" value="https://wmsbs.file.force.com/servlet/servlet.ImageServer?oid=00D1I000001V0eB&id=0153u000002Omy8" alt="WM Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;width:1.1in;height: 0.3in;"  title="WM Logo"/>
+<br></br>
+{!relatedTo.Quote_Thread_Id__c}:{!relatedTo.SBQQ__Opportunity2__r.Case__r.Reference_Number__c}
+</div>
+</body>
+</html>            
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>
