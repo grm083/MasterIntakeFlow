@@ -1,0 +1,252 @@
+<template>
+    <lightning-card title="Intake Flow Visualizer" icon-name="standard:flow">
+        <!-- Stats Bar -->
+        <div class="slds-p-horizontal_medium slds-p-top_medium">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value">{stats.totalNodes}</div>
+                    <div class="stat-label">Questions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{stats.totalEdges}</div>
+                    <div class="stat-label">Connections</div>
+                </div>
+                <div class="stat-item stat-warning">
+                    <div class="stat-value">{stats.orphanedNodes}</div>
+                    <div class="stat-label">Orphaned</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{stats.startNodes}</div>
+                    <div class="stat-label">Start Points</div>
+                </div>
+                <div class="stat-item stat-warning">
+                    <div class="stat-value">{stats.deadEnds}</div>
+                    <div class="stat-label">Dead Ends</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-wrap slds-gutters">
+                <!-- View Mode Buttons -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-button-group>
+                        <lightning-button
+                            label="Full Flow"
+                            onclick={handleViewFullFlow}
+                            variant={isFullViewMode}
+                            icon-name="utility:graph">
+                        </lightning-button>
+                        <lightning-button
+                            label="Refresh"
+                            onclick={handleRefresh}
+                            icon-name="utility:refresh"
+                            disabled={isLoading}>
+                        </lightning-button>
+                    </lightning-button-group>
+                </div>
+
+                <!-- Zoom Controls -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <div class="slds-float_right">
+                        <lightning-button-group>
+                            <lightning-button
+                                label="Zoom Out"
+                                icon-name="utility:zoomout"
+                                onclick={handleZoomOut}
+                                disabled={isLoading}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Reset"
+                                onclick={handleResetZoom}
+                                disabled={isLoading}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Zoom In"
+                                icon-name="utility:zoomin"
+                                onclick={handleZoomIn}
+                                disabled={isLoading}>
+                            </lightning-button>
+                        </lightning-button-group>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display Options -->
+            <div class="slds-m-top_medium">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input
+                            type="checkbox"
+                            label="Show Labels"
+                            checked={showLabels}
+                            onchange={handleShowLabelsChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input
+                            type="checkbox"
+                            label="Show Orphaned"
+                            checked={showOrphaned}
+                            onchange={handleShowOrphanedChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input
+                            type="checkbox"
+                            label="Highlight Issues"
+                            checked={highlightIssues}
+                            onchange={handleHighlightIssuesChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualization Canvas -->
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={isLoading}>
+                <div class="slds-text-align_center slds-p-vertical_x-large">
+                    <lightning-spinner
+                        alternative-text="Loading flow data..."
+                        size="large">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                    <p class="slds-text-heading_small">Error Loading Flow</p>
+                    <p>{error}</p>
+                </div>
+            </template>
+
+            <template if:false={isLoading}>
+                <template if:true={hasFlowData}>
+                    <div class="flow-container">
+                        <div class="flow-canvas"></div>
+
+                        <!-- Legend -->
+                        <div class="flow-legend">
+                            <div class="legend-title">Legend</div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: #0176d3;"></div>
+                                <span>Start Question</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: #4bca81;"></div>
+                                <span>Active Question</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: #fe9339;"></div>
+                                <span>No Outcomes</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: #ea001e;"></div>
+                                <span>Orphaned</span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:false={hasFlowData}>
+                    <div class="slds-text-align_center slds-p-vertical_large">
+                        <p class="slds-text-heading_small">No Flow Data</p>
+                        <p class="slds-text-body_regular slds-m-top_small">
+                            Click "Full Flow" to load the visualization.
+                        </p>
+                    </div>
+                </template>
+            </template>
+        </div>
+
+        <!-- Selected Node Details Panel -->
+        <template if:true={hasSelectedNode}>
+            <div class="slds-m-horizontal_medium slds-m-bottom_medium">
+                <div class="slds-box slds-theme_shade">
+                    <div class="slds-grid slds-grid_vertical-align-start">
+                        <div class="slds-col slds-grow">
+                            <h3 class="slds-text-heading_small slds-m-bottom_small">
+                                {selectedNode.name}
+                            </h3>
+                            <p class="slds-m-bottom_x-small">
+                                <strong>Question:</strong> {selectedNode.questionText}
+                            </p>
+                            <p class="slds-m-bottom_x-small">
+                                <strong>Type:</strong> {selectedNode.inputType}
+                            </p>
+                            <p class="slds-m-bottom_x-small">
+                                <strong>Case Type:</strong> {selectedNode.caseType}
+                            </p>
+                            <p class="slds-m-bottom_x-small">
+                                <strong>Outcomes:</strong> {selectedNode.outcomeCount}
+                            </p>
+                            <p>
+                                <strong>Incoming Connections:</strong> {selectedNode.incomingCount}
+                            </p>
+
+                            <!-- Validation Results -->
+                            <template if:true={hasValidationResults}>
+                                <div class={validationIssuesClass}>
+                                    <div class="slds-m-top_medium">
+                                        <p class="slds-text-heading_small">Validation Results</p>
+
+                                        <template if:true={validationResults.isValid}>
+                                            <div class="slds-text-color_success slds-m-top_x-small">
+                                                ✓ No issues found
+                                            </div>
+                                        </template>
+
+                                        <template if:false={validationResults.isValid}>
+                                            <div class="slds-m-top_small">
+                                                <template for:each={validationResults.issues} for:item="issue">
+                                                    <div key={issue} class="slds-text-color_error">
+                                                        • {issue}
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+
+                                        <template if:true={validationResults.warnings}>
+                                            <div class="slds-m-top_small">
+                                                <template for:each={validationResults.warnings} for:item="warning">
+                                                    <div key={warning} class="slds-text-color_warning">
+                                                        ⚠ {warning}
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="slds-col slds-no-flex">
+                            <lightning-button-menu
+                                alternative-text="Actions"
+                                icon-size="x-small"
+                                menu-alignment="right">
+                                <lightning-menu-item
+                                    label="View Record"
+                                    icon-name="utility:new_window"
+                                    onclick={handleNavigateToQuestion}>
+                                </lightning-menu-item>
+                                <lightning-menu-item
+                                    label="Show Path from Here"
+                                    icon-name="utility:path"
+                                    onclick={handleViewQuestionPath}>
+                                </lightning-menu-item>
+                                <lightning-menu-item
+                                    label="Close"
+                                    icon-name="utility:close"
+                                    onclick={handleCloseDetails}>
+                                </lightning-menu-item>
+                            </lightning-button-menu>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

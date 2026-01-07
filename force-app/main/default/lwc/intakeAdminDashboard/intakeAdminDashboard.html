@@ -132,6 +132,17 @@
 
                 <div class="slds-col">
                     <lightning-button
+                        variant="brand"
+                        label="View Flow"
+                        icon-name="utility:graph"
+                        onclick={handleViewFlow}
+                        disabled={isLoading}
+                        title="Open Visual Flow Builder">
+                    </lightning-button>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-button
                         variant="neutral"
                         label="Save Search"
                         icon-name="utility:save"

@@ -456,6 +456,20 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         this.showToast('Success', 'Search history cleared', 'success');
     }
 
+    // ========== PHASE 3: FLOW VISUALIZER ==========
+
+    handleViewFlow() {
+        // Dispatch custom event to navigate to flow visualizer
+        // This will be handled by the Lightning App to navigate to the Flow tab
+        const event = new CustomEvent('viewflow', {
+            bubbles: true,
+            composed: true
+        });
+        this.dispatchEvent(event);
+
+        this.showToast('Info', 'Opening Flow Visualizer...', 'info');
+    }
+
     // ========== HELPERS ==========
 
     getStatusLabel(question) {

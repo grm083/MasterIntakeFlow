@@ -232,6 +232,273 @@ public with sharing class IntakeAdminController {
     }
 
     /**
+     * Get flow visualization data (all questions and their connections)
+     * Returns nodes and edges for visual flow builder
+     * @param filters Optional JSON string to filter which questions to include
+     * @return Map with nodes and edges arrays
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> getFlowVisualizationData(String filters) {
+        try {
+            Map<String, Object> filterMap = filters != null ?
+                (Map<String, Object>) JSON.deserializeUntyped(filters) :
+                new Map<String, Object>();
+
+            // Get questions (nodes)
+            String nodeQuery = buildFlowNodeQuery(filterMap);
+            List<Intake_Process__c> questions = Database.query(nodeQuery);
+
+            // Get outcomes (edges)
+            Set<Id> questionIds = new Map<Id, Intake_Process__c>(questions).keySet();
+            List<Intake_Process__c> outcomes = [
+                SELECT Id, Name, Intake_Question__c, Next_Question__c,
+                       Outcome__c, Outcome_Statement__c
+                FROM Intake_Process__c
+                WHERE Intake_Question__c IN :questionIds
+                AND RecordType.Name = 'Intake Outcomes'
+                AND Next_Question__c != null
+            ];
+
+            // Get outcome counts and incoming references
+            Map<Id, Integer> outcomeCounts = getOutcomeCountsForQuestions(questionIds);
+            Map<Id, Integer> incomingReferences = getIncomingReferenceCountsForQuestions(questionIds);
+
+            // Build nodes
+            List<Map<String, Object>> nodes = new List<Map<String, Object>>();
+            for (Intake_Process__c q : questions) {
+                Map<String, Object> node = new Map<String, Object>();
+                node.put('id', q.Id);
+                node.put('name', q.Name);
+                node.put('questionText', q.Question__c);
+                node.put('inputType', q.Input_Type__c);
+                node.put('caseType', q.Case_Type__c);
+                node.put('caseSubType', q.Case_Sub_Type__c);
+                node.put('presentationOrder', q.Presentation_Order__c);
+                node.put('outcomeCount', outcomeCounts.containsKey(q.Id) ? outcomeCounts.get(q.Id) : 0);
+                node.put('incomingCount', incomingReferences.containsKey(q.Id) ? incomingReferences.get(q.Id) : 0);
+                node.put('isOrphaned', !incomingReferences.containsKey(q.Id) && q.Presentation_Order__c != 1);
+                node.put('isStart', q.Presentation_Order__c == 1);
+                nodes.add(node);
+            }
+
+            // Build edges
+            List<Map<String, Object>> edges = new List<Map<String, Object>>();
+            for (Intake_Process__c outcome : outcomes) {
+                Map<String, Object> edge = new Map<String, Object>();
+                edge.put('id', outcome.Id);
+                edge.put('source', outcome.Intake_Question__c);
+                edge.put('target', outcome.Next_Question__c);
+                edge.put('label', outcome.Outcome__c);
+                edge.put('outcomeStatement', outcome.Outcome_Statement__c);
+                edges.add(edge);
+            }
+
+            // Return result
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('nodes', nodes);
+            result.put('edges', edges);
+            result.put('nodeCount', nodes.size());
+            result.put('edgeCount', edges.size());
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error getting flow visualization data: ' + e.getMessage());
+        }
+    }
+
+    /**
+     * Get flow path starting from a specific question
+     * Traces all possible paths from the given question
+     * @param questionId Starting question ID
+     * @param maxDepth Maximum depth to traverse (default 50)
+     * @return Map with nodes and edges in the path
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> getQuestionFlowPath(Id questionId, Integer maxDepth) {
+        try {
+            if (maxDepth == null || maxDepth <= 0) {
+                maxDepth = 50;
+            }
+
+            Set<Id> visitedQuestions = new Set<Id>();
+            Set<Id> visitedOutcomes = new Set<Id>();
+            List<Id> questionsToProcess = new List<Id>{ questionId };
+            Integer currentDepth = 0;
+
+            // Breadth-first traversal
+            while (!questionsToProcess.isEmpty() && currentDepth < maxDepth) {
+                List<Id> nextBatch = new List<Id>();
+
+                // Get outcomes for current batch
+                List<Intake_Process__c> outcomes = [
+                    SELECT Id, Intake_Question__c, Next_Question__c,
+                           Outcome__c, Outcome_Statement__c
+                    FROM Intake_Process__c
+                    WHERE Intake_Question__c IN :questionsToProcess
+                    AND RecordType.Name = 'Intake Outcomes'
+                    AND Next_Question__c != null
+                ];
+
+                for (Intake_Process__c outcome : outcomes) {
+                    visitedOutcomes.add(outcome.Id);
+                    if (!visitedQuestions.contains(outcome.Next_Question__c)) {
+                        nextBatch.add(outcome.Next_Question__c);
+                    }
+                }
+
+                visitedQuestions.addAll(questionsToProcess);
+                questionsToProcess = nextBatch;
+                currentDepth++;
+            }
+
+            // Get all visited questions
+            List<Intake_Process__c> questions = [
+                SELECT Id, Name, Question__c, Input_Type__c, Case_Type__c,
+                       Case_Sub_Type__c, Presentation_Order__c
+                FROM Intake_Process__c
+                WHERE Id IN :visitedQuestions
+                AND RecordType.Name = 'Intake Questions'
+            ];
+
+            // Get all visited outcomes
+            List<Intake_Process__c> pathOutcomes = [
+                SELECT Id, Intake_Question__c, Next_Question__c,
+                       Outcome__c, Outcome_Statement__c
+                FROM Intake_Process__c
+                WHERE Id IN :visitedOutcomes
+            ];
+
+            // Get outcome counts
+            Map<Id, Integer> outcomeCounts = getOutcomeCountsForQuestions(visitedQuestions);
+            Map<Id, Integer> incomingReferences = getIncomingReferenceCountsForQuestions(visitedQuestions);
+
+            // Build nodes
+            List<Map<String, Object>> nodes = new List<Map<String, Object>>();
+            for (Intake_Process__c q : questions) {
+                Map<String, Object> node = new Map<String, Object>();
+                node.put('id', q.Id);
+                node.put('name', q.Name);
+                node.put('questionText', q.Question__c);
+                node.put('inputType', q.Input_Type__c);
+                node.put('caseType', q.Case_Type__c);
+                node.put('caseSubType', q.Case_Sub_Type__c);
+                node.put('outcomeCount', outcomeCounts.containsKey(q.Id) ? outcomeCounts.get(q.Id) : 0);
+                node.put('incomingCount', incomingReferences.containsKey(q.Id) ? incomingReferences.get(q.Id) : 0);
+                node.put('isStart', q.Id == questionId);
+                nodes.add(node);
+            }
+
+            // Build edges
+            List<Map<String, Object>> edges = new List<Map<String, Object>>();
+            for (Intake_Process__c outcome : pathOutcomes) {
+                Map<String, Object> edge = new Map<String, Object>();
+                edge.put('id', outcome.Id);
+                edge.put('source', outcome.Intake_Question__c);
+                edge.put('target', outcome.Next_Question__c);
+                edge.put('label', outcome.Outcome__c);
+                edge.put('outcomeStatement', outcome.Outcome_Statement__c);
+                edges.add(edge);
+            }
+
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('nodes', nodes);
+            result.put('edges', edges);
+            result.put('startQuestionId', questionId);
+            result.put('depthReached', currentDepth);
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error getting question flow path: ' + e.getMessage());
+        }
+    }
+
+    /**
+     * Validate question paths and detect issues
+     * @param questionId Question to validate
+     * @return Map with validation results
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> validateQuestionPath(Id questionId) {
+        try {
+            // Get question
+            Intake_Process__c question = [
+                SELECT Id, Name, Question__c, Presentation_Order__c
+                FROM Intake_Process__c
+                WHERE Id = :questionId
+                AND RecordType.Name = 'Intake Questions'
+                LIMIT 1
+            ];
+
+            // Get outcomes
+            List<Intake_Process__c> outcomes = [
+                SELECT Id, Outcome__c, Next_Question__c
+                FROM Intake_Process__c
+                WHERE Intake_Question__c = :questionId
+                AND RecordType.Name = 'Intake Outcomes'
+            ];
+
+            // Get incoming references
+            List<Intake_Process__c> incomingRefs = [
+                SELECT Id
+                FROM Intake_Process__c
+                WHERE Next_Question__c = :questionId
+                AND RecordType.Name = 'Intake Outcomes'
+            ];
+
+            // Validation checks
+            List<String> issues = new List<String>();
+            List<String> warnings = new List<String>();
+
+            // Check: Orphaned (no incoming references and not a start question)
+            if (incomingRefs.isEmpty() && question.Presentation_Order__c != 1) {
+                issues.add('Orphaned: No other questions link to this question');
+            }
+
+            // Check: No outcomes
+            if (outcomes.isEmpty()) {
+                warnings.add('No Outcomes: This question has no answer options defined');
+            }
+
+            // Check: Dead end outcomes (outcomes with no next question)
+            Integer deadEndCount = 0;
+            for (Intake_Process__c outcome : outcomes) {
+                if (outcome.Next_Question__c == null) {
+                    deadEndCount++;
+                }
+            }
+            if (deadEndCount > 0 && deadEndCount < outcomes.size()) {
+                warnings.add('Partial Dead End: ' + deadEndCount + ' of ' + outcomes.size() + ' outcomes have no next question');
+            } else if (deadEndCount == outcomes.size() && !outcomes.isEmpty()) {
+                warnings.add('Terminal Question: All outcomes lead to dead ends (this may be intentional)');
+            }
+
+            // Check: Circular reference (outcome points back to same question)
+            for (Intake_Process__c outcome : outcomes) {
+                if (outcome.Next_Question__c == questionId) {
+                    warnings.add('Circular Reference: Outcome "' + outcome.Outcome__c + '" points back to this question');
+                }
+            }
+
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('questionId', questionId);
+            result.put('questionName', question.Name);
+            result.put('isValid', issues.isEmpty());
+            result.put('issues', issues);
+            result.put('warnings', warnings);
+            result.put('outcomeCount', outcomes.size());
+            result.put('incomingCount', incomingRefs.size());
+            result.put('deadEndCount', deadEndCount);
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error validating question path: ' + e.getMessage());
+        }
+    }
+
+    /**
      * Get question details with full outcome information
      */
     @AuraEnabled(cacheable=false)
@@ -289,6 +556,36 @@ public with sharing class IntakeAdminController {
     }
 
     // ========== PRIVATE HELPER METHODS ==========
+
+    /**
+     * Build query for flow visualization nodes
+     */
+    private static String buildFlowNodeQuery(Map<String, Object> filters) {
+        String query = 'SELECT Id, Name, Question__c, Input_Type__c, Presentation_Order__c, ' +
+                      'Case_Type__c, Case_Sub_Type__c ' +
+                      'FROM Intake_Process__c ' +
+                      'WHERE RecordType.Name = \'Intake Questions\'';
+
+        // Add filters if provided
+        if (filters.containsKey('caseType') && filters.get('caseType') != null) {
+            String caseType = String.escapeSingleQuotes((String) filters.get('caseType'));
+            query += ' AND Case_Type__c = \'' + caseType + '\'';
+        }
+
+        if (filters.containsKey('caseSubType') && filters.get('caseSubType') != null) {
+            String caseSubType = String.escapeSingleQuotes((String) filters.get('caseSubType'));
+            query += ' AND Case_Sub_Type__c = \'' + caseSubType + '\'';
+        }
+
+        // Limit for performance (can be adjusted)
+        if (filters.containsKey('limit') && filters.get('limit') != null) {
+            query += ' LIMIT ' + filters.get('limit');
+        } else {
+            query += ' LIMIT 1000'; // Default limit for visualization
+        }
+
+        return query;
+    }
 
     /**
      * Build dynamic SOQL query for questions
