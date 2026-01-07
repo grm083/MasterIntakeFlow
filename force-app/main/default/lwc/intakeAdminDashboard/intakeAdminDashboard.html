@@ -264,6 +264,30 @@
                                 Showing {paginationLabel}
                             </p>
                         </div>
+                        <!-- Phase 4: Bulk Actions -->
+                        <template if:true={hasSelectedRows}>
+                            <div class="slds-col slds-no-flex">
+                                <lightning-button-group>
+                                    <lightning-button
+                                        variant="neutral"
+                                        label="Bulk Edit"
+                                        icon-name="utility:edit"
+                                        onclick={handleBulkEdit}
+                                        disabled={isBulkProcessing}>
+                                    </lightning-button>
+                                    <lightning-button
+                                        variant="destructive"
+                                        label="Bulk Delete"
+                                        icon-name="utility:delete"
+                                        onclick={handleBulkDelete}
+                                        disabled={isBulkProcessing}>
+                                    </lightning-button>
+                                </lightning-button-group>
+                                <span class="slds-m-left_x-small slds-text-body_small slds-text-color_weak">
+                                    {selectedRowCount} selected
+                                </span>
+                            </div>
+                        </template>
                     </div>
 
                     <!-- Table -->
@@ -274,7 +298,7 @@
                         sorted-by={sortedBy}
                         sorted-direction={sortedDirection}
                         onsort={handleSort}
-                        hide-checkbox-column>
+                        onrowselection={handleRowSelection}>
                     </lightning-datatable>
 
                     <!-- Pagination Controls -->
@@ -320,5 +344,153 @@
                 </template>
             </template>
         </div>
+
+        <!-- Phase 4: Bulk Edit Modal -->
+        <template if:true={showBulkEditModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">{bulkEditTitle}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <p class="slds-m-bottom_medium">
+                            Select which fields to update. Only non-empty fields will be updated.
+                        </p>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox
+                                    label="Case Type"
+                                    value={bulkEditFields.caseType}
+                                    options={caseTypeOptions}
+                                    data-field="caseType"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox
+                                    label="Case Sub-Type"
+                                    value={bulkEditFields.caseSubType}
+                                    options={caseSubTypeOptions}
+                                    data-field="caseSubType"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input
+                                    label="Case Reason"
+                                    value={bulkEditFields.caseReason}
+                                    data-field="caseReason"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox
+                                    label="User Role"
+                                    value={bulkEditFields.userRole}
+                                    options={userRoleOptions}
+                                    data-field="userRole"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox
+                                    label="Input Type"
+                                    value={bulkEditFields.inputType}
+                                    options={inputTypeOptions}
+                                    data-field="inputType"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelBulkEdit}
+                            disabled={isBulkProcessing}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="brand"
+                            label="Update Questions"
+                            onclick={handleConfirmBulkEdit}
+                            disabled={isBulkProcessing}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Phase 4: Bulk Delete Modal -->
+        <template if:true={showBulkDeleteModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">{bulkDeleteTitle}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-box slds-theme_warning slds-m-bottom_medium">
+                            <p class="slds-text-heading_small">
+                                ⚠️ Warning: This action cannot be undone
+                            </p>
+                        </div>
+
+                        <p class="slds-m-bottom_small">
+                            You are about to delete <strong>{selectedRowCount}</strong> question{selectedRowCount > 1 ? 's' : ''}.
+                        </p>
+
+                        <template if:true={hasDeleteWarnings}>
+                            <div class="slds-box slds-theme_error slds-m-top_medium">
+                                <p class="slds-text-heading_small slds-m-bottom_small">
+                                    Impact Analysis:
+                                </p>
+                                <template for:each={deleteValidation.warnings} for:item="warning">
+                                    <p key={warning} class="slds-m-bottom_x-small">
+                                        • {warning}
+                                    </p>
+                                </template>
+                            </div>
+                        </template>
+
+                        <div class="slds-m-top_medium">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                The following will be deleted:
+                            </p>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <li>{selectedRowCount} question record{selectedRowCount > 1 ? 's' : ''}</li>
+                                <template if:true={deleteValidation}>
+                                    <li>{deleteValidation.outcomesToDeleteCount} associated outcome{deleteValidation.outcomesToDeleteCount > 1 ? 's' : ''}</li>
+                                </template>
+                            </ul>
+                        </div>
+
+                        <p class="slds-m-top_medium slds-text-color_error">
+                            Are you sure you want to proceed with deletion?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelBulkDelete}
+                            disabled={isBulkProcessing}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="destructive"
+                            label="Delete Permanently"
+                            onclick={handleConfirmBulkDelete}
+                            disabled={isBulkProcessing}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
     </lightning-card>
 </template>

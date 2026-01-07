@@ -5,6 +5,9 @@ import getQuestions from '@salesforce/apex/IntakeAdminController.getQuestions';
 import getQuestionCount from '@salesforce/apex/IntakeAdminController.getQuestionCount';
 import getFilterOptions from '@salesforce/apex/IntakeAdminController.getFilterOptions';
 import exportQuestionsToCSV from '@salesforce/apex/IntakeAdminController.exportQuestionsToCSV';
+import bulkUpdateQuestions from '@salesforce/apex/IntakeAdminController.bulkUpdateQuestions';
+import validateBulkDelete from '@salesforce/apex/IntakeAdminController.validateBulkDelete';
+import bulkDeleteQuestions from '@salesforce/apex/IntakeAdminController.bulkDeleteQuestions';
 
 const COLUMNS = [
     {
@@ -122,6 +125,20 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     @track showSavedSearchModal = false;
     @track savedSearchName = '';
     searchTimeout;
+
+    // Phase 4: Bulk Operations
+    @track selectedRows = [];
+    @track showBulkEditModal = false;
+    @track showBulkDeleteModal = false;
+    @track bulkEditFields = {
+        caseType: '',
+        caseSubType: '',
+        caseReason: '',
+        userRole: '',
+        inputType: ''
+    };
+    @track deleteValidation = null;
+    @track isBulkProcessing = false;
 
     // ========== LIFECYCLE ==========
 
@@ -470,6 +487,146 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         this.showToast('Info', 'Opening Flow Visualizer...', 'info');
     }
 
+    // ========== PHASE 4: BULK OPERATIONS ==========
+
+    handleRowSelection(event) {
+        const selectedRows = event.detail.selectedRows;
+        this.selectedRows = selectedRows.map(row => row.id);
+    }
+
+    handleBulkEdit() {
+        if (this.selectedRows.length === 0) {
+            this.showToast('Warning', 'Please select at least one question', 'warning');
+            return;
+        }
+        this.showBulkEditModal = true;
+    }
+
+    handleBulkDelete() {
+        if (this.selectedRows.length === 0) {
+            this.showToast('Warning', 'Please select at least one question', 'warning');
+            return;
+        }
+        this.validateDelete();
+    }
+
+    async validateDelete() {
+        try {
+            this.isBulkProcessing = true;
+            const validation = await validateBulkDelete({ questionIds: this.selectedRows });
+            this.deleteValidation = validation;
+            this.showBulkDeleteModal = true;
+            this.isBulkProcessing = false;
+        } catch (error) {
+            console.error('Error validating delete:', error);
+            this.showToast('Error', error.body?.message || error.message, 'error');
+            this.isBulkProcessing = false;
+        }
+    }
+
+    handleBulkEditFieldChange(event) {
+        const field = event.target.dataset.field;
+        this.bulkEditFields[field] = event.target.value;
+    }
+
+    async handleConfirmBulkEdit() {
+        try {
+            this.isBulkProcessing = true;
+
+            // Build field updates map (only include non-empty values)
+            const fieldUpdates = {};
+            if (this.bulkEditFields.caseType) fieldUpdates.Case_Type__c = this.bulkEditFields.caseType;
+            if (this.bulkEditFields.caseSubType) fieldUpdates.Case_Sub_Type__c = this.bulkEditFields.caseSubType;
+            if (this.bulkEditFields.caseReason) fieldUpdates.Case_Reason__c = this.bulkEditFields.caseReason;
+            if (this.bulkEditFields.userRole) fieldUpdates.User_Role__c = this.bulkEditFields.userRole;
+            if (this.bulkEditFields.inputType) fieldUpdates.Input_Type__c = this.bulkEditFields.inputType;
+
+            if (Object.keys(fieldUpdates).length === 0) {
+                this.showToast('Warning', 'Please select at least one field to update', 'warning');
+                this.isBulkProcessing = false;
+                return;
+            }
+
+            const result = await bulkUpdateQuestions({
+                questionIds: this.selectedRows,
+                fieldUpdates: fieldUpdates
+            });
+
+            this.showBulkEditModal = false;
+            this.isBulkProcessing = false;
+            this.selectedRows = [];
+
+            // Reset form
+            this.bulkEditFields = {
+                caseType: '',
+                caseSubType: '',
+                caseReason: '',
+                userRole: '',
+                inputType: ''
+            };
+
+            this.showToast(
+                'Success',
+                `Updated ${result.successCount} questions${result.errorCount > 0 ? '. ' + result.errorCount + ' errors occurred.' : ''}`,
+                result.errorCount > 0 ? 'warning' : 'success'
+            );
+
+            // Reload data
+            this.loadQuestions();
+
+        } catch (error) {
+            console.error('Error in bulk edit:', error);
+            this.showToast('Error', error.body?.message || error.message, 'error');
+            this.isBulkProcessing = false;
+        }
+    }
+
+    async handleConfirmBulkDelete() {
+        try {
+            this.isBulkProcessing = true;
+
+            const result = await bulkDeleteQuestions({
+                questionIds: this.selectedRows,
+                deleteCascade: true
+            });
+
+            this.showBulkDeleteModal = false;
+            this.isBulkProcessing = false;
+            this.selectedRows = [];
+            this.deleteValidation = null;
+
+            this.showToast(
+                'Success',
+                `Deleted ${result.successCount} questions${result.errorCount > 0 ? '. ' + result.errorCount + ' errors occurred.' : ''}`,
+                result.errorCount > 0 ? 'warning' : 'success'
+            );
+
+            // Reload data
+            this.loadQuestions();
+
+        } catch (error) {
+            console.error('Error in bulk delete:', error);
+            this.showToast('Error', error.body?.message || error.message, 'error');
+            this.isBulkProcessing = false;
+        }
+    }
+
+    handleCancelBulkEdit() {
+        this.showBulkEditModal = false;
+        this.bulkEditFields = {
+            caseType: '',
+            caseSubType: '',
+            caseReason: '',
+            userRole: '',
+            inputType: ''
+        };
+    }
+
+    handleCancelBulkDelete() {
+        this.showBulkDeleteModal = false;
+        this.deleteValidation = null;
+    }
+
     // ========== HELPERS ==========
 
     getStatusLabel(question) {
@@ -575,5 +732,25 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
 
     get canSaveSearch() {
         return this.hasFilters || this.filters.searchTerm;
+    }
+
+    get hasSelectedRows() {
+        return this.selectedRows && this.selectedRows.length > 0;
+    }
+
+    get selectedRowCount() {
+        return this.selectedRows ? this.selectedRows.length : 0;
+    }
+
+    get bulkEditTitle() {
+        return `Bulk Edit ${this.selectedRowCount} Question${this.selectedRowCount !== 1 ? 's' : ''}`;
+    }
+
+    get bulkDeleteTitle() {
+        return `Bulk Delete ${this.selectedRowCount} Question${this.selectedRowCount !== 1 ? 's' : ''}`;
+    }
+
+    get hasDeleteWarnings() {
+        return this.deleteValidation && this.deleteValidation.warnings && this.deleteValidation.warnings.length > 0;
     }
 }

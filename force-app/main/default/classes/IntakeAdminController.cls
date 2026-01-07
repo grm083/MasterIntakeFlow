@@ -499,6 +499,207 @@ public with sharing class IntakeAdminController {
     }
 
     /**
+     * Bulk update questions with specified field values
+     * @param questionIds List of question IDs to update
+     * @param fieldUpdates Map of field API names to new values
+     * @return Map with success count, error count, and error messages
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> bulkUpdateQuestions(List<Id> questionIds, Map<String, Object> fieldUpdates) {
+        try {
+            List<Intake_Process__c> questionsToUpdate = [
+                SELECT Id, Case_Type__c, Case_Sub_Type__c, Case_Reason__c,
+                       User_Role__c, Input_Type__c
+                FROM Intake_Process__c
+                WHERE Id IN :questionIds
+                AND RecordType.Name = 'Intake Questions'
+            ];
+
+            // Apply field updates
+            for (Intake_Process__c q : questionsToUpdate) {
+                if (fieldUpdates.containsKey('Case_Type__c') && fieldUpdates.get('Case_Type__c') != null) {
+                    q.Case_Type__c = (String) fieldUpdates.get('Case_Type__c');
+                }
+                if (fieldUpdates.containsKey('Case_Sub_Type__c') && fieldUpdates.get('Case_Sub_Type__c') != null) {
+                    q.Case_Sub_Type__c = (String) fieldUpdates.get('Case_Sub_Type__c');
+                }
+                if (fieldUpdates.containsKey('Case_Reason__c') && fieldUpdates.get('Case_Reason__c') != null) {
+                    q.Case_Reason__c = (String) fieldUpdates.get('Case_Reason__c');
+                }
+                if (fieldUpdates.containsKey('User_Role__c') && fieldUpdates.get('User_Role__c') != null) {
+                    q.User_Role__c = (String) fieldUpdates.get('User_Role__c');
+                }
+                if (fieldUpdates.containsKey('Input_Type__c') && fieldUpdates.get('Input_Type__c') != null) {
+                    q.Input_Type__c = (String) fieldUpdates.get('Input_Type__c');
+                }
+            }
+
+            // Update records
+            List<Database.SaveResult> results = Database.update(questionsToUpdate, false);
+
+            // Process results
+            Integer successCount = 0;
+            Integer errorCount = 0;
+            List<String> errorMessages = new List<String>();
+
+            for (Integer i = 0; i < results.size(); i++) {
+                if (results[i].isSuccess()) {
+                    successCount++;
+                } else {
+                    errorCount++;
+                    String errorMsg = questionsToUpdate[i].Name + ': ';
+                    for (Database.Error err : results[i].getErrors()) {
+                        errorMsg += err.getMessage() + '; ';
+                    }
+                    errorMessages.add(errorMsg);
+                }
+            }
+
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('successCount', successCount);
+            result.put('errorCount', errorCount);
+            result.put('errorMessages', errorMessages);
+            result.put('totalProcessed', questionIds.size());
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error in bulk update: ' + e.getMessage());
+        }
+    }
+
+    /**
+     * Validate if questions can be safely deleted
+     * @param questionIds List of question IDs to validate
+     * @return Map with validation results and warnings
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> validateBulkDelete(List<Id> questionIds) {
+        try {
+            // Check for incoming references
+            List<Intake_Process__c> incomingRefs = [
+                SELECT Next_Question__c, Question__r.Name, Outcome__c
+                FROM Intake_Process__c
+                WHERE Next_Question__c IN :questionIds
+                AND RecordType.Name = 'Intake Outcomes'
+            ];
+
+            // Count outcomes for each question
+            Map<Id, Integer> outcomeCountsMap = new Map<Id, Integer>();
+            for (AggregateResult ar : [
+                SELECT Intake_Question__c, COUNT(Id) cnt
+                FROM Intake_Process__c
+                WHERE Intake_Question__c IN :questionIds
+                AND RecordType.Name = 'Intake Outcomes'
+                GROUP BY Intake_Question__c
+            ]) {
+                outcomeCountsMap.put((Id) ar.get('Intake_Question__c'), (Integer) ar.get('cnt'));
+            }
+
+            // Build warnings
+            List<String> warnings = new List<String>();
+            Map<Id, List<String>> referencingQuestions = new Map<Id, List<String>>();
+
+            for (Intake_Process__c ref : incomingRefs) {
+                if (!referencingQuestions.containsKey(ref.Next_Question__c)) {
+                    referencingQuestions.put(ref.Next_Question__c, new List<String>());
+                }
+                referencingQuestions.get(ref.Next_Question__c).add(ref.Question__r.Name);
+            }
+
+            // Calculate total outcomes that will be deleted
+            Integer totalOutcomesToDelete = 0;
+            for (Integer count : outcomeCountsMap.values()) {
+                totalOutcomesToDelete += count;
+            }
+
+            // Generate warnings
+            if (!incomingRefs.isEmpty()) {
+                warnings.add('WARNING: ' + incomingRefs.size() + ' outcomes from other questions reference these questions. Those outcomes will become broken.');
+            }
+            if (totalOutcomesToDelete > 0) {
+                warnings.add('WARNING: ' + totalOutcomesToDelete + ' outcomes will be deleted along with these questions.');
+            }
+
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('canDelete', true); // Always allow but show warnings
+            result.put('warnings', warnings);
+            result.put('incomingReferenceCount', incomingRefs.size());
+            result.put('outcomesToDeleteCount', totalOutcomesToDelete);
+            result.put('referencingQuestions', referencingQuestions);
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error validating bulk delete: ' + e.getMessage());
+        }
+    }
+
+    /**
+     * Bulk delete questions and their outcomes
+     * @param questionIds List of question IDs to delete
+     * @param deleteCascade If true, also delete related outcomes
+     * @return Map with success count and error count
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> bulkDeleteQuestions(List<Id> questionIds, Boolean deleteCascade) {
+        try {
+            Integer successCount = 0;
+            Integer errorCount = 0;
+            List<String> errorMessages = new List<String>();
+
+            // Get questions
+            List<Intake_Process__c> questionsToDelete = [
+                SELECT Id, Name
+                FROM Intake_Process__c
+                WHERE Id IN :questionIds
+                AND RecordType.Name = 'Intake Questions'
+            ];
+
+            // If cascade delete, also delete outcomes
+            if (deleteCascade) {
+                List<Intake_Process__c> outcomesToDelete = [
+                    SELECT Id
+                    FROM Intake_Process__c
+                    WHERE Intake_Question__c IN :questionIds
+                    AND RecordType.Name = 'Intake Outcomes'
+                ];
+
+                if (!outcomesToDelete.isEmpty()) {
+                    delete outcomesToDelete;
+                }
+            }
+
+            // Delete questions
+            List<Database.DeleteResult> results = Database.delete(questionsToDelete, false);
+
+            for (Integer i = 0; i < results.size(); i++) {
+                if (results[i].isSuccess()) {
+                    successCount++;
+                } else {
+                    errorCount++;
+                    String errorMsg = questionsToDelete[i].Name + ': ';
+                    for (Database.Error err : results[i].getErrors()) {
+                        errorMsg += err.getMessage() + '; ';
+                    }
+                    errorMessages.add(errorMsg);
+                }
+            }
+
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('successCount', successCount);
+            result.put('errorCount', errorCount);
+            result.put('errorMessages', errorMessages);
+            result.put('totalProcessed', questionIds.size());
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error in bulk delete: ' + e.getMessage());
+        }
+    }
+
+    /**
      * Get question details with full outcome information
      */
     @AuraEnabled(cacheable=false)

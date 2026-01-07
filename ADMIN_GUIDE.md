@@ -1792,15 +1792,117 @@ Click any node to see validation results.
 
 ---
 
-## Phase 4: Bulk Operations (Planned)
+## Phase 4: Bulk Operations (✅ IMPLEMENTED)
+
+Phase 4 provides powerful bulk editing and deletion capabilities for managing multiple questions at once.
+
+### 4.1 Row Selection
+
+Select multiple questions in the datatable using checkboxes.
+
+**How to Use:**
+1. Click checkboxes next to questions
+2. Select all on page with header checkbox
+3. Bulk action buttons appear when rows selected
+4. Selection count displayed
+
+### 4.2 Bulk Edit
+
+Update multiple questions simultaneously.
+
+**Features:**
+- Edit Case Type, Sub-Type, Reason, User Role, Input Type
+- Only updates non-empty fields
+- Partial success handling (some succeed, some fail)
+- Automatic data reload after update
+
+**How to Use:**
+1. Select questions (checkboxes)
+2. Click **Bulk Edit** button
+3. Fill in fields to update (leave blank to skip)
+4. Click **Update Questions**
+5. Success toast shows count updated
+
+**Safety:**
+- Only selected fields are updated
+- Blank fields are skipped
+- Errors reported individually
+- No data lost on failure
+
+### 4.3 Bulk Delete
+
+Delete multiple questions with impact analysis.
+
+**Features:**
+- Pre-delete validation
+- Impact analysis (shows affected outcomes)
+- Cascade delete (removes outcomes too)
+- Warning for broken references
+- Detailed confirmation dialog
+
+**How to Use:**
+1. Select questions to delete
+2. Click **Bulk Delete** button (red/destructive)
+3. Review impact analysis warnings
+4. Confirm deletion
+5. Questions and outcomes deleted
+
+**Warnings Shown:**
+- Number of outcomes that will be deleted
+- Other questions referencing these (will break)
+- Total impact count
+
+**Safety:**
+- Cannot be undone warning
+- Impact analysis before delete
+- Explicit confirmation required
+- Detailed warning messages
+
+### 4.4 Validation & Safety
+
+**Bulk Edit Safety:**
+- Database.update with allOrNone=false
+- Individual error tracking
+- Success/error counts returned
+- Failed records don't block successful ones
+
+**Bulk Delete Safety:**
+- Pre-validation with validateBulkDelete()
+- Impact analysis displayed
+- Warning for broken references
+- Cascade delete option
+- Explicit user confirmation required
+
+**Performance:**
+- Handles hundreds of records
+- Efficient DML operations
+- Progress indicators during processing
+- Automatic refresh after completion
+
+### 4.5 Use Cases
+
+**Data Cleanup:**
+- Fix incorrect Case Types in bulk
+- Update User Roles across questions
+- Standardize Case Reasons
+- Remove orphaned questions
+
+**Migration:**
+- Bulk update after org changes
+- Reassign question categories
+- Clean up test data
+- Consolidate duplicate questions
+
+**Maintenance:**
+- Regular cleanup of unused questions
+- Update fields after process changes
+- Bulk corrections from audits
+
+---
+
+## Phase 5: Analytics (Planned)
 
 Future enhancements:
-
-### Phase 4: Bulk Operations
-- Mass edit questions
-- Bulk delete
-- Bulk assignment
-- Import from Excel
 
 ### Phase 5: Analytics
 - Question usage analytics
@@ -1850,11 +1952,21 @@ You now have a fully functional admin interface for managing intake questions wi
 ✅ Click-to-navigate to Salesforce records
 ✅ Issue highlighting and detection
 
-**Total Implementation Time:** 5-6 hours (including testing)
+### Phase 4 Features ✅
+✅ Multi-select row selection in datatable
+✅ Bulk edit with field-level control
+✅ Bulk delete with impact analysis
+✅ Pre-delete validation and warnings
+✅ Cascade delete for outcomes
+✅ Partial success handling
+✅ Real-time selection count
+✅ Detailed confirmation dialogs
+
+**Total Implementation Time:** 7-8 hours (including testing)
 
 **Files Created:**
-- 1 Apex class (IntakeAdminController.cls) - 820+ lines
-- 2 LWC components (8 files total) - 950+ lines
+- 1 Apex class (IntakeAdminController.cls) - 1,000+ lines
+- 2 LWC components (8 files total) - 1,150+ lines
 - 1 Lightning App
 - 1 Permission Set
 
@@ -1863,8 +1975,10 @@ You now have a fully functional admin interface for managing intake questions wi
 - Sub-2-second query performance
 - CSV export supports unlimited records
 - Flow visualization supports 1,000 nodes
+- Bulk operations on hundreds of records
 - localStorage-based saved searches
 - SVG-based rendering (no external dependencies)
+- Impact analysis before destructive operations
 - Professional SLDS design
 
 **Next Steps:**
@@ -1872,4 +1986,5 @@ You now have a fully functional admin interface for managing intake questions wi
 2. Export data for reporting and analysis
 3. Use the flow visualizer to understand question flow
 4. Identify and fix orphaned questions
-5. Validate critical paths before deployment
+5. Use bulk operations for data cleanup
+6. Validate critical paths before deployment
