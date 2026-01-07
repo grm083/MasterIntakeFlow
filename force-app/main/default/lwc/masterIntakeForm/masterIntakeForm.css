@@ -1,28 +1,13 @@
-/* Main Container */
-.intake-container {
-    position: relative;
-}
-
-/* Card Header */
-.card-header {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Progress Indicator */
-.progress-indicator {
-    display: flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    background-color: #f3f3f3;
-    border-radius: 1rem;
-    font-weight: 500;
+/* Modal Content */
+.intake-modal-content {
+    min-height: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0;
 }
 
 /* Question Stack */
 .question-stack {
-    max-height: 600px;
-    overflow-y: auto;
     padding: 1rem;
     scroll-behavior: smooth;
 }

@@ -1,0 +1,30 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-around_medium">
+            <div class="launcher-container">
+                <div class="launcher-icon">
+                    <lightning-icon
+                        icon-name="custom:custom63"
+                        size="medium"
+                        class="slds-m-right_medium">
+                    </lightning-icon>
+                </div>
+                <div class="launcher-content">
+                    <h3 class="slds-text-heading_small slds-m-bottom_xx-small">
+                        Master Intake Required
+                    </h3>
+                    <p class="slds-text-body_regular slds-text-color_weak slds-m-bottom_small">
+                        Please complete the Master Intake Flow to provide case details and route appropriately.
+                    </p>
+                    <lightning-button
+                        variant="brand"
+                        label="Start Master Intake"
+                        icon-name="utility:form"
+                        onclick={handleOpenIntake}
+                        class="slds-m-top_small">
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

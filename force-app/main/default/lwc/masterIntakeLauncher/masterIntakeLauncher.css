@@ -1,0 +1,22 @@
+.launcher-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.launcher-icon {
+    flex-shrink: 0;
+}
+
+.launcher-content {
+    flex-grow: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .launcher-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}

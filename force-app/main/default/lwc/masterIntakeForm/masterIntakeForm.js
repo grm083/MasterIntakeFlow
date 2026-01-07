@@ -1,11 +1,13 @@
-import { LightningElement, api, track } from 'lwc';
+import LightningModal from 'lightning/modal';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import initializeIntake from '@salesforce/apex/IntakeProcessController.initializeIntake';
 import getNextQuestionBatch from '@salesforce/apex/IntakeProcessController.getNextQuestionBatch';
 import completeIntake from '@salesforce/apex/IntakeProcessController.completeIntake';
 
 /**
- * Master Intake Form - Main container component
+ * Master Intake Form - Modal dialog component
+ *
+ * This component opens as a modal dialog to provide a focused intake experience.
  *
  * DEBUGGING:
  * - Open browser DevTools Console (F12)
@@ -14,8 +16,9 @@ import completeIntake from '@salesforce/apex/IntakeProcessController.completeInt
  * - Check "Initialization complete" message for final state
  * - Verify "showQuestions getter" returns true when questions should display
  */
-export default class MasterIntakeForm extends LightningElement {
-    @api recordId; // Case ID from record page
+export default class MasterIntakeForm extends LightningModal {
+    // Record ID is passed as a parameter when opening the modal
+    recordId;
 
     // State object
     @track state = {
@@ -422,11 +425,10 @@ export default class MasterIntakeForm extends LightningElement {
                 console.log('[MasterIntakeForm] Task ID:', result.taskId);
                 this.showSuccessToast('Success', 'Intake completed successfully');
 
-                // Refresh the page to hide component and show updated case
+                // Close the modal and signal success
                 setTimeout(() => {
-                    console.log('[MasterIntakeForm] Refreshing page...');
-                    // Use NavigationMixin or force refresh
-                    eval("$A.get('e.force:refreshView').fire();");
+                    console.log('[MasterIntakeForm] Closing modal and refreshing...');
+                    this.close('success');
                 }, 1000);
 
             } else {
@@ -441,6 +443,16 @@ export default class MasterIntakeForm extends LightningElement {
             console.error('[MasterIntakeForm] Error stack:', error.stack);
             this.showErrorToast('Error', error.body?.message || 'Failed to complete intake');
         }
+    }
+
+    // ========== MODAL CONTROL ==========
+
+    /**
+     * Handle modal close button click
+     */
+    handleClose() {
+        console.log('[MasterIntakeForm] handleClose - Closing modal');
+        this.close('cancelled');
     }
 
     // ========== UTILITY METHODS ==========
