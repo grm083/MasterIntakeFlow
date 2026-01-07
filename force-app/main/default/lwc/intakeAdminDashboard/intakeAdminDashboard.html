@@ -89,7 +89,7 @@
                 </div>
             </div>
 
-            <!-- Action Buttons -->
+            <!-- Action Buttons Row 1 -->
             <div class="slds-m-top_medium">
                 <lightning-button
                     variant="neutral"
@@ -112,9 +112,118 @@
                     label="Show No Outcomes"
                     icon-name="utility:error"
                     onclick={handleShowNoOutcomes}
-                    disabled={isLoading}>
+                    disabled={isLoading}
+                    class="slds-m-right_small">
                 </lightning-button>
             </div>
+
+            <!-- Phase 2: Action Buttons Row 2 -->
+            <div class="slds-m-top_small slds-grid slds-wrap slds-gutters_x-small">
+                <div class="slds-col">
+                    <lightning-button
+                        variant="brand"
+                        label="Export to CSV"
+                        icon-name="utility:download"
+                        onclick={handleExportToCSV}
+                        disabled={isLoading}
+                        class="slds-m-right_small">
+                    </lightning-button>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-button
+                        variant="neutral"
+                        label="Save Search"
+                        icon-name="utility:save"
+                        onclick={handleSaveSearch}
+                        disabled={isLoading}
+                        title="Save current filters and sorting">
+                    </lightning-button>
+                </div>
+
+                <template if:true={hasSavedSearches}>
+                    <div class="slds-col">
+                        <lightning-button-menu
+                            alternative-text="Saved Searches"
+                            icon-size="x-small"
+                            menu-alignment="left"
+                            variant="border-filled"
+                            label="Saved Searches">
+                            <template for:each={savedSearches} for:item="search">
+                                <lightning-menu-item
+                                    key={search.id}
+                                    value={search.id}
+                                    label={search.name}
+                                    data-id={search.id}
+                                    onclick={handleLoadSavedSearch}
+                                    icon-name="utility:filterList">
+                                </lightning-menu-item>
+                            </template>
+                        </lightning-button-menu>
+                    </div>
+                </template>
+
+                <template if:true={hasSearchHistory}>
+                    <div class="slds-col">
+                        <lightning-button-menu
+                            alternative-text="Search History"
+                            icon-size="x-small"
+                            menu-alignment="left"
+                            variant="border-filled"
+                            label="Recent Searches">
+                            <template for:each={searchHistory} for:item="history">
+                                <lightning-menu-item
+                                    key={history.id}
+                                    value={history.searchTerm}
+                                    label={history.searchTerm}
+                                    data-term={history.searchTerm}
+                                    onclick={handleLoadSearchFromHistory}
+                                    icon-name="utility:search">
+                                </lightning-menu-item>
+                            </template>
+                            <lightning-menu-item
+                                value="clear"
+                                label="Clear History"
+                                onclick={handleClearSearchHistory}
+                                icon-name="utility:delete">
+                            </lightning-menu-item>
+                        </lightning-button-menu>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Phase 2: Saved Search Modal -->
+            <template if:true={showSavedSearchModal}>
+                <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium">Save Current Search</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-input
+                                label="Search Name"
+                                value={savedSearchName}
+                                onchange={handleSavedSearchNameChange}
+                                placeholder="Enter a name for this search..."
+                                required>
+                            </lightning-input>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button
+                                variant="neutral"
+                                label="Cancel"
+                                onclick={handleCancelSaveSearch}>
+                            </lightning-button>
+                            <lightning-button
+                                variant="brand"
+                                label="Save"
+                                onclick={handleSaveSearchConfirm}>
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
         </div>
 
         <!-- Data Table -->

@@ -58,3 +58,12 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Phase 2: Modal Styles */
+.slds-modal {
+    z-index: 9001;
+}
+
+.slds-backdrop {
+    z-index: 9000;
+}

@@ -153,6 +153,85 @@ public with sharing class IntakeAdminController {
     }
 
     /**
+     * Export questions to CSV format
+     * Returns all questions matching filters (not paginated) as CSV string
+     * @param filters JSON string of filter criteria
+     * @param sortField Field to sort by
+     * @param sortDirection ASC or DESC
+     * @return CSV string with all matching questions
+     */
+    @AuraEnabled(cacheable=false)
+    public static String exportQuestionsToCSV(
+        String filters,
+        String sortField,
+        String sortDirection
+    ) {
+        try {
+            // Parse filters
+            Map<String, Object> filterMap = filters != null ?
+                (Map<String, Object>) JSON.deserializeUntyped(filters) :
+                new Map<String, Object>();
+
+            // Build query without pagination (export all)
+            String query = buildQuestionQuery(filterMap, sortField, sortDirection, null, null);
+
+            // Execute query
+            List<Intake_Process__c> questions = Database.query(query);
+
+            // Get outcome counts
+            Map<Id, Integer> outcomeCounts = getOutcomeCountsForQuestions(
+                new Map<Id, Intake_Process__c>(questions).keySet()
+            );
+
+            // Get incoming reference counts
+            Map<Id, Integer> incomingReferences = getIncomingReferenceCountsForQuestions(
+                new Map<Id, Intake_Process__c>(questions).keySet()
+            );
+
+            // Build CSV
+            StringBuilder csv = new StringBuilder();
+
+            // CSV Header
+            csv.append('Name,Question Text,Input Type,Case Type,Case Sub-Type,Case Reason,User Role,');
+            csv.append('Customer Account,Customer Location,Presentation Order,Outcome Count,Status,');
+            csv.append('Last Modified Date,Last Modified By,Created Date,Created By\n');
+
+            // CSV Rows
+            for (Intake_Process__c q : questions) {
+                QuestionWrapper wrapper = buildQuestionWrapper(q, outcomeCounts, incomingReferences);
+
+                csv.append(escapeCsvValue(wrapper.name));
+                csv.append(escapeCsvValue(wrapper.questionText));
+                csv.append(escapeCsvValue(wrapper.inputType));
+                csv.append(escapeCsvValue(wrapper.caseType));
+                csv.append(escapeCsvValue(wrapper.caseSubType));
+                csv.append(escapeCsvValue(wrapper.caseReason));
+                csv.append(escapeCsvValue(wrapper.userRole));
+                csv.append(escapeCsvValue(wrapper.customerAccount));
+                csv.append(escapeCsvValue(wrapper.customerLocation));
+                csv.append(wrapper.presentationOrder != null ? String.valueOf(wrapper.presentationOrder) : '');
+                csv.append(',');
+                csv.append(String.valueOf(wrapper.outcomeCount));
+                csv.append(',');
+                csv.append(getStatusLabel(wrapper));
+                csv.append(',');
+                csv.append(wrapper.lastModifiedDate != null ? wrapper.lastModifiedDate.format('yyyy-MM-dd HH:mm:ss') : '');
+                csv.append(',');
+                csv.append(escapeCsvValue(wrapper.lastModifiedBy));
+                csv.append(wrapper.createdDate != null ? wrapper.createdDate.format('yyyy-MM-dd HH:mm:ss') : '');
+                csv.append(',');
+                csv.append(escapeCsvValue(wrapper.createdBy));
+                csv.append('\n');
+            }
+
+            return csv.toString();
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error exporting to CSV: ' + e.getMessage());
+        }
+    }
+
+    /**
      * Get question details with full outcome information
      */
     @AuraEnabled(cacheable=false)
@@ -233,7 +312,13 @@ public with sharing class IntakeAdminController {
         // Add filters
         if (filters.containsKey('searchTerm') && filters.get('searchTerm') != null) {
             String searchTerm = String.escapeSingleQuotes((String) filters.get('searchTerm'));
-            query += ' AND (Question__c LIKE \'%' + searchTerm + '%\' OR Name LIKE \'%' + searchTerm + '%\')';
+            // Enhanced global search - searches across multiple fields
+            query += ' AND (Question__c LIKE \'%' + searchTerm + '%\' ' +
+                    'OR Name LIKE \'%' + searchTerm + '%\' ' +
+                    'OR Case_Type__c LIKE \'%' + searchTerm + '%\' ' +
+                    'OR Case_Sub_Type__c LIKE \'%' + searchTerm + '%\' ' +
+                    'OR Case_Reason__c LIKE \'%' + searchTerm + '%\' ' +
+                    'OR User_Role__c LIKE \'%' + searchTerm + '%\')';
         }
 
         if (filters.containsKey('caseType') && filters.get('caseType') != null) {
@@ -285,7 +370,13 @@ public with sharing class IntakeAdminController {
         // Add same filters as main query
         if (filters.containsKey('searchTerm') && filters.get('searchTerm') != null) {
             String searchTerm = String.escapeSingleQuotes((String) filters.get('searchTerm'));
-            query += ' AND (Question__c LIKE \'%' + searchTerm + '%\' OR Name LIKE \'%' + searchTerm + '%\')';
+            // Enhanced global search - searches across multiple fields
+            query += ' AND (Question__c LIKE \'%' + searchTerm + '%\' ' +
+                    'OR Name LIKE \'%' + searchTerm + '%\' ' +
+                    'OR Case_Type__c LIKE \'%' + searchTerm + '%\' ' +
+                    'OR Case_Sub_Type__c LIKE \'%' + searchTerm + '%\' ' +
+                    'OR Case_Reason__c LIKE \'%' + searchTerm + '%\' ' +
+                    'OR User_Role__c LIKE \'%' + searchTerm + '%\')';
         }
 
         if (filters.containsKey('caseType') && filters.get('caseType') != null) {
@@ -404,5 +495,52 @@ public with sharing class IntakeAdminController {
         wrapper.createdBy = q.CreatedBy.Name;
 
         return wrapper;
+    }
+
+    /**
+     * Escape CSV value - handles commas, quotes, and newlines
+     */
+    private static String escapeCsvValue(String value) {
+        if (value == null) {
+            return ',';
+        }
+
+        // If value contains comma, quote, or newline, wrap in quotes and escape internal quotes
+        if (value.contains(',') || value.contains('"') || value.contains('\n')) {
+            value = '"' + value.replace('"', '""') + '"';
+        }
+
+        return value + ',';
+    }
+
+    /**
+     * Get status label for a question
+     */
+    private static String getStatusLabel(QuestionWrapper wrapper) {
+        if (wrapper.isOrphaned) {
+            return 'Orphaned';
+        }
+        if (wrapper.outcomeCount == 0) {
+            return 'No Outcomes';
+        }
+        if (!wrapper.hasNextQuestions) {
+            return 'Terminal';
+        }
+        return 'Active';
+    }
+
+    /**
+     * StringBuilder helper class for CSV generation
+     */
+    private class StringBuilder {
+        private List<String> buffer = new List<String>();
+
+        public void append(String value) {
+            buffer.add(value);
+        }
+
+        public override String toString() {
+            return String.join(buffer, '');
+        }
     }
 }

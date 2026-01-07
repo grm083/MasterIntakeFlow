@@ -4,6 +4,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import getQuestions from '@salesforce/apex/IntakeAdminController.getQuestions';
 import getQuestionCount from '@salesforce/apex/IntakeAdminController.getQuestionCount';
 import getFilterOptions from '@salesforce/apex/IntakeAdminController.getFilterOptions';
+import exportQuestionsToCSV from '@salesforce/apex/IntakeAdminController.exportQuestionsToCSV';
 
 const COLUMNS = [
     {
@@ -104,6 +105,7 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     @track pageNumber = 1;
     @track sortedBy = 'caseType';
     @track sortedDirection = 'asc';
+    @track isExporting = false;
 
     // Stats
     @track stats = {
@@ -114,11 +116,20 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         text: 0
     };
 
+    // Phase 2: Saved Searches & History
+    @track savedSearches = [];
+    @track searchHistory = [];
+    @track showSavedSearchModal = false;
+    @track savedSearchName = '';
+    searchTimeout;
+
     // ========== LIFECYCLE ==========
 
     connectedCallback() {
         this.loadFilterOptions();
         this.loadQuestions();
+        this.loadSavedSearches();
+        this.loadSearchHistory();
     }
 
     // ========== DATA LOADING ==========
@@ -244,6 +255,7 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         this.searchTimeout = setTimeout(() => {
             this.resetToFirstPage();
             this.loadQuestions();
+            this.addToSearchHistory();
         }, 500);
     }
 
@@ -283,6 +295,165 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
 
     resetToFirstPage() {
         this.pageNumber = 1;
+    }
+
+    // ========== PHASE 2: EXPORT TO CSV ==========
+
+    async handleExportToCSV() {
+        try {
+            this.isExporting = true;
+
+            // Build filter JSON
+            const filterJson = JSON.stringify(this.filters);
+
+            // Call Apex to generate CSV
+            const csvData = await exportQuestionsToCSV({
+                filters: filterJson,
+                sortField: this.sortedBy,
+                sortDirection: this.sortedDirection
+            });
+
+            // Create download link
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `intake_questions_${this.getTimestamp()}.csv`;
+            link.click();
+            window.URL.revokeObjectURL(url);
+
+            this.showToast('Success', 'Questions exported successfully', 'success');
+            this.isExporting = false;
+
+        } catch (error) {
+            console.error('Error exporting to CSV:', error);
+            this.showToast('Error', 'Failed to export questions: ' + (error.body?.message || error.message), 'error');
+            this.isExporting = false;
+        }
+    }
+
+    getTimestamp() {
+        const now = new Date();
+        return `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_` +
+               `${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
+    }
+
+    // ========== PHASE 2: SAVED SEARCHES ==========
+
+    loadSavedSearches() {
+        try {
+            const saved = localStorage.getItem('intakeAdminSavedSearches');
+            if (saved) {
+                this.savedSearches = JSON.parse(saved);
+            }
+        } catch (error) {
+            console.error('Error loading saved searches:', error);
+        }
+    }
+
+    handleSaveSearch() {
+        this.showSavedSearchModal = true;
+    }
+
+    handleSavedSearchNameChange(event) {
+        this.savedSearchName = event.target.value;
+    }
+
+    handleSaveSearchConfirm() {
+        if (!this.savedSearchName || this.savedSearchName.trim() === '') {
+            this.showToast('Error', 'Please enter a name for this search', 'error');
+            return;
+        }
+
+        const newSearch = {
+            id: Date.now().toString(),
+            name: this.savedSearchName,
+            filters: JSON.parse(JSON.stringify(this.filters)),
+            sortedBy: this.sortedBy,
+            sortedDirection: this.sortedDirection,
+            createdDate: new Date().toISOString()
+        };
+
+        this.savedSearches = [...this.savedSearches, newSearch];
+        localStorage.setItem('intakeAdminSavedSearches', JSON.stringify(this.savedSearches));
+
+        this.showToast('Success', `Search "${this.savedSearchName}" saved successfully`, 'success');
+        this.savedSearchName = '';
+        this.showSavedSearchModal = false;
+    }
+
+    handleCancelSaveSearch() {
+        this.savedSearchName = '';
+        this.showSavedSearchModal = false;
+    }
+
+    handleLoadSavedSearch(event) {
+        const searchId = event.target.dataset.id;
+        const search = this.savedSearches.find(s => s.id === searchId);
+
+        if (search) {
+            this.filters = JSON.parse(JSON.stringify(search.filters));
+            this.sortedBy = search.sortedBy;
+            this.sortedDirection = search.sortedDirection;
+            this.resetToFirstPage();
+            this.loadQuestions();
+            this.showToast('Info', `Loaded search "${search.name}"`, 'info');
+        }
+    }
+
+    handleDeleteSavedSearch(event) {
+        const searchId = event.target.dataset.id;
+        this.savedSearches = this.savedSearches.filter(s => s.id !== searchId);
+        localStorage.setItem('intakeAdminSavedSearches', JSON.stringify(this.savedSearches));
+        this.showToast('Success', 'Saved search deleted', 'success');
+    }
+
+    // ========== PHASE 2: SEARCH HISTORY ==========
+
+    loadSearchHistory() {
+        try {
+            const history = localStorage.getItem('intakeAdminSearchHistory');
+            if (history) {
+                this.searchHistory = JSON.parse(history);
+            }
+        } catch (error) {
+            console.error('Error loading search history:', error);
+        }
+    }
+
+    addToSearchHistory() {
+        if (!this.filters.searchTerm || this.filters.searchTerm.trim() === '') {
+            return;
+        }
+
+        // Check if this search term already exists in history
+        const exists = this.searchHistory.some(h => h.searchTerm === this.filters.searchTerm);
+        if (exists) {
+            return;
+        }
+
+        const historyItem = {
+            id: Date.now().toString(),
+            searchTerm: this.filters.searchTerm,
+            timestamp: new Date().toISOString()
+        };
+
+        // Add to beginning of array and keep only last 10
+        this.searchHistory = [historyItem, ...this.searchHistory].slice(0, 10);
+        localStorage.setItem('intakeAdminSearchHistory', JSON.stringify(this.searchHistory));
+    }
+
+    handleLoadSearchFromHistory(event) {
+        const searchTerm = event.target.dataset.term;
+        this.filters.searchTerm = searchTerm;
+        this.resetToFirstPage();
+        this.loadQuestions();
+    }
+
+    handleClearSearchHistory() {
+        this.searchHistory = [];
+        localStorage.removeItem('intakeAdminSearchHistory');
+        this.showToast('Success', 'Search history cleared', 'success');
     }
 
     // ========== HELPERS ==========
@@ -378,5 +549,17 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
             { label: '-- All User Roles --', value: '' },
             ...this.filterOptions.userRoles
         ];
+    }
+
+    get hasSavedSearches() {
+        return this.savedSearches && this.savedSearches.length > 0;
+    }
+
+    get hasSearchHistory() {
+        return this.searchHistory && this.searchHistory.length > 0;
+    }
+
+    get canSaveSearch() {
+        return this.hasFilters || this.filters.searchTerm;
     }
 }
