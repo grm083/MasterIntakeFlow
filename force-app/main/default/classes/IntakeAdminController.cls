@@ -255,7 +255,6 @@ public with sharing class IntakeAdminController {
                        Outcome__c, Outcome_Statement__c
                 FROM Intake_Process__c
                 WHERE Intake_Question__c IN :questionIds
-                AND RecordType.Name = 'Intake Outcomes'
                 AND Next_Question__c != null
             ];
 
@@ -336,7 +335,7 @@ public with sharing class IntakeAdminController {
                            Outcome__c, Outcome_Statement__c
                     FROM Intake_Process__c
                     WHERE Intake_Question__c IN :questionsToProcess
-                    AND RecordType.Name = 'Intake Outcomes'
+                    
                     AND Next_Question__c != null
                 ];
 
@@ -358,7 +357,7 @@ public with sharing class IntakeAdminController {
                        Case_Sub_Type__c, Presentation_Order__c
                 FROM Intake_Process__c
                 WHERE Id IN :visitedQuestions
-                AND RecordType.Name = 'Intake Questions'
+                
             ];
 
             // Get all visited outcomes
@@ -427,7 +426,7 @@ public with sharing class IntakeAdminController {
                 SELECT Id, Name, Question__c, Presentation_Order__c
                 FROM Intake_Process__c
                 WHERE Id = :questionId
-                AND RecordType.Name = 'Intake Questions'
+                
                 LIMIT 1
             ];
 
@@ -436,7 +435,7 @@ public with sharing class IntakeAdminController {
                 SELECT Id, Outcome__c, Next_Question__c
                 FROM Intake_Process__c
                 WHERE Intake_Question__c = :questionId
-                AND RecordType.Name = 'Intake Outcomes'
+                
             ];
 
             // Get incoming references
@@ -444,7 +443,7 @@ public with sharing class IntakeAdminController {
                 SELECT Id
                 FROM Intake_Process__c
                 WHERE Next_Question__c = :questionId
-                AND RecordType.Name = 'Intake Outcomes'
+                
             ];
 
             // Validation checks
@@ -512,7 +511,7 @@ public with sharing class IntakeAdminController {
                        User_Role__c, Input_Type__c
                 FROM Intake_Process__c
                 WHERE Id IN :questionIds
-                AND RecordType.Name = 'Intake Questions'
+                
             ];
 
             // Apply field updates
@@ -581,7 +580,7 @@ public with sharing class IntakeAdminController {
                 SELECT Next_Question__c, Question__r.Name, Outcome__c
                 FROM Intake_Process__c
                 WHERE Next_Question__c IN :questionIds
-                AND RecordType.Name = 'Intake Outcomes'
+                
             ];
 
             // Count outcomes for each question
@@ -590,7 +589,7 @@ public with sharing class IntakeAdminController {
                 SELECT Intake_Question__c, COUNT(Id) cnt
                 FROM Intake_Process__c
                 WHERE Intake_Question__c IN :questionIds
-                AND RecordType.Name = 'Intake Outcomes'
+                
                 GROUP BY Intake_Question__c
             ]) {
                 outcomeCountsMap.put((Id) ar.get('Intake_Question__c'), (Integer) ar.get('cnt'));
@@ -653,7 +652,7 @@ public with sharing class IntakeAdminController {
                 SELECT Id, Name
                 FROM Intake_Process__c
                 WHERE Id IN :questionIds
-                AND RecordType.Name = 'Intake Questions'
+                
             ];
 
             // If cascade delete, also delete outcomes
@@ -662,7 +661,7 @@ public with sharing class IntakeAdminController {
                     SELECT Id
                     FROM Intake_Process__c
                     WHERE Intake_Question__c IN :questionIds
-                    AND RecordType.Name = 'Intake Outcomes'
+                    
                 ];
 
                 if (!outcomesToDelete.isEmpty()) {
@@ -714,7 +713,7 @@ public with sharing class IntakeAdminController {
                        LastModifiedDate, LastModifiedBy.Name
                 FROM Intake_Process__c
                 WHERE Id = :questionId
-                AND RecordType.Name = 'Intake Questions'
+                
                 LIMIT 1
             ];
 
@@ -731,7 +730,7 @@ public with sharing class IntakeAdminController {
                        Create_Task__c, Task_Type__c, Task_Process__c
                 FROM Intake_Process__c
                 WHERE Intake_Question__c = :questionId
-                AND RecordType.Name = 'Intake Outcomes'
+                
                 ORDER BY Outcome__c
             ];
 
@@ -740,7 +739,7 @@ public with sharing class IntakeAdminController {
                 SELECT Id, Name, Question__c, Outcome__c
                 FROM Intake_Process__c
                 WHERE Next_Question__c = :questionId
-                AND RecordType.Name = 'Intake Outcomes'
+                
             ];
 
             Map<String, Object> result = new Map<String, Object>();
@@ -765,7 +764,8 @@ public with sharing class IntakeAdminController {
         String query = 'SELECT Id, Name, Question__c, Input_Type__c, Presentation_Order__c, ' +
                       'Case_Type__c, Case_Sub_Type__c ' +
                       'FROM Intake_Process__c ' +
-                      'WHERE RecordType.Name = \'Intake Questions\'';
+                      'WHERE Question__c != null ' +
+                      'AND Intake_Question__c = null';
 
         // Add filters if provided
         if (filters.containsKey('caseType') && filters.get('caseType') != null) {
@@ -805,7 +805,8 @@ public with sharing class IntakeAdminController {
                       'LastModifiedDate, LastModifiedBy.Name, ' +
                       'CreatedDate, CreatedBy.Name ' +
                       'FROM Intake_Process__c ' +
-                      'WHERE RecordType.Name = \'Intake Questions\'';
+                      'WHERE Question__c != null ' +
+                      'AND Intake_Question__c = null';
 
         // Add filters
         if (filters.containsKey('searchTerm') && filters.get('searchTerm') != null) {
@@ -863,7 +864,8 @@ public with sharing class IntakeAdminController {
      */
     private static String buildCountQuery(Map<String, Object> filters) {
         String query = 'SELECT COUNT() FROM Intake_Process__c ' +
-                      'WHERE RecordType.Name = \'Intake Questions\'';
+                      'WHERE Question__c != null ' +
+                      'AND Intake_Question__c = null';
 
         // Add same filters as main query
         if (filters.containsKey('searchTerm') && filters.get('searchTerm') != null) {
@@ -910,7 +912,7 @@ public with sharing class IntakeAdminController {
             SELECT Intake_Question__c, COUNT(Id) cnt
             FROM Intake_Process__c
             WHERE Intake_Question__c IN :questionIds
-            AND RecordType.Name = 'Intake Outcomes'
+            
             GROUP BY Intake_Question__c
         ]) {
             counts.put((Id) ar.get('Intake_Question__c'), (Integer) ar.get('cnt'));
@@ -929,7 +931,7 @@ public with sharing class IntakeAdminController {
             SELECT Next_Question__c, COUNT(Id) cnt
             FROM Intake_Process__c
             WHERE Next_Question__c IN :questionIds
-            AND RecordType.Name = 'Intake Outcomes'
+            
             GROUP BY Next_Question__c
         ]) {
             counts.put((Id) ar.get('Next_Question__c'), (Integer) ar.get('cnt'));
@@ -946,7 +948,8 @@ public with sharing class IntakeAdminController {
         Set<String> values = new Set<String>();
 
         String query = 'SELECT ' + fieldName + ' FROM Intake_Process__c ' +
-                      'WHERE RecordType.Name = \'Intake Questions\' ' +
+                      'WHERE Question__c != null ' +
+                      'AND Intake_Question__c = null ' +
                       'AND ' + fieldName + ' != null ' +
                       'ORDER BY ' + fieldName;
 
