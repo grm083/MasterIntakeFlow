@@ -767,15 +767,21 @@ public with sharing class IntakeAdminController {
                       'WHERE Question__c != null ' +
                       'AND Intake_Question__c = null';
 
-        // Add filters if provided
+        // Add filters if provided (check for both null and empty strings)
         if (filters.containsKey('caseType') && filters.get('caseType') != null) {
-            String caseType = String.escapeSingleQuotes((String) filters.get('caseType'));
-            query += ' AND Case_Type__c = \'' + caseType + '\'';
+            String caseType = String.valueOf(filters.get('caseType')).trim();
+            if (String.isNotBlank(caseType)) {
+                caseType = String.escapeSingleQuotes(caseType);
+                query += ' AND Case_Type__c = \'' + caseType + '\'';
+            }
         }
 
         if (filters.containsKey('caseSubType') && filters.get('caseSubType') != null) {
-            String caseSubType = String.escapeSingleQuotes((String) filters.get('caseSubType'));
-            query += ' AND Case_Sub_Type__c = \'' + caseSubType + '\'';
+            String caseSubType = String.valueOf(filters.get('caseSubType')).trim();
+            if (String.isNotBlank(caseSubType)) {
+                caseSubType = String.escapeSingleQuotes(caseSubType);
+                query += ' AND Case_Sub_Type__c = \'' + caseSubType + '\'';
+            }
         }
 
         // Limit for performance (can be adjusted)
@@ -808,36 +814,51 @@ public with sharing class IntakeAdminController {
                       'WHERE Question__c != null ' +
                       'AND Intake_Question__c = null';
 
-        // Add filters
+        // Add filters (check for both null and empty strings)
         if (filters.containsKey('searchTerm') && filters.get('searchTerm') != null) {
-            String searchTerm = String.escapeSingleQuotes((String) filters.get('searchTerm'));
-            // Enhanced global search - searches across multiple fields
-            query += ' AND (Question__c LIKE \'%' + searchTerm + '%\' ' +
-                    'OR Name LIKE \'%' + searchTerm + '%\' ' +
-                    'OR Case_Type__c LIKE \'%' + searchTerm + '%\' ' +
-                    'OR Case_Sub_Type__c LIKE \'%' + searchTerm + '%\' ' +
-                    'OR Case_Reason__c LIKE \'%' + searchTerm + '%\' ' +
-                    'OR User_Role__c LIKE \'%' + searchTerm + '%\')';
+            String searchTerm = String.valueOf(filters.get('searchTerm')).trim();
+            if (String.isNotBlank(searchTerm)) {
+                searchTerm = String.escapeSingleQuotes(searchTerm);
+                // Enhanced global search - searches across multiple fields
+                query += ' AND (Question__c LIKE \'%' + searchTerm + '%\' ' +
+                        'OR Name LIKE \'%' + searchTerm + '%\' ' +
+                        'OR Case_Type__c LIKE \'%' + searchTerm + '%\' ' +
+                        'OR Case_Sub_Type__c LIKE \'%' + searchTerm + '%\' ' +
+                        'OR Case_Reason__c LIKE \'%' + searchTerm + '%\' ' +
+                        'OR User_Role__c LIKE \'%' + searchTerm + '%\')';
+            }
         }
 
         if (filters.containsKey('caseType') && filters.get('caseType') != null) {
-            String caseType = String.escapeSingleQuotes((String) filters.get('caseType'));
-            query += ' AND Case_Type__c = \'' + caseType + '\'';
+            String caseType = String.valueOf(filters.get('caseType')).trim();
+            if (String.isNotBlank(caseType)) {
+                caseType = String.escapeSingleQuotes(caseType);
+                query += ' AND Case_Type__c = \'' + caseType + '\'';
+            }
         }
 
         if (filters.containsKey('caseSubType') && filters.get('caseSubType') != null) {
-            String caseSubType = String.escapeSingleQuotes((String) filters.get('caseSubType'));
-            query += ' AND Case_Sub_Type__c = \'' + caseSubType + '\'';
+            String caseSubType = String.valueOf(filters.get('caseSubType')).trim();
+            if (String.isNotBlank(caseSubType)) {
+                caseSubType = String.escapeSingleQuotes(caseSubType);
+                query += ' AND Case_Sub_Type__c = \'' + caseSubType + '\'';
+            }
         }
 
         if (filters.containsKey('inputType') && filters.get('inputType') != null) {
-            String inputType = String.escapeSingleQuotes((String) filters.get('inputType'));
-            query += ' AND Input_Type__c = \'' + inputType + '\'';
+            String inputType = String.valueOf(filters.get('inputType')).trim();
+            if (String.isNotBlank(inputType)) {
+                inputType = String.escapeSingleQuotes(inputType);
+                query += ' AND Input_Type__c = \'' + inputType + '\'';
+            }
         }
 
         if (filters.containsKey('userRole') && filters.get('userRole') != null) {
-            String userRole = String.escapeSingleQuotes((String) filters.get('userRole'));
-            query += ' AND User_Role__c = \'' + userRole + '\'';
+            String userRole = String.valueOf(filters.get('userRole')).trim();
+            if (String.isNotBlank(userRole)) {
+                userRole = String.escapeSingleQuotes(userRole);
+                query += ' AND User_Role__c = \'' + userRole + '\'';
+            }
         }
 
         // Add sorting
@@ -867,36 +888,51 @@ public with sharing class IntakeAdminController {
                       'WHERE Question__c != null ' +
                       'AND Intake_Question__c = null';
 
-        // Add same filters as main query
+        // Add same filters as main query (check for both null and empty strings)
         if (filters.containsKey('searchTerm') && filters.get('searchTerm') != null) {
-            String searchTerm = String.escapeSingleQuotes((String) filters.get('searchTerm'));
-            // Enhanced global search - searches across multiple fields
-            query += ' AND (Question__c LIKE \'%' + searchTerm + '%\' ' +
-                    'OR Name LIKE \'%' + searchTerm + '%\' ' +
-                    'OR Case_Type__c LIKE \'%' + searchTerm + '%\' ' +
-                    'OR Case_Sub_Type__c LIKE \'%' + searchTerm + '%\' ' +
-                    'OR Case_Reason__c LIKE \'%' + searchTerm + '%\' ' +
-                    'OR User_Role__c LIKE \'%' + searchTerm + '%\')';
+            String searchTerm = String.valueOf(filters.get('searchTerm')).trim();
+            if (String.isNotBlank(searchTerm)) {
+                searchTerm = String.escapeSingleQuotes(searchTerm);
+                // Enhanced global search - searches across multiple fields
+                query += ' AND (Question__c LIKE \'%' + searchTerm + '%\' ' +
+                        'OR Name LIKE \'%' + searchTerm + '%\' ' +
+                        'OR Case_Type__c LIKE \'%' + searchTerm + '%\' ' +
+                        'OR Case_Sub_Type__c LIKE \'%' + searchTerm + '%\' ' +
+                        'OR Case_Reason__c LIKE \'%' + searchTerm + '%\' ' +
+                        'OR User_Role__c LIKE \'%' + searchTerm + '%\')';
+            }
         }
 
         if (filters.containsKey('caseType') && filters.get('caseType') != null) {
-            String caseType = String.escapeSingleQuotes((String) filters.get('caseType'));
-            query += ' AND Case_Type__c = \'' + caseType + '\'';
+            String caseType = String.valueOf(filters.get('caseType')).trim();
+            if (String.isNotBlank(caseType)) {
+                caseType = String.escapeSingleQuotes(caseType);
+                query += ' AND Case_Type__c = \'' + caseType + '\'';
+            }
         }
 
         if (filters.containsKey('caseSubType') && filters.get('caseSubType') != null) {
-            String caseSubType = String.escapeSingleQuotes((String) filters.get('caseSubType'));
-            query += ' AND Case_Sub_Type__c = \'' + caseSubType + '\'';
+            String caseSubType = String.valueOf(filters.get('caseSubType')).trim();
+            if (String.isNotBlank(caseSubType)) {
+                caseSubType = String.escapeSingleQuotes(caseSubType);
+                query += ' AND Case_Sub_Type__c = \'' + caseSubType + '\'';
+            }
         }
 
         if (filters.containsKey('inputType') && filters.get('inputType') != null) {
-            String inputType = String.escapeSingleQuotes((String) filters.get('inputType'));
-            query += ' AND Input_Type__c = \'' + inputType + '\'';
+            String inputType = String.valueOf(filters.get('inputType')).trim();
+            if (String.isNotBlank(inputType)) {
+                inputType = String.escapeSingleQuotes(inputType);
+                query += ' AND Input_Type__c = \'' + inputType + '\'';
+            }
         }
 
         if (filters.containsKey('userRole') && filters.get('userRole') != null) {
-            String userRole = String.escapeSingleQuotes((String) filters.get('userRole'));
-            query += ' AND User_Role__c = \'' + userRole + '\'';
+            String userRole = String.valueOf(filters.get('userRole')).trim();
+            if (String.isNotBlank(userRole)) {
+                userRole = String.escapeSingleQuotes(userRole);
+                query += ' AND User_Role__c = \'' + userRole + '\'';
+            }
         }
 
         return query;
