@@ -1,0 +1,204 @@
+<template>
+    <lightning-card title="Intake Question Admin Dashboard" icon-name="standard:form">
+        <!-- Stats Section -->
+        <div class="slds-p-horizontal_medium slds-p-top_medium">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value">{stats.total}</div>
+                    <div class="stat-label">Total Questions</div>
+                </div>
+                <div class="stat-card stat-warning">
+                    <div class="stat-value">{stats.orphaned}</div>
+                    <div class="stat-label">Orphaned</div>
+                </div>
+                <div class="stat-card stat-warning">
+                    <div class="stat-value">{stats.noOutcomes}</div>
+                    <div class="stat-label">No Outcomes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{stats.picklist}</div>
+                    <div class="stat-label">Picklist</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{stats.text}</div>
+                    <div class="stat-label">Text Input</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-wrap slds-gutters">
+                <!-- Search -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-input
+                        type="search"
+                        label="Search Questions"
+                        placeholder="Search question text..."
+                        value={filters.searchTerm}
+                        onchange={handleSearchChange}>
+                    </lightning-input>
+                </div>
+
+                <!-- Case Type Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="caseType"
+                        label="Case Type"
+                        value={filters.caseType}
+                        options={caseTypeOptions}
+                        onchange={handleCaseTypeChange}
+                        placeholder="Select Case Type">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Case Sub-Type Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="caseSubType"
+                        label="Case Sub-Type"
+                        value={filters.caseSubType}
+                        options={caseSubTypeOptions}
+                        onchange={handleCaseSubTypeChange}
+                        placeholder="Select Sub-Type">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Input Type Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="inputType"
+                        label="Input Type"
+                        value={filters.inputType}
+                        options={inputTypeOptions}
+                        onchange={handleInputTypeChange}
+                        placeholder="Select Input Type">
+                    </lightning-combobox>
+                </div>
+
+                <!-- User Role Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="userRole"
+                        label="User Role"
+                        value={filters.userRole}
+                        options={userRoleOptions}
+                        onchange={handleUserRoleChange}
+                        placeholder="Select User Role">
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    variant="neutral"
+                    label="Clear Filters"
+                    icon-name="utility:clear"
+                    onclick={handleClearFilters}
+                    disabled={isLoading}
+                    class="slds-m-right_small">
+                </lightning-button>
+                <lightning-button
+                    variant="neutral"
+                    label="Show Orphaned"
+                    icon-name="utility:warning"
+                    onclick={handleShowOrphaned}
+                    disabled={isLoading}
+                    class="slds-m-right_small">
+                </lightning-button>
+                <lightning-button
+                    variant="neutral"
+                    label="Show No Outcomes"
+                    icon-name="utility:error"
+                    onclick={handleShowNoOutcomes}
+                    disabled={isLoading}>
+                </lightning-button>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={isLoading}>
+                <div class="slds-text-align_center slds-p-vertical_large">
+                    <lightning-spinner
+                        alternative-text="Loading questions..."
+                        size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                    <p class="slds-text-heading_small">Error Loading Questions</p>
+                    <p>{error}</p>
+                </div>
+            </template>
+
+            <template if:false={isLoading}>
+                <template if:true={hasQuestions}>
+                    <!-- Pagination Info -->
+                    <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                        <div class="slds-col">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                Showing {paginationLabel}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <lightning-datatable
+                        key-field="id"
+                        data={questions}
+                        columns={columns}
+                        sorted-by={sortedBy}
+                        sorted-direction={sortedDirection}
+                        onsort={handleSort}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+
+                    <!-- Pagination Controls -->
+                    <div class="slds-grid slds-grid_align-center slds-m-top_medium">
+                        <lightning-button-group>
+                            <lightning-button
+                                label="First"
+                                icon-name="utility:chevronleft"
+                                onclick={handleFirstPage}
+                                disabled={isPreviousDisabled}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Previous"
+                                icon-name="utility:left"
+                                onclick={handlePrevious}
+                                disabled={isPreviousDisabled}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Next"
+                                icon-name="utility:right"
+                                icon-position="right"
+                                onclick={handleNext}
+                                disabled={isNextDisabled}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Last"
+                                icon-name="utility:chevronright"
+                                icon-position="right"
+                                onclick={handleLastPage}
+                                disabled={isNextDisabled}>
+                            </lightning-button>
+                        </lightning-button-group>
+                    </div>
+                </template>
+
+                <template if:false={hasQuestions}>
+                    <div class="slds-text-align_center slds-p-vertical_large">
+                        <p class="slds-text-heading_small">No Questions Found</p>
+                        <p class="slds-text-body_regular slds-m-top_small">
+                            Try adjusting your filters or search criteria.
+                        </p>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>
