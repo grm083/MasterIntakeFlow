@@ -861,6 +861,19 @@ public with sharing class IntakeAdminController {
             }
         }
 
+        // Quick filters - showOrphaned
+        if (filters.containsKey('showOrphaned') && filters.get('showOrphaned') == true) {
+            // Orphaned questions: no incoming references AND not a starting question
+            query += ' AND Id NOT IN (SELECT Next_Question__c FROM Intake_Process__c WHERE Next_Question__c != null)';
+            query += ' AND (Presentation_Order__c = null OR Presentation_Order__c != 1)';
+        }
+
+        // Quick filters - showNoOutcomes
+        if (filters.containsKey('showNoOutcomes') && filters.get('showNoOutcomes') == true) {
+            // Questions with no outcomes
+            query += ' AND Id NOT IN (SELECT Intake_Question__c FROM Intake_Process__c WHERE Intake_Question__c != null)';
+        }
+
         // Add sorting
         if (sortField != null && sortDirection != null) {
             query += ' ORDER BY ' + sortField + ' ' + sortDirection;
@@ -933,6 +946,19 @@ public with sharing class IntakeAdminController {
                 userRole = String.escapeSingleQuotes(userRole);
                 query += ' AND User_Role__c = \'' + userRole + '\'';
             }
+        }
+
+        // Quick filters - showOrphaned
+        if (filters.containsKey('showOrphaned') && filters.get('showOrphaned') == true) {
+            // Orphaned questions: no incoming references AND not a starting question
+            query += ' AND Id NOT IN (SELECT Next_Question__c FROM Intake_Process__c WHERE Next_Question__c != null)';
+            query += ' AND (Presentation_Order__c = null OR Presentation_Order__c != 1)';
+        }
+
+        // Quick filters - showNoOutcomes
+        if (filters.containsKey('showNoOutcomes') && filters.get('showNoOutcomes') == true) {
+            // Questions with no outcomes
+            query += ' AND Id NOT IN (SELECT Intake_Question__c FROM Intake_Process__c WHERE Intake_Question__c != null)';
         }
 
         return query;

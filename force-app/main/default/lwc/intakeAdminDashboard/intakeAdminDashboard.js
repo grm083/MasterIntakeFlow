@@ -261,15 +261,23 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
 
     // Quick filters
     handleShowOrphaned() {
-        // Filter client-side for orphaned questions
-        this.filteredQuestions = this.questions.filter(q => q.isOrphaned);
-        this.showToast('Info', `Found ${this.filteredQuestions.length} orphaned questions`, 'info');
+        // Toggle orphaned filter
+        this.filters.showOrphaned = !this.filters.showOrphaned;
+        if (this.filters.showOrphaned) {
+            this.filters.showNoOutcomes = false; // Clear the other quick filter
+        }
+        this.resetToFirstPage();
+        this.loadQuestions();
     }
 
     handleShowNoOutcomes() {
-        // Filter client-side for questions with no outcomes
-        this.filteredQuestions = this.questions.filter(q => q.outcomeCount === 0);
-        this.showToast('Info', `Found ${this.filteredQuestions.length} questions with no outcomes`, 'info');
+        // Toggle no outcomes filter
+        this.filters.showNoOutcomes = !this.filters.showNoOutcomes;
+        if (this.filters.showNoOutcomes) {
+            this.filters.showOrphaned = false; // Clear the other quick filter
+        }
+        this.resetToFirstPage();
+        this.loadQuestions();
     }
 
     // Debounced search
@@ -703,7 +711,9 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
                this.filters.caseType ||
                this.filters.caseSubType ||
                this.filters.inputType ||
-               this.filters.userRole;
+               this.filters.userRole ||
+               this.filters.showOrphaned ||
+               this.filters.showNoOutcomes;
     }
 
     get totalPages() {
@@ -786,5 +796,21 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
 
     get filterJson() {
         return JSON.stringify(this.filters);
+    }
+
+    get orphanedButtonVariant() {
+        return this.filters.showOrphaned ? 'brand' : 'neutral';
+    }
+
+    get orphanedButtonLabel() {
+        return this.filters.showOrphaned ? 'Showing Orphaned' : 'Show Orphaned';
+    }
+
+    get noOutcomesButtonVariant() {
+        return this.filters.showNoOutcomes ? 'brand' : 'neutral';
+    }
+
+    get noOutcomesButtonLabel() {
+        return this.filters.showNoOutcomes ? 'Showing No Outcomes' : 'Show No Outcomes';
     }
 }

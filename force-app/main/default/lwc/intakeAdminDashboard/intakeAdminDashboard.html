@@ -102,16 +102,16 @@
                     class="slds-m-right_small">
                 </lightning-button>
                 <lightning-button
-                    variant="neutral"
-                    label="Show Orphaned"
+                    variant={orphanedButtonVariant}
+                    label={orphanedButtonLabel}
                     icon-name="utility:warning"
                     onclick={handleShowOrphaned}
                     disabled={isLoading}
                     class="slds-m-right_small">
                 </lightning-button>
                 <lightning-button
-                    variant="neutral"
-                    label="Show No Outcomes"
+                    variant={noOutcomesButtonVariant}
+                    label={noOutcomesButtonLabel}
                     icon-name="utility:error"
                     onclick={handleShowNoOutcomes}
                     disabled={isLoading}
