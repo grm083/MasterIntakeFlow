@@ -1,4 +1,5 @@
 import LightningModal from 'lightning/modal';
+import { api, track } from 'lwc';
 import initializeIntake from '@salesforce/apex/IntakeProcessController.initializeIntake';
 import getNextQuestionBatch from '@salesforce/apex/IntakeProcessController.getNextQuestionBatch';
 import completeIntake from '@salesforce/apex/IntakeProcessController.completeIntake';
@@ -17,7 +18,7 @@ import completeIntake from '@salesforce/apex/IntakeProcessController.completeInt
  */
 export default class MasterIntakeForm extends LightningModal {
     // Record ID is passed as a parameter when opening the modal
-    recordId;
+    @api recordId;
 
     // State object
     @track state = {
