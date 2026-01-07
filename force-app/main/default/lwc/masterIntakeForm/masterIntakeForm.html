@@ -1,0 +1,123 @@
+<template>
+    <!-- Modal Header -->
+    <div class="slds-modal__header">
+        <h1 class="slds-modal__title slds-hyphenate">Master Intake Flow</h1>
+        <template if:true={state.caseContext}>
+            <p class="slds-text-body_small slds-text-color_weak">
+                {caseContextDisplay}
+            </p>
+        </template>
+        <template if:true={showQuestions}>
+            <p class="slds-text-body_small slds-m-top_xx-small">
+                <lightning-icon
+                    icon-name="utility:checkin"
+                    size="xx-small"
+                    class="slds-m-right_xx-small">
+                </lightning-icon>
+                {questionCountDisplay}
+            </p>
+        </template>
+    </div>
+
+    <!-- Modal Content -->
+    <div class="slds-modal__content intake-modal-content" id="modal-content">
+
+        <!-- Loading Spinner -->
+        <template if:true={showLoading}>
+            <div class="slds-align_absolute-center" style="height: 300px;">
+                <lightning-spinner
+                    alternative-text="Loading intake questions"
+                    size="medium">
+                </lightning-spinner>
+            </div>
+        </template>
+
+        <!-- CPQ Eligible Screen -->
+        <template if:true={showCPQScreen}>
+            <div class="slds-p-around_medium">
+                <div class="cpq-notice">
+                    <lightning-icon
+                        icon-name="utility:announcement"
+                        size="large"
+                        variant="warning"
+                        class="slds-m-right_medium">
+                    </lightning-icon>
+                    <div>
+                        <p class="slds-text-heading_medium slds-m-bottom_small">
+                            This case is eligible for CPQ
+                        </p>
+                        <p class="slds-text-body_regular">
+                            Please use the <strong>"Add Quote"</strong> button at the top of the screen
+                            to configure the customer's requested change using the Configure Price Quote tool.
+                        </p>
+                        <div class="slds-m-top_medium">
+                            <lightning-button
+                                label="Close"
+                                variant="brand"
+                                onclick={handleClose}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Main Intake Form -->
+        <template if:true={showQuestions}>
+            <div class="question-stack">
+                <template for:each={state.questionHistory} for:item="question" for:index="index">
+                    <c-question-item
+                        key={question.questionId}
+                        question={question}
+                        is-active={question.isActive}
+                        index={index}
+                        onanswerselected={handleAnswerSelected}
+                        oneditquestion={handleEditQuestion}>
+                    </c-question-item>
+                </template>
+            </div>
+        </template>
+
+        <!-- Answer Summary Screen -->
+        <template if:true={showAnswerSummary}>
+            <c-answer-summary
+                questions={state.questionHistory}
+                final-outcome={state.finalOutcome}
+                is-loading={state.isLoading}
+                onback={handleBackFromSummary}
+                onsubmit={handleFinalSubmit}
+                oneditquestion={handleEditQuestion}>
+            </c-answer-summary>
+        </template>
+
+        <!-- Error State -->
+        <template if:true={showError}>
+            <div class="slds-p-around_medium">
+                <div class="error-message">
+                    <lightning-icon
+                        icon-name="utility:error"
+                        size="small"
+                        variant="error"
+                        class="slds-m-right_small">
+                    </lightning-icon>
+                    <div>
+                        <p class="slds-text-heading_small slds-text-color_error slds-m-bottom_x-small">
+                            Unable to load intake questions
+                        </p>
+                        <p class="slds-text-body_regular">
+                            {state.error}
+                        </p>
+                        <div class="slds-m-top_medium">
+                            <lightning-button
+                                label="Close"
+                                variant="brand"
+                                onclick={handleClose}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+    </div>
+</template>

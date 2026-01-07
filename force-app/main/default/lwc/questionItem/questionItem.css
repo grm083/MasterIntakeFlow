@@ -1,0 +1,115 @@
+/* Question Item Container */
+.question-item {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+/* Active Question - Highlighted */
+.question-item.active {
+    background-color: #ffffff;
+    border: 1px solid #0176d3;
+    box-shadow: 0 2px 8px rgba(1, 118, 211, 0.1);
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Completed Question - Collapsed */
+.question-item.completed {
+    background-color: #f3f3f3;
+    border: 1px solid #e5e5e5;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.question-item.completed:hover {
+    background-color: #e9e9e9;
+}
+
+/* Pending Question - Hidden */
+.question-item.pending {
+    display: none;
+}
+
+/* Question Header */
+.question-header {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.question-item.completed .question-header {
+    margin-bottom: 0;
+}
+
+.question-number {
+    font-weight: 600;
+    color: #0176d3;
+    margin-right: 0.5rem;
+}
+
+.question-text {
+    color: #181818;
+}
+
+/* Answer Summary (for completed questions) */
+.answer-summary {
+    margin-top: 0.25rem;
+    padding-left: 2rem;
+    font-size: 0.875rem;
+}
+
+/* Question Input Area */
+.question-input {
+    padding-left: 2rem;
+    animation: fadeIn 0.2s ease-in;
+}
+
+/* Edit Button */
+.edit-button {
+    font-size: 0.75rem;
+}
+
+/* Instruction Box */
+.instruction-box {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+    background-color: #e8f4f8;
+    border-left: 4px solid #0176d3;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .question-input {
+        padding-left: 1rem;
+    }
+
+    .answer-summary {
+        padding-left: 1rem;
+    }
+}
