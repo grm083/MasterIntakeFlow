@@ -69,8 +69,16 @@ public with sharing class IntakeAdminController {
                 (Map<String, Object>) JSON.deserializeUntyped(filters) :
                 new Map<String, Object>();
 
+            // Pre-filter for quick filters (orphaned/no outcomes) to avoid subquery issues
+            Set<Id> quickFilterIds = null;
+            if (filterMap.containsKey('showOrphaned') && filterMap.get('showOrphaned') == true) {
+                quickFilterIds = getOrphanedQuestionIds();
+            } else if (filterMap.containsKey('showNoOutcomes') && filterMap.get('showNoOutcomes') == true) {
+                quickFilterIds = getNoOutcomeQuestionIds();
+            }
+
             // Build dynamic query
-            String query = buildQuestionQuery(filterMap, sortField, sortDirection, limitRecords, offsetRecords);
+            String query = buildQuestionQuery(filterMap, sortField, sortDirection, limitRecords, offsetRecords, quickFilterIds);
 
             // Execute query
             List<Intake_Process__c> questions = Database.query(query);
@@ -108,7 +116,15 @@ public with sharing class IntakeAdminController {
                 (Map<String, Object>) JSON.deserializeUntyped(filters) :
                 new Map<String, Object>();
 
-            String query = buildCountQuery(filterMap);
+            // Pre-filter for quick filters (orphaned/no outcomes) to avoid subquery issues
+            Set<Id> quickFilterIds = null;
+            if (filterMap.containsKey('showOrphaned') && filterMap.get('showOrphaned') == true) {
+                quickFilterIds = getOrphanedQuestionIds();
+            } else if (filterMap.containsKey('showNoOutcomes') && filterMap.get('showNoOutcomes') == true) {
+                quickFilterIds = getNoOutcomeQuestionIds();
+            }
+
+            String query = buildCountQuery(filterMap, quickFilterIds);
             return Database.countQuery(query);
 
         } catch (Exception e) {
@@ -802,7 +818,8 @@ public with sharing class IntakeAdminController {
         String sortField,
         String sortDirection,
         Integer limitRecords,
-        Integer offsetRecords
+        Integer offsetRecords,
+        Set<Id> quickFilterIds
     ) {
         String query = 'SELECT Id, Name, Question__c, Input_Type__c, Presentation_Order__c, ' +
                       'Case_Type__c, Case_Sub_Type__c, Case_Reason__c, User_Role__c, ' +
@@ -813,6 +830,11 @@ public with sharing class IntakeAdminController {
                       'FROM Intake_Process__c ' +
                       'WHERE Question__c != null ' +
                       'AND Intake_Question__c = null';
+
+        // Apply quick filter IDs if provided
+        if (quickFilterIds != null && !quickFilterIds.isEmpty()) {
+            query += ' AND Id IN :quickFilterIds';
+        }
 
         // Add filters (check for both null and empty strings)
         if (filters.containsKey('searchTerm') && filters.get('searchTerm') != null) {
@@ -861,19 +883,6 @@ public with sharing class IntakeAdminController {
             }
         }
 
-        // Quick filters - showOrphaned
-        if (filters.containsKey('showOrphaned') && filters.get('showOrphaned') == true) {
-            // Orphaned questions: no incoming references AND not a starting question
-            query += ' AND Id NOT IN (SELECT Next_Question__c FROM Intake_Process__c WHERE Next_Question__c != null)';
-            query += ' AND (Presentation_Order__c = null OR Presentation_Order__c != 1)';
-        }
-
-        // Quick filters - showNoOutcomes
-        if (filters.containsKey('showNoOutcomes') && filters.get('showNoOutcomes') == true) {
-            // Questions with no outcomes
-            query += ' AND Id NOT IN (SELECT Intake_Question__c FROM Intake_Process__c WHERE Intake_Question__c != null)';
-        }
-
         // Add sorting
         if (sortField != null && sortDirection != null) {
             query += ' ORDER BY ' + sortField + ' ' + sortDirection;
@@ -896,10 +905,15 @@ public with sharing class IntakeAdminController {
     /**
      * Build count query
      */
-    private static String buildCountQuery(Map<String, Object> filters) {
+    private static String buildCountQuery(Map<String, Object> filters, Set<Id> quickFilterIds) {
         String query = 'SELECT COUNT() FROM Intake_Process__c ' +
                       'WHERE Question__c != null ' +
                       'AND Intake_Question__c = null';
+
+        // Apply quick filter IDs if provided
+        if (quickFilterIds != null && !quickFilterIds.isEmpty()) {
+            query += ' AND Id IN :quickFilterIds';
+        }
 
         // Add same filters as main query (check for both null and empty strings)
         if (filters.containsKey('searchTerm') && filters.get('searchTerm') != null) {
@@ -948,20 +962,86 @@ public with sharing class IntakeAdminController {
             }
         }
 
-        // Quick filters - showOrphaned
-        if (filters.containsKey('showOrphaned') && filters.get('showOrphaned') == true) {
-            // Orphaned questions: no incoming references AND not a starting question
-            query += ' AND Id NOT IN (SELECT Next_Question__c FROM Intake_Process__c WHERE Next_Question__c != null)';
-            query += ' AND (Presentation_Order__c = null OR Presentation_Order__c != 1)';
-        }
-
-        // Quick filters - showNoOutcomes
-        if (filters.containsKey('showNoOutcomes') && filters.get('showNoOutcomes') == true) {
-            // Questions with no outcomes
-            query += ' AND Id NOT IN (SELECT Intake_Question__c FROM Intake_Process__c WHERE Intake_Question__c != null)';
-        }
-
         return query;
+    }
+
+    /**
+     * Get IDs of orphaned questions (no incoming references and not starting questions)
+     */
+    private static Set<Id> getOrphanedQuestionIds() {
+        Set<Id> orphanedIds = new Set<Id>();
+
+        // Get all question IDs
+        Set<Id> allQuestionIds = new Set<Id>();
+        for (Intake_Process__c q : [
+            SELECT Id, Presentation_Order__c
+            FROM Intake_Process__c
+            WHERE Question__c != null
+            AND Intake_Question__c = null
+        ]) {
+            // Exclude starting questions (Presentation_Order__c = 1)
+            if (q.Presentation_Order__c == null || q.Presentation_Order__c != 1) {
+                allQuestionIds.add(q.Id);
+            }
+        }
+
+        // Get IDs that have incoming references
+        Set<Id> referencedIds = new Set<Id>();
+        for (Intake_Process__c outcome : [
+            SELECT Next_Question__c
+            FROM Intake_Process__c
+            WHERE Next_Question__c != null
+            AND Next_Question__c IN :allQuestionIds
+        ]) {
+            referencedIds.add(outcome.Next_Question__c);
+        }
+
+        // Orphaned = in allQuestionIds but NOT in referencedIds
+        for (Id qId : allQuestionIds) {
+            if (!referencedIds.contains(qId)) {
+                orphanedIds.add(qId);
+            }
+        }
+
+        return orphanedIds;
+    }
+
+    /**
+     * Get IDs of questions with no outcomes
+     */
+    private static Set<Id> getNoOutcomeQuestionIds() {
+        Set<Id> noOutcomeIds = new Set<Id>();
+
+        // Get all question IDs
+        Set<Id> allQuestionIds = new Set<Id>();
+        for (Intake_Process__c q : [
+            SELECT Id
+            FROM Intake_Process__c
+            WHERE Question__c != null
+            AND Intake_Question__c = null
+        ]) {
+            allQuestionIds.add(q.Id);
+        }
+
+        // Get IDs that have outcomes
+        Set<Id> withOutcomeIds = new Set<Id>();
+        for (Intake_Process__c outcome : [
+            SELECT Intake_Question__c
+            FROM Intake_Process__c
+            WHERE Intake_Question__c != null
+            AND Intake_Question__c IN :allQuestionIds
+        ]) {
+            withOutcomeIds.add(outcome.Intake_Question__c);
+        }
+
+        // No outcomes = in allQuestionIds but NOT in withOutcomeIds
+        for (Id qId : allQuestionIds) {
+            if (!withOutcomeIds.contains(qId)) {
+                noOutcomeIds.add(qId);
+            }
+        }
+
+        return noOutcomeIds;
     }
 
     /**
