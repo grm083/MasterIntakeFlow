@@ -1,5 +1,7 @@
 <template>
-    <lightning-card title="Intake Question Admin Dashboard" icon-name="standard:form">
+    <!-- Dashboard View -->
+    <template if:false={showFlowVisualizer}>
+        <lightning-card title="Intake Question Admin Dashboard" icon-name="standard:form">
         <!-- Stats Section -->
         <div class="slds-p-horizontal_medium slds-p-top_medium">
             <div class="stats-container">
@@ -492,5 +494,24 @@
             </section>
             <div class="slds-backdrop slds-backdrop_open"></div>
         </template>
-    </lightning-card>
+        </lightning-card>
+    </template>
+
+    <!-- Flow Visualizer View -->
+    <template if:true={showFlowVisualizer}>
+        <lightning-card title="Intake Flow Visualizer" icon-name="standard:flow">
+            <div slot="actions">
+                <lightning-button
+                    label="Back to Dashboard"
+                    icon-name="utility:back"
+                    onclick={handleBackToDashboard}>
+                </lightning-button>
+            </div>
+            <div class="slds-p-around_medium">
+                <c-intake-flow-visualizer
+                    filters={filterJson}>
+                </c-intake-flow-visualizer>
+            </div>
+        </lightning-card>
+    </template>
 </template>

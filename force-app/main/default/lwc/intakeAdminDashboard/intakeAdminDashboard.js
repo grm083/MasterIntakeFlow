@@ -140,6 +140,9 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     @track deleteValidation = null;
     @track isBulkProcessing = false;
 
+    // View State
+    @track showFlowVisualizer = false;
+
     // ========== LIFECYCLE ==========
 
     connectedCallback() {
@@ -336,13 +339,17 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
                 sortDirection: this.sortedDirection
             });
 
-            // Create download link
-            const blob = new Blob([csvData], { type: 'text/csv' });
+            // Create download link with UTF-8 BOM for Excel compatibility
+            const BOM = '\uFEFF';
+            const blob = new Blob([BOM + csvData], { type: 'text/csv;charset=utf-8;' });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
             link.download = `intake_questions_${this.getTimestamp()}.csv`;
+            link.style.display = 'none';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
 
             this.showToast('Success', 'Questions exported successfully', 'success');
@@ -482,15 +489,11 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     // ========== PHASE 3: FLOW VISUALIZER ==========
 
     handleViewFlow() {
-        // Dispatch custom event to navigate to flow visualizer
-        // This will be handled by the Lightning App to navigate to the Flow tab
-        const event = new CustomEvent('viewflow', {
-            bubbles: true,
-            composed: true
-        });
-        this.dispatchEvent(event);
+        this.showFlowVisualizer = true;
+    }
 
-        this.showToast('Info', 'Opening Flow Visualizer...', 'info');
+    handleBackToDashboard() {
+        this.showFlowVisualizer = false;
     }
 
     // ========== PHASE 4: BULK OPERATIONS ==========
@@ -779,5 +782,9 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
 
     get hasDeleteWarnings() {
         return this.deleteValidation && this.deleteValidation.warnings && this.deleteValidation.warnings.length > 0;
+    }
+
+    get filterJson() {
+        return JSON.stringify(this.filters);
     }
 }

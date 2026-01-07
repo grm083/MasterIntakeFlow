@@ -6,6 +6,9 @@ import getQuestionFlowPath from '@salesforce/apex/IntakeAdminController.getQuest
 import validateQuestionPath from '@salesforce/apex/IntakeAdminController.validateQuestionPath';
 
 export default class IntakeFlowVisualizer extends NavigationMixin(LightningElement) {
+    // Public API - can receive filters from parent component
+    @api filters;
+
     // Data
     @track flowData = null;
     @track selectedNode = null;
@@ -17,8 +20,8 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
     @track viewMode = 'full'; // 'full' or 'path'
     @track selectedQuestionId = null;
 
-    // Filters
-    @track filters = {
+    // Internal filters (used if no filters passed from parent)
+    @track internalFilters = {
         caseType: '',
         caseSubType: '',
         limit: 1000
@@ -59,7 +62,9 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
             this.isLoading = true;
             this.error = null;
 
-            const filterJson = JSON.stringify(this.filters);
+            // Use filters from parent if provided, otherwise use internal filters
+            const filtersToUse = this.filters || this.internalFilters;
+            const filterJson = typeof filtersToUse === 'string' ? filtersToUse : JSON.stringify(filtersToUse);
             const data = await getFlowVisualizationData({ filters: filterJson });
 
             this.flowData = data;
