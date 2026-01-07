@@ -4,6 +4,16 @@ import initializeIntake from '@salesforce/apex/IntakeProcessController.initializ
 import getNextQuestionBatch from '@salesforce/apex/IntakeProcessController.getNextQuestionBatch';
 import completeIntake from '@salesforce/apex/IntakeProcessController.completeIntake';
 
+/**
+ * Master Intake Form - Main container component
+ *
+ * DEBUGGING:
+ * - Open browser DevTools Console (F12)
+ * - All log messages are prefixed with [MasterIntakeForm]
+ * - Look for errors (red) and warnings (yellow)
+ * - Check "Initialization complete" message for final state
+ * - Verify "showQuestions getter" returns true when questions should display
+ */
 export default class MasterIntakeForm extends LightningElement {
     @api recordId; // Case ID from record page
 
@@ -34,34 +44,67 @@ export default class MasterIntakeForm extends LightningElement {
     // ========== LIFECYCLE HOOKS ==========
 
     connectedCallback() {
+        console.log('[MasterIntakeForm] connectedCallback - Component mounted');
+        console.log('[MasterIntakeForm] recordId:', this.recordId);
         this.loadIntakeData();
+    }
+
+    renderedCallback() {
+        console.log('[MasterIntakeForm] renderedCallback - Component rendered');
+        console.log('[MasterIntakeForm] Visible sections:', {
+            showLoading: this.showLoading,
+            showCPQScreen: this.showCPQScreen,
+            showQuestions: this.showQuestions,
+            showAnswerSummary: this.showAnswerSummary,
+            showError: this.showError
+        });
     }
 
     // ========== INITIALIZATION ==========
 
     async loadIntakeData() {
+        console.log('[MasterIntakeForm] loadIntakeData - Starting initialization');
+        console.log('[MasterIntakeForm] Case ID:', this.recordId);
+
         try {
             this.state.isLoading = true;
+            console.log('[MasterIntakeForm] Loading state set to true');
 
+            console.log('[MasterIntakeForm] Calling initializeIntake Apex method...');
             const data = await initializeIntake({ caseId: this.recordId });
+            console.log('[MasterIntakeForm] Received data from Apex:', JSON.stringify(data, null, 2));
 
             // Store case context
             this.state.caseContext = data.caseContext;
             this.state.cpqCheckComplete = true;
+            console.log('[MasterIntakeForm] Case context:', this.state.caseContext);
 
             // Check CPQ eligibility FIRST
             if (data.cpqEligible) {
+                console.log('[MasterIntakeForm] Case is CPQ eligible - showing CPQ screen');
                 this.state.cpqEligible = true;
                 this.state.isLoading = false;
                 return;
             }
+            console.log('[MasterIntakeForm] Case is NOT CPQ eligible - proceeding with questions');
 
             // Check if there are questions configured
             if (!data.firstQuestion) {
+                console.error('[MasterIntakeForm] No first question returned from Apex');
+                console.error('[MasterIntakeForm] Case Type:', data.caseContext?.caseType);
+                console.error('[MasterIntakeForm] Case Sub-Type:', data.caseContext?.caseSubType);
+                console.error('[MasterIntakeForm] Case Reason:', data.caseContext?.caseReason);
                 this.state.error = 'No intake questions configured for this case type.';
                 this.state.isLoading = false;
                 return;
             }
+
+            console.log('[MasterIntakeForm] First question received:', {
+                id: data.firstQuestion.questionId,
+                text: data.firstQuestion.questionText,
+                inputType: data.firstQuestion.inputType,
+                outcomesCount: data.firstQuestion.outcomes?.length
+            });
 
             // Store first question in history
             const firstQuestion = {
@@ -75,17 +118,36 @@ export default class MasterIntakeForm extends LightningElement {
 
             this.state.questionHistory = [firstQuestion];
             this.state.currentQuestionId = firstQuestion.questionId;
+            console.log('[MasterIntakeForm] Question history initialized with first question');
+            console.log('[MasterIntakeForm] Current question ID:', this.state.currentQuestionId);
 
             // Cache next questions
             if (data.nextQuestionsCache) {
+                console.log('[MasterIntakeForm] Caching next questions. Keys:', Object.keys(data.nextQuestionsCache));
                 Object.keys(data.nextQuestionsCache).forEach(key => {
                     this.state.nextQuestionCache.set(key, data.nextQuestionsCache[key]);
                 });
+                console.log('[MasterIntakeForm] Cache size:', this.state.nextQuestionCache.size);
+            } else {
+                console.log('[MasterIntakeForm] No nextQuestionsCache in response');
             }
 
             this.state.isLoading = false;
+            console.log('[MasterIntakeForm] Initialization complete. State:', {
+                cpqEligible: this.state.cpqEligible,
+                questionHistoryLength: this.state.questionHistory.length,
+                currentQuestionId: this.state.currentQuestionId,
+                cacheSize: this.state.nextQuestionCache.size,
+                isLoading: this.state.isLoading,
+                error: this.state.error
+            });
 
         } catch (error) {
+            console.error('[MasterIntakeForm] Error in loadIntakeData:', error);
+            console.error('[MasterIntakeForm] Error message:', error.body?.message || error.message);
+            console.error('[MasterIntakeForm] Error stack:', error.stack);
+            console.error('[MasterIntakeForm] Full error object:', JSON.stringify(error, null, 2));
+
             this.state.error = error.body?.message || 'Error loading intake data';
             this.state.isLoading = false;
             this.showErrorToast('Error', this.state.error);
@@ -95,7 +157,14 @@ export default class MasterIntakeForm extends LightningElement {
     // ========== ANSWER HANDLING ==========
 
     handleAnswerSelected(event) {
+        console.log('[MasterIntakeForm] handleAnswerSelected - Answer selected');
         const { questionId, outcomeId, outcomeText, answerValue } = event.detail;
+        console.log('[MasterIntakeForm] Answer details:', {
+            questionId,
+            outcomeId,
+            outcomeText,
+            answerValue
+        });
 
         // Find question in history
         const questionIndex = this.state.questionHistory.findIndex(
@@ -103,9 +172,11 @@ export default class MasterIntakeForm extends LightningElement {
         );
 
         if (questionIndex === -1) {
-            console.error('Question not found in history:', questionId);
+            console.error('[MasterIntakeForm] Question not found in history:', questionId);
             return;
         }
+
+        console.log('[MasterIntakeForm] Found question at index:', questionIndex);
 
         // Update question with answer
         const question = this.state.questionHistory[questionIndex];
@@ -115,52 +186,87 @@ export default class MasterIntakeForm extends LightningElement {
         question.isComplete = true;
         question.isEditable = true;
 
+        console.log('[MasterIntakeForm] Updated question with answer');
+
         // Find the selected outcome
         const outcome = question.outcomes.find(o => o.outcomeId === outcomeId);
 
         if (!outcome) {
-            console.error('Outcome not found:', outcomeId);
+            console.error('[MasterIntakeForm] Outcome not found:', outcomeId);
             return;
         }
 
+        console.log('[MasterIntakeForm] Selected outcome:', {
+            outcomeId: outcome.outcomeId,
+            outcomeText: outcome.outcomeText,
+            isTerminal: outcome.isTerminal,
+            hasNextQuestion: outcome.hasNextQuestion,
+            nextQuestionId: outcome.nextQuestionId
+        });
+
         // Check if this is the end of the flow
         if (outcome.isTerminal) {
+            console.log('[MasterIntakeForm] Terminal outcome - completing intake');
             this.handleIntakeComplete(outcome);
             return;
         }
 
         // Load next question
+        console.log('[MasterIntakeForm] Loading next question:', outcome.nextQuestionId);
         this.loadNextQuestion(outcome.nextQuestionId, questionIndex);
     }
 
     async loadNextQuestion(nextQuestionId, afterIndex) {
+        console.log('[MasterIntakeForm] loadNextQuestion - Starting');
+        console.log('[MasterIntakeForm] Next question ID:', nextQuestionId);
+        console.log('[MasterIntakeForm] After index:', afterIndex);
+
         try {
             // Remove any questions after this point (in case of edit)
             this.state.questionHistory = this.state.questionHistory.slice(0, afterIndex + 1);
+            console.log('[MasterIntakeForm] Trimmed question history to:', this.state.questionHistory.length);
 
             // Check cache first
             let nextQuestion = this.state.nextQuestionCache.get(nextQuestionId);
+            console.log('[MasterIntakeForm] Cache lookup result:', nextQuestion ? 'FOUND' : 'NOT FOUND');
 
             if (!nextQuestion) {
                 // Not in cache, fetch it
+                console.log('[MasterIntakeForm] Fetching question from server...');
                 this.state.isLoading = true;
 
+                const selectedOutcomeId = this.state.questionHistory[afterIndex].selectedOutcomeId;
+                console.log('[MasterIntakeForm] Selected outcome ID:', selectedOutcomeId);
+
                 const batchData = await getNextQuestionBatch({
-                    outcomeId: this.state.questionHistory[afterIndex].selectedOutcomeId
+                    outcomeId: selectedOutcomeId
                 });
+
+                console.log('[MasterIntakeForm] Received batch data. Keys:', Object.keys(batchData));
 
                 // Add to cache
                 Object.keys(batchData).forEach(key => {
                     this.state.nextQuestionCache.set(key, batchData[key]);
                 });
+                console.log('[MasterIntakeForm] Updated cache size:', this.state.nextQuestionCache.size);
 
                 nextQuestion = this.state.nextQuestionCache.get(nextQuestionId);
                 this.state.isLoading = false;
 
                 if (!nextQuestion) {
+                    console.error('[MasterIntakeForm] Question still not found after fetch!');
+                    console.error('[MasterIntakeForm] Looking for:', nextQuestionId);
+                    console.error('[MasterIntakeForm] Available keys:', Array.from(this.state.nextQuestionCache.keys()));
                     throw new Error('Next question not found in batch data');
                 }
             }
+
+            console.log('[MasterIntakeForm] Next question details:', {
+                id: nextQuestion.questionId,
+                text: nextQuestion.questionText,
+                inputType: nextQuestion.inputType,
+                outcomesCount: nextQuestion.outcomes?.length
+            });
 
             // Add to history
             const newQuestion = {
@@ -174,21 +280,27 @@ export default class MasterIntakeForm extends LightningElement {
 
             this.state.questionHistory = [...this.state.questionHistory, newQuestion];
             this.state.currentQuestionId = nextQuestionId;
+            console.log('[MasterIntakeForm] Added question to history. New length:', this.state.questionHistory.length);
+            console.log('[MasterIntakeForm] Current question ID:', this.state.currentQuestionId);
 
             // Scroll to new question
             this.scrollToBottom();
 
         } catch (error) {
             this.state.isLoading = false;
+            console.error('[MasterIntakeForm] Error in loadNextQuestion:', error);
+            console.error('[MasterIntakeForm] Error message:', error.message);
+            console.error('[MasterIntakeForm] Error stack:', error.stack);
             this.showErrorToast('Error', 'Failed to load next question');
-            console.error('Error loading next question:', error);
         }
     }
 
     // ========== EDIT HANDLING ==========
 
     handleEditQuestion(event) {
+        console.log('[MasterIntakeForm] handleEditQuestion - Edit requested');
         const { questionId } = event.detail;
+        console.log('[MasterIntakeForm] Question ID to edit:', questionId);
 
         // Find question index
         const questionIndex = this.state.questionHistory.findIndex(
@@ -196,12 +308,15 @@ export default class MasterIntakeForm extends LightningElement {
         );
 
         if (questionIndex === -1) {
-            console.error('Question not found for edit:', questionId);
+            console.error('[MasterIntakeForm] Question not found for edit:', questionId);
             return;
         }
 
+        console.log('[MasterIntakeForm] Found question at index:', questionIndex);
+
         // Remove all questions after this one
         this.state.questionHistory = this.state.questionHistory.slice(0, questionIndex + 1);
+        console.log('[MasterIntakeForm] Trimmed history to:', this.state.questionHistory.length);
 
         // Clear the answer on this question
         const question = this.state.questionHistory[questionIndex];
@@ -215,6 +330,8 @@ export default class MasterIntakeForm extends LightningElement {
         this.state.allQuestionsAnswered = false;
         this.state.showSummary = false;
 
+        console.log('[MasterIntakeForm] Question cleared and reactivated');
+
         // Scroll to edited question
         setTimeout(() => {
             this.scrollToQuestion(questionIndex);
@@ -224,12 +341,20 @@ export default class MasterIntakeForm extends LightningElement {
     // ========== COMPLETION HANDLING ==========
 
     handleIntakeComplete(finalOutcome) {
+        console.log('[MasterIntakeForm] handleIntakeComplete - All questions answered');
+        console.log('[MasterIntakeForm] Final outcome:', {
+            outcomeId: finalOutcome.outcomeId,
+            outcomeText: finalOutcome.outcomeText,
+            outcomeStatement: finalOutcome.outcomeStatement
+        });
+
         this.state.allQuestionsAnswered = true;
         this.state.finalOutcome = finalOutcome;
         this.state.currentQuestionId = null;
 
         // Show summary screen
         this.state.showSummary = true;
+        console.log('[MasterIntakeForm] Showing summary screen');
 
         // Scroll to top of summary
         setTimeout(() => {
@@ -238,6 +363,7 @@ export default class MasterIntakeForm extends LightningElement {
     }
 
     handleBackFromSummary() {
+        console.log('[MasterIntakeForm] handleBackFromSummary - Returning to questions');
         this.state.showSummary = false;
         this.state.allQuestionsAnswered = false;
 
@@ -247,20 +373,25 @@ export default class MasterIntakeForm extends LightningElement {
             lastQuestion.isComplete = false;
             lastQuestion.isEditable = false;
             this.state.currentQuestionId = lastQuestion.questionId;
+            console.log('[MasterIntakeForm] Re-activated last question:', lastQuestion.questionId);
         }
     }
 
     async handleFinalSubmit(event) {
+        console.log('[MasterIntakeForm] handleFinalSubmit - Submitting intake');
         try {
             this.state.isLoading = true;
 
             const additionalComments = event.detail.additionalComments || '';
+            console.log('[MasterIntakeForm] Additional comments:', additionalComments);
 
             // Build answers JSON
             const answers = this.state.questionHistory.map(q => ({
                 question: q.questionText,
                 answer: q.answerValue || q.selectedOutcomeText
             }));
+
+            console.log('[MasterIntakeForm] Built answers array. Count:', answers.length);
 
             // Add additional comments if provided
             if (additionalComments.trim()) {
@@ -270,29 +401,39 @@ export default class MasterIntakeForm extends LightningElement {
                 });
             }
 
+            console.log('[MasterIntakeForm] Calling completeIntake Apex method...');
             const result = await completeIntake({
                 caseId: this.recordId,
                 answersJSON: JSON.stringify(answers),
                 finalOutcomeId: this.state.finalOutcome.outcomeId
             });
 
+            console.log('[MasterIntakeForm] Received completion result:', result);
+
             if (result.success) {
+                console.log('[MasterIntakeForm] Intake completed successfully');
+                console.log('[MasterIntakeForm] Comment ID:', result.commentId);
+                console.log('[MasterIntakeForm] Task ID:', result.taskId);
                 this.showSuccessToast('Success', 'Intake completed successfully');
 
                 // Refresh the page to hide component and show updated case
                 setTimeout(() => {
+                    console.log('[MasterIntakeForm] Refreshing page...');
                     // Use NavigationMixin or force refresh
                     eval("$A.get('e.force:refreshView').fire();");
                 }, 1000);
 
             } else {
+                console.error('[MasterIntakeForm] Completion failed:', result.errorMessage);
                 throw new Error(result.errorMessage);
             }
 
         } catch (error) {
             this.state.isLoading = false;
+            console.error('[MasterIntakeForm] Error in handleFinalSubmit:', error);
+            console.error('[MasterIntakeForm] Error message:', error.body?.message || error.message);
+            console.error('[MasterIntakeForm] Error stack:', error.stack);
             this.showErrorToast('Error', error.body?.message || 'Failed to complete intake');
-            console.error('Error completing intake:', error);
         }
     }
 
@@ -349,25 +490,52 @@ export default class MasterIntakeForm extends LightningElement {
     // ========== GETTERS ==========
 
     get showCPQScreen() {
-        return this.state.cpqCheckComplete && this.state.cpqEligible;
+        const result = this.state.cpqCheckComplete && this.state.cpqEligible;
+        console.log('[MasterIntakeForm] showCPQScreen getter:', {
+            result,
+            cpqCheckComplete: this.state.cpqCheckComplete,
+            cpqEligible: this.state.cpqEligible
+        });
+        return result;
     }
 
     get showQuestions() {
-        return !this.state.cpqEligible &&
+        const result = !this.state.cpqEligible &&
                this.state.questionHistory.length > 0 &&
                !this.state.showSummary;
+        console.log('[MasterIntakeForm] showQuestions getter:', {
+            result,
+            cpqEligible: this.state.cpqEligible,
+            questionHistoryLength: this.state.questionHistory.length,
+            showSummary: this.state.showSummary
+        });
+        return result;
     }
 
     get showAnswerSummary() {
-        return this.state.showSummary;
+        const result = this.state.showSummary;
+        console.log('[MasterIntakeForm] showAnswerSummary getter:', result);
+        return result;
     }
 
     get showError() {
-        return this.state.error !== null;
+        const result = this.state.error !== null;
+        console.log('[MasterIntakeForm] showError getter:', {
+            result,
+            error: this.state.error
+        });
+        return result;
     }
 
     get showLoading() {
-        return this.state.isLoading && !this.showQuestions && !this.showCPQScreen;
+        const result = this.state.isLoading && !this.showQuestions && !this.showCPQScreen;
+        console.log('[MasterIntakeForm] showLoading getter:', {
+            result,
+            isLoading: this.state.isLoading,
+            showQuestions: this.showQuestions,
+            showCPQScreen: this.showCPQScreen
+        });
+        return result;
     }
 
     get caseContextDisplay() {
