@@ -111,6 +111,7 @@ export default class MasterIntakeForm extends LightningElement {
                 ...data.firstQuestion,
                 isComplete: false,
                 isEditable: false,
+                isActive: true,
                 selectedOutcomeId: null,
                 selectedOutcomeText: null,
                 answerValue: null
@@ -118,6 +119,7 @@ export default class MasterIntakeForm extends LightningElement {
 
             this.state.questionHistory = [firstQuestion];
             this.state.currentQuestionId = firstQuestion.questionId;
+            this.updateActiveStates();
             console.log('[MasterIntakeForm] Question history initialized with first question');
             console.log('[MasterIntakeForm] Current question ID:', this.state.currentQuestionId);
 
@@ -273,6 +275,7 @@ export default class MasterIntakeForm extends LightningElement {
                 ...nextQuestion,
                 isComplete: false,
                 isEditable: false,
+                isActive: true,
                 selectedOutcomeId: null,
                 selectedOutcomeText: null,
                 answerValue: null
@@ -280,6 +283,7 @@ export default class MasterIntakeForm extends LightningElement {
 
             this.state.questionHistory = [...this.state.questionHistory, newQuestion];
             this.state.currentQuestionId = nextQuestionId;
+            this.updateActiveStates();
             console.log('[MasterIntakeForm] Added question to history. New length:', this.state.questionHistory.length);
             console.log('[MasterIntakeForm] Current question ID:', this.state.currentQuestionId);
 
@@ -329,6 +333,7 @@ export default class MasterIntakeForm extends LightningElement {
         this.state.currentQuestionId = questionId;
         this.state.allQuestionsAnswered = false;
         this.state.showSummary = false;
+        this.updateActiveStates();
 
         console.log('[MasterIntakeForm] Question cleared and reactivated');
 
@@ -373,6 +378,7 @@ export default class MasterIntakeForm extends LightningElement {
             lastQuestion.isComplete = false;
             lastQuestion.isEditable = false;
             this.state.currentQuestionId = lastQuestion.questionId;
+            this.updateActiveStates();
             console.log('[MasterIntakeForm] Re-activated last question:', lastQuestion.questionId);
         }
     }
@@ -438,6 +444,18 @@ export default class MasterIntakeForm extends LightningElement {
     }
 
     // ========== UTILITY METHODS ==========
+
+    /**
+     * Update isActive property on all questions based on currentQuestionId
+     * This is needed because LWC doesn't support conditional expressions in templates
+     */
+    updateActiveStates() {
+        console.log('[MasterIntakeForm] updateActiveStates - Updating question active states');
+        this.state.questionHistory.forEach(question => {
+            question.isActive = (question.questionId === this.state.currentQuestionId);
+        });
+        console.log('[MasterIntakeForm] Active question ID:', this.state.currentQuestionId);
+    }
 
     scrollToBottom() {
         setTimeout(() => {

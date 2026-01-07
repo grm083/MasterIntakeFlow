@@ -69,7 +69,7 @@
                             <c-question-item
                                 key={question.questionId}
                                 question={question}
-                                is-active={question.questionId === state.currentQuestionId}
+                                is-active={question.isActive}
                                 index={index}
                                 onanswerselected={handleAnswerSelected}
                                 oneditquestion={handleEditQuestion}>
