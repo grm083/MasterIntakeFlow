@@ -8,6 +8,7 @@ import exportQuestionsToCSV from '@salesforce/apex/IntakeAdminController.exportQ
 import bulkUpdateQuestions from '@salesforce/apex/IntakeAdminController.bulkUpdateQuestions';
 import validateBulkDelete from '@salesforce/apex/IntakeAdminController.validateBulkDelete';
 import bulkDeleteQuestions from '@salesforce/apex/IntakeAdminController.bulkDeleteQuestions';
+import deleteAllOrphanedQuestions from '@salesforce/apex/IntakeAdminController.deleteAllOrphanedQuestions';
 
 const COLUMNS = [
     {
@@ -139,6 +140,10 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     };
     @track deleteValidation = null;
     @track isBulkProcessing = false;
+
+    // Delete All Orphaned
+    @track showDeleteAllOrphanedModal = false;
+    @track isProcessingDeleteAll = false;
 
     // View State
     @track showFlowVisualizer = false;
@@ -642,6 +647,44 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     handleCancelBulkDelete() {
         this.showBulkDeleteModal = false;
         this.deleteValidation = null;
+    }
+
+    // ========== DELETE ALL ORPHANED ==========
+
+    handleDeleteAllOrphaned() {
+        this.showDeleteAllOrphanedModal = true;
+    }
+
+    async handleConfirmDeleteAllOrphaned() {
+        try {
+            this.isProcessingDeleteAll = true;
+
+            const result = await deleteAllOrphanedQuestions();
+
+            this.showDeleteAllOrphanedModal = false;
+            this.isProcessingDeleteAll = false;
+
+            // Turn off the orphaned filter since we just deleted them all
+            this.filters.showOrphaned = false;
+
+            this.showToast(
+                'Success',
+                `Deleted ${result.successCount} orphaned questions${result.errorCount > 0 ? '. ' + result.errorCount + ' errors occurred.' : ''}`,
+                result.errorCount > 0 ? 'warning' : 'success'
+            );
+
+            // Reload data
+            this.loadQuestions();
+
+        } catch (error) {
+            console.error('Error deleting all orphaned questions:', error);
+            this.showToast('Error', error.body?.message || error.message, 'error');
+            this.isProcessingDeleteAll = false;
+        }
+    }
+
+    handleCancelDeleteAllOrphaned() {
+        this.showDeleteAllOrphanedModal = false;
     }
 
     // ========== HELPERS ==========

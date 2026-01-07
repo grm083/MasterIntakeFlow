@@ -290,6 +290,20 @@
                                 </span>
                             </div>
                         </template>
+
+                        <!-- Delete All Orphaned Button (shown when orphaned filter is active) -->
+                        <template if:true={filters.showOrphaned}>
+                            <div class="slds-col slds-no-flex">
+                                <lightning-button
+                                    variant="destructive"
+                                    label="Delete All Orphaned"
+                                    icon-name="utility:delete"
+                                    onclick={handleDeleteAllOrphaned}
+                                    disabled={isProcessingDeleteAll}
+                                    title="Delete all orphaned questions at once">
+                                </lightning-button>
+                            </div>
+                        </template>
                     </div>
 
                     <!-- Table -->
@@ -488,6 +502,69 @@
                             label="Delete Permanently"
                             onclick={handleConfirmBulkDelete}
                             disabled={isBulkProcessing}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Delete All Orphaned Modal -->
+        <template if:true={showDeleteAllOrphanedModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Delete All Orphaned Questions</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                            <p class="slds-text-heading_small">
+                                ⚠️ Critical Warning: This action cannot be undone
+                            </p>
+                        </div>
+
+                        <p class="slds-m-bottom_small">
+                            You are about to delete <strong>ALL orphaned questions</strong> in the system.
+                        </p>
+
+                        <div class="slds-box slds-theme_shade slds-m-vertical_medium">
+                            <p class="slds-text-heading_small slds-m-bottom_small">
+                                What are orphaned questions?
+                            </p>
+                            <p class="slds-text-body_small">
+                                Orphaned questions are questions that have no incoming references from other
+                                questions and are not starting questions (Presentation Order ≠ 1). These questions
+                                are unreachable in the intake flow and can be safely removed.
+                            </p>
+                        </div>
+
+                        <div class="slds-m-top_medium">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                The following will be deleted:
+                            </p>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <li>All orphaned question records (count shown in stats above)</li>
+                                <li>All outcomes associated with orphaned questions</li>
+                            </ul>
+                        </div>
+
+                        <p class="slds-m-top_medium slds-text-color_error slds-text-align_center">
+                            <strong>This operation will delete ALL orphaned questions at once.</strong><br/>
+                            Are you absolutely sure you want to proceed?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelDeleteAllOrphaned}
+                            disabled={isProcessingDeleteAll}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="destructive"
+                            label="Delete All Permanently"
+                            onclick={handleConfirmDeleteAllOrphaned}
+                            disabled={isProcessingDeleteAll}>
                         </lightning-button>
                     </footer>
                 </div>

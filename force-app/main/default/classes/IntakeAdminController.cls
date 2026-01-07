@@ -715,6 +715,77 @@ public with sharing class IntakeAdminController {
     }
 
     /**
+     * Delete all orphaned questions in bulk
+     * @return Map with successCount, errorCount, errorMessages, totalProcessed
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> deleteAllOrphanedQuestions() {
+        try {
+            // Get all orphaned question IDs
+            Set<Id> orphanedIds = getOrphanedQuestionIds();
+
+            if (orphanedIds.isEmpty()) {
+                Map<String, Object> result = new Map<String, Object>();
+                result.put('successCount', 0);
+                result.put('errorCount', 0);
+                result.put('errorMessages', new List<String>());
+                result.put('totalProcessed', 0);
+                return result;
+            }
+
+            // Get the questions to delete
+            List<Intake_Process__c> questionsToDelete = [
+                SELECT Id, Name
+                FROM Intake_Process__c
+                WHERE Id IN :orphanedIds
+            ];
+
+            // Delete associated outcomes first (cascade delete)
+            List<Intake_Process__c> outcomesToDelete = [
+                SELECT Id
+                FROM Intake_Process__c
+                WHERE Intake_Question__c IN :orphanedIds
+            ];
+
+            if (!outcomesToDelete.isEmpty()) {
+                Database.delete(outcomesToDelete, false);
+            }
+
+            // Delete the questions with partial success
+            Database.DeleteResult[] results = Database.delete(questionsToDelete, false);
+
+            // Process results
+            Integer successCount = 0;
+            Integer errorCount = 0;
+            List<String> errorMessages = new List<String>();
+
+            for (Integer i = 0; i < results.size(); i++) {
+                if (results[i].isSuccess()) {
+                    successCount++;
+                } else {
+                    errorCount++;
+                    String errorMsg = questionsToDelete[i].Name + ': ';
+                    for (Database.Error err : results[i].getErrors()) {
+                        errorMsg += err.getMessage() + '; ';
+                    }
+                    errorMessages.add(errorMsg);
+                }
+            }
+
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('successCount', successCount);
+            result.put('errorCount', errorCount);
+            result.put('errorMessages', errorMessages);
+            result.put('totalProcessed', orphanedIds.size());
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error deleting orphaned questions: ' + e.getMessage());
+        }
+    }
+
+    /**
      * Get question details with full outcome information
      */
     @AuraEnabled(cacheable=false)
