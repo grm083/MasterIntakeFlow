@@ -171,10 +171,13 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
             // Calculate offset
             const offset = (this.pageNumber - 1) * this.pageSize;
 
+            // Map the sort field from camelCase to Salesforce API field name
+            const apiSortField = this.mapFieldNameToApiName(this.sortedBy);
+
             // Fetch questions
             const questions = await getQuestions({
                 filters: filterJson,
-                sortField: this.sortedBy,
+                sortField: apiSortField,
                 sortDirection: this.sortedDirection,
                 limitRecords: this.pageSize,
                 offsetRecords: offset
@@ -323,10 +326,13 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
             // Build filter JSON
             const filterJson = JSON.stringify(this.filters);
 
+            // Map the sort field from camelCase to Salesforce API field name
+            const apiSortField = this.mapFieldNameToApiName(this.sortedBy);
+
             // Call Apex to generate CSV
             const csvData = await exportQuestionsToCSV({
                 filters: filterJson,
-                sortField: this.sortedBy,
+                sortField: apiSortField,
                 sortDirection: this.sortedDirection
             });
 
@@ -628,6 +634,27 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     }
 
     // ========== HELPERS ==========
+
+    /**
+     * Maps camelCase JavaScript field names to Salesforce API field names
+     * This is needed because datatable columns use camelCase for display,
+     * but SOQL queries need the actual API field names
+     */
+    mapFieldNameToApiName(fieldName) {
+        const fieldMapping = {
+            'caseType': 'Case_Type__c',
+            'caseSubType': 'Case_Sub_Type__c',
+            'inputType': 'Input_Type__c',
+            'questionText': 'Question__c',
+            'name': 'Name',
+            'questionUrl': 'Name', // URL column sorts by Name
+            'outcomeCount': 'Name', // Outcome count is calculated, sort by Name instead
+            'lastModifiedDate': 'LastModifiedDate',
+            'statusLabel': 'Name' // Status is calculated, sort by Name instead
+        };
+
+        return fieldMapping[fieldName] || fieldName;
+    }
 
     getStatusLabel(question) {
         if (question.isOrphaned) return 'Orphaned';
