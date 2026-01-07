@@ -1,5 +1,4 @@
 import LightningModal from 'lightning/modal';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import initializeIntake from '@salesforce/apex/IntakeProcessController.initializeIntake';
 import getNextQuestionBatch from '@salesforce/apex/IntakeProcessController.getNextQuestionBatch';
 import completeIntake from '@salesforce/apex/IntakeProcessController.completeIntake';
@@ -155,7 +154,7 @@ export default class MasterIntakeForm extends LightningModal {
 
             this.state.error = error.body?.message || 'Error loading intake data';
             this.state.isLoading = false;
-            this.showErrorToast('Error', this.state.error);
+            // Error displayed inline via showError getter
         }
     }
 
@@ -298,7 +297,7 @@ export default class MasterIntakeForm extends LightningModal {
             console.error('[MasterIntakeForm] Error in loadNextQuestion:', error);
             console.error('[MasterIntakeForm] Error message:', error.message);
             console.error('[MasterIntakeForm] Error stack:', error.stack);
-            this.showErrorToast('Error', 'Failed to load next question');
+            this.state.error = 'Failed to load next question';
         }
     }
 
@@ -423,13 +422,13 @@ export default class MasterIntakeForm extends LightningModal {
                 console.log('[MasterIntakeForm] Intake completed successfully');
                 console.log('[MasterIntakeForm] Comment ID:', result.commentId);
                 console.log('[MasterIntakeForm] Task ID:', result.taskId);
-                this.showSuccessToast('Success', 'Intake completed successfully');
 
                 // Close the modal and signal success
+                // Launcher will display success toast
                 setTimeout(() => {
                     console.log('[MasterIntakeForm] Closing modal and refreshing...');
                     this.close('success');
-                }, 1000);
+                }, 500);
 
             } else {
                 console.error('[MasterIntakeForm] Completion failed:', result.errorMessage);
@@ -441,7 +440,7 @@ export default class MasterIntakeForm extends LightningModal {
             console.error('[MasterIntakeForm] Error in handleFinalSubmit:', error);
             console.error('[MasterIntakeForm] Error message:', error.body?.message || error.message);
             console.error('[MasterIntakeForm] Error stack:', error.stack);
-            this.showErrorToast('Error', error.body?.message || 'Failed to complete intake');
+            this.state.error = error.body?.message || 'Failed to complete intake';
         }
     }
 
@@ -494,27 +493,6 @@ export default class MasterIntakeForm extends LightningModal {
                 questions[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }, 100);
-    }
-
-    showSuccessToast(title, message) {
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: title,
-                message: message,
-                variant: 'success'
-            })
-        );
-    }
-
-    showErrorToast(title, message) {
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: title,
-                message: message,
-                variant: 'error',
-                mode: 'sticky'
-            })
-        );
     }
 
     // ========== GETTERS ==========

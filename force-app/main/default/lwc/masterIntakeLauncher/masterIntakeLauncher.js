@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import MasterIntakeFormModal from 'c/masterIntakeForm';
 
 /**
@@ -25,13 +26,36 @@ export default class MasterIntakeLauncher extends LightningElement {
 
             // If intake was completed successfully, refresh the page
             if (result === 'success') {
-                console.log('[MasterIntakeLauncher] Intake completed, refreshing page...');
-                // Use force:refreshView or navigate to refresh
-                eval("$A.get('e.force:refreshView').fire();");
+                console.log('[MasterIntakeLauncher] Intake completed successfully');
+
+                // Show success toast
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Master Intake completed successfully',
+                        variant: 'success'
+                    })
+                );
+
+                // Refresh the page to show updated case
+                setTimeout(() => {
+                    console.log('[MasterIntakeLauncher] Refreshing page...');
+                    eval("$A.get('e.force:refreshView').fire();");
+                }, 500);
             }
 
         } catch (error) {
             console.error('[MasterIntakeLauncher] Error opening modal:', error);
+
+            // Show error toast
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Failed to open Master Intake Flow',
+                    variant: 'error',
+                    mode: 'sticky'
+                })
+            );
         }
     }
 }
