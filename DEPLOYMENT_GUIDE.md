@@ -12,14 +12,17 @@ This guide covers deploying and configuring the new Lightning Web Component (LWC
 - **Smoother UX** - Auto-advance eliminates "Next" button clicks
 
 ### UX Improvements
+- **Modal dialog interface** - Opens in focused modal for better space utilization
 - **Auto-advance on answer** - No more clicking "Next" after every question
 - **Collapsible completed questions** - Clean, focused interface
 - **Edit previous answers** - Change answers and re-branch
 - **Answer summary screen** - Review all responses before submission
 - **Actions preview** - See what will happen before committing
+- **Large modal size** - Ample space for long question flows (70vh height)
 
 ### Technical Improvements
 - **Modern LWC architecture** - Better performance, maintainability
+- **LightningModal base** - Native modal dialog implementation
 - **Reactive state management** - Smoother UI updates
 - **Better error handling** - Clear error messages and recovery
 - **Accessibility** - WCAG compliant with keyboard navigation
@@ -28,12 +31,13 @@ This guide covers deploying and configuring the new Lightning Web Component (LWC
 
 ### Apex Classes
 - `IntakeProcessController.cls` - Optimized controller with batch fetching
-- `IntakeProcessControllerTest.cls` - Unit tests (to be created)
+- `IntakeProcessControllerTest.cls` - Comprehensive unit tests
 
 ### LWC Components
-- `masterIntakeForm` - Main container component
-- `questionItem` - Individual question renderer
-- `answerSummary` - Final review screen
+- `masterIntakeLauncher` - **Button component to open modal** (Place on Case page)
+- `masterIntakeForm` - **Modal dialog component** (Opened by launcher)
+- `questionItem` - Individual question renderer (Used by masterIntakeForm)
+- `answerSummary` - Final review screen (Used by masterIntakeForm)
 
 ## Deployment Steps
 
@@ -43,23 +47,29 @@ This guide covers deploying and configuring the new Lightning Web Component (LWC
 # Authenticate to sandbox
 sfdx auth:web:login --setalias my-sandbox --instanceurl https://test.salesforce.com
 
-# Deploy components
+# Deploy all components
+sfdx force:source:deploy --sourcepath force-app/main/default/lwc/masterIntakeLauncher --targetusername my-sandbox
 sfdx force:source:deploy --sourcepath force-app/main/default/lwc/masterIntakeForm --targetusername my-sandbox
 sfdx force:source:deploy --sourcepath force-app/main/default/lwc/questionItem --targetusername my-sandbox
 sfdx force:source:deploy --sourcepath force-app/main/default/lwc/answerSummary --targetusername my-sandbox
 sfdx force:source:deploy --sourcepath force-app/main/default/classes/IntakeProcessController.cls --targetusername my-sandbox
 sfdx force:source:deploy --sourcepath force-app/main/default/classes/IntakeProcessController.cls-meta.xml --targetusername my-sandbox
+sfdx force:source:deploy --sourcepath force-app/main/default/classes/IntakeProcessControllerTest.cls --targetusername my-sandbox
+sfdx force:source:deploy --sourcepath force-app/main/default/classes/IntakeProcessControllerTest.cls-meta.xml --targetusername my-sandbox
 ```
 
-### 2. Add Component to Case Page Layout
+### 2. Add Launcher Component to Case Page Layout
 
 1. Navigate to **Setup → Object Manager → Case → Lightning Record Pages**
 2. Select the Case record page where intake flow should appear
 3. In Lightning App Builder:
    - Remove the old `MasterIntakeShell` Aura component (if present)
-   - Drag `Master Intake Form` LWC component onto the page
-   - Recommended placement: Top of the page or in a prominent tab
+   - Drag **`Master Intake Launcher`** component onto the page
+   - Recommended placement: Top of the page or in a prominent position
+   - The launcher will display a button to open the modal
 4. **Save** and **Activate** the page
+
+**Important:** Place the `masterIntakeLauncher` component, NOT the `masterIntakeForm`. The form opens automatically as a modal dialog when the button is clicked.
 
 ### 3. Assign Permissions
 
@@ -116,15 +126,27 @@ After successful deployment and testing:
 
 #### Starting the Intake
 1. Open a Case record
-2. The Master Intake Form automatically displays if:
+2. Look for the **"Master Intake Required"** card with the button
+3. Click **"Start Master Intake"** button
+4. A large modal dialog opens with the intake questions
+
+**The modal displays if:**
    - Case has Type, Sub-Type configured
    - Intake questions exist for this case type
    - `Master_Intake_Complete__c = false`
+
+#### Working in the Modal
+- **Modal provides focused experience** - No page distractions
+- **Large size (70vh)** - Ample space for long question flows
+- **Scrollable content** - Questions scroll within modal
+- **Can be closed** - Click X or "Close" to dismiss (progress not saved)
 
 #### Answering Questions
 - **Picklist questions**: Click an option → auto-advances
 - **Text questions**: Type answer, press Enter or tab away → auto-advances
 - **Instruction questions**: Read message → auto-advances
+- Questions collapse as you complete them
+- Progress shown in modal header
 
 #### Editing Answers
 - Click **[Edit]** button next to any completed question
@@ -136,6 +158,8 @@ After successful deployment and testing:
 2. Check all answers for accuracy
 3. Optionally add comments
 4. Click **Complete Intake**
+5. Modal closes automatically
+6. Page refreshes to show updated case
 
 ### For Administrators
 
