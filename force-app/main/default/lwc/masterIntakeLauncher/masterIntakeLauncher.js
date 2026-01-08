@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import MasterIntakeFormModal from 'c/masterIntakeForm';
 
@@ -10,6 +10,17 @@ import MasterIntakeFormModal from 'c/masterIntakeForm';
  */
 export default class MasterIntakeLauncher extends LightningElement {
     @api recordId; // Case ID from record page
+    @track showFloatingButton = false;
+
+    connectedCallback() {
+        // Check if there's a minimized form waiting to be restored
+        this.checkFloatingButtonState();
+    }
+
+    checkFloatingButtonState() {
+        this.showFloatingButton = MasterIntakeFormModal.isFloatingButtonVisible();
+        console.log('[MasterIntakeLauncher] Floating button visible:', this.showFloatingButton);
+    }
 
     async handleOpenIntake() {
         console.log('[MasterIntakeLauncher] Opening Master Intake Flow modal');
@@ -23,6 +34,9 @@ export default class MasterIntakeLauncher extends LightningElement {
             });
 
             console.log('[MasterIntakeLauncher] Modal closed with result:', result);
+
+            // Check floating button state after modal closes
+            this.checkFloatingButtonState();
 
             // If intake was completed successfully, refresh the page
             if (result === 'success') {
@@ -44,6 +58,12 @@ export default class MasterIntakeLauncher extends LightningElement {
                 }, 500);
             }
 
+            // If minimized, show floating button
+            if (result === 'minimized') {
+                console.log('[MasterIntakeLauncher] Modal minimized, showing floating button');
+                this.showFloatingButton = true;
+            }
+
         } catch (error) {
             console.error('[MasterIntakeLauncher] Error opening modal:', error);
 
@@ -57,5 +77,16 @@ export default class MasterIntakeLauncher extends LightningElement {
                 })
             );
         }
+    }
+
+    async handleRestoreFromFloating() {
+        console.log('[MasterIntakeLauncher] Restoring from floating button');
+
+        // Hide floating button
+        this.showFloatingButton = false;
+        MasterIntakeFormModal.clearFloatingButton();
+
+        // Re-open the modal (it will auto-load the draft)
+        await this.handleOpenIntake();
     }
 }

@@ -44,10 +44,16 @@ export default class MasterIntakeForm extends LightningModal {
         draftMetadata: null,
         draftLoaded: false,
 
+        // Minimize/Restore
+        isMinimized: false,
+
         // UI state
         isLoading: true,
         error: null
     };
+
+    // Floating button state (stored outside modal lifecycle)
+    static floatingButtonVisible = false;
 
     // ========== LIFECYCLE HOOKS ==========
 
@@ -611,7 +617,42 @@ export default class MasterIntakeForm extends LightningModal {
             this.saveDraftToStorage();
         }
 
+        // Clear floating button state when actually closing
+        MasterIntakeForm.floatingButtonVisible = false;
+
         this.close('cancelled');
+    }
+
+    /**
+     * Handle minimize button click
+     */
+    handleMinimize() {
+        console.log('[MasterIntakeForm] handleMinimize - Minimizing modal');
+
+        // Save draft to preserve progress
+        if (this.state.questionHistory.length > 0) {
+            console.log('[MasterIntakeForm] Saving draft before minimizing');
+            this.saveDraftToStorage();
+        }
+
+        // Set flag to show floating button
+        MasterIntakeForm.floatingButtonVisible = true;
+        this.state.isMinimized = true;
+
+        // Close the modal (but don't clear the draft)
+        this.close('minimized');
+    }
+
+    /**
+     * Handle restore from floating button click
+     * This is called from the parent component that manages the floating button
+     */
+    static clearFloatingButton() {
+        MasterIntakeForm.floatingButtonVisible = false;
+    }
+
+    static isFloatingButtonVisible() {
+        return MasterIntakeForm.floatingButtonVisible;
     }
 
     // ========== UTILITY METHODS ==========

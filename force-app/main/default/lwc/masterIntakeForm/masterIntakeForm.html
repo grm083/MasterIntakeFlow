@@ -17,6 +17,17 @@
                 {questionCountDisplay}
             </p>
         </template>
+        <!-- Minimize Button -->
+        <template if:true={showQuestions}>
+            <lightning-button-icon
+                icon-name="utility:minimize_window"
+                variant="bare"
+                alternative-text="Minimize"
+                title="Minimize - Continue later"
+                onclick={handleMinimize}
+                class="slds-modal__close minimize-button">
+            </lightning-button-icon>
+        </template>
     </div>
 
     <!-- Case Info Panel -->

@@ -27,4 +27,20 @@
             </div>
         </div>
     </lightning-card>
+
+    <!-- Floating Resume Button -->
+    <template if:true={showFloatingButton}>
+        <div class="floating-resume-button" onclick={handleRestoreFromFloating}>
+            <lightning-icon
+                icon-name="utility:form"
+                size="medium"
+                alternative-text="Resume Intake"
+                class="floating-button-icon">
+            </lightning-icon>
+            <div class="floating-button-text">
+                <span class="floating-button-title">Resume Intake</span>
+                <span class="floating-button-subtitle">Continue where you left off</span>
+            </div>
+        </div>
+    </template>
 </template>
