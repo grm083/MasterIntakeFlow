@@ -243,14 +243,15 @@ lightning-button:focus-within {
     font-weight: 700;
 }
 
-/* Minimize Button */
+/* Minimize Button - positioned next to close button */
 .minimize-button {
     position: absolute;
-    top: 1rem;
-    right: 3.5rem;
+    top: 0.75rem;
+    right: 2.75rem;
     z-index: 1;
 }
 
 .minimize-button:hover {
     color: #1c8200;
+    background-color: rgba(28, 130, 0, 0.1);
 }
