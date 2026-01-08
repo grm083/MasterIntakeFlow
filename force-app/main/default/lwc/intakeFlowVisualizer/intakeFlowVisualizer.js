@@ -136,13 +136,14 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
         // Clear existing content
         canvas.innerHTML = '';
 
-        // Create SVG
-        const width = canvas.clientWidth || 800;
-        const height = canvas.clientHeight || 600;
+        // Create SVG with larger dimensions for hierarchical layout
+        const width = canvas.clientWidth || 1200;
+        const height = canvas.clientHeight || 800;
 
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('width', width);
+        svg.setAttribute('width', '100%');
         svg.setAttribute('height', height);
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
         svg.setAttribute('class', 'flow-svg');
 
         // Create groups for edges and nodes
@@ -154,33 +155,32 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
         nodeGroup.setAttribute('class', 'nodes');
         svg.appendChild(nodeGroup);
 
-        // Simple force-directed layout (simplified version)
-        const nodes = this.flowData.nodes.map(n => ({
-            ...n,
-            x: Math.random() * width,
-            y: Math.random() * height,
-            vx: 0,
-            vy: 0
-        }));
-
+        // Calculate hierarchical layout
+        const layoutData = this.calculateHierarchicalLayout(this.flowData, width, height);
+        const nodes = layoutData.nodes;
         const nodeMap = new Map(nodes.map(n => [n.id, n]));
 
-        // Render edges
+        // Render edges with curved paths
         this.flowData.edges.forEach(edge => {
             const source = nodeMap.get(edge.source);
             const target = nodeMap.get(edge.target);
 
             if (source && target) {
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', source.x);
-                line.setAttribute('y1', source.y);
-                line.setAttribute('x2', target.x);
-                line.setAttribute('y2', target.y);
-                line.setAttribute('stroke', '#999');
-                line.setAttribute('stroke-width', '1');
-                line.setAttribute('marker-end', 'url(#arrowhead)');
-                line.setAttribute('data-edge-id', edge.id);
-                edgeGroup.appendChild(line);
+                // Use curved path for better visibility
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+                // Calculate control point for smooth curve
+                const midY = (source.y + target.y) / 2;
+                const pathData = `M ${source.x} ${source.y}
+                                  C ${source.x} ${midY}, ${target.x} ${midY}, ${target.x} ${target.y}`;
+
+                path.setAttribute('d', pathData);
+                path.setAttribute('stroke', '#cbd5e0');
+                path.setAttribute('stroke-width', '2');
+                path.setAttribute('fill', 'none');
+                path.setAttribute('marker-end', 'url(#arrowhead)');
+                path.setAttribute('data-edge-id', edge.id);
+                edgeGroup.appendChild(path);
             }
         });
 
@@ -189,7 +189,7 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             circle.setAttribute('cx', node.x);
             circle.setAttribute('cy', node.y);
-            circle.setAttribute('r', node.isStart ? '12' : '8');
+            circle.setAttribute('r', node.isStart ? '14' : '10');
             circle.setAttribute('data-node-id', node.id);
 
             // Color based on status
@@ -204,7 +204,7 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
 
             circle.setAttribute('fill', fill);
             circle.setAttribute('stroke', '#fff');
-            circle.setAttribute('stroke-width', '2');
+            circle.setAttribute('stroke-width', '3');
             circle.style.cursor = 'pointer';
 
             // Click handler
@@ -218,12 +218,25 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
             if (this.showLabels) {
                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', node.x);
-                text.setAttribute('y', node.y - 15);
+                text.setAttribute('y', node.y - 20);
                 text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('font-size', '10');
-                text.setAttribute('fill', '#333');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('font-weight', node.isStart ? 'bold' : 'normal');
+                text.setAttribute('fill', '#2d3748');
                 text.textContent = node.name;
                 nodeGroup.appendChild(text);
+            }
+
+            // Add tier label for debugging/clarity
+            if (this.showLabels && node.tier !== undefined) {
+                const tierText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                tierText.setAttribute('x', node.x);
+                tierText.setAttribute('y', node.y + 25);
+                tierText.setAttribute('text-anchor', 'middle');
+                tierText.setAttribute('font-size', '9');
+                tierText.setAttribute('fill', '#718096');
+                tierText.textContent = `Tier ${node.tier}`;
+                nodeGroup.appendChild(tierText);
             }
         });
 
@@ -233,18 +246,119 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
         marker.setAttribute('id', 'arrowhead');
         marker.setAttribute('markerWidth', '10');
         marker.setAttribute('markerHeight', '10');
-        marker.setAttribute('refX', '8');
+        marker.setAttribute('refX', '9');
         marker.setAttribute('refY', '3');
         marker.setAttribute('orient', 'auto');
 
         const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
         polygon.setAttribute('points', '0 0, 10 3, 0 6');
-        polygon.setAttribute('fill', '#999');
+        polygon.setAttribute('fill', '#cbd5e0');
         marker.appendChild(polygon);
         defs.appendChild(marker);
         svg.insertBefore(defs, svg.firstChild);
 
         canvas.appendChild(svg);
+    }
+
+    /**
+     * Calculate hierarchical tree layout positions for nodes
+     */
+    calculateHierarchicalLayout(flowData, width, height) {
+        // Build adjacency map for easy traversal
+        const adjacency = new Map();
+        const incomingCount = new Map();
+
+        flowData.nodes.forEach(node => {
+            adjacency.set(node.id, []);
+            incomingCount.set(node.id, 0);
+        });
+
+        flowData.edges.forEach(edge => {
+            if (adjacency.has(edge.source)) {
+                adjacency.get(edge.source).push(edge.target);
+            }
+            incomingCount.set(edge.target, (incomingCount.get(edge.target) || 0) + 1);
+        });
+
+        // Find start nodes (Presentation_Order = 1 or no incoming edges)
+        const startNodes = flowData.nodes.filter(n =>
+            n.isStart || incomingCount.get(n.id) === 0
+        );
+
+        // Assign tiers using BFS
+        const tierMap = new Map();
+        const visited = new Set();
+        const queue = [];
+
+        // Initialize start nodes at tier 0
+        startNodes.forEach(node => {
+            tierMap.set(node.id, 0);
+            queue.push({ id: node.id, tier: 0 });
+            visited.add(node.id);
+        });
+
+        // BFS to assign tiers
+        let maxTier = 0;
+        while (queue.length > 0) {
+            const current = queue.shift();
+            const children = adjacency.get(current.id) || [];
+
+            children.forEach(childId => {
+                if (!visited.has(childId)) {
+                    const childTier = current.tier + 1;
+                    tierMap.set(childId, childTier);
+                    maxTier = Math.max(maxTier, childTier);
+                    queue.push({ id: childId, tier: childTier });
+                    visited.add(childId);
+                }
+            });
+        }
+
+        // Handle orphaned nodes (not visited) - put them at the end
+        flowData.nodes.forEach(node => {
+            if (!tierMap.has(node.id)) {
+                tierMap.set(node.id, maxTier + 1);
+            }
+        });
+
+        maxTier = Math.max(maxTier, maxTier + 1);
+
+        // Group nodes by tier
+        const tierGroups = new Map();
+        for (let i = 0; i <= maxTier; i++) {
+            tierGroups.set(i, []);
+        }
+
+        flowData.nodes.forEach(node => {
+            const tier = tierMap.get(node.id);
+            tierGroups.get(tier).push(node);
+        });
+
+        // Calculate positions
+        const padding = 60;
+        const verticalSpacing = height / (maxTier + 2);
+        const nodes = [];
+
+        tierGroups.forEach((nodesInTier, tier) => {
+            const nodeCount = nodesInTier.length;
+            const horizontalSpacing = nodeCount > 1 ? (width - 2 * padding) / (nodeCount - 1) : 0;
+
+            nodesInTier.forEach((node, index) => {
+                const x = nodeCount === 1
+                    ? width / 2
+                    : padding + (index * horizontalSpacing);
+                const y = padding + (tier * verticalSpacing);
+
+                nodes.push({
+                    ...node,
+                    x: x,
+                    y: y,
+                    tier: tier
+                });
+            });
+        });
+
+        return { nodes, maxTier };
     }
 
     handleNodeClick(node) {
