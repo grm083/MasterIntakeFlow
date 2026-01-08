@@ -480,7 +480,7 @@ export default class MasterIntakeForm extends LightningModal {
 
     scrollToTop() {
         setTimeout(() => {
-            const container = this.template.querySelector('.intake-container');
+            const container = this.template.querySelector('.intake-modal-content');
             if (container) {
                 container.scrollTop = 0;
             }
