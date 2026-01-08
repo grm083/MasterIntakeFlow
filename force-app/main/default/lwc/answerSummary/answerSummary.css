@@ -9,6 +9,25 @@
     box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2);
 }
 
+/* Primary Submit Button - WM Brand */
+.submit-button-primary {
+    min-width: 200px;
+    height: 44px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 3px 6px rgba(28, 130, 0, 0.3);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.submit-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(28, 130, 0, 0.4);
+}
+
+.submit-button-primary:active {
+    transform: translateY(0);
+}
+
 .outcome-statement .slds-text-heading_medium {
     color: #024731;
     font-weight: 700;

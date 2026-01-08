@@ -671,11 +671,18 @@ export default class MasterIntakeForm extends LightningModal {
 
     scrollToBottom() {
         setTimeout(() => {
-            const container = this.template.querySelector('.question-stack');
-            if (container) {
-                container.scrollTop = container.scrollHeight;
+            // Get all question items
+            const questions = this.template.querySelectorAll('c-question-item');
+            if (questions && questions.length > 0) {
+                // Scroll the last question into view (the newly added one)
+                const lastQuestion = questions[questions.length - 1];
+                lastQuestion.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end',
+                    inline: 'nearest'
+                });
             }
-        }, 100);
+        }, 150);
     }
 
     scrollToTop() {
