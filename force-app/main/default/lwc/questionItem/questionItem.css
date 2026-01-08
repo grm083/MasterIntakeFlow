@@ -1,31 +1,33 @@
-/* Question Item Container */
+/* Question Item Container - WM Brand */
 .question-item {
-    padding: 1rem;
-    margin-bottom: 0.75rem;
-    border-radius: 0.25rem;
-    transition: all 0.3s ease;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid transparent;
 }
 
-/* Active Question - Highlighted */
+/* Active Question - Highlighted - WM Brand */
 .question-item.active {
     background-color: #ffffff;
-    border: 1px solid #0176d3;
-    box-shadow: 0 2px 8px rgba(1, 118, 211, 0.1);
+    border: 2px solid #1c8200;
+    box-shadow: 0px 3px 1px -2px rgba(28, 130, 0, 0.2);
     animation: slideIn 0.3s ease-out;
 }
 
-/* Completed Question - Collapsed */
+/* Completed Question - Collapsed - WM Brand */
 .question-item.completed {
-    background-color: #f3f3f3;
-    border: 1px solid #e5e5e5;
-    padding: 0.75rem 1rem;
+    background-color: #f8f8f2;
+    border: 1px solid #e0e0e0;
+    padding: 1rem 1.25rem;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .question-item.completed:hover {
-    background-color: #e9e9e9;
+    background-color: #f0f0f0;
+    border-color: #1c8200;
 }
 
 /* Pending Question - Hidden */
@@ -33,12 +35,12 @@
     display: none;
 }
 
-/* Question Header */
+/* Question Header - WM Brand */
 .question-header {
     display: flex;
     align-items: center;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
 }
 
 .question-item.completed .question-header {
@@ -46,20 +48,23 @@
 }
 
 .question-number {
-    font-weight: 600;
-    color: #0176d3;
-    margin-right: 0.5rem;
+    font-weight: 700;
+    color: #1c8200;
+    margin-right: 0.75rem;
+    font-size: 1rem;
 }
 
 .question-text {
-    color: #181818;
+    color: #024731;
+    line-height: 1.5;
 }
 
-/* Answer Summary (for completed questions) */
+/* Answer Summary (for completed questions) - WM Brand */
 .answer-summary {
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
     padding-left: 2rem;
     font-size: 0.875rem;
+    color: #4f4f58;
 }
 
 /* Question Input Area */
@@ -73,13 +78,15 @@
     font-size: 0.75rem;
 }
 
-/* Instruction Box */
+/* Instruction Box - WM Brand */
 .instruction-box {
     display: flex;
     align-items: flex-start;
-    padding: 1rem;
-    background-color: #e8f4f8;
-    border-left: 4px solid #0176d3;
+    padding: 1rem 1.25rem;
+    background-color: #f0f9ed;
+    border-left: 5px solid #1c8200;
+    border-radius: 4px;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.15);
 }
 
 /* Animations */
