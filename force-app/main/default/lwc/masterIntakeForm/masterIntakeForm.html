@@ -19,6 +19,68 @@
         </template>
     </div>
 
+    <!-- Case Info Panel -->
+    <template if:true={showCaseInfoPanel}>
+        <div class="case-info-panel slds-p-horizontal_medium slds-p-vertical_small slds-border_bottom">
+            <div class="slds-grid slds-gutters_x-small slds-wrap">
+                <!-- Client -->
+                <template if:true={hasClientName}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <div class="info-badge">
+                            <lightning-icon icon-name="standard:account" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                            <span class="slds-truncate" title={clientNameDisplay}>{clientNameDisplay}</span>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Location -->
+                <template if:true={hasLocationName}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <div class="info-badge">
+                            <lightning-icon icon-name="standard:location" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                            <span class="slds-truncate" title={locationNameDisplay}>{locationNameDisplay}</span>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Asset -->
+                <template if:true={hasAssetName}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <div class="info-badge">
+                            <lightning-icon icon-name="standard:asset_object" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                            <span class="slds-truncate" title={assetNameDisplay}>{assetNameDisplay}</span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Second Row -->
+            <template if:true={hasSecondaryInfo}>
+                <div class="slds-grid slds-gutters_x-small slds-wrap slds-m-top_x-small">
+                    <!-- Contact -->
+                    <template if:true={hasContactName}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <div class="info-badge-secondary">
+                                <lightning-icon icon-name="standard:contact" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                <span class="slds-truncate" title={contactNameDisplay}>{contactNameDisplay}</span>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Service Date -->
+                    <template if:true={hasServiceDate}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <div class="info-badge-secondary">
+                                <lightning-icon icon-name="standard:event" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                <span class="slds-truncate" title={serviceDateDisplay}>{serviceDateDisplay}</span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+
     <!-- Modal Content -->
     <div class="slds-modal__content intake-modal-content" id="modal-content">
 

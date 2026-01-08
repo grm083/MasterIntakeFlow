@@ -566,4 +566,65 @@ export default class MasterIntakeForm extends LightningModal {
         const completed = this.completedCount;
         return completed === 1 ? '1 question answered' : `${completed} questions answered`;
     }
+
+    // ========== CASE INFO PANEL GETTERS ==========
+
+    get showCaseInfoPanel() {
+        return this.state.caseContext && !this.showLoading && !this.showError;
+    }
+
+    get hasClientName() {
+        return this.state.caseContext?.clientName != null;
+    }
+
+    get hasLocationName() {
+        return this.state.caseContext?.locationName != null;
+    }
+
+    get hasAssetName() {
+        return this.state.caseContext?.assetName != null;
+    }
+
+    get hasContactName() {
+        return this.state.caseContext?.contactName != null;
+    }
+
+    get hasServiceDate() {
+        return this.state.caseContext?.serviceDate != null;
+    }
+
+    get hasSecondaryInfo() {
+        return this.hasContactName || this.hasServiceDate;
+    }
+
+    get clientNameDisplay() {
+        return this.state.caseContext?.clientName || '';
+    }
+
+    get locationNameDisplay() {
+        return this.state.caseContext?.locationName || '';
+    }
+
+    get assetNameDisplay() {
+        return this.state.caseContext?.assetName || '';
+    }
+
+    get contactNameDisplay() {
+        return this.state.caseContext?.contactName || '';
+    }
+
+    get serviceDateDisplay() {
+        if (!this.state.caseContext?.serviceDate) return '';
+
+        try {
+            const date = new Date(this.state.caseContext.serviceDate);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        } catch (e) {
+            return this.state.caseContext.serviceDate;
+        }
+    }
 }

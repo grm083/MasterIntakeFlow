@@ -16,6 +16,11 @@ public with sharing class IntakeProcessController {
         @AuraEnabled public String caseNumber { get; set; }
         @AuraEnabled public String clientId { get; set; }
         @AuraEnabled public String locationId { get; set; }
+        @AuraEnabled public String clientName { get; set; }
+        @AuraEnabled public String locationName { get; set; }
+        @AuraEnabled public String assetName { get; set; }
+        @AuraEnabled public String contactName { get; set; }
+        @AuraEnabled public Date serviceDate { get; set; }
     }
 
     public class QuestionWrapper {
@@ -78,8 +83,9 @@ public with sharing class IntakeProcessController {
             // 1. Get case context
             Case c = [
                 SELECT Id, Case_Type__c, Case_Sub_Type__c, Case_Reason__c,
-                       CaseNumber, Client__c, Location__c, Asset.Project_Code__c,
-                       Master_Intake_Complete__c, Service_Date__c
+                       CaseNumber, Client__c, Location__c, AssetId, ContactId,
+                       Client__r.Name, Location__r.Name, Asset.Name, Contact.Name,
+                       Asset.Project_Code__c, Master_Intake_Complete__c, Service_Date__c
                 FROM Case
                 WHERE Id = :caseId
                 LIMIT 1
@@ -220,6 +226,14 @@ public with sharing class IntakeProcessController {
         context.caseNumber = c.CaseNumber;
         context.clientId = c.Client__c;
         context.locationId = c.Location__c;
+
+        // Populate relationship field names
+        context.clientName = (c.Client__r != null) ? c.Client__r.Name : null;
+        context.locationName = (c.Location__r != null) ? c.Location__r.Name : null;
+        context.assetName = (c.Asset != null) ? c.Asset.Name : null;
+        context.contactName = (c.Contact != null) ? c.Contact.Name : null;
+        context.serviceDate = c.Service_Date__c;
+
         return context;
     }
 
