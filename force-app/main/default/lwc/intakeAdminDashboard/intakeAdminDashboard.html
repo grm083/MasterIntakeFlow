@@ -1,0 +1,790 @@
+<template>
+    <!-- Dashboard View -->
+    <template if:false={showFlowVisualizer}>
+        <lightning-card title="Intake Question Admin Dashboard" icon-name="standard:form">
+        <!-- Stats Section -->
+        <div class="slds-p-horizontal_medium slds-p-top_medium">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value">{stats.total}</div>
+                    <div class="stat-label">Total Questions</div>
+                </div>
+                <div class="stat-card stat-warning">
+                    <div class="stat-value">{stats.orphaned}</div>
+                    <div class="stat-label">Orphaned</div>
+                </div>
+                <div class="stat-card stat-warning">
+                    <div class="stat-value">{stats.noOutcomes}</div>
+                    <div class="stat-label">No Outcomes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{stats.picklist}</div>
+                    <div class="stat-label">Picklist</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{stats.text}</div>
+                    <div class="stat-label">Text Input</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-wrap slds-gutters">
+                <!-- Search -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-input
+                        type="search"
+                        label="Search Questions"
+                        placeholder="Search question text..."
+                        value={filters.searchTerm}
+                        onchange={handleSearchChange}>
+                    </lightning-input>
+                </div>
+
+                <!-- Case Type Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="caseType"
+                        label="Case Type"
+                        value={filters.caseType}
+                        options={caseTypeOptions}
+                        onchange={handleCaseTypeChange}
+                        placeholder="Select Case Type">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Case Sub-Type Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="caseSubType"
+                        label="Case Sub-Type"
+                        value={filters.caseSubType}
+                        options={caseSubTypeOptions}
+                        onchange={handleCaseSubTypeChange}
+                        placeholder="Select Sub-Type">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Case Reason Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="caseReason"
+                        label="Case Reason"
+                        value={filters.caseReason}
+                        options={caseReasonOptions}
+                        onchange={handleCaseReasonChange}
+                        placeholder="Select Case Reason">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Input Type Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="inputType"
+                        label="Input Type"
+                        value={filters.inputType}
+                        options={inputTypeOptions}
+                        onchange={handleInputTypeChange}
+                        placeholder="Select Input Type">
+                    </lightning-combobox>
+                </div>
+
+                <!-- User Role Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="userRole"
+                        label="User Role"
+                        value={filters.userRole}
+                        options={userRoleOptions}
+                        onchange={handleUserRoleChange}
+                        placeholder="Select User Role">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Customer Account Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="customerAccount"
+                        label="Customer Account"
+                        value={filters.customerAccount}
+                        options={customerAccountOptions}
+                        onchange={handleCustomerAccountChange}
+                        placeholder="Select Customer Account">
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- Action Buttons Row 1 -->
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    variant="neutral"
+                    label="Clear Filters"
+                    icon-name="utility:clear"
+                    onclick={handleClearFilters}
+                    disabled={isLoading}
+                    class="slds-m-right_small">
+                </lightning-button>
+                <lightning-button
+                    variant={orphanedButtonVariant}
+                    label={orphanedButtonLabel}
+                    icon-name="utility:warning"
+                    onclick={handleShowOrphaned}
+                    disabled={isLoading}
+                    class="slds-m-right_small">
+                </lightning-button>
+                <lightning-button
+                    variant={noOutcomesButtonVariant}
+                    label={noOutcomesButtonLabel}
+                    icon-name="utility:error"
+                    onclick={handleShowNoOutcomes}
+                    disabled={isLoading}
+                    class="slds-m-right_small">
+                </lightning-button>
+                <lightning-button
+                    variant={selfReferentialButtonVariant}
+                    label={selfReferentialButtonLabel}
+                    icon-name="utility:refresh"
+                    onclick={handleShowSelfReferential}
+                    disabled={isLoading}
+                    class="slds-m-right_small"
+                    title="Questions with outcomes pointing back to themselves (loops)">
+                </lightning-button>
+                <lightning-button
+                    variant={missingInputTypeButtonVariant}
+                    label={missingInputTypeButtonLabel}
+                    icon-name="utility:ban"
+                    onclick={handleShowMissingInputType}
+                    disabled={isLoading}
+                    class="slds-m-right_small"
+                    title="Questions without Input_Type__c set">
+                </lightning-button>
+            </div>
+
+            <!-- Phase 2: Action Buttons Row 2 -->
+            <div class="slds-m-top_small slds-grid slds-wrap slds-gutters_x-small">
+                <div class="slds-col">
+                    <lightning-button
+                        variant="brand"
+                        label="Export to CSV"
+                        icon-name="utility:download"
+                        onclick={handleExportToCSV}
+                        disabled={isLoading}
+                        class="slds-m-right_small">
+                    </lightning-button>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-button
+                        variant="brand"
+                        label="View Flow"
+                        icon-name="utility:graph"
+                        onclick={handleViewFlow}
+                        disabled={isLoading}
+                        title="Open Visual Flow Builder">
+                    </lightning-button>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-button
+                        variant="neutral"
+                        label="Save Search"
+                        icon-name="utility:save"
+                        onclick={handleSaveSearch}
+                        disabled={isLoading}
+                        title="Save current filters and sorting">
+                    </lightning-button>
+                </div>
+
+                <template if:true={hasSavedSearches}>
+                    <div class="slds-col">
+                        <lightning-button-menu
+                            alternative-text="Saved Searches"
+                            icon-size="x-small"
+                            menu-alignment="left"
+                            variant="border-filled"
+                            label="Saved Searches">
+                            <template for:each={savedSearches} for:item="search">
+                                <lightning-menu-item
+                                    key={search.id}
+                                    value={search.id}
+                                    label={search.name}
+                                    data-id={search.id}
+                                    onclick={handleLoadSavedSearch}
+                                    icon-name="utility:filterList">
+                                </lightning-menu-item>
+                            </template>
+                        </lightning-button-menu>
+                    </div>
+                </template>
+
+                <template if:true={hasSearchHistory}>
+                    <div class="slds-col">
+                        <lightning-button-menu
+                            alternative-text="Search History"
+                            icon-size="x-small"
+                            menu-alignment="left"
+                            variant="border-filled"
+                            label="Recent Searches">
+                            <template for:each={searchHistory} for:item="history">
+                                <lightning-menu-item
+                                    key={history.id}
+                                    value={history.searchTerm}
+                                    label={history.searchTerm}
+                                    data-term={history.searchTerm}
+                                    onclick={handleLoadSearchFromHistory}
+                                    icon-name="utility:search">
+                                </lightning-menu-item>
+                            </template>
+                            <lightning-menu-item
+                                value="clear"
+                                label="Clear History"
+                                onclick={handleClearSearchHistory}
+                                icon-name="utility:delete">
+                            </lightning-menu-item>
+                        </lightning-button-menu>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Phase 2: Saved Search Modal -->
+            <template if:true={showSavedSearchModal}>
+                <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium">Save Current Search</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-input
+                                label="Search Name"
+                                value={savedSearchName}
+                                onchange={handleSavedSearchNameChange}
+                                placeholder="Enter a name for this search..."
+                                required>
+                            </lightning-input>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button
+                                variant="neutral"
+                                label="Cancel"
+                                onclick={handleCancelSaveSearch}>
+                            </lightning-button>
+                            <lightning-button
+                                variant="brand"
+                                label="Save"
+                                onclick={handleSaveSearchConfirm}>
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+
+        <!-- Data Table -->
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={isLoading}>
+                <div class="slds-text-align_center slds-p-vertical_large">
+                    <lightning-spinner
+                        alternative-text="Loading questions..."
+                        size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                    <p class="slds-text-heading_small">Error Loading Questions</p>
+                    <p>{error}</p>
+                </div>
+            </template>
+
+            <template if:false={isLoading}>
+                <template if:true={hasQuestions}>
+                    <!-- Pagination Info -->
+                    <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                        <div class="slds-col">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                Showing {paginationLabel}
+                            </p>
+                        </div>
+                        <!-- Phase 4: Bulk Actions -->
+                        <template if:true={hasSelectedRows}>
+                            <div class="slds-col slds-no-flex">
+                                <lightning-button-group>
+                                    <lightning-button
+                                        variant="neutral"
+                                        label="Bulk Edit"
+                                        icon-name="utility:edit"
+                                        onclick={handleBulkEdit}
+                                        disabled={isBulkProcessing}>
+                                    </lightning-button>
+                                    <lightning-button
+                                        variant="destructive"
+                                        label="Bulk Delete"
+                                        icon-name="utility:delete"
+                                        onclick={handleBulkDelete}
+                                        disabled={isBulkProcessing}>
+                                    </lightning-button>
+                                </lightning-button-group>
+                                <span class="slds-m-left_x-small slds-text-body_small slds-text-color_weak">
+                                    {selectedRowCount} selected
+                                </span>
+                            </div>
+                        </template>
+
+                        <!-- Delete All Orphaned Button (shown when orphaned filter is active) -->
+                        <template if:true={filters.showOrphaned}>
+                            <div class="slds-col slds-no-flex">
+                                <lightning-button
+                                    variant="destructive"
+                                    label="Delete All Orphaned"
+                                    icon-name="utility:delete"
+                                    onclick={handleDeleteAllOrphaned}
+                                    disabled={isProcessingDeleteAll}
+                                    title="Delete all orphaned questions at once">
+                                </lightning-button>
+                            </div>
+                        </template>
+
+                        <!-- Delete All Self-Referential Button (shown when self-referential filter is active) -->
+                        <template if:true={filters.showSelfReferential}>
+                            <div class="slds-col slds-no-flex">
+                                <lightning-button
+                                    variant="destructive"
+                                    label="Delete All Self-Referential"
+                                    icon-name="utility:delete"
+                                    onclick={handleDeleteAllSelfReferential}
+                                    disabled={isProcessingDeleteAllSelfRef}
+                                    title="Delete all self-referential questions at once">
+                                </lightning-button>
+                            </div>
+                        </template>
+
+                        <!-- Delete All Missing Input Type Button (shown when missing type filter is active) -->
+                        <template if:true={filters.showMissingInputType}>
+                            <div class="slds-col slds-no-flex">
+                                <lightning-button
+                                    variant="destructive"
+                                    label="Delete All Missing Type"
+                                    icon-name="utility:delete"
+                                    onclick={handleDeleteAllMissingInputType}
+                                    disabled={isProcessingDeleteAllMissingType}
+                                    title="Delete all questions with missing input type at once">
+                                </lightning-button>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Table -->
+                    <lightning-datatable
+                        key-field="id"
+                        data={questions}
+                        columns={columns}
+                        sorted-by={sortedBy}
+                        sorted-direction={sortedDirection}
+                        onsort={handleSort}
+                        onrowselection={handleRowSelection}>
+                    </lightning-datatable>
+
+                    <!-- Pagination Controls -->
+                    <div class="slds-grid slds-grid_align-center slds-m-top_medium">
+                        <lightning-button-group>
+                            <lightning-button
+                                label="First"
+                                icon-name="utility:chevronleft"
+                                onclick={handleFirstPage}
+                                disabled={isPreviousDisabled}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Previous"
+                                icon-name="utility:left"
+                                onclick={handlePrevious}
+                                disabled={isPreviousDisabled}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Next"
+                                icon-name="utility:right"
+                                icon-position="right"
+                                onclick={handleNext}
+                                disabled={isNextDisabled}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Last"
+                                icon-name="utility:chevronright"
+                                icon-position="right"
+                                onclick={handleLastPage}
+                                disabled={isNextDisabled}>
+                            </lightning-button>
+                        </lightning-button-group>
+                    </div>
+                </template>
+
+                <template if:false={hasQuestions}>
+                    <div class="slds-text-align_center slds-p-vertical_large">
+                        <p class="slds-text-heading_small">No Questions Found</p>
+                        <p class="slds-text-body_regular slds-m-top_small">
+                            Try adjusting your filters or search criteria.
+                        </p>
+                    </div>
+                </template>
+            </template>
+        </div>
+
+        <!-- Phase 4: Bulk Edit Modal -->
+        <template if:true={showBulkEditModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">{bulkEditTitle}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <p class="slds-m-bottom_medium">
+                            Select which fields to update. Only non-empty fields will be updated.
+                        </p>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox
+                                    label="Case Type"
+                                    value={bulkEditFields.caseType}
+                                    options={caseTypeOptions}
+                                    data-field="caseType"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox
+                                    label="Case Sub-Type"
+                                    value={bulkEditFields.caseSubType}
+                                    options={caseSubTypeOptions}
+                                    data-field="caseSubType"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input
+                                    label="Case Reason"
+                                    value={bulkEditFields.caseReason}
+                                    data-field="caseReason"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox
+                                    label="User Role"
+                                    value={bulkEditFields.userRole}
+                                    options={userRoleOptions}
+                                    data-field="userRole"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox
+                                    label="Input Type"
+                                    value={bulkEditFields.inputType}
+                                    options={inputTypeOptions}
+                                    data-field="inputType"
+                                    onchange={handleBulkEditFieldChange}
+                                    placeholder="Leave blank to skip">
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelBulkEdit}
+                            disabled={isBulkProcessing}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="brand"
+                            label="Update Questions"
+                            onclick={handleConfirmBulkEdit}
+                            disabled={isBulkProcessing}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Phase 4: Bulk Delete Modal -->
+        <template if:true={showBulkDeleteModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">{bulkDeleteTitle}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-box slds-theme_warning slds-m-bottom_medium">
+                            <p class="slds-text-heading_small">
+                                ⚠️ Warning: This action cannot be undone
+                            </p>
+                        </div>
+
+                        <p class="slds-m-bottom_small">
+                            You are about to delete <strong>{selectedRowCount}</strong> question{selectedRowCount > 1 ? 's' : ''}.
+                        </p>
+
+                        <template if:true={hasDeleteWarnings}>
+                            <div class="slds-box slds-theme_error slds-m-top_medium">
+                                <p class="slds-text-heading_small slds-m-bottom_small">
+                                    Impact Analysis:
+                                </p>
+                                <template for:each={deleteValidation.warnings} for:item="warning">
+                                    <p key={warning} class="slds-m-bottom_x-small">
+                                        • {warning}
+                                    </p>
+                                </template>
+                            </div>
+                        </template>
+
+                        <div class="slds-m-top_medium">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                The following will be deleted:
+                            </p>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <li>{selectedRowCount} question record{selectedRowCount > 1 ? 's' : ''}</li>
+                                <template if:true={deleteValidation}>
+                                    <li>{deleteValidation.outcomesToDeleteCount} associated outcome{deleteValidation.outcomesToDeleteCount > 1 ? 's' : ''}</li>
+                                </template>
+                            </ul>
+                        </div>
+
+                        <p class="slds-m-top_medium slds-text-color_error">
+                            Are you sure you want to proceed with deletion?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelBulkDelete}
+                            disabled={isBulkProcessing}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="destructive"
+                            label="Delete Permanently"
+                            onclick={handleConfirmBulkDelete}
+                            disabled={isBulkProcessing}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Delete All Orphaned Modal -->
+        <template if:true={showDeleteAllOrphanedModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Delete All Orphaned Questions</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                            <p class="slds-text-heading_small">
+                                ⚠️ Critical Warning: This action cannot be undone
+                            </p>
+                        </div>
+
+                        <p class="slds-m-bottom_small">
+                            You are about to delete <strong>ALL orphaned questions</strong> in the system.
+                        </p>
+
+                        <div class="slds-box slds-theme_shade slds-m-vertical_medium">
+                            <p class="slds-text-heading_small slds-m-bottom_small">
+                                What are orphaned questions?
+                            </p>
+                            <p class="slds-text-body_small">
+                                Orphaned questions are questions that have no incoming references from other
+                                questions and are not starting questions (Presentation Order ≠ 1). These questions
+                                are unreachable in the intake flow and can be safely removed.
+                            </p>
+                        </div>
+
+                        <div class="slds-m-top_medium">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                The following will be deleted:
+                            </p>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <li>All orphaned question records (count shown in stats above)</li>
+                                <li>All outcomes associated with orphaned questions</li>
+                            </ul>
+                        </div>
+
+                        <p class="slds-m-top_medium slds-text-color_error slds-text-align_center">
+                            <strong>This operation will delete ALL orphaned questions at once.</strong><br/>
+                            Are you absolutely sure you want to proceed?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelDeleteAllOrphaned}
+                            disabled={isProcessingDeleteAll}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="destructive"
+                            label="Delete All Permanently"
+                            onclick={handleConfirmDeleteAllOrphaned}
+                            disabled={isProcessingDeleteAll}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Delete All Self-Referential Modal -->
+        <template if:true={showDeleteAllSelfRefModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Delete All Self-Referential Questions</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                            <p class="slds-text-heading_small">
+                                ⚠️ Critical Warning: This action cannot be undone
+                            </p>
+                        </div>
+
+                        <p class="slds-m-bottom_small">
+                            You are about to delete <strong>ALL self-referential questions</strong> in the system.
+                        </p>
+
+                        <div class="slds-box slds-theme_shade slds-m-vertical_medium">
+                            <p class="slds-text-heading_small slds-m-bottom_small">
+                                What are self-referential questions?
+                            </p>
+                            <p class="slds-text-body_small">
+                                Self-referential questions are broken questions that have outcomes pointing back to themselves
+                                (e.g., Question INT-123 has an outcome with Next_Question__c = INT-123). These create infinite
+                                loops in the intake flow and must be fixed or removed.
+                            </p>
+                        </div>
+
+                        <div class="slds-m-top_medium">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                The following will be deleted:
+                            </p>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <li>All self-referential question records (count shown in stats above)</li>
+                                <li>All outcomes associated with these questions</li>
+                            </ul>
+                        </div>
+
+                        <p class="slds-m-top_medium slds-text-color_error slds-text-align_center">
+                            <strong>This operation will delete ALL self-referential questions at once.</strong><br/>
+                            Are you absolutely sure you want to proceed?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelDeleteAllSelfReferential}
+                            disabled={isProcessingDeleteAllSelfRef}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="destructive"
+                            label="Delete All Permanently"
+                            onclick={handleConfirmDeleteAllSelfReferential}
+                            disabled={isProcessingDeleteAllSelfRef}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Delete All Missing Input Type Modal -->
+        <template if:true={showDeleteAllMissingTypeModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Delete All Questions Missing Input Type</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                            <p class="slds-text-heading_small">
+                                ⚠️ Critical Warning: This action cannot be undone
+                            </p>
+                        </div>
+
+                        <p class="slds-m-bottom_small">
+                            You are about to delete <strong>ALL questions with missing Input_Type__c</strong> in the system.
+                        </p>
+
+                        <div class="slds-box slds-theme_shade slds-m-vertical_medium">
+                            <p class="slds-text-heading_small slds-m-bottom_small">
+                                What are questions with missing Input_Type__c?
+                            </p>
+                            <p class="slds-text-body_small">
+                                Questions without Input_Type__c are technically unreachable because the intake flow cannot
+                                render them properly. The Input_Type__c field determines how the question is displayed
+                                (Text, Picklist, Radio, etc.). Questions missing this field are broken and unusable.
+                            </p>
+                        </div>
+
+                        <div class="slds-m-top_medium">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                The following will be deleted:
+                            </p>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <li>All questions with missing or blank Input_Type__c (count shown in stats above)</li>
+                                <li>All outcomes associated with these questions</li>
+                            </ul>
+                        </div>
+
+                        <p class="slds-m-top_medium slds-text-color_error slds-text-align_center">
+                            <strong>This operation will delete ALL questions with missing input type at once.</strong><br/>
+                            Are you absolutely sure you want to proceed?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelDeleteAllMissingInputType}
+                            disabled={isProcessingDeleteAllMissingType}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="destructive"
+                            label="Delete All Permanently"
+                            onclick={handleConfirmDeleteAllMissingInputType}
+                            disabled={isProcessingDeleteAllMissingType}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+        </lightning-card>
+    </template>
+
+    <!-- Flow Visualizer View -->
+    <template if:true={showFlowVisualizer}>
+        <lightning-card title="Intake Flow Visualizer" icon-name="standard:flow">
+            <div slot="actions">
+                <lightning-button
+                    label="Back to Dashboard"
+                    icon-name="utility:back"
+                    onclick={handleBackToDashboard}>
+                </lightning-button>
+            </div>
+            <div class="slds-p-around_medium">
+                <c-intake-flow-visualizer
+                    filters={filterJson}>
+                </c-intake-flow-visualizer>
+            </div>
+        </lightning-card>
+    </template>
+</template>

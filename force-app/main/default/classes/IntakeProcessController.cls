@@ -16,6 +16,11 @@ public with sharing class IntakeProcessController {
         @AuraEnabled public String caseNumber { get; set; }
         @AuraEnabled public String clientId { get; set; }
         @AuraEnabled public String locationId { get; set; }
+        @AuraEnabled public String clientName { get; set; }
+        @AuraEnabled public String locationName { get; set; }
+        @AuraEnabled public String assetName { get; set; }
+        @AuraEnabled public String contactName { get; set; }
+        @AuraEnabled public Date serviceDate { get; set; }
     }
 
     public class QuestionWrapper {
@@ -78,8 +83,9 @@ public with sharing class IntakeProcessController {
             // 1. Get case context
             Case c = [
                 SELECT Id, Case_Type__c, Case_Sub_Type__c, Case_Reason__c,
-                       CaseNumber, Client__c, Location__c, Asset.Project_Code__c,
-                       Master_Intake_Complete__c, Service_Date__c
+                       CaseNumber, Client__c, Location__c, AssetId, ContactId,
+                       Client__r.Name, Location__r.Name, Asset.Name, Contact.Name,
+                       Asset.Project_Code__c, Master_Intake_Complete__c, Service_Date__c
                 FROM Case
                 WHERE Id = :caseId
                 LIMIT 1
@@ -184,8 +190,20 @@ public with sharing class IntakeProcessController {
             // Parse answers
             List<Object> answers = (List<Object>) JSON.deserializeUntyped(answersJSON);
 
-            // Build comment text
-            String commentText = buildCommentFromAnswers(answers);
+            // Get outcome statement
+            String outcomeStatement = '';
+            if (finalOutcomeId != null) {
+                Intake_Process__c outcome = [
+                    SELECT Outcome_Statement__c
+                    FROM Intake_Process__c
+                    WHERE Id = :finalOutcomeId
+                    LIMIT 1
+                ];
+                outcomeStatement = outcome.Outcome_Statement__c != null ? outcome.Outcome_Statement__c : '';
+            }
+
+            // Build comment text with HTML formatting
+            String commentText = buildCommentFromAnswers(answers, outcomeStatement);
 
             // Create comment
             result.commentId = createIntakeComment(caseId, commentText);
@@ -220,6 +238,14 @@ public with sharing class IntakeProcessController {
         context.caseNumber = c.CaseNumber;
         context.clientId = c.Client__c;
         context.locationId = c.Location__c;
+
+        // Populate relationship field names
+        context.clientName = (c.Client__r != null) ? c.Client__r.Name : null;
+        context.locationName = (c.Location__r != null) ? c.Location__r.Name : null;
+        context.assetName = (c.Asset != null) ? c.Asset.Name : null;
+        context.contactName = (c.Contact != null) ? c.Contact.Name : null;
+        context.serviceDate = c.Service_Date__c;
+
         return context;
     }
 
@@ -512,19 +538,39 @@ public with sharing class IntakeProcessController {
     }
 
     /**
-     * Build comment text from answer history
+     * Build comment text from answer history with HTML formatting
      */
-    private static String buildCommentFromAnswers(List<Object> answers) {
-        String commentText = 'Master Intake Responses:\n\n';
+    private static String buildCommentFromAnswers(List<Object> answers, String outcomeStatement) {
+        String commentText = '<div style="font-family: Arial, sans-serif; line-height: 1.6;">';
+
+        // Add header
+        commentText += '<h3 style="color: #024731; border-bottom: 3px solid #1c8200; padding-bottom: 8px; margin-bottom: 15px;">Master Intake Complete</h3>';
+
+        // Add outcome statement if provided
+        if (String.isNotBlank(outcomeStatement)) {
+            commentText += '<div style="background-color: #f0f9ed; padding: 12px; border-left: 5px solid #1c8200; margin-bottom: 20px; border-radius: 4px;">';
+            commentText += '<strong style="color: #024731; font-size: 16px;">Outcome:</strong><br/>';
+            commentText += '<span style="color: #4f4f58;">' + outcomeStatement.escapeHtml4() + '</span>';
+            commentText += '</div>';
+        }
+
+        // Add questions and answers section
+        commentText += '<h4 style="color: #024731; margin-bottom: 12px;">Questions and Answers:</h4>';
+        commentText += '<ul style="list-style-type: none; padding-left: 0;">';
 
         for (Object answerObj : answers) {
             Map<String, Object> answer = (Map<String, Object>) answerObj;
             String question = (String) answer.get('question');
             String response = (String) answer.get('answer');
 
-            commentText += question + '\n';
-            commentText += 'Answer: ' + response + '\n\n';
+            commentText += '<li style="margin-bottom: 15px; padding: 10px; background-color: #fafafa; border-left: 3px solid #1c8200; border-radius: 4px;">';
+            commentText += '<strong style="color: #024731;">' + question.escapeHtml4() + '</strong><br/>';
+            commentText += '<span style="color: #4f4f58; margin-left: 10px;">' + response.escapeHtml4() + '</span>';
+            commentText += '</li>';
         }
+
+        commentText += '</ul>';
+        commentText += '</div>';
 
         return commentText;
     }
