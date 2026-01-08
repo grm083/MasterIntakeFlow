@@ -49,6 +49,24 @@ const COLUMNS = [
         sortable: true
     },
     {
+        label: 'Case Reason',
+        fieldName: 'caseReason',
+        type: 'text',
+        sortable: true
+    },
+    {
+        label: 'User Role',
+        fieldName: 'userRole',
+        type: 'text',
+        sortable: true
+    },
+    {
+        label: 'Customer Account',
+        fieldName: 'customerAccount',
+        type: 'text',
+        sortable: true
+    },
+    {
         label: 'Outcomes',
         fieldName: 'outcomeCount',
         type: 'number',
@@ -88,8 +106,10 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     @track filterOptions = {
         caseTypes: [],
         caseSubTypes: [],
+        caseReasons: [],
         inputTypes: [],
-        userRoles: []
+        userRoles: [],
+        customerAccounts: []
     };
 
     // Filter values
@@ -97,8 +117,10 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         searchTerm: '',
         caseType: '',
         caseSubType: '',
+        caseReason: '',
         inputType: '',
         userRole: '',
+        customerAccount: '',
         showOrphaned: false,
         showNoOutcomes: false,
         showSelfReferential: false,
@@ -262,13 +284,27 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         this.loadQuestions();
     }
 
+    handleCaseReasonChange(event) {
+        this.filters.caseReason = event.target.value;
+        this.resetToFirstPage();
+        this.loadQuestions();
+    }
+
+    handleCustomerAccountChange(event) {
+        this.filters.customerAccount = event.target.value;
+        this.resetToFirstPage();
+        this.loadQuestions();
+    }
+
     handleClearFilters() {
         this.filters = {
             searchTerm: '',
             caseType: '',
             caseSubType: '',
+            caseReason: '',
             inputType: '',
             userRole: '',
+            customerAccount: '',
             showOrphaned: false,
             showNoOutcomes: false,
             showSelfReferential: false,
@@ -816,7 +852,10 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         const fieldMapping = {
             'caseType': 'Case_Type__c',
             'caseSubType': 'Case_Sub_Type__c',
+            'caseReason': 'Case_Reason__c',
             'inputType': 'Input_Type__c',
+            'userRole': 'User_Role__c',
+            'customerAccount': 'Customer_Account__r.Name',
             'questionText': 'Question__c',
             'name': 'Name',
             'questionUrl': 'Name', // URL column sorts by Name
@@ -871,8 +910,10 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         return this.filters.searchTerm ||
                this.filters.caseType ||
                this.filters.caseSubType ||
+               this.filters.caseReason ||
                this.filters.inputType ||
                this.filters.userRole ||
+               this.filters.customerAccount ||
                this.filters.showOrphaned ||
                this.filters.showNoOutcomes ||
                this.filters.showSelfReferential ||
@@ -918,10 +959,24 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         ];
     }
 
+    get caseReasonOptions() {
+        return [
+            { label: '-- All Case Reasons --', value: '' },
+            ...this.filterOptions.caseReasons
+        ];
+    }
+
     get userRoleOptions() {
         return [
             { label: '-- All User Roles --', value: '' },
             ...this.filterOptions.userRoles
+        ];
+    }
+
+    get customerAccountOptions() {
+        return [
+            { label: '-- All Customer Accounts --', value: '' },
+            ...this.filterOptions.customerAccounts
         ];
     }
 

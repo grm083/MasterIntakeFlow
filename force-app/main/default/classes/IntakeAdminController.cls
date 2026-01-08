@@ -34,8 +34,10 @@ public with sharing class IntakeAdminController {
     public class FilterOptions {
         @AuraEnabled public List<PicklistOption> caseTypes { get; set; }
         @AuraEnabled public List<PicklistOption> caseSubTypes { get; set; }
+        @AuraEnabled public List<PicklistOption> caseReasons { get; set; }
         @AuraEnabled public List<PicklistOption> inputTypes { get; set; }
         @AuraEnabled public List<PicklistOption> userRoles { get; set; }
+        @AuraEnabled public List<PicklistOption> customerAccounts { get; set; }
     }
 
     /**
@@ -154,6 +156,9 @@ public with sharing class IntakeAdminController {
             // Get distinct Case Sub-Types
             options.caseSubTypes = getDistinctValues('Case_Sub_Type__c');
 
+            // Get distinct Case Reasons
+            options.caseReasons = getDistinctValues('Case_Reason__c');
+
             // Get Input Types from picklist
             options.inputTypes = new List<PicklistOption>();
             Schema.DescribeFieldResult fieldResult = Intake_Process__c.Input_Type__c.getDescribe();
@@ -168,6 +173,9 @@ public with sharing class IntakeAdminController {
 
             // Get distinct User Roles
             options.userRoles = getDistinctValues('User_Role__c');
+
+            // Get distinct Customer Accounts
+            options.customerAccounts = getDistinctAccountValues();
 
             return options;
 
@@ -1122,11 +1130,27 @@ public with sharing class IntakeAdminController {
             }
         }
 
+        if (filters.containsKey('caseReason') && filters.get('caseReason') != null) {
+            String caseReason = String.valueOf(filters.get('caseReason')).trim();
+            if (String.isNotBlank(caseReason)) {
+                caseReason = String.escapeSingleQuotes(caseReason);
+                query += ' AND Case_Reason__c = \'' + caseReason + '\'';
+            }
+        }
+
         if (filters.containsKey('userRole') && filters.get('userRole') != null) {
             String userRole = String.valueOf(filters.get('userRole')).trim();
             if (String.isNotBlank(userRole)) {
                 userRole = String.escapeSingleQuotes(userRole);
                 query += ' AND User_Role__c = \'' + userRole + '\'';
+            }
+        }
+
+        if (filters.containsKey('customerAccount') && filters.get('customerAccount') != null) {
+            String customerAccount = String.valueOf(filters.get('customerAccount')).trim();
+            if (String.isNotBlank(customerAccount)) {
+                customerAccount = String.escapeSingleQuotes(customerAccount);
+                query += ' AND Customer_Account__r.Name = \'' + customerAccount + '\'';
             }
         }
 
@@ -1201,11 +1225,27 @@ public with sharing class IntakeAdminController {
             }
         }
 
+        if (filters.containsKey('caseReason') && filters.get('caseReason') != null) {
+            String caseReason = String.valueOf(filters.get('caseReason')).trim();
+            if (String.isNotBlank(caseReason)) {
+                caseReason = String.escapeSingleQuotes(caseReason);
+                query += ' AND Case_Reason__c = \'' + caseReason + '\'';
+            }
+        }
+
         if (filters.containsKey('userRole') && filters.get('userRole') != null) {
             String userRole = String.valueOf(filters.get('userRole')).trim();
             if (String.isNotBlank(userRole)) {
                 userRole = String.escapeSingleQuotes(userRole);
                 query += ' AND User_Role__c = \'' + userRole + '\'';
+            }
+        }
+
+        if (filters.containsKey('customerAccount') && filters.get('customerAccount') != null) {
+            String customerAccount = String.valueOf(filters.get('customerAccount')).trim();
+            if (String.isNotBlank(customerAccount)) {
+                customerAccount = String.escapeSingleQuotes(customerAccount);
+                query += ' AND Customer_Account__r.Name = \'' + customerAccount + '\'';
             }
         }
 
@@ -1390,6 +1430,35 @@ public with sharing class IntakeAdminController {
                 opt.label = value;
                 opt.value = value;
                 options.add(opt);
+            }
+        }
+
+        return options;
+    }
+
+    /**
+     * Get distinct Customer Account values for filter
+     */
+    private static List<PicklistOption> getDistinctAccountValues() {
+        List<PicklistOption> options = new List<PicklistOption>();
+        Set<String> values = new Set<String>();
+
+        String query = 'SELECT Customer_Account__r.Name FROM Intake_Process__c ' +
+                      'WHERE Question__c != null ' +
+                      'AND Intake_Question__c = null ' +
+                      'AND Customer_Account__c != null ' +
+                      'ORDER BY Customer_Account__r.Name';
+
+        for (Intake_Process__c record : Database.query(query)) {
+            if (record.Customer_Account__r != null && record.Customer_Account__r.Name != null) {
+                String value = record.Customer_Account__r.Name;
+                if (!values.contains(value)) {
+                    values.add(value);
+                    PicklistOption opt = new PicklistOption();
+                    opt.label = value;
+                    opt.value = value;
+                    options.add(opt);
+                }
             }
         }
 

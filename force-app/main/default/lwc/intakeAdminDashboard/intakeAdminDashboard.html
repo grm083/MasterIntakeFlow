@@ -66,6 +66,18 @@
                     </lightning-combobox>
                 </div>
 
+                <!-- Case Reason Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="caseReason"
+                        label="Case Reason"
+                        value={filters.caseReason}
+                        options={caseReasonOptions}
+                        onchange={handleCaseReasonChange}
+                        placeholder="Select Case Reason">
+                    </lightning-combobox>
+                </div>
+
                 <!-- Input Type Filter -->
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
                     <lightning-combobox
@@ -87,6 +99,18 @@
                         options={userRoleOptions}
                         onchange={handleUserRoleChange}
                         placeholder="Select User Role">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Customer Account Filter -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                    <lightning-combobox
+                        name="customerAccount"
+                        label="Customer Account"
+                        value={filters.customerAccount}
+                        options={customerAccountOptions}
+                        onchange={handleCustomerAccountChange}
+                        placeholder="Select Customer Account">
                     </lightning-combobox>
                 </div>
             </div>
