@@ -264,14 +264,20 @@ public with sharing class IntakeAdminController {
             String nodeQuery = buildFlowNodeQuery(filterMap);
             List<Intake_Process__c> questions = Database.query(nodeQuery);
 
-            // Get outcomes (edges)
+            // Get outcomes (edges) - including terminal outcomes
             Set<Id> questionIds = new Map<Id, Intake_Process__c>(questions).keySet();
             List<Intake_Process__c> outcomes = [
                 SELECT Id, Name, Intake_Question__c, Next_Question__c,
-                       Outcome__c, Outcome_Statement__c
+                       Outcome__c, Outcome_Statement__c,
+                       Update_Case_Status__c, Case_Status__c,
+                       Update_Case_Type__c, Case_Type__c,
+                       Update_Case_Sub_Type__c, Case_Sub_Type__c,
+                       Update_Case_Reason__c, Case_Reason__c,
+                       Update_Case_Record_Type__c, Case_Record_Type__c,
+                       Create_Task__c, Task_Type__c, Task_Process__c,
+                       Queue_Assigned__c, Team_Name__c, Assign_to_Current_User__c
                 FROM Intake_Process__c
                 WHERE Intake_Question__c IN :questionIds
-                AND Next_Question__c != null
             ];
 
             // Get outcome counts and incoming references
@@ -305,6 +311,28 @@ public with sharing class IntakeAdminController {
                 edge.put('target', outcome.Next_Question__c);
                 edge.put('label', outcome.Outcome__c);
                 edge.put('outcomeStatement', outcome.Outcome_Statement__c);
+                edge.put('isTerminal', outcome.Next_Question__c == null);
+
+                // Include action fields for terminal outcomes
+                Map<String, Object> actions = new Map<String, Object>();
+                actions.put('updateCaseStatus', outcome.Update_Case_Status__c);
+                actions.put('caseStatus', outcome.Case_Status__c);
+                actions.put('updateCaseType', outcome.Update_Case_Type__c);
+                actions.put('caseType', outcome.Case_Type__c);
+                actions.put('updateCaseSubType', outcome.Update_Case_Sub_Type__c);
+                actions.put('caseSubType', outcome.Case_Sub_Type__c);
+                actions.put('updateCaseReason', outcome.Update_Case_Reason__c);
+                actions.put('caseReason', outcome.Case_Reason__c);
+                actions.put('updateCaseRecordType', outcome.Update_Case_Record_Type__c);
+                actions.put('caseRecordType', outcome.Case_Record_Type__c);
+                actions.put('createTask', outcome.Create_Task__c);
+                actions.put('taskType', outcome.Task_Type__c);
+                actions.put('taskProcess', outcome.Task_Process__c);
+                actions.put('queueAssigned', outcome.Queue_Assigned__c);
+                actions.put('teamName', outcome.Team_Name__c);
+                actions.put('assignToCurrentUser', outcome.Assign_to_Current_User__c);
+                edge.put('actions', actions);
+
                 edges.add(edge);
             }
 

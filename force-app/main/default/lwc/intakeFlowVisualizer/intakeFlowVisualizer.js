@@ -13,6 +13,7 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
     @track flowData = null;
     @track selectedNode = null;
     @track validationResults = null;
+    @track selectedTerminalOutcome = null;
 
     // UI State
     @track isLoading = false;
@@ -160,8 +161,12 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
         const nodes = layoutData.nodes;
         const nodeMap = new Map(nodes.map(n => [n.id, n]));
 
-        // Render edges with curved paths
-        this.flowData.edges.forEach(edge => {
+        // Separate terminal and regular edges
+        const terminalEdges = this.flowData.edges.filter(e => e.isTerminal);
+        const regularEdges = this.flowData.edges.filter(e => !e.isTerminal);
+
+        // Render regular edges with curved paths and labels
+        regularEdges.forEach(edge => {
             const source = nodeMap.get(edge.source);
             const target = nodeMap.get(edge.target);
 
@@ -181,7 +186,71 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
                 path.setAttribute('marker-end', 'url(#arrowhead)');
                 path.setAttribute('data-edge-id', edge.id);
                 edgeGroup.appendChild(path);
+
+                // Add outcome label if present
+                if (edge.label && this.showLabels) {
+                    const labelX = source.x;
+                    const labelY = (source.y + target.y) / 2;
+
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', labelX + 10);
+                    text.setAttribute('y', labelY);
+                    text.setAttribute('font-size', '10');
+                    text.setAttribute('font-style', 'italic');
+                    text.setAttribute('fill', '#4a5568');
+                    text.setAttribute('class', 'edge-label');
+                    text.textContent = edge.label;
+                    edgeGroup.appendChild(text);
+                }
             }
+        });
+
+        // Render terminal outcomes as special end nodes
+        const terminalNodesBySource = new Map();
+        terminalEdges.forEach(edge => {
+            if (!terminalNodesBySource.has(edge.source)) {
+                terminalNodesBySource.set(edge.source, []);
+            }
+            terminalNodesBySource.get(edge.source).push(edge);
+        });
+
+        terminalNodesBySource.forEach((terminals, sourceId) => {
+            const source = nodeMap.get(sourceId);
+            if (!source) return;
+
+            terminals.forEach((edge, index) => {
+                // Calculate position below source node
+                const terminalY = source.y + 100;
+                const offset = (index - (terminals.length - 1) / 2) * 150;
+                const terminalX = source.x + offset;
+
+                // Draw connection line to terminal outcome
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const midY = (source.y + terminalY) / 2;
+                const pathData = `M ${source.x} ${source.y}
+                                  C ${source.x} ${midY}, ${terminalX} ${midY}, ${terminalX} ${terminalY}`;
+                path.setAttribute('d', pathData);
+                path.setAttribute('stroke', '#48bb78');
+                path.setAttribute('stroke-width', '2');
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke-dasharray', '5,5');
+                edgeGroup.appendChild(path);
+
+                // Add outcome label on the path
+                if (edge.label && this.showLabels) {
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', source.x + 10);
+                    text.setAttribute('y', (source.y + terminalY) / 2);
+                    text.setAttribute('font-size', '10');
+                    text.setAttribute('font-weight', 'bold');
+                    text.setAttribute('fill', '#2f855a');
+                    text.textContent = edge.label;
+                    edgeGroup.appendChild(text);
+                }
+
+                // Render terminal outcome box
+                this.renderTerminalOutcome(nodeGroup, terminalX, terminalY, edge);
+            });
         });
 
         // Render nodes
@@ -258,6 +327,111 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
         svg.insertBefore(defs, svg.firstChild);
 
         canvas.appendChild(svg);
+    }
+
+    /**
+     * Render a terminal outcome as a visual box with statement and actions
+     */
+    renderTerminalOutcome(parentGroup, x, y, edge) {
+        const boxWidth = 140;
+        const boxHeight = 80;
+
+        // Create rounded rectangle for terminal outcome
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', x - boxWidth / 2);
+        rect.setAttribute('y', y - boxHeight / 2);
+        rect.setAttribute('width', boxWidth);
+        rect.setAttribute('height', boxHeight);
+        rect.setAttribute('rx', '8');
+        rect.setAttribute('fill', '#f0fff4');
+        rect.setAttribute('stroke', '#48bb78');
+        rect.setAttribute('stroke-width', '2');
+        parentGroup.appendChild(rect);
+
+        // Add "END" indicator
+        const endLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        endLabel.setAttribute('x', x);
+        endLabel.setAttribute('y', y - boxHeight / 2 + 15);
+        endLabel.setAttribute('text-anchor', 'middle');
+        endLabel.setAttribute('font-size', '9');
+        endLabel.setAttribute('font-weight', 'bold');
+        endLabel.setAttribute('fill', '#2f855a');
+        endLabel.textContent = 'END';
+        parentGroup.appendChild(endLabel);
+
+        // Add outcome statement if present
+        if (edge.outcomeStatement) {
+            const statement = this.truncateText(edge.outcomeStatement, 20);
+            const statementText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            statementText.setAttribute('x', x);
+            statementText.setAttribute('y', y - 5);
+            statementText.setAttribute('text-anchor', 'middle');
+            statementText.setAttribute('font-size', '9');
+            statementText.setAttribute('fill', '#2d3748');
+            statementText.textContent = statement;
+            parentGroup.appendChild(statementText);
+        }
+
+        // Add action indicators
+        const actionIcons = this.getActionIcons(edge.actions);
+        if (actionIcons.length > 0) {
+            const iconsText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            iconsText.setAttribute('x', x);
+            iconsText.setAttribute('y', y + 15);
+            iconsText.setAttribute('text-anchor', 'middle');
+            iconsText.setAttribute('font-size', '8');
+            iconsText.setAttribute('fill', '#718096');
+            iconsText.textContent = actionIcons.join(' • ');
+            parentGroup.appendChild(iconsText);
+        }
+
+        // Make it clickable for more details
+        rect.style.cursor = 'pointer';
+        rect.addEventListener('click', () => {
+            this.handleTerminalOutcomeClick(edge);
+        });
+    }
+
+    /**
+     * Get action icons/labels for terminal outcome
+     */
+    getActionIcons(actions) {
+        if (!actions) return [];
+
+        const icons = [];
+        if (actions.updateCaseStatus) icons.push('📊 Status');
+        if (actions.updateCaseType) icons.push('📁 Type');
+        if (actions.updateCaseSubType) icons.push('📋 SubType');
+        if (actions.updateCaseReason) icons.push('🔍 Reason');
+        if (actions.createTask) icons.push('✓ Task');
+        if (actions.queueAssigned) icons.push('👥 Queue');
+        if (actions.assignToCurrentUser) icons.push('👤 User');
+
+        return icons;
+    }
+
+    /**
+     * Truncate text to specified length
+     */
+    truncateText(text, maxLength) {
+        if (!text) return '';
+        return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    }
+
+    /**
+     * Handle click on terminal outcome
+     */
+    handleTerminalOutcomeClick(edge) {
+        // Store terminal outcome details for display
+        this.selectedTerminalOutcome = edge;
+
+        // Show toast with summary
+        const actionCount = this.getActionIcons(edge.actions).length;
+        const message = edge.outcomeStatement
+            ? `${edge.outcomeStatement} (${actionCount} actions)`
+            : `Terminal outcome with ${actionCount} actions`;
+
+        this.showToast('Terminal Outcome', message, 'info');
     }
 
     /**
