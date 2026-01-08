@@ -9,6 +9,8 @@ import bulkUpdateQuestions from '@salesforce/apex/IntakeAdminController.bulkUpda
 import validateBulkDelete from '@salesforce/apex/IntakeAdminController.validateBulkDelete';
 import bulkDeleteQuestions from '@salesforce/apex/IntakeAdminController.bulkDeleteQuestions';
 import deleteAllOrphanedQuestions from '@salesforce/apex/IntakeAdminController.deleteAllOrphanedQuestions';
+import deleteAllSelfReferentialQuestions from '@salesforce/apex/IntakeAdminController.deleteAllSelfReferentialQuestions';
+import deleteAllMissingInputTypeQuestions from '@salesforce/apex/IntakeAdminController.deleteAllMissingInputTypeQuestions';
 
 const COLUMNS = [
     {
@@ -98,7 +100,9 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         inputType: '',
         userRole: '',
         showOrphaned: false,
-        showNoOutcomes: false
+        showNoOutcomes: false,
+        showSelfReferential: false,
+        showMissingInputType: false
     };
 
     // UI State
@@ -144,6 +148,14 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
     // Delete All Orphaned
     @track showDeleteAllOrphanedModal = false;
     @track isProcessingDeleteAll = false;
+
+    // Delete All Self-Referential
+    @track showDeleteAllSelfRefModal = false;
+    @track isProcessingDeleteAllSelfRef = false;
+
+    // Delete All Missing Input Type
+    @track showDeleteAllMissingTypeModal = false;
+    @track isProcessingDeleteAllMissingType = false;
 
     // View State
     @track showFlowVisualizer = false;
@@ -258,7 +270,9 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
             inputType: '',
             userRole: '',
             showOrphaned: false,
-            showNoOutcomes: false
+            showNoOutcomes: false,
+            showSelfReferential: false,
+            showMissingInputType: false
         };
         this.resetToFirstPage();
         this.loadQuestions();
@@ -269,7 +283,9 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         // Toggle orphaned filter
         this.filters.showOrphaned = !this.filters.showOrphaned;
         if (this.filters.showOrphaned) {
-            this.filters.showNoOutcomes = false; // Clear the other quick filter
+            this.filters.showNoOutcomes = false; // Clear the other quick filters
+            this.filters.showSelfReferential = false;
+            this.filters.showMissingInputType = false;
         }
         this.resetToFirstPage();
         this.loadQuestions();
@@ -279,7 +295,33 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         // Toggle no outcomes filter
         this.filters.showNoOutcomes = !this.filters.showNoOutcomes;
         if (this.filters.showNoOutcomes) {
-            this.filters.showOrphaned = false; // Clear the other quick filter
+            this.filters.showOrphaned = false; // Clear the other quick filters
+            this.filters.showSelfReferential = false;
+            this.filters.showMissingInputType = false;
+        }
+        this.resetToFirstPage();
+        this.loadQuestions();
+    }
+
+    handleShowSelfReferential() {
+        // Toggle self-referential filter
+        this.filters.showSelfReferential = !this.filters.showSelfReferential;
+        if (this.filters.showSelfReferential) {
+            this.filters.showOrphaned = false; // Clear the other quick filters
+            this.filters.showNoOutcomes = false;
+            this.filters.showMissingInputType = false;
+        }
+        this.resetToFirstPage();
+        this.loadQuestions();
+    }
+
+    handleShowMissingInputType() {
+        // Toggle missing input type filter
+        this.filters.showMissingInputType = !this.filters.showMissingInputType;
+        if (this.filters.showMissingInputType) {
+            this.filters.showOrphaned = false; // Clear the other quick filters
+            this.filters.showNoOutcomes = false;
+            this.filters.showSelfReferential = false;
         }
         this.resetToFirstPage();
         this.loadQuestions();
@@ -687,6 +729,82 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
         this.showDeleteAllOrphanedModal = false;
     }
 
+    // ========== DELETE ALL SELF-REFERENTIAL ==========
+
+    handleDeleteAllSelfReferential() {
+        this.showDeleteAllSelfRefModal = true;
+    }
+
+    async handleConfirmDeleteAllSelfReferential() {
+        try {
+            this.isProcessingDeleteAllSelfRef = true;
+
+            const result = await deleteAllSelfReferentialQuestions();
+
+            this.showDeleteAllSelfRefModal = false;
+            this.isProcessingDeleteAllSelfRef = false;
+
+            // Turn off the self-referential filter since we just deleted them all
+            this.filters.showSelfReferential = false;
+
+            this.showToast(
+                'Success',
+                `Deleted ${result.successCount} self-referential questions${result.errorCount > 0 ? '. ' + result.errorCount + ' errors occurred.' : ''}`,
+                result.errorCount > 0 ? 'warning' : 'success'
+            );
+
+            // Reload data
+            this.loadQuestions();
+
+        } catch (error) {
+            console.error('Error deleting all self-referential questions:', error);
+            this.showToast('Error', error.body?.message || error.message, 'error');
+            this.isProcessingDeleteAllSelfRef = false;
+        }
+    }
+
+    handleCancelDeleteAllSelfReferential() {
+        this.showDeleteAllSelfRefModal = false;
+    }
+
+    // ========== DELETE ALL MISSING INPUT TYPE ==========
+
+    handleDeleteAllMissingInputType() {
+        this.showDeleteAllMissingTypeModal = true;
+    }
+
+    async handleConfirmDeleteAllMissingInputType() {
+        try {
+            this.isProcessingDeleteAllMissingType = true;
+
+            const result = await deleteAllMissingInputTypeQuestions();
+
+            this.showDeleteAllMissingTypeModal = false;
+            this.isProcessingDeleteAllMissingType = false;
+
+            // Turn off the missing input type filter since we just deleted them all
+            this.filters.showMissingInputType = false;
+
+            this.showToast(
+                'Success',
+                `Deleted ${result.successCount} questions with missing input type${result.errorCount > 0 ? '. ' + result.errorCount + ' errors occurred.' : ''}`,
+                result.errorCount > 0 ? 'warning' : 'success'
+            );
+
+            // Reload data
+            this.loadQuestions();
+
+        } catch (error) {
+            console.error('Error deleting all missing input type questions:', error);
+            this.showToast('Error', error.body?.message || error.message, 'error');
+            this.isProcessingDeleteAllMissingType = false;
+        }
+    }
+
+    handleCancelDeleteAllMissingInputType() {
+        this.showDeleteAllMissingTypeModal = false;
+    }
+
     // ========== HELPERS ==========
 
     /**
@@ -756,7 +874,9 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
                this.filters.inputType ||
                this.filters.userRole ||
                this.filters.showOrphaned ||
-               this.filters.showNoOutcomes;
+               this.filters.showNoOutcomes ||
+               this.filters.showSelfReferential ||
+               this.filters.showMissingInputType;
     }
 
     get totalPages() {
@@ -855,5 +975,21 @@ export default class IntakeAdminDashboard extends NavigationMixin(LightningEleme
 
     get noOutcomesButtonLabel() {
         return this.filters.showNoOutcomes ? 'Showing No Outcomes' : 'Show No Outcomes';
+    }
+
+    get selfReferentialButtonVariant() {
+        return this.filters.showSelfReferential ? 'brand' : 'neutral';
+    }
+
+    get selfReferentialButtonLabel() {
+        return this.filters.showSelfReferential ? 'Showing Self-Referential' : 'Show Self-Referential';
+    }
+
+    get missingInputTypeButtonVariant() {
+        return this.filters.showMissingInputType ? 'brand' : 'neutral';
+    }
+
+    get missingInputTypeButtonLabel() {
+        return this.filters.showMissingInputType ? 'Showing Missing Type' : 'Show Missing Type';
     }
 }

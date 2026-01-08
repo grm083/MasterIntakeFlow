@@ -69,12 +69,16 @@ public with sharing class IntakeAdminController {
                 (Map<String, Object>) JSON.deserializeUntyped(filters) :
                 new Map<String, Object>();
 
-            // Pre-filter for quick filters (orphaned/no outcomes) to avoid subquery issues
+            // Pre-filter for quick filters (orphaned/no outcomes/self-referential/missing type) to avoid subquery issues
             Set<Id> quickFilterIds = null;
             if (filterMap.containsKey('showOrphaned') && filterMap.get('showOrphaned') == true) {
                 quickFilterIds = getOrphanedQuestionIds();
             } else if (filterMap.containsKey('showNoOutcomes') && filterMap.get('showNoOutcomes') == true) {
                 quickFilterIds = getNoOutcomeQuestionIds();
+            } else if (filterMap.containsKey('showSelfReferential') && filterMap.get('showSelfReferential') == true) {
+                quickFilterIds = getSelfReferentialQuestionIds();
+            } else if (filterMap.containsKey('showMissingInputType') && filterMap.get('showMissingInputType') == true) {
+                quickFilterIds = getMissingInputTypeQuestionIds();
             }
 
             // Build dynamic query
@@ -116,12 +120,16 @@ public with sharing class IntakeAdminController {
                 (Map<String, Object>) JSON.deserializeUntyped(filters) :
                 new Map<String, Object>();
 
-            // Pre-filter for quick filters (orphaned/no outcomes) to avoid subquery issues
+            // Pre-filter for quick filters (orphaned/no outcomes/self-referential/missing type) to avoid subquery issues
             Set<Id> quickFilterIds = null;
             if (filterMap.containsKey('showOrphaned') && filterMap.get('showOrphaned') == true) {
                 quickFilterIds = getOrphanedQuestionIds();
             } else if (filterMap.containsKey('showNoOutcomes') && filterMap.get('showNoOutcomes') == true) {
                 quickFilterIds = getNoOutcomeQuestionIds();
+            } else if (filterMap.containsKey('showSelfReferential') && filterMap.get('showSelfReferential') == true) {
+                quickFilterIds = getSelfReferentialQuestionIds();
+            } else if (filterMap.containsKey('showMissingInputType') && filterMap.get('showMissingInputType') == true) {
+                quickFilterIds = getMissingInputTypeQuestionIds();
             }
 
             String query = buildCountQuery(filterMap, quickFilterIds);
@@ -814,6 +822,146 @@ public with sharing class IntakeAdminController {
     }
 
     /**
+     * Delete all self-referential questions (questions with outcomes pointing back to themselves)
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> deleteAllSelfReferentialQuestions() {
+        try {
+            // Get all self-referential question IDs
+            Set<Id> selfRefIds = getSelfReferentialQuestionIds();
+
+            if (selfRefIds.isEmpty()) {
+                Map<String, Object> result = new Map<String, Object>();
+                result.put('successCount', 0);
+                result.put('errorCount', 0);
+                result.put('errorMessages', new List<String>());
+                result.put('totalProcessed', 0);
+                return result;
+            }
+
+            // Get the questions to delete
+            List<Intake_Process__c> questionsToDelete = [
+                SELECT Id, Name
+                FROM Intake_Process__c
+                WHERE Id IN :selfRefIds
+            ];
+
+            // Delete associated outcomes first (cascade delete)
+            List<Intake_Process__c> outcomesToDelete = [
+                SELECT Id
+                FROM Intake_Process__c
+                WHERE Intake_Question__c IN :selfRefIds
+            ];
+
+            if (!outcomesToDelete.isEmpty()) {
+                Database.delete(outcomesToDelete, false);
+            }
+
+            // Delete the questions with partial success
+            Database.DeleteResult[] results = Database.delete(questionsToDelete, false);
+
+            // Process results
+            Integer successCount = 0;
+            Integer errorCount = 0;
+            List<String> errorMessages = new List<String>();
+
+            for (Integer i = 0; i < results.size(); i++) {
+                if (results[i].isSuccess()) {
+                    successCount++;
+                } else {
+                    errorCount++;
+                    String errorMsg = questionsToDelete[i].Name + ': ';
+                    for (Database.Error err : results[i].getErrors()) {
+                        errorMsg += err.getMessage() + '; ';
+                    }
+                    errorMessages.add(errorMsg);
+                }
+            }
+
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('successCount', successCount);
+            result.put('errorCount', errorCount);
+            result.put('errorMessages', errorMessages);
+            result.put('totalProcessed', selfRefIds.size());
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error deleting self-referential questions: ' + e.getMessage());
+        }
+    }
+
+    /**
+     * Delete all questions missing Input_Type__c
+     */
+    @AuraEnabled(cacheable=false)
+    public static Map<String, Object> deleteAllMissingInputTypeQuestions() {
+        try {
+            // Get all missing input type question IDs
+            Set<Id> missingTypeIds = getMissingInputTypeQuestionIds();
+
+            if (missingTypeIds.isEmpty()) {
+                Map<String, Object> result = new Map<String, Object>();
+                result.put('successCount', 0);
+                result.put('errorCount', 0);
+                result.put('errorMessages', new List<String>());
+                result.put('totalProcessed', 0);
+                return result;
+            }
+
+            // Get the questions to delete
+            List<Intake_Process__c> questionsToDelete = [
+                SELECT Id, Name
+                FROM Intake_Process__c
+                WHERE Id IN :missingTypeIds
+            ];
+
+            // Delete associated outcomes first (cascade delete)
+            List<Intake_Process__c> outcomesToDelete = [
+                SELECT Id
+                FROM Intake_Process__c
+                WHERE Intake_Question__c IN :missingTypeIds
+            ];
+
+            if (!outcomesToDelete.isEmpty()) {
+                Database.delete(outcomesToDelete, false);
+            }
+
+            // Delete the questions with partial success
+            Database.DeleteResult[] results = Database.delete(questionsToDelete, false);
+
+            // Process results
+            Integer successCount = 0;
+            Integer errorCount = 0;
+            List<String> errorMessages = new List<String>();
+
+            for (Integer i = 0; i < results.size(); i++) {
+                if (results[i].isSuccess()) {
+                    successCount++;
+                } else {
+                    errorCount++;
+                    String errorMsg = questionsToDelete[i].Name + ': ';
+                    for (Database.Error err : results[i].getErrors()) {
+                        errorMsg += err.getMessage() + '; ';
+                    }
+                    errorMessages.add(errorMsg);
+                }
+            }
+
+            Map<String, Object> result = new Map<String, Object>();
+            result.put('successCount', successCount);
+            result.put('errorCount', errorCount);
+            result.put('errorMessages', errorMessages);
+            result.put('totalProcessed', missingTypeIds.size());
+
+            return result;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Error deleting questions with missing input type: ' + e.getMessage());
+        }
+    }
+
+    /**
      * Get question details with full outcome information
      */
     @AuraEnabled(cacheable=false)
@@ -1141,6 +1289,46 @@ public with sharing class IntakeAdminController {
         }
 
         return noOutcomeIds;
+    }
+
+    /**
+     * Get IDs of questions with self-referential outcomes (loops)
+     */
+    private static Set<Id> getSelfReferentialQuestionIds() {
+        Set<Id> selfRefIds = new Set<Id>();
+
+        // Find outcomes where Next_Question__c points back to the question itself
+        for (Intake_Process__c outcome : [
+            SELECT Intake_Question__c, Next_Question__c
+            FROM Intake_Process__c
+            WHERE Intake_Question__c != null
+            AND Next_Question__c != null
+            AND Intake_Question__c = Next_Question__c
+        ]) {
+            selfRefIds.add(outcome.Intake_Question__c);
+        }
+
+        return selfRefIds;
+    }
+
+    /**
+     * Get IDs of questions missing Input_Type__c
+     */
+    private static Set<Id> getMissingInputTypeQuestionIds() {
+        Set<Id> missingTypeIds = new Set<Id>();
+
+        // Find questions without Input_Type__c
+        for (Intake_Process__c q : [
+            SELECT Id
+            FROM Intake_Process__c
+            WHERE Question__c != null
+            AND Intake_Question__c = null
+            AND (Input_Type__c = null OR Input_Type__c = '')
+        ]) {
+            missingTypeIds.add(q.Id);
+        }
+
+        return missingTypeIds;
     }
 
     /**

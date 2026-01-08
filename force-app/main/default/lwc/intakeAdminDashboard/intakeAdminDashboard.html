@@ -117,6 +117,24 @@
                     disabled={isLoading}
                     class="slds-m-right_small">
                 </lightning-button>
+                <lightning-button
+                    variant={selfReferentialButtonVariant}
+                    label={selfReferentialButtonLabel}
+                    icon-name="utility:refresh"
+                    onclick={handleShowSelfReferential}
+                    disabled={isLoading}
+                    class="slds-m-right_small"
+                    title="Questions with outcomes pointing back to themselves (loops)">
+                </lightning-button>
+                <lightning-button
+                    variant={missingInputTypeButtonVariant}
+                    label={missingInputTypeButtonLabel}
+                    icon-name="utility:ban"
+                    onclick={handleShowMissingInputType}
+                    disabled={isLoading}
+                    class="slds-m-right_small"
+                    title="Questions without Input_Type__c set">
+                </lightning-button>
             </div>
 
             <!-- Phase 2: Action Buttons Row 2 -->
@@ -301,6 +319,34 @@
                                     onclick={handleDeleteAllOrphaned}
                                     disabled={isProcessingDeleteAll}
                                     title="Delete all orphaned questions at once">
+                                </lightning-button>
+                            </div>
+                        </template>
+
+                        <!-- Delete All Self-Referential Button (shown when self-referential filter is active) -->
+                        <template if:true={filters.showSelfReferential}>
+                            <div class="slds-col slds-no-flex">
+                                <lightning-button
+                                    variant="destructive"
+                                    label="Delete All Self-Referential"
+                                    icon-name="utility:delete"
+                                    onclick={handleDeleteAllSelfReferential}
+                                    disabled={isProcessingDeleteAllSelfRef}
+                                    title="Delete all self-referential questions at once">
+                                </lightning-button>
+                            </div>
+                        </template>
+
+                        <!-- Delete All Missing Input Type Button (shown when missing type filter is active) -->
+                        <template if:true={filters.showMissingInputType}>
+                            <div class="slds-col slds-no-flex">
+                                <lightning-button
+                                    variant="destructive"
+                                    label="Delete All Missing Type"
+                                    icon-name="utility:delete"
+                                    onclick={handleDeleteAllMissingInputType}
+                                    disabled={isProcessingDeleteAllMissingType}
+                                    title="Delete all questions with missing input type at once">
                                 </lightning-button>
                             </div>
                         </template>
@@ -565,6 +611,132 @@
                             label="Delete All Permanently"
                             onclick={handleConfirmDeleteAllOrphaned}
                             disabled={isProcessingDeleteAll}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Delete All Self-Referential Modal -->
+        <template if:true={showDeleteAllSelfRefModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Delete All Self-Referential Questions</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                            <p class="slds-text-heading_small">
+                                ⚠️ Critical Warning: This action cannot be undone
+                            </p>
+                        </div>
+
+                        <p class="slds-m-bottom_small">
+                            You are about to delete <strong>ALL self-referential questions</strong> in the system.
+                        </p>
+
+                        <div class="slds-box slds-theme_shade slds-m-vertical_medium">
+                            <p class="slds-text-heading_small slds-m-bottom_small">
+                                What are self-referential questions?
+                            </p>
+                            <p class="slds-text-body_small">
+                                Self-referential questions are broken questions that have outcomes pointing back to themselves
+                                (e.g., Question INT-123 has an outcome with Next_Question__c = INT-123). These create infinite
+                                loops in the intake flow and must be fixed or removed.
+                            </p>
+                        </div>
+
+                        <div class="slds-m-top_medium">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                The following will be deleted:
+                            </p>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <li>All self-referential question records (count shown in stats above)</li>
+                                <li>All outcomes associated with these questions</li>
+                            </ul>
+                        </div>
+
+                        <p class="slds-m-top_medium slds-text-color_error slds-text-align_center">
+                            <strong>This operation will delete ALL self-referential questions at once.</strong><br/>
+                            Are you absolutely sure you want to proceed?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelDeleteAllSelfReferential}
+                            disabled={isProcessingDeleteAllSelfRef}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="destructive"
+                            label="Delete All Permanently"
+                            onclick={handleConfirmDeleteAllSelfReferential}
+                            disabled={isProcessingDeleteAllSelfRef}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Delete All Missing Input Type Modal -->
+        <template if:true={showDeleteAllMissingTypeModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Delete All Questions Missing Input Type</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-box slds-theme_error slds-m-bottom_medium">
+                            <p class="slds-text-heading_small">
+                                ⚠️ Critical Warning: This action cannot be undone
+                            </p>
+                        </div>
+
+                        <p class="slds-m-bottom_small">
+                            You are about to delete <strong>ALL questions with missing Input_Type__c</strong> in the system.
+                        </p>
+
+                        <div class="slds-box slds-theme_shade slds-m-vertical_medium">
+                            <p class="slds-text-heading_small slds-m-bottom_small">
+                                What are questions with missing Input_Type__c?
+                            </p>
+                            <p class="slds-text-body_small">
+                                Questions without Input_Type__c are technically unreachable because the intake flow cannot
+                                render them properly. The Input_Type__c field determines how the question is displayed
+                                (Text, Picklist, Radio, etc.). Questions missing this field are broken and unusable.
+                            </p>
+                        </div>
+
+                        <div class="slds-m-top_medium">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                The following will be deleted:
+                            </p>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <li>All questions with missing or blank Input_Type__c (count shown in stats above)</li>
+                                <li>All outcomes associated with these questions</li>
+                            </ul>
+                        </div>
+
+                        <p class="slds-m-top_medium slds-text-color_error slds-text-align_center">
+                            <strong>This operation will delete ALL questions with missing input type at once.</strong><br/>
+                            Are you absolutely sure you want to proceed?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="neutral"
+                            label="Cancel"
+                            onclick={handleCancelDeleteAllMissingInputType}
+                            disabled={isProcessingDeleteAllMissingType}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="destructive"
+                            label="Delete All Permanently"
+                            onclick={handleConfirmDeleteAllMissingInputType}
+                            disabled={isProcessingDeleteAllMissingType}>
                         </lightning-button>
                     </footer>
                 </div>
