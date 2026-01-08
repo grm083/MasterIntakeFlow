@@ -39,6 +39,11 @@ export default class MasterIntakeForm extends LightningModal {
         finalOutcome: null,
         showSummary: false,
 
+        // Draft management
+        showDraftPrompt: false,
+        draftMetadata: null,
+        draftLoaded: false,
+
         // UI state
         isLoading: true,
         error: null
@@ -49,7 +54,22 @@ export default class MasterIntakeForm extends LightningModal {
     connectedCallback() {
         console.log('[MasterIntakeForm] connectedCallback - Component mounted');
         console.log('[MasterIntakeForm] recordId:', this.recordId);
-        this.loadIntakeData();
+
+        // Check for existing draft first
+        const draft = this.loadDraftFromStorage();
+        if (draft && draft.questionHistory && draft.questionHistory.length > 0) {
+            console.log('[MasterIntakeForm] Draft found with', draft.questionHistory.length, 'answered questions');
+            this.state.draftMetadata = {
+                questionCount: draft.questionHistory.filter(q => q.isComplete).length,
+                timestamp: draft.timestamp,
+                caseNumber: draft.caseContext?.caseNumber
+            };
+            this.state.showDraftPrompt = true;
+            this.state.isLoading = false;
+        } else {
+            console.log('[MasterIntakeForm] No draft found, loading fresh data');
+            this.loadIntakeData();
+        }
     }
 
     renderedCallback() {
@@ -159,6 +179,129 @@ export default class MasterIntakeForm extends LightningModal {
         }
     }
 
+    // ========== DRAFT MANAGEMENT ==========
+
+    /**
+     * Get the storage key for this case's draft
+     */
+    getDraftKey() {
+        return `masterIntakeDraft_${this.recordId}`;
+    }
+
+    /**
+     * Save current progress to sessionStorage
+     */
+    saveDraftToStorage() {
+        try {
+            const draft = {
+                caseId: this.recordId,
+                caseContext: this.state.caseContext,
+                questionHistory: this.state.questionHistory,
+                currentQuestionId: this.state.currentQuestionId,
+                // Store cache as plain object for serialization
+                nextQuestionCache: Object.fromEntries(this.state.nextQuestionCache),
+                timestamp: new Date().toISOString()
+            };
+
+            sessionStorage.setItem(this.getDraftKey(), JSON.stringify(draft));
+            console.log('[MasterIntakeForm] Draft saved:', draft.questionHistory.length, 'questions');
+        } catch (error) {
+            console.error('[MasterIntakeForm] Error saving draft:', error);
+            // Silently fail - don't interrupt user experience
+        }
+    }
+
+    /**
+     * Load draft from sessionStorage
+     */
+    loadDraftFromStorage() {
+        try {
+            const draftJson = sessionStorage.getItem(this.getDraftKey());
+            if (!draftJson) {
+                return null;
+            }
+
+            const draft = JSON.parse(draftJson);
+
+            // Check if draft is too old (older than 24 hours)
+            const draftDate = new Date(draft.timestamp);
+            const now = new Date();
+            const hoursDiff = (now - draftDate) / (1000 * 60 * 60);
+
+            if (hoursDiff > 24) {
+                console.log('[MasterIntakeForm] Draft expired, clearing');
+                this.clearDraftFromStorage();
+                return null;
+            }
+
+            return draft;
+        } catch (error) {
+            console.error('[MasterIntakeForm] Error loading draft:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Clear draft from sessionStorage
+     */
+    clearDraftFromStorage() {
+        try {
+            sessionStorage.removeItem(this.getDraftKey());
+            console.log('[MasterIntakeForm] Draft cleared');
+        } catch (error) {
+            console.error('[MasterIntakeForm] Error clearing draft:', error);
+        }
+    }
+
+    /**
+     * Resume from saved draft
+     */
+    handleResumeDraft() {
+        console.log('[MasterIntakeForm] Resuming from draft');
+        const draft = this.loadDraftFromStorage();
+
+        if (!draft) {
+            console.error('[MasterIntakeForm] Draft not found when trying to resume');
+            this.state.showDraftPrompt = false;
+            this.loadIntakeData();
+            return;
+        }
+
+        // Restore state from draft
+        this.state.caseContext = draft.caseContext;
+        this.state.questionHistory = draft.questionHistory;
+        this.state.currentQuestionId = draft.currentQuestionId;
+
+        // Restore cache
+        this.state.nextQuestionCache = new Map(Object.entries(draft.nextQuestionCache));
+
+        this.state.showDraftPrompt = false;
+        this.state.draftLoaded = true;
+        this.state.isLoading = false;
+
+        console.log('[MasterIntakeForm] Draft restored successfully');
+
+        // Scroll to current question
+        setTimeout(() => {
+            const currentIndex = this.state.questionHistory.findIndex(
+                q => q.questionId === this.state.currentQuestionId
+            );
+            if (currentIndex >= 0) {
+                this.scrollToQuestion(currentIndex);
+            }
+        }, 200);
+    }
+
+    /**
+     * Start fresh, clearing any existing draft
+     */
+    handleStartFresh() {
+        console.log('[MasterIntakeForm] Starting fresh, clearing draft');
+        this.clearDraftFromStorage();
+        this.state.showDraftPrompt = false;
+        this.loadIntakeData();
+    }
+
     // ========== ANSWER HANDLING ==========
 
     handleAnswerSelected(event) {
@@ -208,6 +351,9 @@ export default class MasterIntakeForm extends LightningModal {
             hasNextQuestion: outcome.hasNextQuestion,
             nextQuestionId: outcome.nextQuestionId
         });
+
+        // Auto-save draft after answer
+        this.saveDraftToStorage();
 
         // Check if this is the end of the flow
         if (outcome.isTerminal) {
@@ -340,6 +486,9 @@ export default class MasterIntakeForm extends LightningModal {
 
         console.log('[MasterIntakeForm] Question cleared and reactivated');
 
+        // Auto-save draft after edit
+        this.saveDraftToStorage();
+
         // Scroll to edited question
         setTimeout(() => {
             this.scrollToQuestion(questionIndex);
@@ -424,6 +573,9 @@ export default class MasterIntakeForm extends LightningModal {
                 console.log('[MasterIntakeForm] Comment ID:', result.commentId);
                 console.log('[MasterIntakeForm] Task ID:', result.taskId);
 
+                // Clear draft on successful submission
+                this.clearDraftFromStorage();
+
                 // Close the modal and signal success
                 // Launcher will display success toast
                 setTimeout(() => {
@@ -452,6 +604,13 @@ export default class MasterIntakeForm extends LightningModal {
      */
     handleClose() {
         console.log('[MasterIntakeForm] handleClose - Closing modal');
+
+        // Auto-save draft when closing (if not completed)
+        if (!this.state.allQuestionsAnswered && this.state.questionHistory.length > 0) {
+            console.log('[MasterIntakeForm] Saving draft before closing');
+            this.saveDraftToStorage();
+        }
+
         this.close('cancelled');
     }
 
@@ -625,6 +784,47 @@ export default class MasterIntakeForm extends LightningModal {
             });
         } catch (e) {
             return this.state.caseContext.serviceDate;
+        }
+    }
+
+    // ========== DRAFT PROMPT GETTERS ==========
+
+    get showDraftPrompt() {
+        return this.state.showDraftPrompt;
+    }
+
+    get draftQuestionCount() {
+        return this.state.draftMetadata?.questionCount || 0;
+    }
+
+    get draftQuestionText() {
+        const count = this.draftQuestionCount;
+        return count === 1 ? '1 question answered' : `${count} questions answered`;
+    }
+
+    get draftTimestamp() {
+        if (!this.state.draftMetadata?.timestamp) return '';
+
+        try {
+            const timestamp = new Date(this.state.draftMetadata.timestamp);
+            const now = new Date();
+            const diffMs = now - timestamp;
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+
+            if (diffMins < 1) return 'just now';
+            if (diffMins < 60) return `${diffMins} ${diffMins === 1 ? 'minute' : 'minutes'} ago`;
+
+            const diffHours = Math.floor(diffMins / 60);
+            if (diffHours < 24) return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`;
+
+            return timestamp.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+        } catch (e) {
+            return '';
         }
     }
 }

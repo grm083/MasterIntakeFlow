@@ -84,6 +84,48 @@
     <!-- Modal Content -->
     <div class="slds-modal__content intake-modal-content" id="modal-content">
 
+        <!-- Draft Resume Prompt -->
+        <template if:true={showDraftPrompt}>
+            <div class="slds-p-around_medium">
+                <div class="draft-prompt">
+                    <lightning-icon
+                        icon-name="utility:save"
+                        size="large"
+                        class="slds-m-right_medium">
+                    </lightning-icon>
+                    <div class="draft-prompt-content">
+                        <p class="slds-text-heading_medium slds-m-bottom_x-small">
+                            Draft Found
+                        </p>
+                        <p class="slds-text-body_regular slds-m-bottom_x-small">
+                            You have <strong>{draftQuestionText}</strong> saved from <strong>{draftTimestamp}</strong>.
+                        </p>
+                        <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_medium">
+                            Would you like to resume where you left off, or start fresh?
+                        </p>
+                        <div class="slds-grid slds-gutters_small">
+                            <div class="slds-col">
+                                <lightning-button
+                                    label="Resume Where I Left Off"
+                                    variant="brand"
+                                    onclick={handleResumeDraft}
+                                    class="slds-size_1-of-1">
+                                </lightning-button>
+                            </div>
+                            <div class="slds-col">
+                                <lightning-button
+                                    label="Start Fresh"
+                                    variant="neutral"
+                                    onclick={handleStartFresh}
+                                    class="slds-size_1-of-1">
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
         <!-- Loading Spinner -->
         <template if:true={showLoading}>
             <div class="slds-align_absolute-center" style="height: 300px;">
