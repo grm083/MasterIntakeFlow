@@ -71,6 +71,7 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
             this.flowData = data;
             this.calculateStats(data);
             this.isVisualizationRendered = false; // Trigger re-render
+            this.zoomLevel = 1; // Reset zoom to default when loading new data
 
             this.showToast('Success', `Loaded ${data.nodeCount} questions and ${data.edgeCount} connections`, 'success');
             this.isLoading = false;
@@ -137,15 +138,54 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
         // Clear existing content
         canvas.innerHTML = '';
 
-        // Create SVG with larger dimensions for hierarchical layout
-        const width = canvas.clientWidth || 1600;
-        const height = canvas.clientHeight || 1200;
+        // Create SVG with initial dimensions
+        const canvasWidth = canvas.clientWidth || 1600;
+        const canvasHeight = canvas.clientHeight || 1200;
+
+        // Calculate hierarchical layout first to get all node positions
+        const layoutData = this.calculateHierarchicalLayout(this.flowData, canvasWidth, canvasHeight);
+        const nodes = layoutData.nodes;
+
+        // Calculate the bounding box of all nodes to ensure everything is visible
+        let minX = Infinity, maxX = -Infinity;
+        let minY = Infinity, maxY = -Infinity;
+
+        nodes.forEach(node => {
+            minX = Math.min(minX, node.x);
+            maxX = Math.max(maxX, node.x);
+            minY = Math.min(minY, node.y);
+            maxY = Math.max(maxY, node.y);
+        });
+
+        // Add padding around the content
+        const padding = 100;
+        minX -= padding;
+        maxX += padding;
+        minY -= padding;
+        maxY += padding;
+
+        // Calculate the total width and height needed
+        const contentWidth = maxX - minX;
+        const contentHeight = maxY - minY;
+
+        // Use the larger of content size or canvas size to ensure everything fits
+        const viewBoxWidth = Math.max(contentWidth, canvasWidth);
+        const viewBoxHeight = Math.max(contentHeight, canvasHeight);
+
+        // Center the content if it's smaller than the canvas
+        const viewBoxX = minX - (viewBoxWidth - contentWidth) / 2;
+        const viewBoxY = minY - (viewBoxHeight - contentHeight) / 2;
 
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('width', '100%');
-        svg.setAttribute('height', height);
-        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        svg.setAttribute('height', '100%');
+        svg.setAttribute('viewBox', `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+        svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
         svg.setAttribute('class', 'flow-svg');
+        svg.style.transform = 'none'; // Ensure no CSS transform is applied
+
+        // Store original viewBox for zoom functionality
+        svg.setAttribute('data-original-viewbox', `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
 
         // Create groups for edges and nodes
         const edgeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -156,9 +196,7 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
         nodeGroup.setAttribute('class', 'nodes');
         svg.appendChild(nodeGroup);
 
-        // Calculate hierarchical layout
-        const layoutData = this.calculateHierarchicalLayout(this.flowData, width, height);
-        const nodes = layoutData.nodes;
+        // Use the nodes from the layout calculation we already did
         const nodeMap = new Map(nodes.map(n => [n.id, n]));
 
         // Separate terminal and regular edges
@@ -581,12 +619,12 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
     }
 
     handleZoomIn() {
-        this.zoomLevel = Math.min(this.zoomLevel + 0.2, 3);
+        this.zoomLevel = Math.min(this.zoomLevel + 0.2, 5);
         this.applyZoom();
     }
 
     handleZoomOut() {
-        this.zoomLevel = Math.max(this.zoomLevel - 0.2, 0.5);
+        this.zoomLevel = Math.max(this.zoomLevel - 0.2, 0.2);
         this.applyZoom();
     }
 
@@ -597,9 +635,28 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
 
     applyZoom() {
         const svg = this.template.querySelector('.flow-svg');
-        if (svg) {
-            svg.style.transform = `scale(${this.zoomLevel})`;
-            svg.style.transformOrigin = 'center center';
+        if (svg && svg.hasAttribute('data-original-viewbox')) {
+            // Get the original viewBox values
+            const originalViewBox = svg.getAttribute('data-original-viewbox').split(' ');
+            const x = parseFloat(originalViewBox[0]);
+            const y = parseFloat(originalViewBox[1]);
+            const width = parseFloat(originalViewBox[2]);
+            const height = parseFloat(originalViewBox[3]);
+
+            // Calculate the center point
+            const centerX = x + width / 2;
+            const centerY = y + height / 2;
+
+            // Calculate new dimensions based on zoom level (inverse - lower zoom = larger viewBox = zoomed out)
+            const newWidth = width / this.zoomLevel;
+            const newHeight = height / this.zoomLevel;
+
+            // Calculate new position to maintain center
+            const newX = centerX - newWidth / 2;
+            const newY = centerY - newHeight / 2;
+
+            // Update viewBox
+            svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
         }
     }
 

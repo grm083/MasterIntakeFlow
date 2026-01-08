@@ -51,7 +51,7 @@
 }
 
 .flow-svg {
-    transition: transform 0.3s ease;
+    /* Smooth viewBox transitions handled by browser */
 }
 
 /* Legend */
