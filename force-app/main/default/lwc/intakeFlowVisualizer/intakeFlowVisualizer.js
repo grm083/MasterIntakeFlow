@@ -138,8 +138,8 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
         canvas.innerHTML = '';
 
         // Create SVG with larger dimensions for hierarchical layout
-        const width = canvas.clientWidth || 1200;
-        const height = canvas.clientHeight || 800;
+        const width = canvas.clientWidth || 1600;
+        const height = canvas.clientHeight || 1200;
 
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('width', '100%');
@@ -193,10 +193,11 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
                     const labelY = (source.y + target.y) / 2;
 
                     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    text.setAttribute('x', labelX + 10);
+                    text.setAttribute('x', labelX + 15);
                     text.setAttribute('y', labelY);
-                    text.setAttribute('font-size', '10');
+                    text.setAttribute('font-size', '12'); // Larger font for edge labels
                     text.setAttribute('font-style', 'italic');
+                    text.setAttribute('font-weight', '500');
                     text.setAttribute('fill', '#4a5568');
                     text.setAttribute('class', 'edge-label');
                     text.textContent = edge.label;
@@ -239,9 +240,9 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
                 // Add outcome label on the path
                 if (edge.label && this.showLabels) {
                     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    text.setAttribute('x', source.x + 10);
+                    text.setAttribute('x', source.x + 15);
                     text.setAttribute('y', (source.y + terminalY) / 2);
-                    text.setAttribute('font-size', '10');
+                    text.setAttribute('font-size', '12'); // Larger font for terminal labels
                     text.setAttribute('font-weight', 'bold');
                     text.setAttribute('fill', '#2f855a');
                     text.textContent = edge.label;
@@ -253,12 +254,12 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
             });
         });
 
-        // Render nodes
+        // Render nodes with improved sizing and spacing
         nodes.forEach(node => {
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             circle.setAttribute('cx', node.x);
             circle.setAttribute('cy', node.y);
-            circle.setAttribute('r', node.isStart ? '14' : '10');
+            circle.setAttribute('r', node.isStart ? '18' : '14'); // Larger circles for visibility
             circle.setAttribute('data-node-id', node.id);
 
             // Color based on status
@@ -287,9 +288,9 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
             if (this.showLabels) {
                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', node.x);
-                text.setAttribute('y', node.y - 20);
+                text.setAttribute('y', node.y - 28); // More space above node
                 text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('font-size', '11');
+                text.setAttribute('font-size', '13'); // Larger font
                 text.setAttribute('font-weight', node.isStart ? 'bold' : 'normal');
                 text.setAttribute('fill', '#2d3748');
                 text.textContent = node.name;
@@ -300,9 +301,9 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
             if (this.showLabels && node.tier !== undefined) {
                 const tierText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 tierText.setAttribute('x', node.x);
-                tierText.setAttribute('y', node.y + 25);
+                tierText.setAttribute('y', node.y + 32); // More space below node
                 tierText.setAttribute('text-anchor', 'middle');
-                tierText.setAttribute('font-size', '9');
+                tierText.setAttribute('font-size', '10'); // Slightly larger tier labels
                 tierText.setAttribute('fill', '#718096');
                 tierText.textContent = `Tier ${node.tier}`;
                 nodeGroup.appendChild(tierText);
@@ -508,14 +509,26 @@ export default class IntakeFlowVisualizer extends NavigationMixin(LightningEleme
             tierGroups.get(tier).push(node);
         });
 
-        // Calculate positions
-        const padding = 60;
-        const verticalSpacing = height / (maxTier + 2);
+        // Calculate positions with increased spacing for better readability
+        const padding = 80;
+        const minVerticalSpacing = 150; // Minimum vertical space between tiers
+        const minHorizontalSpacing = 200; // Minimum horizontal space between nodes
+
+        // Use larger of calculated or minimum spacing
+        const verticalSpacing = Math.max(minVerticalSpacing, height / (maxTier + 2));
         const nodes = [];
 
         tierGroups.forEach((nodesInTier, tier) => {
             const nodeCount = nodesInTier.length;
-            const horizontalSpacing = nodeCount > 1 ? (width - 2 * padding) / (nodeCount - 1) : 0;
+
+            // Calculate horizontal spacing with minimum spacing enforced
+            let horizontalSpacing;
+            if (nodeCount === 1) {
+                horizontalSpacing = 0;
+            } else {
+                const calculatedSpacing = (width - 2 * padding) / (nodeCount - 1);
+                horizontalSpacing = Math.max(minHorizontalSpacing, calculatedSpacing);
+            }
 
             nodesInTier.forEach((node, index) => {
                 const x = nodeCount === 1
