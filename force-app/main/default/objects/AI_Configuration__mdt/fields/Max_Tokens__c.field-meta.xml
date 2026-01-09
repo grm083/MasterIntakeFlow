@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Max_Tokens__c</fullName>
+    <label>Max Tokens</label>
+    <description>Maximum tokens in AI response. Recommended: 500 for classification</description>
+    <required>true</required>
+    <type>Number</type>
+    <precision>5</precision>
+    <scale>0</scale>
+    <defaultValue>500</defaultValue>
+</CustomField>
