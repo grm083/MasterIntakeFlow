@@ -1,7 +1,7 @@
 /**
- * Azure OpenAI Service - Handles AI-powered case classification
+ * Google Gemini Service - Handles AI-powered case classification
  *
- * This service integrates with Azure OpenAI (Microsoft Copilot) to predict
+ * This service integrates with Google Gemini AI to predict
  * case classifications based on pre-intake diagnostic questions.
  *
  * Features:
@@ -14,10 +14,10 @@
  * @author Master Intake Flow Team
  * @date 2026-01-09
  */
-public with sharing class AzureOpenAIService {
+public with sharing class GoogleGeminiService {
 
     // Configuration
-    private static final String NAMED_CREDENTIAL = 'callout:Azure_OpenAI_Intake';
+    private static final String NAMED_CREDENTIAL = 'callout:Google_Gemini_API';
     private static final Integer MAX_RETRIES = 2;
     private static final Integer TIMEOUT_MS = 30000; // 30 seconds
     private static final Integer RETRY_DELAY_MS = 1000; // 1 second
@@ -31,26 +31,26 @@ public with sharing class AzureOpenAIService {
      * @param answers List of pre-intake question/answer pairs
      * @param caseRecord Case record with context information
      * @return ClassificationResult with predicted classification and confidence
-     * @throws AzureOpenAIException if classification fails after retries
+     * @throws GoogleGeminiException if classification fails after retries
      */
     public static ClassificationResult classifyCase(
         List<PreIntakeAnswer> answers,
         Case caseRecord
     ) {
         if (answers == null || answers.isEmpty()) {
-            throw new AzureOpenAIException('Pre-intake answers are required for classification');
+            throw new GoogleGeminiException('Pre-intake answers are required for classification');
         }
 
         if (caseRecord == null) {
-            throw new AzureOpenAIException('Case record is required for classification');
+            throw new GoogleGeminiException('Case record is required for classification');
         }
 
         try {
             // Build intelligent prompt with context
             String prompt = buildClassificationPrompt(answers, caseRecord);
 
-            // Call Azure OpenAI with retry logic
-            String response = callAzureOpenAIWithRetry(prompt);
+            // Call Google Gemini with retry logic
+            String response = callGeminiWithRetry(prompt);
 
             // Parse and validate response
             ClassificationResult result = parseClassificationResponse(response);
@@ -65,25 +65,25 @@ public with sharing class AzureOpenAIService {
             logClassification(caseRecord.Id, null, 'FAILURE: ' + e.getMessage());
 
             // Re-throw as custom exception
-            throw new AzureOpenAIException('Classification failed: ' + e.getMessage(), e);
+            throw new GoogleGeminiException('Classification failed: ' + e.getMessage(), e);
         }
     }
 
     /**
-     * Call Azure OpenAI with retry logic for transient failures
+     * Call Google Gemini with retry logic for transient failures
      */
-    private static String callAzureOpenAIWithRetry(String userPrompt) {
+    private static String callGeminiWithRetry(String prompt) {
         Integer attemptNumber = 1;
         Exception lastException = null;
 
         while (attemptNumber <= MAX_RETRIES) {
             try {
-                System.debug('[AzureOpenAIService] Attempt ' + attemptNumber + ' of ' + MAX_RETRIES);
-                return callAzureOpenAI(userPrompt);
+                System.debug('[GoogleGeminiService] Attempt ' + attemptNumber + ' of ' + MAX_RETRIES);
+                return callGemini(prompt);
 
             } catch (CalloutException e) {
                 lastException = e;
-                System.debug('[AzureOpenAIService] Attempt ' + attemptNumber + ' failed: ' + e.getMessage());
+                System.debug('[GoogleGeminiService] Attempt ' + attemptNumber + ' failed: ' + e.getMessage());
 
                 // Check if error is retryable
                 if (!isRetryableError(e) || attemptNumber >= MAX_RETRIES) {
@@ -92,7 +92,7 @@ public with sharing class AzureOpenAIService {
 
                 // Wait before retry (exponential backoff)
                 Integer delayMs = RETRY_DELAY_MS * attemptNumber;
-                System.debug('[AzureOpenAIService] Retrying in ' + delayMs + 'ms...');
+                System.debug('[GoogleGeminiService] Retrying in ' + delayMs + 'ms...');
 
                 attemptNumber++;
 
@@ -103,7 +103,7 @@ public with sharing class AzureOpenAIService {
         }
 
         // Should never reach here, but just in case
-        throw new AzureOpenAIException(
+        throw new GoogleGeminiException(
             'Failed after ' + MAX_RETRIES + ' attempts',
             lastException
         );
@@ -125,28 +125,27 @@ public with sharing class AzureOpenAIService {
     }
 
     /**
-     * Make HTTP callout to Azure OpenAI API
+     * Make HTTP callout to Google Gemini API
      */
-    private static String callAzureOpenAI(String userPrompt) {
+    private static String callGemini(String prompt) {
         // Get configuration
         AI_Configuration__mdt config = getConfiguration();
 
-        // Build request body
+        // Build request body for Gemini API
         Map<String, Object> requestBody = new Map<String, Object>{
-            'messages' => new List<Map<String, String>>{
-                new Map<String, String>{
-                    'role' => 'system',
-                    'content' => buildSystemPrompt()
-                },
-                new Map<String, String>{
-                    'role' => 'user',
-                    'content' => userPrompt
+            'contents' => new List<Map<String, Object>>{
+                new Map<String, Object>{
+                    'parts' => new List<Map<String, String>>{
+                        new Map<String, String>{
+                            'text' => prompt
+                        }
+                    }
                 }
             },
-            'temperature' => config.Temperature__c,
-            'max_tokens' => Integer.valueOf(config.Max_Tokens__c),
-            'response_format' => new Map<String, String>{
-                'type' => 'json_object'
+            'generationConfig' => new Map<String, Object>{
+                'temperature' => config.Temperature__c,
+                'maxOutputTokens' => Integer.valueOf(config.Max_Tokens__c),
+                'responseMimeType' => 'application/json'
             }
         };
 
@@ -158,18 +157,18 @@ public with sharing class AzureOpenAIService {
         req.setBody(JSON.serialize(requestBody));
         req.setTimeout(TIMEOUT_MS);
 
-        System.debug('[AzureOpenAIService] Request endpoint: ' + req.getEndpoint());
-        System.debug('[AzureOpenAIService] Request body length: ' + req.getBody().length());
+        System.debug('[GoogleGeminiService] Request endpoint: ' + req.getEndpoint());
+        System.debug('[GoogleGeminiService] Request body length: ' + req.getBody().length());
 
         Http http = new Http();
         HttpResponse res = http.send(req);
 
-        System.debug('[AzureOpenAIService] Response status: ' + res.getStatusCode());
-        System.debug('[AzureOpenAIService] Response body length: ' + res.getBody().length());
+        System.debug('[GoogleGeminiService] Response status: ' + res.getStatusCode());
+        System.debug('[GoogleGeminiService] Response body length: ' + res.getBody().length());
 
         // Handle error responses
         if (res.getStatusCode() != 200) {
-            String errorMessage = 'Azure OpenAI API error: ' +
+            String errorMessage = 'Google Gemini API error: ' +
                                 res.getStatusCode() + ' ' +
                                 res.getStatus();
 
@@ -196,37 +195,33 @@ public with sharing class AzureOpenAIService {
             Map<String, Object> responseMap =
                 (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
 
-            List<Object> choices = (List<Object>) responseMap.get('choices');
+            List<Object> candidates = (List<Object>) responseMap.get('candidates');
 
-            if (choices == null || choices.isEmpty()) {
-                throw new AzureOpenAIException('No choices returned in API response');
+            if (candidates == null || candidates.isEmpty()) {
+                throw new GoogleGeminiException('No candidates returned in API response');
             }
 
-            Map<String, Object> firstChoice = (Map<String, Object>) choices[0];
-            Map<String, Object> message = (Map<String, Object>) firstChoice.get('message');
-            String content = (String) message.get('content');
+            Map<String, Object> firstCandidate = (Map<String, Object>) candidates[0];
+            Map<String, Object> content = (Map<String, Object>) firstCandidate.get('content');
+            List<Object> parts = (List<Object>) content.get('parts');
 
-            System.debug('[AzureOpenAIService] Extracted content: ' + content);
+            if (parts == null || parts.isEmpty()) {
+                throw new GoogleGeminiException('No parts in candidate response');
+            }
 
-            return content;
+            Map<String, Object> firstPart = (Map<String, Object>) parts[0];
+            String text = (String) firstPart.get('text');
+
+            System.debug('[GoogleGeminiService] Extracted content: ' + text);
+
+            return text;
 
         } catch (Exception e) {
-            throw new AzureOpenAIException(
-                'Failed to parse Azure OpenAI response: ' + e.getMessage(),
+            throw new GoogleGeminiException(
+                'Failed to parse Google Gemini response: ' + e.getMessage(),
                 e
             );
         }
-    }
-
-    /**
-     * Build system prompt that defines AI behavior
-     */
-    private static String buildSystemPrompt() {
-        return 'You are an expert case classification system for a waste management company. ' +
-               'Your role is to analyze case intake responses and predict the correct classification. ' +
-               'You must return ONLY valid JSON with no additional text. ' +
-               'Be precise and consider historical patterns when available. ' +
-               'Provide confidence scores between 0.0 and 1.0 based on certainty.';
     }
 
     /**
@@ -236,7 +231,11 @@ public with sharing class AzureOpenAIService {
         List<PreIntakeAnswer> answers,
         Case caseRecord
     ) {
-        String prompt = '# Case Context:\n';
+        String prompt = 'You are an expert case classification system for a waste management company. ';
+        prompt += 'Your role is to analyze case intake responses and predict the correct classification. ';
+        prompt += 'You must return ONLY valid JSON with no additional text or markdown.\n\n';
+
+        prompt += '# Case Context:\n';
         prompt += '- Customer: ' + (caseRecord.Client__r?.Name ?? 'Unknown') + '\n';
         prompt += '- Location: ' + (caseRecord.Location__r?.Name ?? 'Unknown') + '\n';
 
@@ -268,7 +267,7 @@ public with sharing class AzureOpenAIService {
         prompt += 'Based on the case context and responses above, predict the most appropriate classification.\n';
         prompt += 'Consider keywords, urgency indicators, and historical patterns.\n\n';
 
-        prompt += 'Return ONLY a JSON object in this exact format (no markdown, no additional text):\n';
+        prompt += 'Return ONLY a JSON object in this exact format (no markdown, no code blocks, no additional text):\n';
         prompt += '{\n';
         prompt += '  "caseType": "string",\n';
         prompt += '  "caseSubType": "string",\n';
@@ -321,19 +320,19 @@ public with sharing class AzureOpenAIService {
             if (String.isBlank(result.caseType) ||
                 String.isBlank(result.caseSubType) ||
                 String.isBlank(result.caseReason)) {
-                throw new AzureOpenAIException('AI response missing required classification fields');
+                throw new GoogleGeminiException('AI response missing required classification fields');
             }
 
             // Validate confidence range
             if (result.confidence < 0 || result.confidence > 1) {
-                System.debug('[AzureOpenAIService] Invalid confidence value, setting to 0.5');
+                System.debug('[GoogleGeminiService] Invalid confidence value, setting to 0.5');
                 result.confidence = 0.5;
             }
 
             return result;
 
         } catch (Exception e) {
-            throw new AzureOpenAIException(
+            throw new GoogleGeminiException(
                 'Failed to parse classification response: ' + e.getMessage() +
                 '\nResponse: ' + jsonResponse,
                 e
@@ -395,7 +394,7 @@ public with sharing class AzureOpenAIService {
             return summary;
 
         } catch (Exception e) {
-            System.debug('[AzureOpenAIService] Error getting historical patterns: ' + e.getMessage());
+            System.debug('[GoogleGeminiService] Error getting historical patterns: ' + e.getMessage());
             return ''; // Fail gracefully
         }
     }
@@ -462,7 +461,7 @@ public with sharing class AzureOpenAIService {
             return String.join(new List<String>(classifications), '\n');
 
         } catch (Exception e) {
-            System.debug('[AzureOpenAIService] Error getting classifications: ' + e.getMessage());
+            System.debug('[GoogleGeminiService] Error getting classifications: ' + e.getMessage());
             return 'Classifications list unavailable';
         }
     }
@@ -482,7 +481,7 @@ public with sharing class AzureOpenAIService {
             } catch (Exception e) {
                 // Return default configuration if metadata not found
                 configCache = new AI_Configuration__mdt(
-                    API_Endpoint__c = '/openai/deployments/case-classifier/chat/completions?api-version=2024-02-15-preview',
+                    API_Endpoint__c = '/v1beta/models/gemini-1.5-flash:generateContent',
                     Temperature__c = 0.3,
                     Max_Tokens__c = 500
                 );
@@ -503,7 +502,7 @@ public with sharing class AzureOpenAIService {
         try {
             // In production, consider logging to a custom object
             // For now, using System.debug
-            System.debug('[AzureOpenAIService] Classification Log:');
+            System.debug('[GoogleGeminiService] Classification Log:');
             System.debug('  Case ID: ' + caseId);
             System.debug('  Status: ' + status);
 
@@ -517,7 +516,7 @@ public with sharing class AzureOpenAIService {
 
         } catch (Exception e) {
             // Never fail on logging errors
-            System.debug('[AzureOpenAIService] Logging error: ' + e.getMessage());
+            System.debug('[GoogleGeminiService] Logging error: ' + e.getMessage());
         }
     }
 
@@ -556,7 +555,7 @@ public with sharing class AzureOpenAIService {
     }
 
     /**
-     * Custom exception for Azure OpenAI errors
+     * Custom exception for Google Gemini errors
      */
-    public class AzureOpenAIException extends Exception {}
+    public class GoogleGeminiException extends Exception {}
 }

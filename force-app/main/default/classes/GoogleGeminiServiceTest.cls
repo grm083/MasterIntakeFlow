@@ -1,5 +1,5 @@
 /**
- * Test class for AzureOpenAIService
+ * Test class for GoogleGeminiService
  *
  * Provides comprehensive test coverage including:
  * - Successful classification
@@ -8,7 +8,7 @@
  * - Edge cases and validation
  */
 @isTest
-private class AzureOpenAIServiceTest {
+private class GoogleGeminiServiceTest {
 
     /**
      * Test successful case classification
@@ -18,17 +18,17 @@ private class AzureOpenAIServiceTest {
         // Setup test data
         Case testCase = createTestCase();
 
-        List<AzureOpenAIService.PreIntakeAnswer> answers = new List<AzureOpenAIService.PreIntakeAnswer>{
-            new AzureOpenAIService.PreIntakeAnswer('What is the issue?', 'Compactor is broken'),
-            new AzureOpenAIService.PreIntakeAnswer('Is this urgent?', 'Yes, needs immediate repair')
+        List<GoogleGeminiService.PreIntakeAnswer> answers = new List<GoogleGeminiService.PreIntakeAnswer>{
+            new GoogleGeminiService.PreIntakeAnswer('What is the issue?', 'Compactor is broken'),
+            new GoogleGeminiService.PreIntakeAnswer('Is this urgent?', 'Yes, needs immediate repair')
         };
 
         // Set mock callout
-        Test.setMock(HttpCalloutMock.class, new SuccessfulAzureAPIMock());
+        Test.setMock(HttpCalloutMock.class, new SuccessfulGeminiAPIMock());
 
         Test.startTest();
-        AzureOpenAIService.ClassificationResult result =
-            AzureOpenAIService.classifyCase(answers, testCase);
+        GoogleGeminiService.ClassificationResult result =
+            GoogleGeminiService.classifyCase(answers, testCase);
         Test.stopTest();
 
         // Assertions
@@ -47,16 +47,16 @@ private class AzureOpenAIServiceTest {
     static void testRetryLogic() {
         Case testCase = createTestCase();
 
-        List<AzureOpenAIService.PreIntakeAnswer> answers = new List<AzureOpenAIService.PreIntakeAnswer>{
-            new AzureOpenAIService.PreIntakeAnswer('What is the issue?', 'Need service')
+        List<GoogleGeminiService.PreIntakeAnswer> answers = new List<GoogleGeminiService.PreIntakeAnswer>{
+            new GoogleGeminiService.PreIntakeAnswer('What is the issue?', 'Need service')
         };
 
         // Set mock that fails once then succeeds
         Test.setMock(HttpCalloutMock.class, new RetryableFailureMock());
 
         Test.startTest();
-        AzureOpenAIService.ClassificationResult result =
-            AzureOpenAIService.classifyCase(answers, testCase);
+        GoogleGeminiService.ClassificationResult result =
+            GoogleGeminiService.classifyCase(answers, testCase);
         Test.stopTest();
 
         // Should succeed after retry
@@ -71,8 +71,8 @@ private class AzureOpenAIServiceTest {
     static void testNonRetryableError() {
         Case testCase = createTestCase();
 
-        List<AzureOpenAIService.PreIntakeAnswer> answers = new List<AzureOpenAIService.PreIntakeAnswer>{
-            new AzureOpenAIService.PreIntakeAnswer('Question', 'Answer')
+        List<GoogleGeminiService.PreIntakeAnswer> answers = new List<GoogleGeminiService.PreIntakeAnswer>{
+            new GoogleGeminiService.PreIntakeAnswer('Question', 'Answer')
         };
 
         // Set mock that returns 400 Bad Request (non-retryable)
@@ -80,9 +80,9 @@ private class AzureOpenAIServiceTest {
 
         Test.startTest();
         try {
-            AzureOpenAIService.classifyCase(answers, testCase);
+            GoogleGeminiService.classifyCase(answers, testCase);
             System.assert(false, 'Should have thrown exception');
-        } catch (AzureOpenAIService.AzureOpenAIException e) {
+        } catch (GoogleGeminiService.GoogleGeminiException e) {
             System.assert(e.getMessage().contains('400'), 'Should mention 400 error');
         }
         Test.stopTest();
@@ -94,13 +94,13 @@ private class AzureOpenAIServiceTest {
     @isTest
     static void testEmptyAnswersValidation() {
         Case testCase = createTestCase();
-        List<AzureOpenAIService.PreIntakeAnswer> emptyAnswers = new List<AzureOpenAIService.PreIntakeAnswer>();
+        List<GoogleGeminiService.PreIntakeAnswer> emptyAnswers = new List<GoogleGeminiService.PreIntakeAnswer>();
 
         Test.startTest();
         try {
-            AzureOpenAIService.classifyCase(emptyAnswers, testCase);
+            GoogleGeminiService.classifyCase(emptyAnswers, testCase);
             System.assert(false, 'Should have thrown exception');
-        } catch (AzureOpenAIService.AzureOpenAIException e) {
+        } catch (GoogleGeminiService.GoogleGeminiException e) {
             System.assert(e.getMessage().contains('required'), 'Should mention required field');
         }
         Test.stopTest();
@@ -111,15 +111,15 @@ private class AzureOpenAIServiceTest {
      */
     @isTest
     static void testNullCaseValidation() {
-        List<AzureOpenAIService.PreIntakeAnswer> answers = new List<AzureOpenAIService.PreIntakeAnswer>{
-            new AzureOpenAIService.PreIntakeAnswer('Question', 'Answer')
+        List<GoogleGeminiService.PreIntakeAnswer> answers = new List<GoogleGeminiService.PreIntakeAnswer>{
+            new GoogleGeminiService.PreIntakeAnswer('Question', 'Answer')
         };
 
         Test.startTest();
         try {
-            AzureOpenAIService.classifyCase(answers, null);
+            GoogleGeminiService.classifyCase(answers, null);
             System.assert(false, 'Should have thrown exception');
-        } catch (AzureOpenAIService.AzureOpenAIException e) {
+        } catch (GoogleGeminiService.GoogleGeminiException e) {
             System.assert(e.getMessage().contains('required'), 'Should mention required field');
         }
         Test.stopTest();
@@ -132,17 +132,17 @@ private class AzureOpenAIServiceTest {
     static void testMalformedJSONResponse() {
         Case testCase = createTestCase();
 
-        List<AzureOpenAIService.PreIntakeAnswer> answers = new List<AzureOpenAIService.PreIntakeAnswer>{
-            new AzureOpenAIService.PreIntakeAnswer('Question', 'Answer')
+        List<GoogleGeminiService.PreIntakeAnswer> answers = new List<GoogleGeminiService.PreIntakeAnswer>{
+            new GoogleGeminiService.PreIntakeAnswer('Question', 'Answer')
         };
 
         Test.setMock(HttpCalloutMock.class, new MalformedJSONMock());
 
         Test.startTest();
         try {
-            AzureOpenAIService.classifyCase(answers, testCase);
+            GoogleGeminiService.classifyCase(answers, testCase);
             System.assert(false, 'Should have thrown exception');
-        } catch (AzureOpenAIService.AzureOpenAIException e) {
+        } catch (GoogleGeminiService.GoogleGeminiException e) {
             System.assert(
                 e.getMessage().contains('parse'),
                 'Should mention parsing error'
@@ -157,15 +157,15 @@ private class AzureOpenAIServiceTest {
     @isTest
     static void testWrapperClasses() {
         // Test PreIntakeAnswer
-        AzureOpenAIService.PreIntakeAnswer answer =
-            new AzureOpenAIService.PreIntakeAnswer('Question?', 'Answer!');
+        GoogleGeminiService.PreIntakeAnswer answer =
+            new GoogleGeminiService.PreIntakeAnswer('Question?', 'Answer!');
 
         System.assertEquals('Question?', answer.questionText);
         System.assertEquals('Answer!', answer.answerText);
 
         // Test ClassificationResult
-        AzureOpenAIService.ClassificationResult result =
-            new AzureOpenAIService.ClassificationResult();
+        GoogleGeminiService.ClassificationResult result =
+            new GoogleGeminiService.ClassificationResult();
 
         System.assertEquals(true, result.success);
     }
@@ -209,25 +209,29 @@ private class AzureOpenAIServiceTest {
     // ========== MOCK CLASSES ==========
 
     /**
-     * Mock successful Azure OpenAI API response
+     * Mock successful Google Gemini API response
      */
-    private class SuccessfulAzureAPIMock implements HttpCalloutMock {
+    private class SuccessfulGeminiAPIMock implements HttpCalloutMock {
         public HttpResponse respond(HttpRequest req) {
             HttpResponse res = new HttpResponse();
             res.setStatusCode(200);
             res.setStatus('OK');
 
             Map<String, Object> responseBody = new Map<String, Object>{
-                'choices' => new List<Map<String, Object>>{
+                'candidates' => new List<Map<String, Object>>{
                     new Map<String, Object>{
-                        'message' => new Map<String, Object>{
-                            'content' => JSON.serialize(new Map<String, Object>{
-                                'caseType' => 'Equipment Maintenance',
-                                'caseSubType' => 'Compactor',
-                                'caseReason' => 'Repair Request',
-                                'confidence' => 0.92,
-                                'reasoning' => 'Keywords indicate equipment issue requiring repair'
-                            })
+                        'content' => new Map<String, Object>{
+                            'parts' => new List<Map<String, Object>>{
+                                new Map<String, Object>{
+                                    'text' => JSON.serialize(new Map<String, Object>{
+                                        'caseType' => 'Equipment Maintenance',
+                                        'caseSubType' => 'Compactor',
+                                        'caseReason' => 'Repair Request',
+                                        'confidence' => 0.92,
+                                        'reasoning' => 'Keywords indicate equipment issue requiring repair'
+                                    })
+                                }
+                            }
                         }
                     }
                 }
@@ -261,16 +265,20 @@ private class AzureOpenAIServiceTest {
                 res.setStatus('OK');
 
                 Map<String, Object> responseBody = new Map<String, Object>{
-                    'choices' => new List<Map<String, Object>>{
+                    'candidates' => new List<Map<String, Object>>{
                         new Map<String, Object>{
-                            'message' => new Map<String, Object>{
-                                'content' => JSON.serialize(new Map<String, Object>{
-                                    'caseType' => 'Service Request',
-                                    'caseSubType' => 'General',
-                                    'caseReason' => 'Standard Service',
-                                    'confidence' => 0.75,
-                                    'reasoning' => 'General service request'
-                                })
+                            'content' => new Map<String, Object>{
+                                'parts' => new List<Map<String, Object>>{
+                                    new Map<String, Object>{
+                                        'text' => JSON.serialize(new Map<String, Object>{
+                                            'caseType' => 'Service Request',
+                                            'caseSubType' => 'General',
+                                            'caseReason' => 'Standard Service',
+                                            'confidence' => 0.75,
+                                            'reasoning' => 'General service request'
+                                        })
+                                    }
+                                }
                             }
                         }
                     }
@@ -305,10 +313,14 @@ private class AzureOpenAIServiceTest {
             res.setStatus('OK');
 
             Map<String, Object> responseBody = new Map<String, Object>{
-                'choices' => new List<Map<String, Object>>{
+                'candidates' => new List<Map<String, Object>>{
                     new Map<String, Object>{
-                        'message' => new Map<String, Object>{
-                            'content' => 'This is not valid JSON for classification'
+                        'content' => new Map<String, Object>{
+                            'parts' => new List<Map<String, Object>>{
+                                new Map<String, Object>{
+                                    'text' => 'This is not valid JSON for classification'
+                                }
+                            }
                         }
                     }
                 }
