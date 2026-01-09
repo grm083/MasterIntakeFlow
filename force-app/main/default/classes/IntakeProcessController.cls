@@ -69,6 +69,24 @@ public with sharing class IntakeProcessController {
         @AuraEnabled public String errorMessage { get; set; }
     }
 
+    public class ClassificationResultWrapper {
+        @AuraEnabled public Boolean success { get; set; }
+        @AuraEnabled public String caseType { get; set; }
+        @AuraEnabled public String caseSubType { get; set; }
+        @AuraEnabled public String caseReason { get; set; }
+        @AuraEnabled public Decimal confidence { get; set; }
+        @AuraEnabled public String reasoning { get; set; }
+        @AuraEnabled public Boolean autoApplied { get; set; }
+        @AuraEnabled public String message { get; set; }
+        @AuraEnabled public String errorMessage { get; set; }
+        @AuraEnabled public String errorType { get; set; }
+
+        public ClassificationResultWrapper() {
+            this.success = false;
+            this.autoApplied = false;
+        }
+    }
+
     // ========== PUBLIC METHODS ==========
 
     /**
@@ -223,6 +241,135 @@ public with sharing class IntakeProcessController {
         }
 
         return result;
+    }
+
+    /**
+     * Predict case classification using AI based on pre-intake answers
+     *
+     * @param caseId The Case ID to classify
+     * @param preIntakeAnswersJSON JSON string of pre-intake question/answer pairs
+     * @param autoApplyThreshold Confidence threshold for auto-applying classification (0.0-1.0)
+     * @return ClassificationResultWrapper with predicted classification and metadata
+     */
+    @AuraEnabled
+    public static ClassificationResultWrapper predictCaseClassification(
+        Id caseId,
+        String preIntakeAnswersJSON,
+        Decimal autoApplyThreshold
+    ) {
+        ClassificationResultWrapper result = new ClassificationResultWrapper();
+
+        try {
+            // Validate inputs
+            if (String.isBlank(preIntakeAnswersJSON)) {
+                throw new AuraHandledException('Pre-intake answers are required');
+            }
+
+            // Parse pre-intake answers from JSON
+            List<Object> answersRaw = (List<Object>) JSON.deserializeUntyped(preIntakeAnswersJSON);
+            List<GoogleGeminiService.PreIntakeAnswer> answers = new List<GoogleGeminiService.PreIntakeAnswer>();
+
+            for (Object answerObj : answersRaw) {
+                Map<String, Object> answerMap = (Map<String, Object>) answerObj;
+                GoogleGeminiService.PreIntakeAnswer answer = new GoogleGeminiService.PreIntakeAnswer();
+                answer.questionText = (String) answerMap.get('questionText');
+                answer.answerText = (String) answerMap.get('answerText');
+                answers.add(answer);
+            }
+
+            // Get case record with necessary fields
+            Case c = [
+                SELECT Id, CaseNumber, Client__c, Location__c, Service_Date__c,
+                       Client__r.Name, Location__r.Name,
+                       Case_Type__c, Case_Sub_Type__c, Case_Reason__c
+                FROM Case
+                WHERE Id = :caseId
+                LIMIT 1
+            ];
+
+            // Call Google Gemini AI service
+            GoogleGeminiService.ClassificationResult aiResult =
+                GoogleGeminiService.classifyCase(answers, c);
+
+            // Map to wrapper class
+            result.caseType = aiResult.caseType;
+            result.caseSubType = aiResult.caseSubType;
+            result.caseReason = aiResult.caseReason;
+            result.confidence = aiResult.confidence;
+            result.reasoning = aiResult.reasoning;
+            result.success = true;
+
+            // Auto-apply if confidence meets threshold
+            if (autoApplyThreshold != null && aiResult.confidence >= autoApplyThreshold) {
+                c.Case_Type__c = aiResult.caseType;
+                c.Case_Sub_Type__c = aiResult.caseSubType;
+                c.Case_Reason__c = aiResult.caseReason;
+                c.Classification_Method__c = 'AI-Gemini';
+                c.Classification_Confidence__c = aiResult.confidence * 100;
+                c.Pre_Classification_Complete__c = true;
+
+                update c;
+
+                result.autoApplied = true;
+                result.message = 'Classification applied automatically (confidence: ' +
+                               Math.round(aiResult.confidence * 100) + '%)';
+            } else {
+                result.autoApplied = false;
+                result.message = 'Review and confirm classification (confidence: ' +
+                               Math.round(aiResult.confidence * 100) + '%)';
+            }
+
+        } catch (GoogleGeminiService.GoogleGeminiException e) {
+            // AI-specific error
+            result.success = false;
+            result.errorMessage = 'AI Classification Error: ' + e.getMessage();
+            result.errorType = 'AI_ERROR';
+
+        } catch (Exception e) {
+            // General error
+            result.success = false;
+            result.errorMessage = 'Error: ' + e.getMessage();
+            result.errorType = 'GENERAL_ERROR';
+        }
+
+        return result;
+    }
+
+    /**
+     * Apply AI classification to case manually (after user review)
+     *
+     * @param caseId The Case ID to update
+     * @param caseType Predicted case type
+     * @param caseSubType Predicted case sub-type
+     * @param caseReason Predicted case reason
+     * @param confidence AI confidence score
+     * @return Boolean indicating success
+     */
+    @AuraEnabled
+    public static Boolean applyAIClassification(
+        Id caseId,
+        String caseType,
+        String caseSubType,
+        String caseReason,
+        Decimal confidence
+    ) {
+        try {
+            Case c = [SELECT Id FROM Case WHERE Id = :caseId LIMIT 1];
+
+            c.Case_Type__c = caseType;
+            c.Case_Sub_Type__c = caseSubType;
+            c.Case_Reason__c = caseReason;
+            c.Classification_Method__c = 'AI-Gemini-Manual';
+            c.Classification_Confidence__c = confidence * 100;
+            c.Pre_Classification_Complete__c = true;
+
+            update c;
+
+            return true;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Failed to apply classification: ' + e.getMessage());
+        }
     }
 
     // ========== PRIVATE HELPER METHODS ==========
