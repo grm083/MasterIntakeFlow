@@ -372,6 +372,56 @@ public with sharing class IntakeProcessController {
         }
     }
 
+    /**
+     * Generate AI-powered case subject line from intake answers
+     * This creates a concise, meaningful subject line that can be used for
+     * historical pattern matching in future case classifications
+     *
+     * @param caseId The Case ID to generate subject for
+     * @param answersJSON JSON string of intake question/answer pairs
+     * @return String the generated subject line (max 255 chars)
+     */
+    @AuraEnabled
+    public static String generateCaseSubject(
+        Id caseId,
+        String answersJSON
+    ) {
+        try {
+            // Validate inputs
+            if (String.isBlank(answersJSON)) {
+                throw new AuraHandledException('Intake answers are required');
+            }
+
+            // Get case record with necessary fields
+            Case c = [
+                SELECT Id, CaseNumber, Client__c, Location__c, Service_Date__c,
+                       Client__r.Name, Location__r.Name, Subject
+                FROM Case
+                WHERE Id = :caseId
+                LIMIT 1
+            ];
+
+            // Call Google Gemini AI service to generate subject
+            String generatedSubject = GoogleGeminiService.generateCaseSubject(answersJSON, c);
+
+            // Update Case.Subject
+            c.Subject = generatedSubject;
+            update c;
+
+            System.debug('[IntakeProcessController] Generated and saved subject: ' + generatedSubject);
+
+            return generatedSubject;
+
+        } catch (GoogleGeminiService.GoogleGeminiException e) {
+            // AI-specific error
+            throw new AuraHandledException('AI Subject Generation Error: ' + e.getMessage());
+
+        } catch (Exception e) {
+            // General error
+            throw new AuraHandledException('Error generating subject: ' + e.getMessage());
+        }
+    }
+
     // ========== PRIVATE HELPER METHODS ==========
 
     /**

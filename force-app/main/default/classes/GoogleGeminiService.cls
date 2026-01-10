@@ -70,6 +70,66 @@ public with sharing class GoogleGeminiService {
     }
 
     /**
+     * Generate concise case subject line from intake answers
+     *
+     * @param answers List of intake question/answer pairs (as JSON string from frontend)
+     * @param caseRecord Case record with context information
+     * @return String subject line (max 255 characters)
+     * @throws GoogleGeminiException if generation fails after retries
+     */
+    public static String generateCaseSubject(
+        String answersJSON,
+        Case caseRecord
+    ) {
+        if (String.isBlank(answersJSON)) {
+            throw new GoogleGeminiException('Intake answers JSON is required for subject generation');
+        }
+
+        // Parse JSON to answer objects
+        List<Object> answersRaw = (List<Object>) JSON.deserializeUntyped(answersJSON);
+        List<PreIntakeAnswer> answers = new List<PreIntakeAnswer>();
+
+        for (Object answerObj : answersRaw) {
+            Map<String, Object> answerMap = (Map<String, Object>) answerObj;
+            PreIntakeAnswer answer = new PreIntakeAnswer();
+            answer.questionText = (String) answerMap.get('questionText');
+            answer.answerText = (String) answerMap.get('answerText');
+            answers.add(answer);
+        }
+
+        if (answers.isEmpty()) {
+            throw new GoogleGeminiException('No valid answers provided for subject generation');
+        }
+
+        if (caseRecord == null) {
+            throw new GoogleGeminiException('Case record is required for subject generation');
+        }
+
+        try {
+            // Build subject generation prompt
+            String prompt = buildSubjectPrompt(answers, caseRecord);
+
+            // Call Google Gemini with retry logic
+            String response = callGeminiWithRetry(prompt);
+
+            // Parse and validate response
+            String subject = parseSubjectResponse(response);
+
+            // Log successful generation
+            System.debug('[GoogleGeminiService] Generated subject: ' + subject);
+
+            return subject;
+
+        } catch (Exception e) {
+            // Log failure
+            System.debug('[GoogleGeminiService] Subject generation failed: ' + e.getMessage());
+
+            // Re-throw as custom exception
+            throw new GoogleGeminiException('Subject generation failed: ' + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Call Google Gemini with retry logic for transient failures
      */
     private static String callGeminiWithRetry(String prompt) {
@@ -337,6 +397,94 @@ public with sharing class GoogleGeminiService {
                 e
             );
         }
+    }
+
+    /**
+     * Build prompt for subject line generation
+     */
+    private static String buildSubjectPrompt(
+        List<PreIntakeAnswer> answers,
+        Case caseRecord
+    ) {
+        String prompt = 'You are an expert at creating concise, descriptive case subject lines. ';
+        prompt += 'Your role is to analyze case intake responses and create a brief subject line. ';
+        prompt += 'The subject must be under 255 characters and capture the key issue.\n\n';
+
+        prompt += '# Case Context:\n';
+        prompt += '- Customer: ' + (caseRecord.Client__r?.Name ?? 'Unknown') + '\n';
+        prompt += '- Location: ' + (caseRecord.Location__r?.Name ?? 'Unknown') + '\n';
+
+        if (caseRecord.Service_Date__c != null) {
+            prompt += '- Service Date: ' + caseRecord.Service_Date__c.format() + '\n';
+        }
+
+        prompt += '\n# Intake Responses:\n';
+        Integer questionNum = 1;
+        for (PreIntakeAnswer answer : answers) {
+            prompt += 'Q' + questionNum + ': ' + answer.questionText + '\n';
+            prompt += 'A' + questionNum + ': ' + answer.answerText + '\n\n';
+            questionNum++;
+        }
+
+        // Task instructions
+        prompt += '# Task:\n';
+        prompt += 'Based on the intake responses above, create a concise subject line that:\n';
+        prompt += '- Captures the main issue or request\n';
+        prompt += '- Is under 255 characters\n';
+        prompt += '- Is clear and specific\n';
+        prompt += '- Includes key details (equipment type, issue, urgency if critical)\n';
+        prompt += '- Uses professional language\n\n';
+
+        prompt += 'Examples of good subjects:\n';
+        prompt += '- "Compactor repair needed - loud grinding noise, urgent"\n';
+        prompt += '- "Request new dumpster - 8 yard, weekly pickup at Main St location"\n';
+        prompt += '- "Billing inquiry - duplicate charge on March invoice"\n';
+        prompt += '- "Emergency service - overflowing dumpster requires immediate pickup"\n\n';
+
+        prompt += 'Return ONLY the subject line text with no quotes, no JSON, no additional text.';
+
+        return prompt;
+    }
+
+    /**
+     * Parse subject line from AI response
+     */
+    private static String parseSubjectResponse(String response) {
+        // Clean response
+        String subject = response.trim();
+
+        // Remove quotes if present
+        if (subject.startsWith('"') && subject.endsWith('"')) {
+            subject = subject.substring(1, subject.length() - 1);
+        }
+        if (subject.startsWith('\'') && subject.endsWith('\'')) {
+            subject = subject.substring(1, subject.length() - 1);
+        }
+
+        // Remove any markdown or code block artifacts
+        if (subject.startsWith('```')) {
+            Integer firstNewline = subject.indexOf('\n');
+            if (firstNewline > 0) {
+                subject = subject.substring(firstNewline + 1);
+            }
+        }
+        if (subject.endsWith('```')) {
+            subject = subject.substring(0, subject.length() - 3);
+        }
+
+        subject = subject.trim();
+
+        // Truncate if exceeds Salesforce limit
+        if (subject.length() > 255) {
+            subject = subject.substring(0, 252) + '...';
+        }
+
+        // Validate not empty
+        if (String.isBlank(subject)) {
+            throw new GoogleGeminiException('AI returned empty subject line');
+        }
+
+        return subject;
     }
 
     /**

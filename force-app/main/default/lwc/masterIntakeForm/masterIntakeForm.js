@@ -3,6 +3,7 @@ import { api, track } from 'lwc';
 import initializeIntake from '@salesforce/apex/IntakeProcessController.initializeIntake';
 import getNextQuestionBatch from '@salesforce/apex/IntakeProcessController.getNextQuestionBatch';
 import completeIntake from '@salesforce/apex/IntakeProcessController.completeIntake';
+import generateCaseSubject from '@salesforce/apex/IntakeProcessController.generateCaseSubject';
 
 /**
  * Master Intake Form - Modal dialog component
@@ -563,6 +564,25 @@ export default class MasterIntakeForm extends LightningModal {
                     question: 'Additional Comments',
                     answer: additionalComments
                 });
+            }
+
+            // Generate AI-powered subject line from answers
+            console.log('[MasterIntakeForm] Generating AI-powered subject line...');
+            try {
+                const subjectAnswers = this.state.questionHistory.map(q => ({
+                    questionText: q.questionText,
+                    answerText: q.answerValue || q.selectedOutcomeText
+                }));
+
+                const generatedSubject = await generateCaseSubject({
+                    caseId: this.recordId,
+                    answersJSON: JSON.stringify(subjectAnswers)
+                });
+
+                console.log('[MasterIntakeForm] Generated subject:', generatedSubject);
+            } catch (subjectError) {
+                // Log but don't fail - subject generation is not critical
+                console.warn('[MasterIntakeForm] Failed to generate subject (continuing):', subjectError);
             }
 
             console.log('[MasterIntakeForm] Calling completeIntake Apex method...');
