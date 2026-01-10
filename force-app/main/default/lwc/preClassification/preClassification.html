@@ -1,0 +1,336 @@
+<template>
+    <!-- Introduction Screen -->
+    <template if:true={showIntro}>
+        <lightning-card title="Quick Case Assessment" icon-name="custom:custom63">
+            <div class="slds-p-around_medium">
+                <div class="intro-content">
+                    <lightning-icon
+                        icon-name="utility:magicwand"
+                        size="large"
+                        class="intro-icon">
+                    </lightning-icon>
+
+                    <h2 class="slds-text-heading_medium slds-m-bottom_small">
+                        Let's find the right path for your case
+                    </h2>
+
+                    <p class="slds-text-body_regular slds-m-bottom_medium">
+                        Answer a few quick questions and our AI will automatically route your case to the right team.
+                        This takes less than 30 seconds.
+                    </p>
+
+                    <div class="info-badges slds-m-bottom_large">
+                        <div class="info-badge">
+                            <lightning-icon icon-name="utility:clock" size="x-small"></lightning-icon>
+                            <span>~30 seconds</span>
+                        </div>
+                        <div class="info-badge">
+                            <lightning-icon icon-name="utility:routing_offline" size="x-small"></lightning-icon>
+                            <span>AI-Powered</span>
+                        </div>
+                        <div class="info-badge">
+                            <lightning-icon icon-name="utility:success" size="x-small"></lightning-icon>
+                            <span>Accurate Routing</span>
+                        </div>
+                    </div>
+
+                    <lightning-button
+                        variant="brand"
+                        label="Get Started"
+                        onclick={handleStartAssessment}
+                        class="start-button">
+                    </lightning-button>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+
+    <!-- Questions Screen -->
+    <template if:true={showQuestions}>
+        <lightning-card title="Quick Assessment" icon-name="utility:questions_and_answers">
+            <div class="slds-p-around_medium">
+
+                <!-- Progress Indicator -->
+                <div class="progress-indicator slds-m-bottom_medium">
+                    <lightning-progress-indicator
+                        current-step={currentStepName}
+                        type="path"
+                        variant="base">
+                        <template for:each={progressSteps} for:item="step">
+                            <lightning-progress-step
+                                key={step.value}
+                                label={step.label}
+                                value={step.value}>
+                            </lightning-progress-step>
+                        </template>
+                    </lightning-progress-indicator>
+                </div>
+
+                <!-- Questions -->
+                <template for:each={questions} for:item="question" for:index="index">
+                    <div key={question.id} class="question-container slds-m-bottom_medium">
+                        <div class="question-header">
+                            <span class="question-number">Question {question.number}</span>
+                            <template if:true={question.required}>
+                                <span class="required-indicator">*</span>
+                            </template>
+                        </div>
+
+                        <p class="question-text slds-m-bottom_small">
+                            {question.text}
+                        </p>
+
+                        <!-- Radio Button Question -->
+                        <template if:true={question.isRadio}>
+                            <lightning-radio-group
+                                name={question.id}
+                                options={question.options}
+                                value={question.answer}
+                                onchange={handleAnswerChange}
+                                data-question-id={question.id}
+                                required={question.required}>
+                            </lightning-radio-group>
+                        </template>
+
+                        <!-- Text Input Question -->
+                        <template if:true={question.isText}>
+                            <lightning-textarea
+                                name={question.id}
+                                value={question.answer}
+                                placeholder={question.placeholder}
+                                onchange={handleAnswerChange}
+                                data-question-id={question.id}
+                                max-length="500"
+                                required={question.required}>
+                            </lightning-textarea>
+                        </template>
+
+                        <!-- Combobox Question -->
+                        <template if:true={question.isCombobox}>
+                            <lightning-combobox
+                                name={question.id}
+                                value={question.answer}
+                                placeholder="Select an option"
+                                options={question.options}
+                                onchange={handleAnswerChange}
+                                data-question-id={question.id}
+                                required={question.required}>
+                            </lightning-combobox>
+                        </template>
+                    </div>
+                </template>
+
+                <!-- Action Buttons -->
+                <div class="slds-m-top_large">
+                    <lightning-button
+                        variant="neutral"
+                        label="Back"
+                        onclick={handleBack}
+                        disabled={isProcessing}>
+                    </lightning-button>
+
+                    <lightning-button
+                        variant="brand"
+                        label="Analyze with AI"
+                        onclick={handleSubmitAssessment}
+                        disabled={isSubmitDisabled}
+                        class="slds-m-left_small submit-button">
+                    </lightning-button>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+
+    <!-- Processing/Loading Screen -->
+    <template if:true={showProcessing}>
+        <lightning-card title="Analyzing Your Case" icon-name="utility:spinner">
+            <div class="slds-p-around_large processing-container">
+                <div class="processing-content">
+                    <lightning-spinner
+                        alternative-text="Processing"
+                        size="large">
+                    </lightning-spinner>
+
+                    <h3 class="slds-text-heading_medium slds-m-top_medium">
+                        AI is analyzing your responses...
+                    </h3>
+
+                    <p class="slds-text-body_regular slds-text-color_weak slds-m-top_small">
+                        This typically takes 2-3 seconds
+                    </p>
+
+                    <div class="processing-steps slds-m-top_large">
+                        <div class="processing-step">
+                            <lightning-icon icon-name="utility:check" size="x-small" class="step-icon"></lightning-icon>
+                            <span>Analyzing keywords</span>
+                        </div>
+                        <div class="processing-step">
+                            <lightning-icon icon-name="utility:check" size="x-small" class="step-icon"></lightning-icon>
+                            <span>Reviewing historical patterns</span>
+                        </div>
+                        <div class="processing-step">
+                            <lightning-icon icon-name="utility:spinner" size="x-small" class="step-icon spinning"></lightning-icon>
+                            <span>Predicting classification...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+
+    <!-- Results Screen -->
+    <template if:true={showResults}>
+        <lightning-card title="Classification Results" icon-name="utility:success">
+            <div class="slds-p-around_medium">
+
+                <!-- Auto-Applied Success -->
+                <template if:true={result.autoApplied}>
+                    <div class="result-success slds-m-bottom_large">
+                        <lightning-icon
+                            icon-name="utility:success"
+                            size="large"
+                            variant="success"
+                            class="result-icon">
+                        </lightning-icon>
+                        <h3 class="slds-text-heading_medium slds-m-top_small">
+                            Classification Applied Successfully!
+                        </h3>
+                        <p class="slds-text-body_regular slds-text-color_weak slds-m-top_xx-small">
+                            {result.message}
+                        </p>
+                    </div>
+                </template>
+
+                <!-- Prediction for Review -->
+                <template if:false={result.autoApplied}>
+                    <div class="result-review slds-m-bottom_large">
+                        <lightning-icon
+                            icon-name="utility:info"
+                            size="large"
+                            variant="warning"
+                            class="result-icon">
+                        </lightning-icon>
+                        <h3 class="slds-text-heading_medium slds-m-top_small">
+                            Please Review Classification
+                        </h3>
+                        <p class="slds-text-body_regular slds-text-color_weak slds-m-top_xx-small">
+                            {result.message}
+                        </p>
+                    </div>
+                </template>
+
+                <!-- Classification Details -->
+                <div class="classification-details slds-m-bottom_large">
+                    <h4 class="slds-text-heading_small slds-m-bottom_small">Predicted Classification:</h4>
+
+                    <div class="classification-path">
+                        <div class="path-item">
+                            <span class="path-label">Type</span>
+                            <span class="path-value">{result.caseType}</span>
+                        </div>
+                        <lightning-icon icon-name="utility:chevronright" size="x-small"></lightning-icon>
+                        <div class="path-item">
+                            <span class="path-label">Sub-Type</span>
+                            <span class="path-value">{result.caseSubType}</span>
+                        </div>
+                        <lightning-icon icon-name="utility:chevronright" size="x-small"></lightning-icon>
+                        <div class="path-item">
+                            <span class="path-label">Reason</span>
+                            <span class="path-value">{result.caseReason}</span>
+                        </div>
+                    </div>
+
+                    <!-- Confidence Score -->
+                    <div class="confidence-display slds-m-top_medium">
+                        <span class="confidence-label">Confidence Score:</span>
+                        <div class="confidence-bar-container">
+                            <div class="confidence-bar" style={confidenceBarStyle}></div>
+                        </div>
+                        <span class="confidence-value">{confidencePercentage}%</span>
+                    </div>
+
+                    <!-- AI Reasoning -->
+                    <template if:true={result.reasoning}>
+                        <div class="reasoning-box slds-m-top_medium">
+                            <h5 class="slds-text-heading_x-small slds-m-bottom_xx-small">
+                                <lightning-icon icon-name="utility:intellishare" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                AI Reasoning:
+                            </h5>
+                            <p class="slds-text-body_small">{result.reasoning}</p>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Action Buttons -->
+                <template if:false={result.autoApplied}>
+                    <div class="slds-m-top_large">
+                        <lightning-button
+                            variant="neutral"
+                            label="Choose Manually"
+                            onclick={handleManualClassification}
+                            disabled={isProcessing}>
+                        </lightning-button>
+
+                        <lightning-button
+                            variant="brand"
+                            label="Accept & Continue"
+                            onclick={handleAcceptClassification}
+                            disabled={isProcessing}
+                            class="slds-m-left_small">
+                        </lightning-button>
+                    </div>
+                </template>
+
+                <template if:true={result.autoApplied}>
+                    <div class="slds-m-top_large">
+                        <lightning-button
+                            variant="brand"
+                            label="Continue to Intake"
+                            onclick={handleContinue}
+                            class="continue-button">
+                        </lightning-button>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+
+    <!-- Error Screen -->
+    <template if:true={showError}>
+        <lightning-card title="Classification Error" icon-name="utility:error">
+            <div class="slds-p-around_medium">
+                <div class="error-content">
+                    <lightning-icon
+                        icon-name="utility:error"
+                        size="large"
+                        variant="error"
+                        class="error-icon">
+                    </lightning-icon>
+
+                    <h3 class="slds-text-heading_medium slds-m-top_small">
+                        Unable to Classify Automatically
+                    </h3>
+
+                    <p class="slds-text-body_regular slds-m-top_small">
+                        {errorMessage}
+                    </p>
+
+                    <div class="slds-m-top_large">
+                        <lightning-button
+                            variant="neutral"
+                            label="Try Again"
+                            onclick={handleRetry}>
+                        </lightning-button>
+
+                        <lightning-button
+                            variant="brand"
+                            label="Classify Manually"
+                            onclick={handleManualClassification}
+                            class="slds-m-left_small">
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+</template>
