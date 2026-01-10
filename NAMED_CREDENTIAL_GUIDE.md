@@ -446,6 +446,76 @@ The ultimate test is using the actual component:
 
 ## Troubleshooting
 
+### Error: "Couldn't access the credential(s)"
+
+**Full Error Message:**
+```
+System.CalloutException: We couldn't access the credential(s). You might not have
+the required permissions, or the external credential "Google_Gemini_API" might not exist.
+```
+
+**Debug Log Shows:**
+```
+NAMED_CREDENTIAL_RESPONSE|NamedCallout[Named Credential Id=null, Named Credential Name=null...
+```
+
+**Cause:** This is the most common initial setup error - the Named Credential doesn't exist yet or cannot be found.
+
+**Solution - Verify Setup:**
+
+**Step 1: Check if Named Credential exists**
+1. Go to **Setup** → Quick Find → type `Named Credentials`
+2. Look for an entry with **Name** = `Google_Gemini_API`
+3. If you don't see it → **You need to create it** (see Method 1 or Method 2 above)
+4. If you see it → Continue to Step 2
+
+**Step 2: Verify the Name is exact**
+1. Click on your Named Credential
+2. Check the **Name** field (not Label!)
+3. Must be exactly: `Google_Gemini_API`
+   - ❌ NOT: `Google Gemini API` (spaces)
+   - ❌ NOT: `google_gemini_api` (case)
+   - ❌ NOT: `GoogleGeminiAPI` (underscores)
+
+**Step 3: If using External Credentials (Method 1)**
+1. Setup → **External Credentials**
+2. Verify entry exists with **Name** = `Google_Gemini_API`
+3. Click on it → Verify custom header `x-goog-api-key` exists
+4. If External Credential missing → Create it first, then Named Credential
+
+**Step 4: Check Remote Site Settings**
+1. Setup → **Remote Site Settings**
+2. Verify entry exists for `https://generativelanguage.googleapis.com`
+3. If missing → See "Unauthorized endpoint" error below
+
+**Step 5: Verify User Permissions**
+1. Setup → **Users** → find your user
+2. Click on your username → **Permission Sets** or **Profile**
+3. Check these permissions are enabled:
+   - ✅ **API Enabled**
+   - ✅ **Author Apex** (for testing in Anonymous Apex)
+
+**Quick Test After Setup:**
+Run this in Anonymous Apex to verify:
+```apex
+HttpRequest req = new HttpRequest();
+req.setEndpoint('callout:Google_Gemini_API/v1beta/models');
+req.setMethod('GET');
+req.setTimeout(30000);
+
+try {
+    Http http = new Http();
+    HttpResponse res = http.send(req);
+    System.debug('✅ SUCCESS - Status: ' + res.getStatusCode());
+} catch (Exception e) {
+    System.debug('❌ ERROR: ' + e.getMessage());
+}
+```
+
+Expected output: `✅ SUCCESS - Status: 200`
+
+---
+
 ### Error: "Unauthorized endpoint"
 
 **Full Error Message:**
