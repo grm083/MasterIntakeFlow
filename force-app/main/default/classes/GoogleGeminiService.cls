@@ -480,9 +480,9 @@ public with sharing class GoogleGeminiService {
             } catch (Exception e) {
                 // Return default configuration if metadata not found
                 configCache = new AI_Configuration__mdt(
-                    API_Endpoint__c = '/v1beta/models/gemini-1.5-flash:generateContent',
+                    API_Endpoint__c = '/v1beta/models/gemini-2.0-flash-exp:generateContent',
                     Temperature__c = 0.3,
-                    Max_Tokens__c = 500
+                    Max_Tokens__c = 1500
                 );
             }
         }
