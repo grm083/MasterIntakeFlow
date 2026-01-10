@@ -50,7 +50,7 @@ Setup → Search "Custom Metadata Types" → AI Configuration → Manage Records
 ```
 Label: Case Classification
 Name: Case_Classification
-API Endpoint: /v1beta/models/gemini-1.5-flash:generateContent
+API Endpoint: /v1/models/gemini-1.5-flash:generateContent
 Temperature: 0.3
 Max Tokens: 500
 ```

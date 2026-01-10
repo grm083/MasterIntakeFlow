@@ -79,7 +79,7 @@ AIzaSyDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 You can test your API key using curl:
 
 ```bash
-curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=YOUR_API_KEY" \
+curl "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=YOUR_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
     "contents": [{
@@ -191,7 +191,7 @@ Custom Metadata stores AI configuration without hardcoding.
 6. Fill in the form:
    - **Label:** `Case Classification`
    - **AI Configuration Name:** `Case_Classification`
-   - **API Endpoint:** `/v1beta/models/gemini-1.5-flash:generateContent`
+   - **API Endpoint:** `/v1/models/gemini-1.5-flash:generateContent`
    - **Temperature:** `0.3`
    - **Max Tokens:** `500`
 
@@ -707,7 +707,7 @@ For more accurate classification (at slightly higher cost):
 2. Edit "Case_Classification" record
 3. Change **API Endpoint** to:
    ```
-   /v1beta/models/gemini-1.5-pro:generateContent
+   /v1/models/gemini-1.5-pro:generateContent
    ```
 4. Save
 

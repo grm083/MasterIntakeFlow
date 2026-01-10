@@ -59,7 +59,7 @@ This document lists all screenshots that should be captured and added to the set
 **Screenshot 2.3b:** `screenshot-2.3b-metadata-record.png`
 - **Page:** Custom Metadata record edit page
 - **What to show:** Case_Classification record with fields:
-  - API Endpoint: /v1beta/models/gemini-1.5-flash:generateContent
+  - API Endpoint: /v1/models/gemini-1.5-flash:generateContent
   - Temperature: 0.3
   - Max Tokens: 500
 - **Callouts:** Each field with its value
