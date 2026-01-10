@@ -144,8 +144,7 @@ public with sharing class GoogleGeminiService {
             },
             'generationConfig' => new Map<String, Object>{
                 'temperature' => config.Temperature__c,
-                'maxOutputTokens' => Integer.valueOf(config.Max_Tokens__c),
-                'responseMimeType' => 'application/json'
+                'maxOutputTokens' => Integer.valueOf(config.Max_Tokens__c)
             }
         };
 
