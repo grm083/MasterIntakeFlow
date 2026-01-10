@@ -385,7 +385,7 @@ After creating the Named Credential, verify it works:
 ```apex
 // Test Google Gemini API connection
 HttpRequest req = new HttpRequest();
-req.setEndpoint('callout:Google_Gemini_API/v1/models');
+req.setEndpoint('callout:Google_Gemini_API/v1beta/models');
 req.setMethod('GET');
 req.setTimeout(30000);
 
@@ -499,7 +499,7 @@ NAMED_CREDENTIAL_RESPONSE|NamedCallout[Named Credential Id=null, Named Credentia
 Run this in Anonymous Apex to verify:
 ```apex
 HttpRequest req = new HttpRequest();
-req.setEndpoint('callout:Google_Gemini_API/v1/models');
+req.setEndpoint('callout:Google_Gemini_API/v1beta/models');
 req.setMethod('GET');
 req.setTimeout(30000);
 
@@ -715,7 +715,7 @@ String apiKey = 'AIzaSyDXXXXXXXXXXX'; // DON'T DO THIS!
 **✅ Good:**
 ```apex
 // Use Named Credential
-req.setEndpoint('callout:Google_Gemini_API/v1/models');
+req.setEndpoint('callout:Google_Gemini_API/v1beta/models');
 // API key passed automatically via custom header
 ```
 
@@ -813,7 +813,7 @@ The setup is the same, just the UI looks different.
 ```apex
 // Reference in Apex
 HttpRequest req = new HttpRequest();
-req.setEndpoint('callout:Google_Gemini_API/v1/models/gemini-1.5-flash:generateContent');
+req.setEndpoint('callout:Google_Gemini_API/v1beta/models/gemini-1.5-flash:generateContent');
 req.setMethod('POST');
 // API key header automatically added!
 ```
