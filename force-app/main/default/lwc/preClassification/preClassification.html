@@ -15,14 +15,13 @@
                     </h2>
 
                     <p class="slds-text-body_regular slds-m-bottom_medium">
-                        Answer a few quick questions and our AI will automatically route your case to the right team.
-                        This takes less than 30 seconds.
+                        Describe your issue or request and our AI will automatically classify and route your case to the right team.
                     </p>
 
                     <div class="info-badges slds-m-bottom_large">
                         <div class="info-badge">
                             <lightning-icon icon-name="utility:clock" size="x-small"></lightning-icon>
-                            <span>~30 seconds</span>
+                            <span>Quick & Easy</span>
                         </div>
                         <div class="info-badge">
                             <lightning-icon icon-name="utility:routing_offline" size="x-small"></lightning-icon>
@@ -30,7 +29,7 @@
                         </div>
                         <div class="info-badge">
                             <lightning-icon icon-name="utility:success" size="x-small"></lightning-icon>
-                            <span>Accurate Routing</span>
+                            <span>Auto-Classified</span>
                         </div>
                     </div>
 
@@ -47,37 +46,17 @@
 
     <!-- Questions Screen -->
     <template if:true={showQuestions}>
-        <lightning-card title="Quick Assessment" icon-name="utility:questions_and_answers">
+        <lightning-card title="Describe Your Issue" icon-name="utility:questions_and_answers">
             <div class="slds-p-around_medium">
-
-                <!-- Progress Indicator -->
-                <div class="progress-indicator slds-m-bottom_medium">
-                    <lightning-progress-indicator
-                        current-step={currentStepName}
-                        type="path"
-                        variant="base">
-                        <template for:each={progressSteps} for:item="step">
-                            <lightning-progress-step
-                                key={step.value}
-                                label={step.label}
-                                value={step.value}>
-                            </lightning-progress-step>
-                        </template>
-                    </lightning-progress-indicator>
-                </div>
 
                 <!-- Questions -->
                 <template for:each={questions} for:item="question" for:index="index">
                     <div key={question.id} class="question-container slds-m-bottom_medium">
-                        <div class="question-header">
-                            <span class="question-number">Question {question.number}</span>
-                            <template if:true={question.required}>
-                                <span class="required-indicator">*</span>
-                            </template>
-                        </div>
-
                         <p class="question-text slds-m-bottom_small">
                             {question.text}
+                            <template if:true={question.required}>
+                                <span class="required-indicator"> *</span>
+                            </template>
                         </p>
 
                         <!-- Radio Button Question -->

@@ -82,63 +82,10 @@ export default class PreClassification extends LightningElement {
             {
                 id: 'q1',
                 number: 1,
-                text: 'What is the primary issue or request?',
-                type: 'radio',
-                required: true,
-                options: [
-                    { label: 'Equipment is broken or malfunctioning', value: 'equipment_issue' },
-                    { label: 'Need service or maintenance', value: 'service_request' },
-                    { label: 'Billing or account question', value: 'billing_issue' },
-                    { label: 'General inquiry or other', value: 'general_inquiry' }
-                ],
-                answer: ''
-            },
-            {
-                id: 'q2',
-                number: 2,
-                text: 'Please describe the issue in more detail:',
+                text: 'Please describe the issue or request:',
                 type: 'text',
-                placeholder: 'E.g., "Compactor is making loud noise and not compacting properly"',
+                placeholder: 'E.g., "Compactor is making loud noise and not compacting properly" or "Need to schedule pickup for next week"',
                 required: true,
-                answer: ''
-            },
-            {
-                id: 'q3',
-                number: 3,
-                text: 'What is the urgency level?',
-                type: 'radio',
-                required: true,
-                options: [
-                    { label: 'Emergency - Immediate attention required', value: 'emergency' },
-                    { label: 'Urgent - Needs attention today', value: 'urgent' },
-                    { label: 'Standard - Can wait 1-2 days', value: 'standard' },
-                    { label: 'Low - No immediate rush', value: 'low' }
-                ],
-                answer: ''
-            },
-            {
-                id: 'q4',
-                number: 4,
-                text: 'Is this related to a specific piece of equipment?',
-                type: 'combobox',
-                required: false,
-                options: [
-                    { label: 'Compactor', value: 'compactor' },
-                    { label: 'Baler', value: 'baler' },
-                    { label: 'Container', value: 'container' },
-                    { label: 'Roll-off', value: 'rolloff' },
-                    { label: 'Cart', value: 'cart' },
-                    { label: 'Other/Not applicable', value: 'other' }
-                ],
-                answer: ''
-            },
-            {
-                id: 'q5',
-                number: 5,
-                text: 'Any additional context or details?',
-                type: 'text',
-                placeholder: 'Optional: Any other information that might help...',
-                required: false,
                 answer: ''
             }
         ];
