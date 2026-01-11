@@ -18,7 +18,7 @@ public with sharing class GoogleGeminiService {
 
     // Configuration
     private static final String NAMED_CREDENTIAL = 'callout:Google_Gemini_API';
-    private static final Integer MAX_RETRIES = 2;
+    private static final Integer MAX_RETRIES = 1; // Only 1 attempt, no retries to prevent token exhaustion and delays
     private static final Integer TIMEOUT_MS = 30000; // 30 seconds
     private static final Integer RETRY_DELAY_MS = 1000; // 1 second
 
@@ -171,14 +171,24 @@ public with sharing class GoogleGeminiService {
 
     /**
      * Determine if an error is retryable (transient failure)
+     * NOTE: MAX_RETRIES is set to 1, so retries are disabled by default to prevent
+     * token exhaustion and delays. This method is kept for configuration flexibility.
      */
     private static Boolean isRetryableError(Exception e) {
         String message = e.getMessage().toLowerCase();
 
-        // Retry on these conditions
+        // DO NOT retry on quota/token errors - these will not resolve with retries
+        if (message.contains('quota') ||
+            message.contains('resource_exhausted') ||
+            message.contains('insufficient') ||
+            message.contains('429')) {  // Rate Limit / Quota Exceeded
+            System.debug('[GoogleGeminiService] Quota/token limit error detected - not retrying');
+            return false;
+        }
+
+        // Only retry on truly transient network errors (though MAX_RETRIES=1 prevents retries)
         return message.contains('timeout') ||
                message.contains('503') ||     // Service Unavailable
-               message.contains('429') ||     // Rate Limit
                message.contains('500') ||     // Internal Server Error
                message.contains('502') ||     // Bad Gateway
                message.contains('504');       // Gateway Timeout
@@ -239,13 +249,22 @@ public with sharing class GoogleGeminiService {
                 if (errorBody.containsKey('error')) {
                     Map<String, Object> error =
                         (Map<String, Object>) errorBody.get('error');
-                    errorMessage += ' - ' + error.get('message');
+                    String apiMessage = (String) error.get('message');
+                    errorMessage += ' - ' + apiMessage;
+
+                    // Log specific error for quota/token issues
+                    if (res.getStatusCode() == 429 ||
+                        (apiMessage != null && (apiMessage.toLowerCase().contains('quota') ||
+                                               apiMessage.toLowerCase().contains('resource_exhausted')))) {
+                        System.debug('[GoogleGeminiService] QUOTA/TOKEN LIMIT ERROR - AI tokens may be exhausted');
+                    }
                 }
             } catch (Exception e) {
                 // If parsing fails, include raw body
                 errorMessage += ' - ' + res.getBody();
             }
 
+            System.debug('[GoogleGeminiService] API Error: ' + errorMessage);
             throw new CalloutException(errorMessage);
         }
 

@@ -11,6 +11,9 @@ public with sharing class CaseSubjectGenerator {
      * Process cases that have been closed without a subject
      * This method is called from CaseTriggerHandler.afterUpdate
      *
+     * CRITICAL: This method must NEVER throw exceptions that could block case closure.
+     * All errors are caught and logged, allowing the case update to proceed.
+     *
      * @param newCaseMap Map of new Case records by ID
      * @param oldCaseMap Map of old Case records by ID
      */
@@ -18,29 +21,38 @@ public with sharing class CaseSubjectGenerator {
         Map<Id, Case> newCaseMap,
         Map<Id, Case> oldCaseMap
     ) {
-        // Find cases that meet the criteria
-        List<Id> eligibleCaseIds = new List<Id>();
+        try {
+            // Find cases that meet the criteria
+            List<Id> eligibleCaseIds = new List<Id>();
 
-        for (Id caseId : newCaseMap.keySet()) {
-            Case newCase = newCaseMap.get(caseId);
-            Case oldCase = oldCaseMap.get(caseId);
+            for (Id caseId : newCaseMap.keySet()) {
+                Case newCase = newCaseMap.get(caseId);
+                Case oldCase = oldCaseMap.get(caseId);
 
-            // Check if case meets all criteria
-            if (shouldGenerateSubjectFromComments(newCase, oldCase)) {
-                eligibleCaseIds.add(caseId);
+                // Check if case meets all criteria
+                if (shouldGenerateSubjectFromComments(newCase, oldCase)) {
+                    eligibleCaseIds.add(caseId);
+                }
             }
+
+            // If no eligible cases, return early
+            if (eligibleCaseIds.isEmpty()) {
+                System.debug('[CaseSubjectGenerator] No eligible cases found');
+                return;
+            }
+
+            System.debug('[CaseSubjectGenerator] Found ' + eligibleCaseIds.size() + ' eligible cases');
+
+            // Process eligible cases asynchronously to avoid hitting governor limits
+            generateSubjectsAsync(eligibleCaseIds);
+
+        } catch (Exception e) {
+            // CRITICAL: Catch all exceptions to prevent blocking case closure
+            // Log the error but do not re-throw
+            System.debug('[CaseSubjectGenerator] ERROR in processClosedCasesWithoutSubject: ' + e.getMessage());
+            System.debug('[CaseSubjectGenerator] Stack trace: ' + e.getStackTraceString());
+            // Subject generation is non-critical - allow case update to proceed
         }
-
-        // If no eligible cases, return early
-        if (eligibleCaseIds.isEmpty()) {
-            System.debug('[CaseSubjectGenerator] No eligible cases found');
-            return;
-        }
-
-        System.debug('[CaseSubjectGenerator] Found ' + eligibleCaseIds.size() + ' eligible cases');
-
-        // Process eligible cases asynchronously to avoid hitting governor limits
-        generateSubjectsAsync(eligibleCaseIds);
     }
 
     /**
