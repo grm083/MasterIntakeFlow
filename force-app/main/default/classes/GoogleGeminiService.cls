@@ -701,6 +701,7 @@ public with sharing class GoogleGeminiService {
      * @return String the generated summary (1 paragraph), or null if no comments exist
      * @throws GoogleGeminiException if summary generation fails
      */
+    @AuraEnabled(cacheable=true)
     public static String generateCommentSummary(Id caseId) {
         if (caseId == null) {
             throw new GoogleGeminiException('Case ID is required for comment summary generation');
@@ -847,7 +848,7 @@ public with sharing class GoogleGeminiService {
                 SELECT Case_Type__c, Case_Sub_Type__c, Case_Reason__c
                 FROM Case
                 WHERE Master_Intake_Complete__c = true
-                AND (Description LIKE :keywordPattern OR Subject LIKE :keywordPattern)
+                AND (Subject LIKE :keywordPattern)
                 AND CreatedDate = LAST_N_DAYS:90
                 ORDER BY CreatedDate DESC
                 LIMIT 20
@@ -928,7 +929,7 @@ public with sharing class GoogleGeminiService {
             List<AggregateResult> results = [
                 SELECT Case_Type__c type, Case_Sub_Type__c subType, Case_Reason__c reason
                 FROM Intake_Process__c
-                WHERE Is_Question__c = true
+                WHERE RecordType.Name = 'Intake Questions'
                 AND Case_Type__c != null
                 AND Case_Sub_Type__c != null
                 AND Case_Reason__c != null
