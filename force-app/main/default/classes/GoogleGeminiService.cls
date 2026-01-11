@@ -694,6 +694,140 @@ public with sharing class GoogleGeminiService {
     }
 
     /**
+     * Generate a 1-paragraph summary of case comments using AI
+     * This method is called from LWC components to provide users with a quick overview
+     *
+     * @param caseId The Case ID to summarize comments for
+     * @return String the generated summary (1 paragraph), or null if no comments exist
+     * @throws GoogleGeminiException if summary generation fails
+     */
+    public static String generateCommentSummary(Id caseId) {
+        if (caseId == null) {
+            throw new GoogleGeminiException('Case ID is required for comment summary generation');
+        }
+
+        // Query case with context
+        List<Case> cases = [
+            SELECT Id, CaseNumber, Client__c, Location__c, Service_Date__c, AssetId,
+                   Source_System__c, Status, Subject,
+                   Client__r.Name,
+                   Location__r.Name, Location__r.AccountNumber,
+                   Case_Type__c, Case_Sub_Type__c, Case_Reason__c,
+                   Asset.Name, Asset.Acorn_SID__c, Asset.Material_Type__c
+            FROM Case
+            WHERE Id = :caseId
+            LIMIT 1
+        ];
+
+        if (cases.isEmpty()) {
+            throw new GoogleGeminiException('Case not found: ' + caseId);
+        }
+
+        Case caseRecord = cases[0];
+
+        // Query all comments for this case
+        List<Comment__c> comments = [
+            SELECT Id, Comment__c, CreatedDate, CreatedBy.Name
+            FROM Comment__c
+            WHERE Case__c = :caseId
+            ORDER BY CreatedDate ASC
+        ];
+
+        if (comments.isEmpty()) {
+            return null; // Caller should handle null as "no comments"
+        }
+
+        System.debug('[GoogleGeminiService] Generating summary for ' + comments.size() + ' comments');
+
+        try {
+            // Build summary prompt
+            String prompt = buildCommentSummaryPrompt(comments, caseRecord);
+
+            // Call Google Gemini with retry logic
+            String response = callGeminiWithRetry(prompt);
+
+            // Parse response (just trim, no special parsing needed)
+            String summary = response.trim();
+
+            // Validate not empty
+            if (String.isBlank(summary)) {
+                throw new GoogleGeminiException('AI returned empty summary');
+            }
+
+            // Log successful generation
+            System.debug('[GoogleGeminiService] Generated comment summary: ' + summary.substring(0, Math.min(100, summary.length())) + '...');
+
+            return summary;
+
+        } catch (Exception e) {
+            // Log failure
+            System.debug('[GoogleGeminiService] Comment summary generation failed: ' + e.getMessage());
+
+            // Re-throw as custom exception
+            throw new GoogleGeminiException('Comment summary generation failed: ' + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Build prompt for comment summary generation
+     */
+    private static String buildCommentSummaryPrompt(
+        List<Comment__c> comments,
+        Case caseRecord
+    ) {
+        String prompt = 'You are an expert at summarizing case histories. ';
+        prompt += 'Your role is to analyze case comments and create a concise 1-paragraph summary of events.\n\n';
+
+        prompt += '# Case Context:\n';
+        prompt += '- Case Number: ' + caseRecord.CaseNumber + '\n';
+        prompt += '- Status: ' + caseRecord.Status + '\n';
+
+        if (String.isNotBlank(caseRecord.Subject)) {
+            prompt += '- Subject: ' + caseRecord.Subject + '\n';
+        }
+
+        if (String.isNotBlank(caseRecord.Case_Type__c)) {
+            prompt += '- Type: ' + caseRecord.Case_Type__c;
+            if (String.isNotBlank(caseRecord.Case_Sub_Type__c)) {
+                prompt += ' - ' + caseRecord.Case_Sub_Type__c;
+            }
+            prompt += '\n';
+        }
+
+        prompt += '\n# Case Comments:\n';
+        prompt += 'Below are the comments documenting the history of this case:\n\n';
+
+        Integer commentNum = 1;
+        for (Comment__c comment : comments) {
+            if (String.isNotBlank(comment.Comment__c)) {
+                prompt += 'Comment ' + commentNum + ' (' + comment.CreatedDate.format('MM/dd/yyyy HH:mm') + ' by ' + comment.CreatedBy.Name + '):\n';
+                prompt += comment.Comment__c + '\n\n';
+                commentNum++;
+            }
+        }
+
+        // Task instructions
+        prompt += '# Task:\n';
+        prompt += 'Based on the comments above, create a concise 1-paragraph summary that:\n';
+        prompt += '- Captures the key events and actions taken on this case\n';
+        prompt += '- Is written in past tense\n';
+        prompt += '- Is no more than 150 words\n';
+        prompt += '- Focuses on important milestones and decisions\n';
+        prompt += '- Omits minor details and routine updates\n';
+        prompt += '- Flows naturally as a single narrative paragraph\n';
+        prompt += '- Uses professional language\n\n';
+
+        prompt += 'Examples of good summaries:\n';
+        prompt += '- "Customer reported compactor making loud grinding noise. Technician dispatched on 01/05 and diagnosed failed motor bearing. Parts ordered same day and installed on 01/07. Unit tested successfully and returned to service."\n';
+        prompt += '- "Missed pickup reported at Main Street location. Route driver confirmed missed due to blocked access. Rescheduled for next day AM service. Pickup completed successfully on 01/06 with no further issues."\n';
+        prompt += '- "Billing inquiry regarding duplicate charge on December invoice. Account reviewed and confirmed system error caused double billing. Credit issued on 01/10 and customer notified via email."\n\n';
+
+        prompt += 'Return ONLY the summary paragraph with no additional text, no quotes, no formatting.';
+
+        return prompt;
+    }
+
+    /**
      * Get historical classification patterns for similar cases
      */
     private static String getHistoricalPatterns(List<PreIntakeAnswer> answers) {

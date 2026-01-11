@@ -1,0 +1,100 @@
+<template>
+    <lightning-card title="AI Comment Summary" icon-name="utility:summary">
+        <!-- Header Actions -->
+        <div slot="actions">
+            <lightning-button
+                label="Refresh"
+                icon-name="utility:refresh"
+                onclick={handleRefresh}
+                disabled={isLoading}
+                variant="neutral"
+            ></lightning-button>
+        </div>
+
+        <!-- Card Body -->
+        <div class="slds-p-horizontal_medium slds-p-vertical_small">
+
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <div class="slds-align_absolute-center slds-p-vertical_large">
+                    <lightning-spinner
+                        alternative-text="Generating AI summary..."
+                        size="small"
+                    ></lightning-spinner>
+                    <div class="slds-text-align_center slds-m-top_small">
+                        <p class="slds-text-body_regular slds-text-color_weak">
+                            Analyzing comments with AI...
+                        </p>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Summary Content -->
+            <template if:true={showSummary}>
+                <div class="summary-container">
+                    <div class="slds-text-body_regular summary-text">
+                        {summary}
+                    </div>
+                    <div class="slds-m-top_small">
+                        <p class="slds-text-body_small slds-text-color_weak ai-disclaimer">
+                            <lightning-icon
+                                icon-name="utility:info"
+                                size="xx-small"
+                                class="slds-m-right_xx-small"
+                            ></lightning-icon>
+                            AI-generated summary based on case comments
+                        </p>
+                    </div>
+                </div>
+            </template>
+
+            <!-- No Comments Message -->
+            <template if:true={showNoComments}>
+                <div class="no-comments-container">
+                    <div class="slds-illustration slds-illustration_small">
+                        <div class="slds-text-align_center">
+                            <lightning-icon
+                                icon-name="utility:comments"
+                                size="large"
+                                class="slds-m-bottom_small illustration-icon"
+                            ></lightning-icon>
+                            <h3 class="slds-text-heading_medium slds-m-bottom_x-small">
+                                No Comments Yet
+                            </h3>
+                            <p class="slds-text-body_regular slds-text-color_weak">
+                                No comments exist on this case yet. Add comments to see an AI-generated summary.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Error Message -->
+            <template if:true={showError}>
+                <div class="error-container">
+                    <div class="slds-notify slds-notify_alert slds-alert_error">
+                        <span class="slds-assistive-text">Error</span>
+                        <lightning-icon
+                            icon-name="utility:error"
+                            size="x-small"
+                            variant="error"
+                            class="slds-m-right_small"
+                        ></lightning-icon>
+                        <h2>
+                            <div class="slds-text-body_regular">
+                                {error}
+                            </div>
+                        </h2>
+                    </div>
+                    <div class="slds-m-top_small">
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            AI summary generation failed. You can still view comments manually.
+                            Click "Refresh" to try again.
+                        </p>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
