@@ -423,12 +423,41 @@ public with sharing class GoogleGeminiService {
         Case caseRecord
     ) {
         String prompt = 'You are an expert at creating concise, descriptive case subject lines. ';
-        prompt += 'Your role is to analyze case intake responses and create a brief subject line. ';
+        prompt += 'Your role is to analyze case intake responses and case details to create a brief subject line. ';
         prompt += 'The subject must be under 255 characters and capture the key issue.\n\n';
 
         prompt += '# Case Context:\n';
         prompt += '- Customer: ' + (caseRecord.Client__r?.Name ?? 'Unknown') + '\n';
         prompt += '- Location: ' + (caseRecord.Location__r?.Name ?? 'Unknown') + '\n';
+
+        // Add Location Account Number if available
+        if (String.isNotBlank(caseRecord.Location__r?.AccountNumber)) {
+            prompt += '- Location Account #: ' + caseRecord.Location__r.AccountNumber + '\n';
+        }
+
+        // Add Case classification if available
+        if (String.isNotBlank(caseRecord.Case_Type__c)) {
+            prompt += '- Case Type: ' + caseRecord.Case_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Sub_Type__c)) {
+            prompt += '- Case Sub-Type: ' + caseRecord.Case_Sub_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Reason__c)) {
+            prompt += '- Case Reason: ' + caseRecord.Case_Reason__c + '\n';
+        }
+
+        // Add Asset details if available
+        if (caseRecord.AssetId != null) {
+            prompt += '- Asset: ' + (caseRecord.Asset?.Name ?? 'Unknown') + '\n';
+
+            if (String.isNotBlank(caseRecord.Asset?.Acorn_SID__c)) {
+                prompt += '- Asset SID: ' + caseRecord.Asset.Acorn_SID__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset?.Material_Type__c)) {
+                prompt += '- Material Type: ' + caseRecord.Asset.Material_Type__c + '\n';
+            }
+        }
 
         if (caseRecord.Service_Date__c != null) {
             prompt += '- Service Date: ' + caseRecord.Service_Date__c.format() + '\n';
@@ -444,18 +473,24 @@ public with sharing class GoogleGeminiService {
 
         // Task instructions
         prompt += '# Task:\n';
-        prompt += 'Based on the intake responses above, create a concise subject line that:\n';
+        prompt += 'Based on the case context and intake responses above, create a concise subject line that:\n';
         prompt += '- Captures the main issue or request\n';
         prompt += '- Is under 255 characters\n';
         prompt += '- Is clear and specific\n';
-        prompt += '- Includes key details (equipment type, issue, urgency if critical)\n';
+        prompt += '- Includes location account number when available (e.g., "HMD000257", "ESS001000")\n';
+        prompt += '- Includes asset details when relevant (equipment type, material type)\n';
+        prompt += '- References the case type/reason when appropriate\n';
         prompt += '- Uses professional language\n\n';
 
-        prompt += 'Examples of good subjects:\n';
-        prompt += '- "Compactor repair needed - loud grinding noise, urgent"\n';
-        prompt += '- "Request new dumpster - 8 yard, weekly pickup at Main St location"\n';
-        prompt += '- "Billing inquiry - duplicate charge on March invoice"\n';
-        prompt += '- "Emergency service - overflowing dumpster requires immediate pickup"\n\n';
+        prompt += 'Examples of preferred subject formats:\n';
+        prompt += '- "Missed Pickup at HMD000257 on the 8 yard trash dumpster"\n';
+        prompt += '- "Repair for ESS001000 on the 34 yard cardboard compactor"\n';
+        prompt += '- "Service Request at ABC123456 - Equipment maintenance needed"\n';
+        prompt += '- "Delivery Issue for DEF789012 - New 6 yard recycling container"\n';
+        prompt += '- "Billing Inquiry for GHI345678 - Invoice discrepancy"\n\n';
+
+        prompt += 'IMPORTANT: When location account number is available, use the format "[Action] at/for [Account#] on/for the [Asset/Equipment]".\n';
+        prompt += 'When asset details are provided, include asset description in the subject line.\n\n';
 
         prompt += 'Return ONLY the subject line text with no quotes, no JSON, no additional text.';
 

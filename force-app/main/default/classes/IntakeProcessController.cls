@@ -478,10 +478,14 @@ public with sharing class IntakeProcessController {
                 throw new AuraHandledException('Intake answers are required');
             }
 
-            // Get case record with necessary fields
+            // Get case record with necessary fields including Location and Asset context
             Case c = [
-                SELECT Id, CaseNumber, Client__c, Location__c, Service_Date__c,
-                       Client__r.Name, Location__r.Name, Subject
+                SELECT Id, CaseNumber, Client__c, Location__c, Service_Date__c, AssetId,
+                       Client__r.Name,
+                       Location__r.Name, Location__r.AccountNumber,
+                       Case_Type__c, Case_Sub_Type__c, Case_Reason__c,
+                       Asset.Name, Asset.Acorn_SID__c, Asset.Material_Type__c,
+                       Subject
                 FROM Case
                 WHERE Id = :caseId
                 LIMIT 1
