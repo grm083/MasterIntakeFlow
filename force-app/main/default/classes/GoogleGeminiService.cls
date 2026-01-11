@@ -327,7 +327,11 @@ public with sharing class GoogleGeminiService {
 
         // Task instructions
         prompt += '# Task:\n';
-        prompt += 'Based on the case context and responses above, predict the most appropriate classification.\n';
+        prompt += 'Based on the case context and responses above:\n';
+        prompt += '1. Predict the most appropriate classification (type, subtype, reason, record type)\n';
+        prompt += '2. Extract location name if mentioned (e.g., "Main Street location", "Building 5", "Site A")\n';
+        prompt += '3. Extract asset/equipment description if mentioned (e.g., "compactor", "front loader", "unit 123")\n';
+        prompt += '4. Extract service date if mentioned (e.g., "next week", "tomorrow", "March 15th")\n';
         prompt += 'Consider keywords, urgency indicators, and historical patterns.\n\n';
 
         prompt += 'Return ONLY a JSON object in this exact format (no markdown, no code blocks, no additional text):\n';
@@ -336,6 +340,9 @@ public with sharing class GoogleGeminiService {
         prompt += '  "caseSubType": "string",\n';
         prompt += '  "caseReason": "string",\n';
         prompt += '  "recordType": "string (DeveloperName from available record types)",\n';
+        prompt += '  "locationName": "string or null (extracted location name if mentioned)",\n';
+        prompt += '  "assetDescription": "string or null (extracted asset/equipment description if mentioned)",\n';
+        prompt += '  "serviceDateString": "string or null (extracted date in natural language if mentioned)",\n';
         prompt += '  "confidence": 0.85,\n';
         prompt += '  "reasoning": "Brief explanation of why this classification was chosen"\n';
         prompt += '}';
@@ -369,6 +376,9 @@ public with sharing class GoogleGeminiService {
             result.caseSubType = (String) parsed.get('caseSubType');
             result.caseReason = (String) parsed.get('caseReason');
             result.recordType = (String) parsed.get('recordType');
+            result.locationName = (String) parsed.get('locationName');
+            result.assetDescription = (String) parsed.get('assetDescription');
+            result.serviceDateString = (String) parsed.get('serviceDateString');
             result.reasoning = (String) parsed.get('reasoning');
 
             // Parse confidence as Decimal (could be Double from JSON)
@@ -751,6 +761,9 @@ public with sharing class GoogleGeminiService {
         @AuraEnabled public String caseSubType { get; set; }
         @AuraEnabled public String caseReason { get; set; }
         @AuraEnabled public String recordType { get; set; }
+        @AuraEnabled public String locationName { get; set; }
+        @AuraEnabled public String assetDescription { get; set; }
+        @AuraEnabled public String serviceDateString { get; set; }
         @AuraEnabled public Decimal confidence { get; set; }
         @AuraEnabled public String reasoning { get; set; }
         @AuraEnabled public Boolean success { get; set; }

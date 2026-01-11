@@ -221,6 +221,9 @@ export default class PreClassification extends LightningElement {
                 caseSubType: this.result.caseSubType,
                 caseReason: this.result.caseReason,
                 recordType: this.result.recordType,
+                locationId: this.result.locationId,
+                assetId: this.result.assetId,
+                serviceDate: this.result.serviceDate,
                 confidence: this.result.confidence
             });
 
