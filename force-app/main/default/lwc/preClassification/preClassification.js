@@ -220,6 +220,7 @@ export default class PreClassification extends LightningElement {
                 caseType: this.result.caseType,
                 caseSubType: this.result.caseSubType,
                 caseReason: this.result.caseReason,
+                recordType: this.result.recordType,
                 confidence: this.result.confidence
             });
 

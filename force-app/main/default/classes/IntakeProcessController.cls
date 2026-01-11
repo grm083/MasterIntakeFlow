@@ -74,6 +74,7 @@ public with sharing class IntakeProcessController {
         @AuraEnabled public String caseType { get; set; }
         @AuraEnabled public String caseSubType { get; set; }
         @AuraEnabled public String caseReason { get; set; }
+        @AuraEnabled public String recordType { get; set; }
         @AuraEnabled public Decimal confidence { get; set; }
         @AuraEnabled public String reasoning { get; set; }
         @AuraEnabled public Boolean autoApplied { get; set; }
@@ -295,6 +296,7 @@ public with sharing class IntakeProcessController {
             result.caseType = aiResult.caseType;
             result.caseSubType = aiResult.caseSubType;
             result.caseReason = aiResult.caseReason;
+            result.recordType = aiResult.recordType;
             result.confidence = aiResult.confidence;
             result.reasoning = aiResult.reasoning;
             result.success = true;
@@ -307,6 +309,14 @@ public with sharing class IntakeProcessController {
                 c.Classification_Method__c = 'AI-Gemini';
                 c.Classification_Confidence__c = aiResult.confidence * 100;
                 c.Pre_Classification_Complete__c = true;
+
+                // Apply Record Type if provided
+                if (String.isNotBlank(aiResult.recordType)) {
+                    Id recordTypeId = getRecordTypeIdByName(aiResult.recordType);
+                    if (recordTypeId != null) {
+                        c.RecordTypeId = recordTypeId;
+                    }
+                }
 
                 update c;
 
@@ -342,6 +352,7 @@ public with sharing class IntakeProcessController {
      * @param caseType Predicted case type
      * @param caseSubType Predicted case sub-type
      * @param caseReason Predicted case reason
+     * @param recordType Predicted record type (DeveloperName)
      * @param confidence AI confidence score
      * @return Boolean indicating success
      */
@@ -351,6 +362,7 @@ public with sharing class IntakeProcessController {
         String caseType,
         String caseSubType,
         String caseReason,
+        String recordType,
         Decimal confidence
     ) {
         try {
@@ -362,6 +374,14 @@ public with sharing class IntakeProcessController {
             c.Classification_Method__c = 'AI-Gemini-Manual';
             c.Classification_Confidence__c = confidence * 100;
             c.Pre_Classification_Complete__c = true;
+
+            // Apply Record Type if provided
+            if (String.isNotBlank(recordType)) {
+                Id recordTypeId = getRecordTypeIdByName(recordType);
+                if (recordTypeId != null) {
+                    c.RecordTypeId = recordTypeId;
+                }
+            }
 
             update c;
 
@@ -444,6 +464,33 @@ public with sharing class IntakeProcessController {
         context.serviceDate = c.Service_Date__c;
 
         return context;
+    }
+
+    /**
+     * Convert Record Type developer name to Record Type ID
+     */
+    private static Id getRecordTypeIdByName(String recordTypeDeveloperName) {
+        try {
+            if (String.isBlank(recordTypeDeveloperName)) {
+                return null;
+            }
+
+            RecordType rt = [
+                SELECT Id
+                FROM RecordType
+                WHERE SObjectType = 'Case'
+                AND DeveloperName = :recordTypeDeveloperName
+                AND IsActive = true
+                LIMIT 1
+            ];
+
+            return rt.Id;
+
+        } catch (Exception e) {
+            System.debug('[IntakeProcessController] Error finding record type: ' + recordTypeDeveloperName);
+            System.debug('[IntakeProcessController] Error: ' + e.getMessage());
+            return null;
+        }
     }
 
     /**

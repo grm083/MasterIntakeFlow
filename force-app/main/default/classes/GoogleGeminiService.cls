@@ -321,6 +321,10 @@ public with sharing class GoogleGeminiService {
         prompt += '# Available Classifications:\n';
         prompt += getAvailableClassifications() + '\n\n';
 
+        // Add available record types
+        prompt += '# Available Record Types:\n';
+        prompt += getAvailableRecordTypes() + '\n\n';
+
         // Task instructions
         prompt += '# Task:\n';
         prompt += 'Based on the case context and responses above, predict the most appropriate classification.\n';
@@ -331,6 +335,7 @@ public with sharing class GoogleGeminiService {
         prompt += '  "caseType": "string",\n';
         prompt += '  "caseSubType": "string",\n';
         prompt += '  "caseReason": "string",\n';
+        prompt += '  "recordType": "string (DeveloperName from available record types)",\n';
         prompt += '  "confidence": 0.85,\n';
         prompt += '  "reasoning": "Brief explanation of why this classification was chosen"\n';
         prompt += '}';
@@ -363,6 +368,7 @@ public with sharing class GoogleGeminiService {
             result.caseType = (String) parsed.get('caseType');
             result.caseSubType = (String) parsed.get('caseSubType');
             result.caseReason = (String) parsed.get('caseReason');
+            result.recordType = (String) parsed.get('recordType');
             result.reasoning = (String) parsed.get('reasoning');
 
             // Parse confidence as Decimal (could be Double from JSON)
@@ -614,6 +620,59 @@ public with sharing class GoogleGeminiService {
     }
 
     /**
+     * Get available Record Types for Case object
+     */
+    private static String getAvailableRecordTypes() {
+        try {
+            List<RecordType> recordTypes = [
+                SELECT DeveloperName, Name
+                FROM RecordType
+                WHERE SObjectType = 'Case'
+                AND IsActive = true
+                ORDER BY Name
+            ];
+
+            Set<String> recordTypeNames = new Set<String>();
+            for (RecordType rt : recordTypes) {
+                recordTypeNames.add(rt.DeveloperName);
+            }
+
+            return String.join(new List<String>(recordTypeNames), ', ');
+
+        } catch (Exception e) {
+            System.debug('[GoogleGeminiService] Error getting record types: ' + e.getMessage());
+            return 'Master';
+        }
+    }
+
+    /**
+     * Convert Record Type developer name to Record Type ID
+     */
+    private static Id getRecordTypeId(String recordTypeDeveloperName) {
+        try {
+            if (String.isBlank(recordTypeDeveloperName)) {
+                return null;
+            }
+
+            RecordType rt = [
+                SELECT Id
+                FROM RecordType
+                WHERE SObjectType = 'Case'
+                AND DeveloperName = :recordTypeDeveloperName
+                AND IsActive = true
+                LIMIT 1
+            ];
+
+            return rt.Id;
+
+        } catch (Exception e) {
+            System.debug('[GoogleGeminiService] Error finding record type: ' + recordTypeDeveloperName);
+            System.debug('[GoogleGeminiService] Error: ' + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Get AI configuration from Custom Metadata
      */
     private static AI_Configuration__mdt getConfiguration() {
@@ -691,6 +750,7 @@ public with sharing class GoogleGeminiService {
         @AuraEnabled public String caseType { get; set; }
         @AuraEnabled public String caseSubType { get; set; }
         @AuraEnabled public String caseReason { get; set; }
+        @AuraEnabled public String recordType { get; set; }
         @AuraEnabled public Decimal confidence { get; set; }
         @AuraEnabled public String reasoning { get; set; }
         @AuraEnabled public Boolean success { get; set; }
