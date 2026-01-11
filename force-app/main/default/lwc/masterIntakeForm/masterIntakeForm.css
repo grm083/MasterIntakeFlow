@@ -235,9 +235,23 @@ lightning-button:focus-within {
 /* Modal Header Enhancement - WM Brand */
 .slds-modal__header {
     border-bottom: 3px solid #1c8200;
+    position: relative;
 }
 
 .slds-modal__title {
     color: #024731;
     font-weight: 700;
+}
+
+/* Minimize Button - positioned next to close button */
+.minimize-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 2.75rem;
+    z-index: 1;
+}
+
+.minimize-button:hover {
+    color: #1c8200;
+    background-color: rgba(28, 130, 0, 0.1);
 }

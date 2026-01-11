@@ -12,11 +12,87 @@
     flex-grow: 1;
 }
 
+/* Floating Resume Button - WM Brand */
+.floating-resume-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background-color: #1c8200;
+    background: linear-gradient(135deg, #1c8200 0%, #024731 100%);
+    color: #ffffff;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(28, 130, 0, 0.4);
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideInUp 0.4s ease-out;
+    max-width: 280px;
+}
+
+.floating-resume-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(28, 130, 0, 0.5);
+    background: linear-gradient(135deg, #024731 0%, #1c8200 100%);
+}
+
+.floating-resume-button:active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(28, 130, 0, 0.4);
+}
+
+.floating-button-icon {
+    flex-shrink: 0;
+    --slds-c-icon-color-foreground-default: #ffffff;
+}
+
+.floating-button-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.3;
+}
+
+.floating-button-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.floating-button-subtitle {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+}
+
+/* Floating button animation */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .launcher-container {
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+
+    .floating-resume-button {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        justify-content: center;
     }
 }

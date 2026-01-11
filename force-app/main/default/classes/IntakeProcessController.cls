@@ -69,6 +69,31 @@ public with sharing class IntakeProcessController {
         @AuraEnabled public String errorMessage { get; set; }
     }
 
+    public class ClassificationResultWrapper {
+        @AuraEnabled public Boolean success { get; set; }
+        @AuraEnabled public String caseType { get; set; }
+        @AuraEnabled public String caseSubType { get; set; }
+        @AuraEnabled public String caseReason { get; set; }
+        @AuraEnabled public String recordType { get; set; }
+        @AuraEnabled public String locationName { get; set; }
+        @AuraEnabled public String assetDescription { get; set; }
+        @AuraEnabled public String serviceDateString { get; set; }
+        @AuraEnabled public Id locationId { get; set; }
+        @AuraEnabled public Id assetId { get; set; }
+        @AuraEnabled public Date serviceDate { get; set; }
+        @AuraEnabled public Decimal confidence { get; set; }
+        @AuraEnabled public String reasoning { get; set; }
+        @AuraEnabled public Boolean autoApplied { get; set; }
+        @AuraEnabled public String message { get; set; }
+        @AuraEnabled public String errorMessage { get; set; }
+        @AuraEnabled public String errorType { get; set; }
+
+        public ClassificationResultWrapper() {
+            this.success = false;
+            this.autoApplied = false;
+        }
+    }
+
     // ========== PUBLIC METHODS ==========
 
     /**
@@ -225,6 +250,268 @@ public with sharing class IntakeProcessController {
         return result;
     }
 
+    /**
+     * Predict case classification using AI based on pre-intake answers
+     *
+     * @param caseId The Case ID to classify
+     * @param preIntakeAnswersJSON JSON string of pre-intake question/answer pairs
+     * @param autoApplyThreshold Confidence threshold for auto-applying classification (0.0-1.0)
+     * @return ClassificationResultWrapper with predicted classification and metadata
+     */
+    @AuraEnabled
+    public static ClassificationResultWrapper predictCaseClassification(
+        Id caseId,
+        String preIntakeAnswersJSON,
+        Decimal autoApplyThreshold
+    ) {
+        ClassificationResultWrapper result = new ClassificationResultWrapper();
+
+        try {
+            // Validate inputs
+            if (String.isBlank(preIntakeAnswersJSON)) {
+                throw new AuraHandledException('Pre-intake answers are required');
+            }
+
+            // Parse pre-intake answers from JSON
+            List<Object> answersRaw = (List<Object>) JSON.deserializeUntyped(preIntakeAnswersJSON);
+            List<GoogleGeminiService.PreIntakeAnswer> answers = new List<GoogleGeminiService.PreIntakeAnswer>();
+
+            for (Object answerObj : answersRaw) {
+                Map<String, Object> answerMap = (Map<String, Object>) answerObj;
+                GoogleGeminiService.PreIntakeAnswer answer = new GoogleGeminiService.PreIntakeAnswer();
+                answer.questionText = (String) answerMap.get('questionText');
+                answer.answerText = (String) answerMap.get('answerText');
+                answers.add(answer);
+            }
+
+            // Get case record with necessary fields
+            Case c = [
+                SELECT Id, CaseNumber, Client__c, Location__c, Service_Date__c,
+                       Client__r.Name, Location__r.Name,
+                       Case_Type__c, Case_Sub_Type__c, Case_Reason__c
+                FROM Case
+                WHERE Id = :caseId
+                LIMIT 1
+            ];
+
+            // Call Google Gemini AI service
+            GoogleGeminiService.ClassificationResult aiResult =
+                GoogleGeminiService.classifyCase(answers, c);
+
+            // Map classification fields to wrapper class
+            result.caseType = aiResult.caseType;
+            result.caseSubType = aiResult.caseSubType;
+            result.caseReason = aiResult.caseReason;
+            result.recordType = aiResult.recordType;
+            result.confidence = aiResult.confidence;
+            result.reasoning = aiResult.reasoning;
+            result.success = true;
+
+            // Extract and lookup entity fields
+            result.locationName = aiResult.locationName;
+            result.assetDescription = aiResult.assetDescription;
+            result.serviceDateString = aiResult.serviceDateString;
+
+            // Lookup Location if extracted
+            if (String.isNotBlank(aiResult.locationName)) {
+                result.locationId = findLocationByName(aiResult.locationName, c.Client__c);
+            }
+
+            // Lookup Asset if extracted (use found locationId if available)
+            if (String.isNotBlank(aiResult.assetDescription)) {
+                result.assetId = findAssetByDescription(
+                    aiResult.assetDescription,
+                    c.Client__c,
+                    result.locationId
+                );
+            }
+
+            // Parse Service Date if extracted
+            if (String.isNotBlank(aiResult.serviceDateString)) {
+                result.serviceDate = parseServiceDate(aiResult.serviceDateString);
+            }
+
+            // Auto-apply if confidence meets threshold
+            if (autoApplyThreshold != null && aiResult.confidence >= autoApplyThreshold) {
+                c.Case_Type__c = aiResult.caseType;
+                c.Case_Sub_Type__c = aiResult.caseSubType;
+                c.Case_Reason__c = aiResult.caseReason;
+                c.Classification_Method__c = 'AI-Gemini';
+                c.Classification_Confidence__c = aiResult.confidence * 100;
+                c.Pre_Classification_Complete__c = true;
+
+                // Apply Record Type if provided
+                if (String.isNotBlank(aiResult.recordType)) {
+                    Id recordTypeId = getRecordTypeIdByName(aiResult.recordType);
+                    if (recordTypeId != null) {
+                        c.RecordTypeId = recordTypeId;
+                    }
+                }
+
+                // Apply Location if found
+                if (result.locationId != null) {
+                    c.Location__c = result.locationId;
+                }
+
+                // Apply Asset if found
+                if (result.assetId != null) {
+                    c.AssetId = result.assetId;
+                }
+
+                // Apply Service Date if parsed
+                if (result.serviceDate != null) {
+                    c.Service_Date__c = result.serviceDate;
+                }
+
+                update c;
+
+                result.autoApplied = true;
+                result.message = 'Classification applied automatically (confidence: ' +
+                               Math.round(aiResult.confidence * 100) + '%)';
+            } else {
+                result.autoApplied = false;
+                result.message = 'Review and confirm classification (confidence: ' +
+                               Math.round(aiResult.confidence * 100) + '%)';
+            }
+
+        } catch (GoogleGeminiService.GoogleGeminiException e) {
+            // AI-specific error
+            result.success = false;
+            result.errorMessage = 'AI Classification Error: ' + e.getMessage();
+            result.errorType = 'AI_ERROR';
+
+        } catch (Exception e) {
+            // General error
+            result.success = false;
+            result.errorMessage = 'Error: ' + e.getMessage();
+            result.errorType = 'GENERAL_ERROR';
+        }
+
+        return result;
+    }
+
+    /**
+     * Apply AI classification to case manually (after user review)
+     *
+     * @param caseId The Case ID to update
+     * @param caseType Predicted case type
+     * @param caseSubType Predicted case sub-type
+     * @param caseReason Predicted case reason
+     * @param recordType Predicted record type (DeveloperName)
+     * @param locationId Location ID (if extracted and found)
+     * @param assetId Asset ID (if extracted and found)
+     * @param serviceDate Service Date (if extracted and parsed)
+     * @param confidence AI confidence score
+     * @return Boolean indicating success
+     */
+    @AuraEnabled
+    public static Boolean applyAIClassification(
+        Id caseId,
+        String caseType,
+        String caseSubType,
+        String caseReason,
+        String recordType,
+        Id locationId,
+        Id assetId,
+        Date serviceDate,
+        Decimal confidence
+    ) {
+        try {
+            Case c = [SELECT Id FROM Case WHERE Id = :caseId LIMIT 1];
+
+            c.Case_Type__c = caseType;
+            c.Case_Sub_Type__c = caseSubType;
+            c.Case_Reason__c = caseReason;
+            c.Classification_Method__c = 'AI-Gemini-Manual';
+            c.Classification_Confidence__c = confidence * 100;
+            c.Pre_Classification_Complete__c = true;
+
+            // Apply Record Type if provided
+            if (String.isNotBlank(recordType)) {
+                Id recordTypeId = getRecordTypeIdByName(recordType);
+                if (recordTypeId != null) {
+                    c.RecordTypeId = recordTypeId;
+                }
+            }
+
+            // Apply Location if provided
+            if (locationId != null) {
+                c.Location__c = locationId;
+            }
+
+            // Apply Asset if provided
+            if (assetId != null) {
+                c.AssetId = assetId;
+            }
+
+            // Apply Service Date if provided
+            if (serviceDate != null) {
+                c.Service_Date__c = serviceDate;
+            }
+
+            update c;
+
+            return true;
+
+        } catch (Exception e) {
+            throw new AuraHandledException('Failed to apply classification: ' + e.getMessage());
+        }
+    }
+
+    /**
+     * Generate AI-powered case subject line from intake answers
+     * This creates a concise, meaningful subject line that can be used for
+     * historical pattern matching in future case classifications
+     *
+     * @param caseId The Case ID to generate subject for
+     * @param answersJSON JSON string of intake question/answer pairs
+     * @return String the generated subject line (max 255 chars)
+     */
+    @AuraEnabled
+    public static String generateCaseSubject(
+        Id caseId,
+        String answersJSON
+    ) {
+        try {
+            // Validate inputs
+            if (String.isBlank(answersJSON)) {
+                throw new AuraHandledException('Intake answers are required');
+            }
+
+            // Get case record with necessary fields including Location and Asset context
+            Case c = [
+                SELECT Id, CaseNumber, Client__c, Location__c, Service_Date__c, AssetId,
+                       Client__r.Name,
+                       Location__r.Name, Location__r.AccountNumber,
+                       Case_Type__c, Case_Sub_Type__c, Case_Reason__c,
+                       Asset.Name, Asset.Acorn_SID__c, Asset.Material_Type__c,
+                       Subject
+                FROM Case
+                WHERE Id = :caseId
+                LIMIT 1
+            ];
+
+            // Call Google Gemini AI service to generate subject
+            String generatedSubject = GoogleGeminiService.generateCaseSubject(answersJSON, c);
+
+            // Update Case.Subject
+            c.Subject = generatedSubject;
+            update c;
+
+            System.debug('[IntakeProcessController] Generated and saved subject: ' + generatedSubject);
+
+            return generatedSubject;
+
+        } catch (GoogleGeminiService.GoogleGeminiException e) {
+            // AI-specific error
+            throw new AuraHandledException('AI Subject Generation Error: ' + e.getMessage());
+
+        } catch (Exception e) {
+            // General error
+            throw new AuraHandledException('Error generating subject: ' + e.getMessage());
+        }
+    }
+
     // ========== PRIVATE HELPER METHODS ==========
 
     /**
@@ -247,6 +534,242 @@ public with sharing class IntakeProcessController {
         context.serviceDate = c.Service_Date__c;
 
         return context;
+    }
+
+    /**
+     * Convert Record Type developer name to Record Type ID
+     */
+    private static Id getRecordTypeIdByName(String recordTypeDeveloperName) {
+        try {
+            if (String.isBlank(recordTypeDeveloperName)) {
+                return null;
+            }
+
+            RecordType rt = [
+                SELECT Id
+                FROM RecordType
+                WHERE SObjectType = 'Case'
+                AND DeveloperName = :recordTypeDeveloperName
+                AND IsActive = true
+                LIMIT 1
+            ];
+
+            return rt.Id;
+
+        } catch (Exception e) {
+            System.debug('[IntakeProcessController] Error finding record type: ' + recordTypeDeveloperName);
+            System.debug('[IntakeProcessController] Error: ' + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Find Location record by name (fuzzy match)
+     * @param locationName Extracted location name from user input
+     * @param clientId Optional Client/Account ID for filtering
+     * @return Location__c ID or null if not found
+     */
+    private static Id findLocationByName(String locationName, Id clientId) {
+        try {
+            if (String.isBlank(locationName)) {
+                return null;
+            }
+
+            System.debug('[IntakeProcessController] Looking up Location: ' + locationName);
+
+            // First try exact match
+            String exactPattern = '%' + locationName + '%';
+            List<Location__c> locations;
+
+            if (clientId != null) {
+                // Filter by Account if available
+                locations = [
+                    SELECT Id, Name
+                    FROM Location__c
+                    WHERE Name LIKE :exactPattern
+                    AND Account__c = :clientId
+                    ORDER BY Name
+                    LIMIT 1
+                ];
+            } else {
+                // Search without Account filter
+                locations = [
+                    SELECT Id, Name
+                    FROM Location__c
+                    WHERE Name LIKE :exactPattern
+                    ORDER BY Name
+                    LIMIT 1
+                ];
+            }
+
+            if (!locations.isEmpty()) {
+                System.debug('[IntakeProcessController] Found Location: ' + locations[0].Name);
+                return locations[0].Id;
+            }
+
+            System.debug('[IntakeProcessController] No Location found for: ' + locationName);
+            return null;
+
+        } catch (Exception e) {
+            System.debug('[IntakeProcessController] Error finding location: ' + locationName);
+            System.debug('[IntakeProcessController] Error: ' + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Find Asset record by description (fuzzy match)
+     * @param assetDescription Extracted asset/equipment description from user input
+     * @param clientId Optional Client/Account ID for filtering
+     * @param locationId Optional Location ID for filtering
+     * @return Asset ID or null if not found
+     */
+    private static Id findAssetByDescription(String assetDescription, Id clientId, Id locationId) {
+        try {
+            if (String.isBlank(assetDescription)) {
+                return null;
+            }
+
+            System.debug('[IntakeProcessController] Looking up Asset: ' + assetDescription);
+
+            // Search pattern for fuzzy match
+            String searchPattern = '%' + assetDescription + '%';
+            List<Asset> assets;
+
+            // Build query with available filters
+            if (clientId != null && locationId != null) {
+                // Filter by both Account and Location
+                assets = [
+                    SELECT Id, Name, SerialNumber
+                    FROM Asset
+                    WHERE (Name LIKE :searchPattern OR SerialNumber LIKE :searchPattern)
+                    AND AccountId = :clientId
+                    AND Location__c = :locationId
+                    ORDER BY Name
+                    LIMIT 1
+                ];
+            } else if (clientId != null) {
+                // Filter by Account only
+                assets = [
+                    SELECT Id, Name, SerialNumber
+                    FROM Asset
+                    WHERE (Name LIKE :searchPattern OR SerialNumber LIKE :searchPattern)
+                    AND AccountId = :clientId
+                    ORDER BY Name
+                    LIMIT 1
+                ];
+            } else if (locationId != null) {
+                // Filter by Location only
+                assets = [
+                    SELECT Id, Name, SerialNumber
+                    FROM Asset
+                    WHERE (Name LIKE :searchPattern OR SerialNumber LIKE :searchPattern)
+                    AND Location__c = :locationId
+                    ORDER BY Name
+                    LIMIT 1
+                ];
+            } else {
+                // No filters - search all assets
+                assets = [
+                    SELECT Id, Name, SerialNumber
+                    FROM Asset
+                    WHERE (Name LIKE :searchPattern OR SerialNumber LIKE :searchPattern)
+                    ORDER BY Name
+                    LIMIT 1
+                ];
+            }
+
+            if (!assets.isEmpty()) {
+                System.debug('[IntakeProcessController] Found Asset: ' + assets[0].Name);
+                return assets[0].Id;
+            }
+
+            System.debug('[IntakeProcessController] No Asset found for: ' + assetDescription);
+            return null;
+
+        } catch (Exception e) {
+            System.debug('[IntakeProcessController] Error finding asset: ' + assetDescription);
+            System.debug('[IntakeProcessController] Error: ' + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Parse natural language date string to Date
+     * @param serviceDateString Natural language date (e.g., "tomorrow", "next week", "March 15")
+     * @return Date or null if unable to parse
+     */
+    private static Date parseServiceDate(String serviceDateString) {
+        try {
+            if (String.isBlank(serviceDateString)) {
+                return null;
+            }
+
+            System.debug('[IntakeProcessController] Parsing service date: ' + serviceDateString);
+
+            String dateStr = serviceDateString.trim().toLowerCase();
+            Date today = Date.today();
+
+            // Handle relative dates
+            if (dateStr.contains('today')) {
+                return today;
+            } else if (dateStr.contains('tomorrow')) {
+                return today.addDays(1);
+            } else if (dateStr.contains('next week')) {
+                return today.addDays(7);
+            } else if (dateStr.contains('next month')) {
+                return today.addMonths(1);
+            } else if (dateStr.contains('monday')) {
+                return getNextWeekday(today, 1);
+            } else if (dateStr.contains('tuesday')) {
+                return getNextWeekday(today, 2);
+            } else if (dateStr.contains('wednesday')) {
+                return getNextWeekday(today, 3);
+            } else if (dateStr.contains('thursday')) {
+                return getNextWeekday(today, 4);
+            } else if (dateStr.contains('friday')) {
+                return getNextWeekday(today, 5);
+            } else if (dateStr.contains('saturday')) {
+                return getNextWeekday(today, 6);
+            } else if (dateStr.contains('sunday')) {
+                return getNextWeekday(today, 7);
+            }
+
+            // Try to parse as ISO date (YYYY-MM-DD)
+            try {
+                return Date.valueOf(serviceDateString);
+            } catch (Exception e) {
+                System.debug('[IntakeProcessController] Unable to parse date: ' + serviceDateString);
+                return null;
+            }
+
+        } catch (Exception e) {
+            System.debug('[IntakeProcessController] Error parsing service date: ' + serviceDateString);
+            System.debug('[IntakeProcessController] Error: ' + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Get the next occurrence of a specific weekday
+     * @param fromDate Starting date
+     * @param targetDayOfWeek Target day (1=Monday, 7=Sunday)
+     * @return Date of next occurrence
+     */
+    private static Date getNextWeekday(Date fromDate, Integer targetDayOfWeek) {
+        // Get current day of week (1=Sunday, 7=Saturday in Salesforce)
+        // Convert to Monday=1, Sunday=7
+        Datetime dt = Datetime.newInstance(fromDate, Time.newInstance(0, 0, 0, 0));
+        String dayName = dt.format('u'); // ISO day of week (1=Monday, 7=Sunday)
+        Integer currentDayOfWeek = Integer.valueOf(dayName);
+
+        // Calculate days to add
+        Integer daysToAdd = targetDayOfWeek - currentDayOfWeek;
+        if (daysToAdd <= 0) {
+            daysToAdd += 7; // Move to next week
+        }
+
+        return fromDate.addDays(daysToAdd);
     }
 
     /**

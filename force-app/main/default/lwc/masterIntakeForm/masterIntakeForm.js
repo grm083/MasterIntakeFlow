@@ -3,6 +3,7 @@ import { api, track } from 'lwc';
 import initializeIntake from '@salesforce/apex/IntakeProcessController.initializeIntake';
 import getNextQuestionBatch from '@salesforce/apex/IntakeProcessController.getNextQuestionBatch';
 import completeIntake from '@salesforce/apex/IntakeProcessController.completeIntake';
+import generateCaseSubject from '@salesforce/apex/IntakeProcessController.generateCaseSubject';
 
 /**
  * Master Intake Form - Modal dialog component
@@ -44,10 +45,16 @@ export default class MasterIntakeForm extends LightningModal {
         draftMetadata: null,
         draftLoaded: false,
 
+        // Minimize/Restore
+        isMinimized: false,
+
         // UI state
         isLoading: true,
         error: null
     };
+
+    // Floating button state (stored outside modal lifecycle)
+    static floatingButtonVisible = false;
 
     // ========== LIFECYCLE HOOKS ==========
 
@@ -559,6 +566,25 @@ export default class MasterIntakeForm extends LightningModal {
                 });
             }
 
+            // Generate AI-powered subject line from answers
+            console.log('[MasterIntakeForm] Generating AI-powered subject line...');
+            try {
+                const subjectAnswers = this.state.questionHistory.map(q => ({
+                    questionText: q.questionText,
+                    answerText: q.answerValue || q.selectedOutcomeText
+                }));
+
+                const generatedSubject = await generateCaseSubject({
+                    caseId: this.recordId,
+                    answersJSON: JSON.stringify(subjectAnswers)
+                });
+
+                console.log('[MasterIntakeForm] Generated subject:', generatedSubject);
+            } catch (subjectError) {
+                // Log but don't fail - subject generation is not critical
+                console.warn('[MasterIntakeForm] Failed to generate subject (continuing):', subjectError);
+            }
+
             console.log('[MasterIntakeForm] Calling completeIntake Apex method...');
             const result = await completeIntake({
                 caseId: this.recordId,
@@ -611,7 +637,42 @@ export default class MasterIntakeForm extends LightningModal {
             this.saveDraftToStorage();
         }
 
+        // Clear floating button state when actually closing
+        MasterIntakeForm.floatingButtonVisible = false;
+
         this.close('cancelled');
+    }
+
+    /**
+     * Handle minimize button click
+     */
+    handleMinimize() {
+        console.log('[MasterIntakeForm] handleMinimize - Minimizing modal');
+
+        // Save draft to preserve progress
+        if (this.state.questionHistory.length > 0) {
+            console.log('[MasterIntakeForm] Saving draft before minimizing');
+            this.saveDraftToStorage();
+        }
+
+        // Set flag to show floating button
+        MasterIntakeForm.floatingButtonVisible = true;
+        this.state.isMinimized = true;
+
+        // Close the modal (but don't clear the draft)
+        this.close('minimized');
+    }
+
+    /**
+     * Handle restore from floating button click
+     * This is called from the parent component that manages the floating button
+     */
+    static clearFloatingButton() {
+        MasterIntakeForm.floatingButtonVisible = false;
+    }
+
+    static isFloatingButtonVisible() {
+        return MasterIntakeForm.floatingButtonVisible;
     }
 
     // ========== UTILITY METHODS ==========
@@ -630,11 +691,18 @@ export default class MasterIntakeForm extends LightningModal {
 
     scrollToBottom() {
         setTimeout(() => {
-            const container = this.template.querySelector('.question-stack');
-            if (container) {
-                container.scrollTop = container.scrollHeight;
+            // Get all question items
+            const questions = this.template.querySelectorAll('c-question-item');
+            if (questions && questions.length > 0) {
+                // Scroll the last question into view (the newly added one)
+                const lastQuestion = questions[questions.length - 1];
+                lastQuestion.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end',
+                    inline: 'nearest'
+                });
             }
-        }, 100);
+        }, 150);
     }
 
     scrollToTop() {

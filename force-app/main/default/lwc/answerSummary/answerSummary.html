@@ -13,6 +13,17 @@
                 <p class="slds-text-body_regular">{outcomeStatement}</p>
             </div>
 
+            <!-- Submit Button - Prominently placed for easy access -->
+            <div class="slds-m-bottom_medium slds-text-align_center">
+                <lightning-button
+                    label={submitButtonLabel}
+                    variant="brand"
+                    onclick={handleSubmitClick}
+                    disabled={submitButtonDisabled}
+                    class="submit-button-primary">
+                </lightning-button>
+            </div>
+
             <!-- Actions Preview -->
             <template if:true={hasActions}>
                 <div class="slds-m-bottom_medium">
@@ -93,22 +104,13 @@
 
         </div>
 
-        <!-- Footer with Actions -->
+        <!-- Footer with Back Button -->
         <div slot="footer">
-            <div class="slds-grid slds-grid_align-spread">
-                <lightning-button
-                    label="Back"
-                    onclick={handleBackClick}
-                    disabled={submitButtonDisabled}>
-                </lightning-button>
-
-                <lightning-button
-                    label={submitButtonLabel}
-                    variant="brand"
-                    onclick={handleSubmitClick}
-                    disabled={submitButtonDisabled}>
-                </lightning-button>
-            </div>
+            <lightning-button
+                label="Back"
+                onclick={handleBackClick}
+                disabled={submitButtonDisabled}>
+            </lightning-button>
         </div>
 
     </lightning-card>
