@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import predictCaseClassification from '@salesforce/apex/IntakeProcessController.predictCaseClassification';
 import applyAIClassification from '@salesforce/apex/IntakeProcessController.applyAIClassification';
+import MasterIntakeFormModal from 'c/masterIntakeForm';
 
 /**
  * Pre-Classification Component
@@ -239,40 +240,130 @@ export default class PreClassification extends LightningElement {
     }
 
     /**
-     * User chooses manual classification
+     * User chooses manual classification - Opens Master Intake Form modal
      */
-    handleManualClassification() {
-        console.log('[PreClassification] User chose manual classification');
+    async handleManualClassification() {
+        console.log('[PreClassification] User chose manual classification - opening intake modal');
 
-        // Dispatch event to parent to handle manual flow
-        this.dispatchEvent(new CustomEvent('manualclassification', {
-            detail: {
-                answers: this.questions.map(q => ({
-                    questionText: q.text,
-                    answerText: q.answer
-                }))
+        try {
+            // Open Master Intake Form modal for manual classification
+            const result = await MasterIntakeFormModal.open({
+                size: 'large',
+                description: 'Master Intake Flow',
+                recordId: this.recordId
+            });
+
+            console.log('[PreClassification] Modal closed with result:', result);
+
+            // If intake was completed successfully, show success toast and refresh
+            if (result === 'success') {
+                console.log('[PreClassification] Intake completed successfully');
+
+                // Show success toast
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Master Intake completed successfully',
+                        variant: 'success'
+                    })
+                );
+
+                // Refresh the page to show updated case
+                setTimeout(() => {
+                    console.log('[PreClassification] Refreshing page...');
+                    eval("$A.get('e.force:refreshView').fire();");
+                }, 500);
             }
-        }));
+
+            // Dispatch event to parent to handle manual flow
+            this.dispatchEvent(new CustomEvent('manualclassification', {
+                detail: {
+                    answers: this.questions.map(q => ({
+                        questionText: q.text,
+                        answerText: q.answer
+                    })),
+                    intakeCompleted: result === 'success'
+                }
+            }));
+
+        } catch (error) {
+            console.error('[PreClassification] Error opening modal:', error);
+
+            // Show error toast
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Failed to open Master Intake Flow',
+                    variant: 'error',
+                    mode: 'sticky'
+                })
+            );
+        }
     }
 
     /**
-     * Continue to main intake flow
+     * Continue to main intake flow - Opens Master Intake Form modal
      */
-    handleContinue() {
-        console.log('[PreClassification] Continuing to main intake');
+    async handleContinue() {
+        console.log('[PreClassification] Continuing to main intake - opening modal');
 
-        // Dispatch event to parent
-        this.dispatchEvent(new CustomEvent('classificationcomplete', {
-            detail: {
-                classification: {
-                    caseType: this.result.caseType,
-                    caseSubType: this.result.caseSubType,
-                    caseReason: this.result.caseReason
-                },
-                confidence: this.result.confidence,
-                autoApplied: this.result.autoApplied
+        try {
+            // Open Master Intake Form modal
+            const result = await MasterIntakeFormModal.open({
+                size: 'large',
+                description: 'Master Intake Flow',
+                recordId: this.recordId
+            });
+
+            console.log('[PreClassification] Modal closed with result:', result);
+
+            // If intake was completed successfully, show success toast and refresh
+            if (result === 'success') {
+                console.log('[PreClassification] Intake completed successfully');
+
+                // Show success toast
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Master Intake completed successfully',
+                        variant: 'success'
+                    })
+                );
+
+                // Refresh the page to show updated case
+                setTimeout(() => {
+                    console.log('[PreClassification] Refreshing page...');
+                    eval("$A.get('e.force:refreshView').fire();");
+                }, 500);
             }
-        }));
+
+            // Dispatch event to parent (for any additional handling)
+            this.dispatchEvent(new CustomEvent('classificationcomplete', {
+                detail: {
+                    classification: {
+                        caseType: this.result.caseType,
+                        caseSubType: this.result.caseSubType,
+                        caseReason: this.result.caseReason
+                    },
+                    confidence: this.result.confidence,
+                    autoApplied: this.result.autoApplied,
+                    intakeCompleted: result === 'success'
+                }
+            }));
+
+        } catch (error) {
+            console.error('[PreClassification] Error opening modal:', error);
+
+            // Show error toast
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Failed to open Master Intake Flow',
+                    variant: 'error',
+                    mode: 'sticky'
+                })
+            );
+        }
     }
 
     /**
