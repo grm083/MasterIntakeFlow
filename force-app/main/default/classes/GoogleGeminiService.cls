@@ -539,6 +539,142 @@ public with sharing class GoogleGeminiService {
     }
 
     /**
+     * Generate subject line from case comments using AI
+     * This method is called when a case is closed without a subject
+     *
+     * @param comments List of Comment__c records for the case
+     * @param caseRecord Case record with context information
+     * @return String the generated subject line
+     * @throws GoogleGeminiException if subject generation fails
+     */
+    public static String generateSubjectFromComments(
+        List<Comment__c> comments,
+        Case caseRecord
+    ) {
+        if (comments == null || comments.isEmpty()) {
+            throw new GoogleGeminiException('Comments are required for subject generation');
+        }
+
+        if (caseRecord == null) {
+            throw new GoogleGeminiException('Case record is required for subject generation');
+        }
+
+        try {
+            // Build subject generation prompt from comments
+            String prompt = buildSubjectFromCommentsPrompt(comments, caseRecord);
+
+            // Call Google Gemini with retry logic
+            String response = callGeminiWithRetry(prompt);
+
+            // Parse and validate response
+            String subject = parseSubjectResponse(response);
+
+            // Log successful generation
+            System.debug('[GoogleGeminiService] Generated subject from comments: ' + subject);
+
+            return subject;
+
+        } catch (Exception e) {
+            // Log failure
+            System.debug('[GoogleGeminiService] Subject generation from comments failed: ' + e.getMessage());
+
+            // Re-throw as custom exception
+            throw new GoogleGeminiException('Subject generation from comments failed: ' + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Build prompt for subject line generation from comments
+     */
+    private static String buildSubjectFromCommentsPrompt(
+        List<Comment__c> comments,
+        Case caseRecord
+    ) {
+        String prompt = 'You are an expert at creating concise, descriptive case subject lines. ';
+        prompt += 'Your role is to analyze case comments and work history to create a brief subject line. ';
+        prompt += 'The subject must be under 255 characters and capture the key issue and resolution.\n\n';
+
+        prompt += '# Case Context:\n';
+        prompt += '- Case Number: ' + caseRecord.CaseNumber + '\n';
+        prompt += '- Customer: ' + (caseRecord.Client__r?.Name ?? 'Unknown') + '\n';
+        prompt += '- Location: ' + (caseRecord.Location__r?.Name ?? 'Unknown') + '\n';
+
+        // Add Location Account Number if available
+        if (String.isNotBlank(caseRecord.Location__r?.AccountNumber)) {
+            prompt += '- Location Account #: ' + caseRecord.Location__r.AccountNumber + '\n';
+        }
+
+        // Add Case classification if available
+        if (String.isNotBlank(caseRecord.Case_Type__c)) {
+            prompt += '- Case Type: ' + caseRecord.Case_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Sub_Type__c)) {
+            prompt += '- Case Sub-Type: ' + caseRecord.Case_Sub_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Reason__c)) {
+            prompt += '- Case Reason: ' + caseRecord.Case_Reason__c + '\n';
+        }
+
+        // Add Asset details if available
+        if (caseRecord.AssetId != null) {
+            prompt += '- Asset: ' + (caseRecord.Asset?.Name ?? 'Unknown') + '\n';
+
+            if (String.isNotBlank(caseRecord.Asset?.Acorn_SID__c)) {
+                prompt += '- Asset SID: ' + caseRecord.Asset.Acorn_SID__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset?.Material_Type__c)) {
+                prompt += '- Material Type: ' + caseRecord.Asset.Material_Type__c + '\n';
+            }
+        }
+
+        if (caseRecord.Service_Date__c != null) {
+            prompt += '- Service Date: ' + caseRecord.Service_Date__c.format() + '\n';
+        }
+
+        prompt += '- Status: ' + caseRecord.Status + '\n';
+
+        prompt += '\n# Case Comments and Work History:\n';
+        prompt += 'Below are the comments documenting the work performed and progress on this case:\n\n';
+
+        Integer commentNum = 1;
+        for (Comment__c comment : comments) {
+            if (String.isNotBlank(comment.Comment__c)) {
+                prompt += 'Comment ' + commentNum + ' (' + comment.CreatedDate.format('MM/dd/yyyy') + ' by ' + comment.CreatedBy.Name + '):\n';
+                prompt += comment.Comment__c + '\n\n';
+                commentNum++;
+            }
+        }
+
+        // Task instructions
+        prompt += '# Task:\n';
+        prompt += 'Based on the case context and comments above, create a concise subject line that:\n';
+        prompt += '- Summarizes the main issue and work performed\n';
+        prompt += '- Is under 255 characters\n';
+        prompt += '- Is clear and specific\n';
+        prompt += '- Includes location account number when available (e.g., "HMD000257", "ESS001000")\n';
+        prompt += '- Includes asset details when relevant (equipment type, material type)\n';
+        prompt += '- References the case type/reason when appropriate\n';
+        prompt += '- Captures the outcome or resolution if described in comments\n';
+        prompt += '- Uses professional language\n\n';
+
+        prompt += 'Examples of preferred subject formats:\n';
+        prompt += '- "Missed Pickup at HMD000257 - Resolved with rescheduled service"\n';
+        prompt += '- "Repair completed for ESS001000 on 34 yard cardboard compactor"\n';
+        prompt += '- "Service Request at ABC123456 - Equipment maintenance completed"\n';
+        prompt += '- "Delivery Issue for DEF789012 - New 6 yard recycling container delivered"\n';
+        prompt += '- "Billing Inquiry for GHI345678 - Invoice corrected and reissued"\n\n';
+
+        prompt += 'IMPORTANT: When location account number is available, use the format "[Action] at/for [Account#] - [Brief outcome]".\n';
+        prompt += 'When asset details are provided, include asset description in the subject line.\n';
+        prompt += 'Focus on what was done and the outcome, not just the initial complaint.\n\n';
+
+        prompt += 'Return ONLY the subject line text with no quotes, no JSON, no additional text.';
+
+        return prompt;
+    }
+
+    /**
      * Get historical classification patterns for similar cases
      */
     private static String getHistoricalPatterns(List<PreIntakeAnswer> answers) {

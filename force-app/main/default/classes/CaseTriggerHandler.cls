@@ -630,8 +630,12 @@ CaseTriggerHelper.updateCCandPO(caseNewMap.values(),oldCaseMap); //
                 RecurrsiveTriggerHandler.isReopenRecurrsiveToAcorn = false;
                 ReopenAcornTicket.reassignTicket(reopenTrackNumber);
             }
-			
-			
+
+			// Generate subject from comments for closed cases without subject
+            if(caseNewMap != null && oldCaseMap != null){
+                CaseSubjectGenerator.processClosedCasesWithoutSubject(caseNewMap, oldCaseMap);
+            }
+
         }
         catch(Exception ex){
             UTIL_LoggingService.logHandledException(ex, UserInfo.getOrganizationId(), UTIL_ErrorConstants.ERROR_APPLICATION,LoggingLevel.ERROR);
