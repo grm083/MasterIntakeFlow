@@ -317,6 +317,17 @@ public with sharing class GoogleGeminiService {
         prompt += '- Customer: ' + (caseRecord.Client__r?.Name ?? 'Unknown') + '\n';
         prompt += '- Location: ' + (caseRecord.Location__r?.Name ?? 'Unknown') + '\n';
 
+        // Include current case classification values for context
+        if (String.isNotBlank(caseRecord.Case_Type__c)) {
+            prompt += '- Current Case Type: ' + caseRecord.Case_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Sub_Type__c)) {
+            prompt += '- Current Case Sub-Type: ' + caseRecord.Case_Sub_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Reason__c)) {
+            prompt += '- Current Case Reason: ' + caseRecord.Case_Reason__c + '\n';
+        }
+
         if (caseRecord.Service_Date__c != null) {
             prompt += '- Service Date: ' + caseRecord.Service_Date__c.format() + '\n';
         }
@@ -350,14 +361,37 @@ public with sharing class GoogleGeminiService {
         prompt += '1. Predict the most appropriate classification (type, subtype, reason, record type)\n';
         prompt += '2. Extract location name if mentioned (e.g., "Main Street location", "Building 5", "Site A")\n';
         prompt += '3. Extract asset/equipment description if mentioned (e.g., "compactor", "front loader", "unit 123")\n';
-        prompt += '4. Extract service date if mentioned (e.g., "next week", "tomorrow", "March 15th")\n';
-        prompt += 'Consider keywords, urgency indicators, and historical patterns.\n\n';
+        prompt += '4. Extract service date if mentioned (e.g., "next week", "tomorrow", "March 15th")\n\n';
+
+        prompt += '# IMPORTANT CLASSIFICATION GUIDELINES:\n';
+        prompt += '- An incomplete stronger match is BETTER than a complete weaker match\n';
+        prompt += '- If Case Type and Sub-Type are clear but Reason is not, return null for caseReason\n';
+        prompt += '- Skilled representatives may directly state classifications (e.g., "needs an empty and return")\n';
+        prompt += '- Not all case types have master intake flows - this does not invalidate the classification\n';
+        prompt += '- Focus on matching the intent and keywords from the user\'s description\n';
+        prompt += '- Consider current case values as context but update if user input suggests different classification\n\n';
+
+        prompt += '# Examples:\n';
+        prompt += 'Example 1 - Direct classification statement:\n';
+        prompt += 'User: "HMD000257 requires an empty and return of their 40 yard compactor"\n';
+        prompt += 'Result: {"caseType": "Pickup", "caseSubType": "Empty and Return", "caseReason": null, "recordType": "Pickup_Case"}\n';
+        prompt += 'Reasoning: User directly stated "empty and return" - strong match even without Case Reason.\n\n';
+
+        prompt += 'Example 2 - Incomplete but strong:\n';
+        prompt += 'User: "Customer needs equipment serviced"\n';
+        prompt += 'Result: {"caseType": "Service Request", "caseSubType": "Maintenance", "caseReason": null, "recordType": "Service_Case"}\n';
+        prompt += 'Reasoning: Clear service request, maintenance is appropriate, but no specific reason evident.\n\n';
+
+        prompt += 'Example 3 - Complete and strong:\n';
+        prompt += 'User: "Compactor is broken and leaking fluids, needs urgent repair"\n';
+        prompt += 'Result: {"caseType": "Service Request", "caseSubType": "Repair", "caseReason": "Equipment Malfunction", "recordType": "Service_Case"}\n';
+        prompt += 'Reasoning: All fields have strong matches from user description.\n\n';
 
         prompt += 'Return ONLY a JSON object in this exact format (no markdown, no code blocks, no additional text):\n';
         prompt += '{\n';
-        prompt += '  "caseType": "string",\n';
-        prompt += '  "caseSubType": "string",\n';
-        prompt += '  "caseReason": "string",\n';
+        prompt += '  "caseType": "string (required)",\n';
+        prompt += '  "caseSubType": "string (required)",\n';
+        prompt += '  "caseReason": "string or null (use null if no strong match)",\n';
         prompt += '  "recordType": "string (DeveloperName from available record types)",\n';
         prompt += '  "locationName": "string or null (extracted location name if mentioned)",\n';
         prompt += '  "assetDescription": "string or null (extracted asset/equipment description if mentioned)",\n';
@@ -411,10 +445,10 @@ public with sharing class GoogleGeminiService {
             }
 
             // Validate required fields
+            // NOTE: caseReason is optional - incomplete strong match is better than complete weak match
             if (String.isBlank(result.caseType) ||
-                String.isBlank(result.caseSubType) ||
-                String.isBlank(result.caseReason)) {
-                throw new GoogleGeminiException('AI response missing required classification fields');
+                String.isBlank(result.caseSubType)) {
+                throw new GoogleGeminiException('AI response missing required classification fields (caseType and caseSubType are required)');
             }
 
             // Validate confidence range

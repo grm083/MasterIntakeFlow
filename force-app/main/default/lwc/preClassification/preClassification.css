@@ -202,6 +202,13 @@
     font-weight: 700;
 }
 
+.path-value-optional {
+    color: #706e6b;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.875rem;
+}
+
 .classification-path lightning-icon {
     --slds-c-icon-color-foreground-default: #1c8200;
 }

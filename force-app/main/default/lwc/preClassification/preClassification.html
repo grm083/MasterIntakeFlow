@@ -215,7 +215,7 @@
                         <lightning-icon icon-name="utility:chevronright" size="x-small"></lightning-icon>
                         <div class="path-item">
                             <span class="path-label">Reason</span>
-                            <span class="path-value">{result.caseReason}</span>
+                            <span class={hasCaseReason ? 'path-value' : 'path-value path-value-optional'}>{displayCaseReason}</span>
                         </div>
                     </div>
 
