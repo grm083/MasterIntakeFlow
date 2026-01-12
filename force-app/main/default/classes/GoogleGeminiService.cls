@@ -22,6 +22,9 @@ public with sharing class GoogleGeminiService {
     private static final Integer TIMEOUT_MS = 30000; // 30 seconds
     private static final Integer RETRY_DELAY_MS = 1000; // 1 second
 
+    // Special user email for personalized messages
+    private static final String JACKIE_EMAIL = 'jduran6@wm.com';
+
     // Cache for configuration to avoid repeated queries
     private static AI_Configuration__mdt configCache;
 
@@ -387,6 +390,17 @@ public with sharing class GoogleGeminiService {
         prompt += 'Result: {"caseType": "Service Request", "caseSubType": "Repair", "caseReason": "Equipment Malfunction", "recordType": "Service_Case"}\n';
         prompt += 'Reasoning: All fields have strong matches from user description.\n\n';
 
+        // Add personalization for Jackie Duran
+        String jackieInstructions = '';
+        if (isJackieDuran()) {
+            jackieInstructions = '\n\n# SPECIAL INSTRUCTION FOR THIS USER:\n';
+            jackieInstructions += 'The person viewing this classification is Jackie Duran, an amazing training consultant. ';
+            jackieInstructions += 'In your "reasoning" field, start with 1-2 sentences of genuine appreciation for Jackie. ';
+            jackieInstructions += 'Here are wonderful things about Jackie: ' + getJackiePersonalization() + '\n';
+            jackieInstructions += 'After your personalized message, provide your classification reasoning as normal.';
+        }
+
+        prompt += jackieInstructions + '\n\n';
         prompt += 'Return ONLY a JSON object in this exact format (no markdown, no code blocks, no additional text):\n';
         prompt += '{\n';
         prompt += '  "caseType": "string (required)",\n';
@@ -397,7 +411,11 @@ public with sharing class GoogleGeminiService {
         prompt += '  "assetDescription": "string or null (extracted asset/equipment description if mentioned)",\n';
         prompt += '  "serviceDateString": "string or null (extracted date in natural language if mentioned)",\n';
         prompt += '  "confidence": 0.85,\n';
-        prompt += '  "reasoning": "Brief explanation of why this classification was chosen"\n';
+        prompt += '  "reasoning": "Brief explanation of why this classification was chosen';
+        if (isJackieDuran()) {
+            prompt += ' (start with personalized message for Jackie as instructed)';
+        }
+        prompt += '"\n';
         prompt += '}';
 
         return prompt;
@@ -856,7 +874,16 @@ public with sharing class GoogleGeminiService {
         prompt += '- "Missed pickup reported at Main Street location. Route driver confirmed missed due to blocked access. Rescheduled for next day AM service. Pickup completed successfully on 01/06 with no further issues."\n';
         prompt += '- "Billing inquiry regarding duplicate charge on December invoice. Account reviewed and confirmed system error caused double billing. Credit issued on 01/10 and customer notified via email."\n\n';
 
-        prompt += 'Return ONLY the summary paragraph with no additional text, no quotes, no formatting.';
+        // Add personalization for Jackie Duran
+        if (isJackieDuran()) {
+            prompt += '# SPECIAL INSTRUCTION FOR THIS USER:\n';
+            prompt += 'The person reading this summary is Jackie Duran, a wonderful training consultant. ';
+            prompt += 'Start your summary with 1-2 sentences of genuine appreciation for Jackie that references her amazing qualities. ';
+            prompt += 'Here are some wonderful things about Jackie: ' + getJackiePersonalization() + '\n';
+            prompt += 'After your personalized greeting, provide the case summary as instructed above.\n\n';
+        }
+
+        prompt += 'Return ONLY the summary paragraph (with Jackie\'s personalized greeting if applicable) with no additional text, no quotes, no formatting.';
 
         return prompt;
     }
@@ -1092,6 +1119,50 @@ public with sharing class GoogleGeminiService {
             // Never fail on logging errors
             System.debug('[GoogleGeminiService] Logging error: ' + e.getMessage());
         }
+    }
+
+    /**
+     * Check if the current user is Jackie Duran
+     * @return Boolean true if current user email matches Jackie's email
+     */
+    private static Boolean isJackieDuran() {
+        try {
+            User currentUser = [
+                SELECT Email
+                FROM User
+                WHERE Id = :UserInfo.getUserId()
+                LIMIT 1
+            ];
+            return currentUser.Email == JACKIE_EMAIL;
+        } catch (Exception e) {
+            System.debug('[GoogleGeminiService] Error checking user: ' + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Generate a personalized message for Jackie Duran
+     * Returns a delightful, randomized personal message just for Jackie
+     * @return String personalized message for Jackie
+     */
+    private static String getJackiePersonalization() {
+        // Random collection of wonderful things about Jackie
+        List<String> jackieMessages = new List<String>{
+            'Jackie, your effervescent spirit brightens every case you touch! Your wonderful sense of humor makes even the toughest situations manageable.',
+            'Hi Jackie! Your patience and attention to detail as a training consultant truly shows in everything you do. You make everyone around you better just by being you!',
+            'Jackie, you bring such joy to our team! Your love for baking with your son is as sweet as you are, and we\'re all cheering for the Packers with you (even after that tough playoff game).',
+            'Hello Jackie from sunny California to cheese-loving Wisconsin! Your Green Bay roots and dedication to the Packers show your loyalty and heart. Can\'t wait to hear about your Hawaii trip!',
+            'Jackie, as someone from the great Green Bay area who loves cheese (as you should!), you know quality when you see it. Your super cute personality and great friendship mean the world to us!',
+            'Hi Jackie! Five years of marriage, a July 2nd birthday to celebrate, and Christmas as your favorite holiday - you know how to make every moment special. Your son is lucky to have such a wonderful baking partner!',
+            'Jackie, your detail-oriented approach and patient teaching style make you an incredible training consultant. You\'re not just super cute and funny - you\'re genuinely one of the sweetest people ever!',
+            'Hello Jackie! While the Packers may have had a tough playoff game, your team spirit never wavers. Just like your love for cheese and baking, you bring authentic Wisconsin warmth to everything you do!',
+            'Jackie, you\'re excited for Hawaii and we\'re excited for you! Your effervescent energy, wonderful humor, and caring heart make you such a great friend. Keep being amazing!',
+            'Hi Jackie from Green Bay! Your patience, sweetness, and incredible sense of humor light up our organization. You make everyone\'s world better, and that\'s pretty special!'
+        };
+
+        // Return a random message
+        Integer randomIndex = Math.mod(Math.abs(Crypto.getRandomInteger()), jackieMessages.size());
+        return jackieMessages[randomIndex];
     }
 
     // ========== WRAPPER CLASSES ==========
