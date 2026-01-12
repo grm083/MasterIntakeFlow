@@ -610,29 +610,55 @@ public with sharing class GoogleGeminiService {
     }
 
     /**
-     * Generate subject line from case comments using AI
+     * Generate subject line from case data using AI
      * This method is called when a case is closed without a subject
+     * Analyzes comments, tasks, emails, quotes, and history to generate comprehensive subject
      *
      * @param comments List of Comment__c records for the case
+     * @param tasks List of Task records related to the case
+     * @param emails List of EmailMessage records related to the case
+     * @param quotes List of SBQQ__Quote__c records related to the case
+     * @param caseHistory List of CaseHistory records for tracked field changes
+     * @param quoteHistory List of SBQQ__QuoteHistory__c records for quote field changes
      * @param caseRecord Case record with context information
      * @return String the generated subject line
      * @throws GoogleGeminiException if subject generation fails
      */
     public static String generateSubjectFromComments(
         List<Comment__c> comments,
+        List<Task> tasks,
+        List<EmailMessage> emails,
+        List<SBQQ__Quote__c> quotes,
+        List<CaseHistory> caseHistory,
+        List<SBQQ__QuoteHistory__c> quoteHistory,
         Case caseRecord
     ) {
-        if (comments == null || comments.isEmpty()) {
-            throw new GoogleGeminiException('Comments are required for subject generation');
-        }
-
         if (caseRecord == null) {
             throw new GoogleGeminiException('Case record is required for subject generation');
         }
 
+        // Check if we have any data
+        Boolean hasData = (comments != null && !comments.isEmpty()) ||
+                         (tasks != null && !tasks.isEmpty()) ||
+                         (emails != null && !emails.isEmpty()) ||
+                         (quotes != null && !quotes.isEmpty()) ||
+                         (caseHistory != null && !caseHistory.isEmpty());
+
+        if (!hasData) {
+            throw new GoogleGeminiException('No data available for subject generation');
+        }
+
         try {
-            // Build subject generation prompt from comments
-            String prompt = buildSubjectFromCommentsPrompt(comments, caseRecord);
+            // Build subject generation prompt from all available data
+            String prompt = buildSubjectFromCommentsPrompt(
+                comments,
+                tasks,
+                emails,
+                quotes,
+                caseHistory,
+                quoteHistory,
+                caseRecord
+            );
 
             // Call Google Gemini with retry logic
             String response = callGeminiWithRetry(prompt);
@@ -641,28 +667,34 @@ public with sharing class GoogleGeminiService {
             String subject = parseSubjectResponse(response);
 
             // Log successful generation
-            System.debug('[GoogleGeminiService] Generated subject from comments: ' + subject);
+            System.debug('[GoogleGeminiService] Generated subject from case data: ' + subject);
 
             return subject;
 
         } catch (Exception e) {
             // Log failure
-            System.debug('[GoogleGeminiService] Subject generation from comments failed: ' + e.getMessage());
+            System.debug('[GoogleGeminiService] Subject generation from case data failed: ' + e.getMessage());
 
             // Re-throw as custom exception
-            throw new GoogleGeminiException('Subject generation from comments failed: ' + e.getMessage(), e);
+            throw new GoogleGeminiException('Subject generation from case data failed: ' + e.getMessage(), e);
         }
     }
 
     /**
-     * Build prompt for subject line generation from comments
+     * Build prompt for subject line generation from case data
+     * Includes comments, tasks, emails, quotes, and history
      */
     private static String buildSubjectFromCommentsPrompt(
         List<Comment__c> comments,
+        List<Task> tasks,
+        List<EmailMessage> emails,
+        List<SBQQ__Quote__c> quotes,
+        List<CaseHistory> caseHistory,
+        List<SBQQ__QuoteHistory__c> quoteHistory,
         Case caseRecord
     ) {
         String prompt = 'You are an expert at creating concise, descriptive case subject lines. ';
-        prompt += 'Your role is to analyze case comments and work history to create a brief subject line. ';
+        prompt += 'Your role is to analyze case data including comments, tasks, emails, quotes, and history to create a brief subject line. ';
         prompt += 'The subject must be under 255 characters and capture the key issue and resolution.\n\n';
 
         prompt += '# Case Context:\n';
@@ -705,40 +737,151 @@ public with sharing class GoogleGeminiService {
 
         prompt += '- Status: ' + caseRecord.Status + '\n';
 
-        prompt += '\n# Case Comments and Work History:\n';
-        prompt += 'Below are the comments documenting the work performed and progress on this case:\n\n';
+        // Add Comments section if available
+        if (comments != null && !comments.isEmpty()) {
+            prompt += '\n# Case Comments:\n';
+            prompt += 'Below are the comments documenting the work performed and progress on this case:\n\n';
 
-        Integer commentNum = 1;
-        for (Comment__c comment : comments) {
-            if (String.isNotBlank(comment.Comment__c)) {
-                prompt += 'Comment ' + commentNum + ' (' + comment.CreatedDate.format('MM/dd/yyyy') + ' by ' + comment.CreatedBy.Name + '):\n';
-                prompt += comment.Comment__c + '\n\n';
-                commentNum++;
+            Integer commentNum = 1;
+            for (Comment__c comment : comments) {
+                if (String.isNotBlank(comment.Comment__c)) {
+                    prompt += 'Comment ' + commentNum + ' (' + comment.CreatedDate.format('MM/dd/yyyy') + ' by ' + comment.CreatedBy.Name + '):\n';
+                    prompt += comment.Comment__c + '\n\n';
+                    commentNum++;
+                }
+            }
+        }
+
+        // Add Tasks section if available
+        if (tasks != null && !tasks.isEmpty()) {
+            prompt += '\n# Tasks:\n';
+            prompt += 'Below are the tasks related to this case:\n\n';
+
+            Integer taskNum = 1;
+            for (Task task : tasks) {
+                prompt += 'Task ' + taskNum + ' (' + task.CreatedDate.format('MM/dd/yyyy') + ' by ' + task.CreatedBy.Name + '):\n';
+                prompt += '- Subject: ' + (task.Subject ?? 'No Subject') + '\n';
+                prompt += '- Status: ' + (task.Status ?? 'Unknown') + '\n';
+
+                if (task.ActivityDate != null) {
+                    prompt += '- Due Date: ' + task.ActivityDate.format() + '\n';
+                }
+
+                if (String.isNotBlank(task.Description)) {
+                    prompt += '- Description: ' + task.Description + '\n';
+                }
+
+                prompt += '\n';
+                taskNum++;
+            }
+        }
+
+        // Add Emails section if available
+        if (emails != null && !emails.isEmpty()) {
+            prompt += '\n# Emails:\n';
+            prompt += 'Below are the emails related to this case:\n\n';
+
+            Integer emailNum = 1;
+            for (EmailMessage email : emails) {
+                prompt += 'Email ' + emailNum + ' (' + email.MessageDate.format('MM/dd/yyyy') + '):\n';
+                prompt += '- From: ' + (email.FromAddress ?? 'Unknown') + '\n';
+                prompt += '- To: ' + (email.ToAddress ?? 'Unknown') + '\n';
+                prompt += '- Subject: ' + (email.Subject ?? 'No Subject') + '\n';
+
+                // Prefer TextBody, fallback to HtmlBody
+                String emailBody = String.isNotBlank(email.TextBody) ? email.TextBody : email.HtmlBody;
+                if (String.isNotBlank(emailBody)) {
+                    // Limit email body length to prevent token overflow
+                    String truncatedBody = emailBody.length() > 500 ? emailBody.substring(0, 500) + '...' : emailBody;
+                    prompt += '- Body: ' + truncatedBody + '\n';
+                }
+
+                prompt += '\n';
+                emailNum++;
+            }
+        }
+
+        // Add Quotes section if available
+        if (quotes != null && !quotes.isEmpty()) {
+            prompt += '\n# Quotes:\n';
+            prompt += 'Below are the quotes related to this case:\n\n';
+
+            Integer quoteNum = 1;
+            for (SBQQ__Quote__c quote : quotes) {
+                prompt += 'Quote ' + quoteNum + ' (' + quote.CreatedDate.format('MM/dd/yyyy') + ' by ' + quote.CreatedBy.Name + '):\n';
+                prompt += '- Quote Name: ' + quote.Name + '\n';
+                prompt += '- Status: ' + (quote.SBQQ__Status__c ?? 'Unknown') + '\n';
+                prompt += '- Primary: ' + (quote.SBQQ__Primary__c ? 'Yes' : 'No') + '\n';
+
+                if (quote.SBQQ__LineItemCount__c != null) {
+                    prompt += '- Line Items: ' + quote.SBQQ__LineItemCount__c.intValue() + '\n';
+                }
+
+                if (quote.SBQQ__NetAmount__c != null) {
+                    prompt += '- Net Amount: $' + quote.SBQQ__NetAmount__c.setScale(2) + '\n';
+                }
+
+                prompt += '\n';
+                quoteNum++;
+            }
+        }
+
+        // Add Case History section if available
+        if (caseHistory != null && !caseHistory.isEmpty()) {
+            prompt += '\n# Case History:\n';
+            prompt += 'Below are the tracked field changes on this case:\n\n';
+
+            Integer historyNum = 1;
+            for (CaseHistory history : caseHistory) {
+                prompt += 'Change ' + historyNum + ' (' + history.CreatedDate.format('MM/dd/yyyy') + ' by ' + history.CreatedBy.Name + '):\n';
+                prompt += '- Field: ' + history.Field + '\n';
+                prompt += '- Old Value: ' + (history.OldValue ?? '(blank)') + '\n';
+                prompt += '- New Value: ' + (history.NewValue ?? '(blank)') + '\n\n';
+                historyNum++;
+            }
+        }
+
+        // Add Quote History section if available
+        if (quoteHistory != null && !quoteHistory.isEmpty()) {
+            prompt += '\n# Quote History:\n';
+            prompt += 'Below are the tracked field changes on quotes related to this case:\n\n';
+
+            Integer historyNum = 1;
+            for (SBQQ__QuoteHistory__c history : quoteHistory) {
+                prompt += 'Change ' + historyNum + ' (' + history.CreatedDate.format('MM/dd/yyyy') + ' by ' + history.CreatedBy.Name + '):\n';
+                prompt += '- Field: ' + history.Field + '\n';
+                prompt += '- Old Value: ' + (history.OldValue ?? '(blank)') + '\n';
+                prompt += '- New Value: ' + (history.NewValue ?? '(blank)') + '\n\n';
+                historyNum++;
             }
         }
 
         // Task instructions
         prompt += '# Task:\n';
-        prompt += 'Based on the case context and comments above, create a concise subject line that:\n';
+        prompt += 'Based on ALL the case data above (context, comments, tasks, emails, quotes, and history), create a concise subject line that:\n';
         prompt += '- Summarizes the main issue and work performed\n';
         prompt += '- Is under 255 characters\n';
         prompt += '- Is clear and specific\n';
         prompt += '- Includes location account number when available (e.g., "HMD000257", "ESS001000")\n';
         prompt += '- Includes asset details when relevant (equipment type, material type)\n';
         prompt += '- References the case type/reason when appropriate\n';
-        prompt += '- Captures the outcome or resolution if described in comments\n';
-        prompt += '- Uses professional language\n\n';
+        prompt += '- Captures the outcome or resolution if described in any of the data sources\n';
+        prompt += '- Uses professional language\n';
+        prompt += '- Synthesizes information from comments, tasks, emails, quotes, and history to provide comprehensive context\n\n';
 
         prompt += 'Examples of preferred subject formats:\n';
         prompt += '- "Missed Pickup at HMD000257 - Resolved with rescheduled service"\n';
         prompt += '- "Repair completed for ESS001000 on 34 yard cardboard compactor"\n';
         prompt += '- "Service Request at ABC123456 - Equipment maintenance completed"\n';
         prompt += '- "Delivery Issue for DEF789012 - New 6 yard recycling container delivered"\n';
-        prompt += '- "Billing Inquiry for GHI345678 - Invoice corrected and reissued"\n\n';
+        prompt += '- "Billing Inquiry for GHI345678 - Invoice corrected and reissued"\n';
+        prompt += '- "Quote Request at JKL456789 - $15,000 proposal sent for equipment upgrade"\n\n';
 
         prompt += 'IMPORTANT: When location account number is available, use the format "[Action] at/for [Account#] - [Brief outcome]".\n';
         prompt += 'When asset details are provided, include asset description in the subject line.\n';
-        prompt += 'Focus on what was done and the outcome, not just the initial complaint.\n\n';
+        prompt += 'When quotes or pricing are involved, you may reference dollar amounts or proposal status.\n';
+        prompt += 'Focus on what was done and the outcome, not just the initial complaint.\n';
+        prompt += 'Analyze ALL available data sources to create the most accurate and comprehensive subject line possible.\n\n';
 
         prompt += 'Return ONLY the subject line text with no quotes, no JSON, no additional text.';
 
