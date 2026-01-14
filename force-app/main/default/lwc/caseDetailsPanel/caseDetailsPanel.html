@@ -1,0 +1,316 @@
+<template>
+    <div class="details-panel">
+        <div class="panel-header">
+            <h2 class="slds-text-heading_small slds-m-bottom_x-small">Case Details</h2>
+        </div>
+
+        <!-- Loading State -->
+        <template if:false={caseDetails}>
+            <div class="slds-align_absolute-center slds-m-vertical_medium">
+                <lightning-spinner alternative-text="Loading details" size="small"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Error State -->
+        <template if:true={error}>
+            <div class="slds-m-around_small">
+                <div class="slds-text-color_error slds-text-body_small">
+                    Unable to load case details
+                </div>
+            </div>
+        </template>
+
+        <!-- Asset Section -->
+        <template if:true={hasAssetData}>
+            <div class="detail-section">
+                <!-- Asset Header (Clickable) -->
+                <div class="section-header" onclick={handleAssetToggle}>
+                    <lightning-icon
+                        icon-name={assetIcon}
+                        size="x-small"
+                        class="slds-m-right_x-small toggle-icon">
+                    </lightning-icon>
+                    <div class="section-title">
+                        <lightning-icon
+                            icon-name="standard:asset_object"
+                            size="x-small"
+                            class="slds-m-right_xx-small">
+                        </lightning-icon>
+                        <span class="slds-text-heading_small">Asset Information</span>
+                    </div>
+                </div>
+
+                <!-- Asset Content (Collapsible) -->
+                <template if:true={isAssetExpanded}>
+                    <div class="section-content">
+                        <!-- Asset Name and Material Type -->
+                        <div class="asset-header-info slds-m-bottom_small">
+                            <div class="slds-text-heading_small">{assetName}</div>
+                            <div class="slds-text-body_small slds-text-color_weak">{materialType}</div>
+                        </div>
+
+                        <!-- Row 1: Basic Info -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">SID</div>
+                                <div class="info-value">{sid}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Duration</div>
+                                <div class="info-value">{duration}</div>
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Occurrence</div>
+                                <div class="info-value">{occurrenceType}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Schedule</div>
+                                <div class="info-value">{schedule}</div>
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Quantity</div>
+                                <div class="info-value">{quantity}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Has XPU</div>
+                                <div class="info-value">{hasExtraPickup}</div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Row 2: Vendor Info -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Vendor</div>
+                                <div class="info-value">{vendorName}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Vendor ID</div>
+                                <div class="info-value">{vendorId}</div>
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">S-Code</div>
+                                <div class="info-value">{sensitivityCode}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Equip Ownership</div>
+                                <div class="info-value">{equipmentOwner}</div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Row 3: Dates and Pricing -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Start Date</div>
+                                <div class="info-value">{startDate}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class={hasEndDate}>
+                                    <div class="info-label">End Date</div>
+                                    <div class="info-value">{endDate}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Table -->
+                        <div class="pricing-section slds-m-top_small">
+                            <div class="pricing-header slds-text-body_small slds-text-color_weak slds-m-bottom_xx-small">
+                                Pricing Information
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Pickup Price</div>
+                                    <div class="info-value price-value">{pickupPrice}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Pickup Cost</div>
+                                    <div class="info-value">{pickupCost}</div>
+                                </div>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Extra Pickup Price</div>
+                                    <div class="info-value price-value">{extraPickupPrice}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Extra Pickup Cost</div>
+                                    <div class="info-value">{extraPickupCost}</div>
+                                </div>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Haul Price</div>
+                                    <div class="info-value price-value">{haulPrice}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Haul Cost</div>
+                                    <div class="info-value">{haulCost}</div>
+                                </div>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Disposal Price</div>
+                                    <div class="info-value price-value">{disposalPrice}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Disposal Cost</div>
+                                    <div class="info-value">{disposalCost}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Row 4: Container and Category -->
+                        <div class="info-item full-width">
+                            <div class="info-label">Container Position</div>
+                            <div class="info-value">{containerPosition}</div>
+                        </div>
+                        <div class="info-item full-width">
+                            <div class="info-label">Category</div>
+                            <div class="info-value">{category}</div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Row 5: MAS Info -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Vendor Account #</div>
+                                <div class="info-value">{vendorAccountNumber}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">MAS Unique #</div>
+                                <div class="info-value">{masUniqueId}</div>
+                            </div>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Company/Account</div>
+                                <div class="info-value">{masCompanyAccount}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">MAS Library</div>
+                                <div class="info-value">{masLibrary}</div>
+                            </div>
+                        </div>
+                        <div class="info-item full-width">
+                            <div class="info-label">Project Name</div>
+                            <div class="info-value">{projectName}</div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Location Section -->
+        <template if:true={hasLocationData}>
+            <div class="detail-section">
+                <!-- Location Header (Clickable) -->
+                <div class="section-header" onclick={handleLocationToggle}>
+                    <lightning-icon
+                        icon-name={locationIcon}
+                        size="x-small"
+                        class="slds-m-right_x-small toggle-icon">
+                    </lightning-icon>
+                    <div class="section-title">
+                        <lightning-icon
+                            icon-name="standard:location"
+                            size="x-small"
+                            class="slds-m-right_xx-small">
+                        </lightning-icon>
+                        <span class="slds-text-heading_small">Location Information</span>
+                    </div>
+                </div>
+
+                <!-- Location Content (Collapsible) -->
+                <template if:true={isLocationExpanded}>
+                    <div class="section-content">
+                        <!-- Location Header Info -->
+                        <div class="location-header-info slds-m-bottom_small">
+                            <div class="slds-text-heading_small">{clientName}</div>
+                            <div class="slds-text-body_small slds-text-color_weak">{locationCode}</div>
+                        </div>
+
+                        <!-- Address and Phone -->
+                        <div class="info-item full-width">
+                            <div class="info-label">Address</div>
+                            <div class="info-value">{locationAddress}</div>
+                        </div>
+                        <div class="info-item full-width">
+                            <div class="info-label">City, State ZIP</div>
+                            <div class="info-value">{locationCityStateZip}</div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Country</div>
+                                <div class="info-value">{locationCountry}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Phone</div>
+                                <div class="info-value">{locationPhone}</div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Segment and Time -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Segment</div>
+                                <div class="info-value">{locationSegment}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Local Time</div>
+                                <div class="info-value">{localTime}</div>
+                            </div>
+                        </div>
+
+                        <div class="info-item full-width">
+                            <div class="info-label">Location Customer Name</div>
+                            <div class="info-value">{customerLocationCode}</div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Portal Info -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Is Portal Customer</div>
+                                <div class="info-value">{isPortalCustomer}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Portal Name</div>
+                                <div class="info-value">{portalName}</div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- No Data Message -->
+        <template if:false={hasAssetData}>
+            <template if:false={hasLocationData}>
+                <template if:true={caseDetails}>
+                    <div class="slds-m-around_small slds-text-align_center slds-text-color_weak">
+                        <p class="slds-text-body_small">No Asset or Location information available</p>
+                    </div>
+                </template>
+            </template>
+        </template>
+    </div>
+</template>
