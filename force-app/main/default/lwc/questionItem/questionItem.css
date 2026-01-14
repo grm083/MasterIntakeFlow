@@ -5,6 +5,7 @@
     border-radius: 4px;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid transparent;
+    position: relative; /* Enable absolute positioning for edit button */
 }
 
 /* Active Question - Highlighted - WM Brand */
@@ -45,6 +46,7 @@
 
 .question-item.completed .question-header {
     margin-bottom: 0;
+    padding-right: 5rem; /* Ensure text doesn't overlap with Edit button */
 }
 
 .question-number {
@@ -71,6 +73,14 @@
 .question-input {
     padding-left: 2rem;
     animation: fadeIn 0.2s ease-in;
+}
+
+/* Edit Button Container - Positioned in upper right corner */
+.edit-button-container {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 10;
 }
 
 /* Edit Button */
