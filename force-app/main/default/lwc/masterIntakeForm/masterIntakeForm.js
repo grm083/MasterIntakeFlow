@@ -66,13 +66,23 @@ export default class MasterIntakeForm extends LightningModal {
         const draft = this.loadDraftFromStorage();
         if (draft && draft.questionHistory && draft.questionHistory.length > 0) {
             console.log('[MasterIntakeForm] Draft found with', draft.questionHistory.length, 'answered questions');
-            this.state.draftMetadata = {
-                questionCount: draft.questionHistory.filter(q => q.isComplete).length,
-                timestamp: draft.timestamp,
-                caseNumber: draft.caseContext?.caseNumber
-            };
-            this.state.showDraftPrompt = true;
-            this.state.isLoading = false;
+            console.log('[MasterIntakeForm] Draft was minimized:', draft.wasMinimized);
+
+            // If draft was created by minimizing, automatically resume
+            if (draft.wasMinimized === true) {
+                console.log('[MasterIntakeForm] Auto-resuming from minimized state');
+                this.handleResumeDraft();
+            } else {
+                // Draft was created by closing (X), show prompt
+                console.log('[MasterIntakeForm] Draft from close, showing prompt');
+                this.state.draftMetadata = {
+                    questionCount: draft.questionHistory.filter(q => q.isComplete).length,
+                    timestamp: draft.timestamp,
+                    caseNumber: draft.caseContext?.caseNumber
+                };
+                this.state.showDraftPrompt = true;
+                this.state.isLoading = false;
+            }
         } else {
             console.log('[MasterIntakeForm] No draft found, loading fresh data');
             this.loadIntakeData();
@@ -197,8 +207,9 @@ export default class MasterIntakeForm extends LightningModal {
 
     /**
      * Save current progress to sessionStorage
+     * @param {boolean} wasMinimized - True if draft is being saved due to minimize, false if due to close
      */
-    saveDraftToStorage() {
+    saveDraftToStorage(wasMinimized = false) {
         try {
             const draft = {
                 caseId: this.recordId,
@@ -207,11 +218,13 @@ export default class MasterIntakeForm extends LightningModal {
                 currentQuestionId: this.state.currentQuestionId,
                 // Store cache as plain object for serialization
                 nextQuestionCache: Object.fromEntries(this.state.nextQuestionCache),
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                wasMinimized: wasMinimized // Track if this draft was created by minimizing
             };
 
             sessionStorage.setItem(this.getDraftKey(), JSON.stringify(draft));
-            console.log('[MasterIntakeForm] Draft saved:', draft.questionHistory.length, 'questions');
+            console.log('[MasterIntakeForm] Draft saved:', draft.questionHistory.length, 'questions',
+                        wasMinimized ? '(minimized)' : '(closed)');
         } catch (error) {
             console.error('[MasterIntakeForm] Error saving draft:', error);
             // Silently fail - don't interrupt user experience
@@ -287,6 +300,10 @@ export default class MasterIntakeForm extends LightningModal {
         this.state.isLoading = false;
 
         console.log('[MasterIntakeForm] Draft restored successfully');
+
+        // Clear the wasMinimized flag now that user has resumed
+        // Future drafts should prompt the user to resume or start fresh
+        this.saveDraftToStorage(false);
 
         // Scroll to current question
         setTimeout(() => {
@@ -632,9 +649,10 @@ export default class MasterIntakeForm extends LightningModal {
         console.log('[MasterIntakeForm] handleClose - Closing modal');
 
         // Auto-save draft when closing (if not completed)
+        // wasMinimized = false for close action
         if (!this.state.allQuestionsAnswered && this.state.questionHistory.length > 0) {
             console.log('[MasterIntakeForm] Saving draft before closing');
-            this.saveDraftToStorage();
+            this.saveDraftToStorage(false);
         }
 
         // Clear floating button state when actually closing
@@ -650,9 +668,10 @@ export default class MasterIntakeForm extends LightningModal {
         console.log('[MasterIntakeForm] handleMinimize - Minimizing modal');
 
         // Save draft to preserve progress
+        // wasMinimized = true for minimize action
         if (this.state.questionHistory.length > 0) {
             console.log('[MasterIntakeForm] Saving draft before minimizing');
-            this.saveDraftToStorage();
+            this.saveDraftToStorage(true);
         }
 
         // Set flag to show floating button
