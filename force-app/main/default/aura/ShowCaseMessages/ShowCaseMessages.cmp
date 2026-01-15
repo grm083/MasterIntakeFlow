@@ -63,6 +63,8 @@
     <aura:attribute name="lastEventName" type="String" access="global" />
     <aura:attribute name="isCapacityEligible" type="Boolean" default="true"/>
 	<aura:attribute name = "isAddQuote" type="Boolean" default="false" />
+    <aura:attribute name="showIntakeWarning" type="Boolean" default="false" />
+    <aura:attribute name="intakeWarningMessage" type="String" default="" />
     <aura:attribute name = "isOpportunityAdded" type="Boolean" default="false" />
 	<aura:attribute name="loadingSpinner" type="Boolean" default="false" />
     <aura:attribute name="showQuoteModal" type="Boolean" default="false" />
@@ -402,6 +404,40 @@
         <c:AddFavoriteContainers showForm="{!v.showFavroiteModal}" caseId="{!v.recordId}" />
     </aura:if>
 
+    <!-- Master Intake Warning Modal -->
+    <aura:if isTrue="{!v.showIntakeWarning}">
+        <div role="dialog" tabindex="-1" aria-labelledby="intake-warning-heading" aria-modal="true"
+            aria-describedby="intake-warning-content" class="slds-modal slds-fade-in-open"
+            style="position:fixed !important;">
+            <div class="slds-modal__container">
+                <!-- Modal Header -->
+                <div class="slds-modal__header slds-theme_warning">
+                    <lightning-icon iconName="utility:warning" size="small"
+                        variant="warning" class="slds-m-right_small">
+                    </lightning-icon>
+                    <h2 id="intake-warning-heading" class="slds-text-heading_medium">
+                        Master Intake Flow Not Completed
+                    </h2>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="slds-modal__content slds-p-around_medium" id="intake-warning-content">
+                    <p class="slds-text-body_regular">
+                        {!v.intakeWarningMessage}
+                    </p>
+                </div>
+
+                <!-- Modal Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" title="Cancel"
+                        onclick="{!c.cancelProgressCase}" />
+                    <lightning-button variant="brand" label="Proceed Anyway" title="Proceed Anyway"
+                        onclick="{!c.proceedWithoutIntake}" />
+                </footer>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="position:fixed !important;"></div>
+    </aura:if>
 
    <!-- commeting out multi date button as per SDT-12786 <div aura:id="calendarHolder"></div>-->
     <div aura:id="subTypeComp"></div>

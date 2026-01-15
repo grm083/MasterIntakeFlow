@@ -1203,4 +1203,27 @@
         });
         $A.enqueueAction(action);
     },
+
+    /**
+     * Open the Progress Case modal (OpenCloseModal component)
+     * Extracted to helper to be reused from both direct click and warning acknowledgment
+     */
+    openProgressModal: function(component) {
+        $A.createComponent(
+            "c:OpenCloseModal",
+            {
+                "caseRecordId": component.get("v.recordId"),
+                "showButtons": true,
+                "caseStatus": component.get("v.caseRecord.Status")
+            },
+            function (msgBox) {
+                if (component.isValid()) {
+                    var targetCmp = component.find('progressComp');
+                    var body = targetCmp.get("v.body");
+                    body.push(msgBox);
+                    targetCmp.set("v.body", body);
+                }
+            }
+        );
+    },
 })
