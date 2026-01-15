@@ -1308,6 +1308,242 @@ public with sharing class GoogleGeminiService {
         return jackieMessages[randomIndex];
     }
 
+    /**
+     * Suggest an answer for an intake question based on comprehensive case context
+     * Uses AI to analyze case details and suggest the most appropriate answer
+     *
+     * @param caseRecord The Case record with all relationships
+     * @param questionText The question being asked
+     * @param questionType The type of question (picklist, text, etc.)
+     * @param picklistOptions Available options for picklist questions (JSON string)
+     * @param previousAnswers Previous Q&A in this session (JSON string)
+     * @return String the suggested answer
+     * @throws GoogleGeminiException if suggestion generation fails
+     */
+    public static String suggestIntakeAnswer(
+        Case caseRecord,
+        String questionText,
+        String questionType,
+        String picklistOptions,
+        String previousAnswers
+    ) {
+        if (caseRecord == null || String.isBlank(questionText)) {
+            throw new GoogleGeminiException('Case record and question text are required');
+        }
+
+        try {
+            // Build comprehensive prompt with all available context
+            String prompt = buildAnswerSuggestionPrompt(
+                caseRecord,
+                questionText,
+                questionType,
+                picklistOptions,
+                previousAnswers
+            );
+
+            // Call Google Gemini with retry logic
+            String response = callGeminiWithRetry(prompt);
+
+            // Parse and clean response
+            String suggestion = response.trim();
+
+            // Log successful generation
+            System.debug('[GoogleGeminiService] Generated answer suggestion: ' + suggestion);
+
+            return suggestion;
+
+        } catch (Exception e) {
+            System.debug('[GoogleGeminiService] Answer suggestion failed: ' + e.getMessage());
+            throw new GoogleGeminiException('Answer suggestion failed: ' + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Build comprehensive prompt for answer suggestion
+     */
+    private static String buildAnswerSuggestionPrompt(
+        Case caseRecord,
+        String questionText,
+        String questionType,
+        String picklistOptions,
+        String previousAnswers
+    ) {
+        String prompt = 'You are an intelligent assistant helping a customer service representative complete an intake form. ';
+        prompt += 'Based on the comprehensive case information provided, suggest the most appropriate answer to the current question.\n\n';
+
+        // Case Context
+        prompt += '# Case Information:\n';
+        prompt += '- Case Number: ' + caseRecord.CaseNumber + '\n';
+
+        if (String.isNotBlank(caseRecord.Description)) {
+            prompt += '- Description: ' + caseRecord.Description + '\n';
+        }
+
+        if (String.isNotBlank(caseRecord.Subject)) {
+            prompt += '- Subject: ' + caseRecord.Subject + '\n';
+        }
+
+        prompt += '- Status: ' + caseRecord.Status + '\n';
+
+        if (String.isNotBlank(caseRecord.Priority)) {
+            prompt += '- Priority: ' + caseRecord.Priority + '\n';
+        }
+
+        if (String.isNotBlank(caseRecord.Source_System__c)) {
+            prompt += '- Source: ' + caseRecord.Source_System__c + '\n';
+        }
+
+        // Classification (if available)
+        if (String.isNotBlank(caseRecord.Case_Type__c)) {
+            prompt += '- Case Type: ' + caseRecord.Case_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Sub_Type__c)) {
+            prompt += '- Case Sub-Type: ' + caseRecord.Case_Sub_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Reason__c)) {
+            prompt += '- Case Reason: ' + caseRecord.Case_Reason__c + '\n';
+        }
+
+        // Client Information
+        if (caseRecord.Client__r != null) {
+            prompt += '\n# Client Information:\n';
+            prompt += '- Client: ' + caseRecord.Client__r.Name + '\n';
+            if (String.isNotBlank(caseRecord.Client__r.Type)) {
+                prompt += '- Type: ' + caseRecord.Client__r.Type + '\n';
+            }
+        }
+
+        // Contact Information
+        if (caseRecord.ContactId != null) {
+            prompt += '\n# Contact Information:\n';
+            prompt += '- Contact: ' + (caseRecord.Contact?.Name ?? 'Unknown') + '\n';
+            if (String.isNotBlank(caseRecord.Contact_Title__c)) {
+                prompt += '- Title: ' + caseRecord.Contact_Title__c + '\n';
+            }
+        }
+
+        // Location Information
+        if (caseRecord.Location__r != null) {
+            prompt += '\n# Location Information:\n';
+            prompt += '- Location: ' + caseRecord.Location__r.Name + '\n';
+
+            if (String.isNotBlank(caseRecord.Location__r.Location_Code__c)) {
+                prompt += '- Location Code: ' + caseRecord.Location__r.Location_Code__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Location__r.AccountNumber)) {
+                prompt += '- Account Number: ' + caseRecord.Location__r.AccountNumber + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Location__r.ShippingStreet)) {
+                prompt += '- Address: ' + caseRecord.Location__r.ShippingStreet;
+                if (String.isNotBlank(caseRecord.Location__r.ShippingCity)) {
+                    prompt += ', ' + caseRecord.Location__r.ShippingCity;
+                }
+                if (String.isNotBlank(caseRecord.Location__r.ShippingState)) {
+                    prompt += ', ' + caseRecord.Location__r.ShippingState;
+                }
+                if (String.isNotBlank(caseRecord.Location__r.ShippingPostalCode)) {
+                    prompt += ' ' + caseRecord.Location__r.ShippingPostalCode;
+                }
+                prompt += '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Location__r.Primary_Segment__c)) {
+                prompt += '- Segment: ' + caseRecord.Location__r.Primary_Segment__c + '\n';
+            }
+
+            if (caseRecord.Location__r.Is_Portal_Customer__c != null) {
+                prompt += '- Portal Customer: ' + (caseRecord.Location__r.Is_Portal_Customer__c ? 'Yes' : 'No') + '\n';
+            }
+        }
+
+        // Asset Information
+        if (caseRecord.AssetId != null && caseRecord.Asset != null) {
+            prompt += '\n# Asset Information:\n';
+            prompt += '- Asset: ' + caseRecord.Asset.Name + '\n';
+
+            if (String.isNotBlank(caseRecord.Asset.Material_Type__c)) {
+                prompt += '- Material Type: ' + caseRecord.Asset.Material_Type__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Acorn_SID__c)) {
+                prompt += '- SID: ' + caseRecord.Asset.Acorn_SID__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.ProductFamily)) {
+                prompt += '- Product Family: ' + caseRecord.Asset.ProductFamily + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Duration__c)) {
+                prompt += '- Duration: ' + caseRecord.Asset.Duration__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Occurrence_Type__c)) {
+                prompt += '- Occurrence: ' + caseRecord.Asset.Occurrence_Type__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Schedule__c)) {
+                prompt += '- Schedule: ' + caseRecord.Asset.Schedule__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Equipment_Owner__c)) {
+                prompt += '- Equipment Owner: ' + caseRecord.Asset.Equipment_Owner__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Category__c)) {
+                prompt += '- Category: ' + caseRecord.Asset.Category__c + '\n';
+            }
+
+            if (caseRecord.Asset.Supplier__r != null && String.isNotBlank(caseRecord.Asset.Supplier__r.Name)) {
+                prompt += '- Vendor: ' + caseRecord.Asset.Supplier__r.Name + '\n';
+            }
+        }
+
+        // Service Date
+        if (caseRecord.Service_Date__c != null) {
+            prompt += '\n# Service Date:\n';
+            prompt += '- ' + caseRecord.Service_Date__c.format() + '\n';
+        }
+
+        // Previous Answers in Session
+        if (String.isNotBlank(previousAnswers) && previousAnswers != '[]') {
+            prompt += '\n# Previous Answers in this Intake Session:\n';
+            prompt += previousAnswers + '\n';
+        }
+
+        // Current Question
+        prompt += '\n# Current Question:\n';
+        prompt += 'Question: ' + questionText + '\n';
+        prompt += 'Question Type: ' + questionType + '\n';
+
+        // Picklist Options
+        if (String.isNotBlank(picklistOptions) && picklistOptions != '[]') {
+            prompt += '\n# Available Answer Options:\n';
+            prompt += picklistOptions + '\n';
+        }
+
+        // Instructions
+        prompt += '\n# Instructions:\n';
+        prompt += 'Based on all the information above, suggest the most appropriate answer to the current question.\n\n';
+
+        if (questionType == 'picklist') {
+            prompt += '- You MUST choose one of the available options listed above\n';
+            prompt += '- Return ONLY the exact text of the option you choose\n';
+            prompt += '- Do not add quotes, explanations, or any additional text\n';
+            prompt += '- If no option clearly fits, choose the closest match or return "Unknown" if available\n\n';
+        } else {
+            prompt += '- Provide a concise, specific answer based on the available information\n';
+            prompt += '- Keep your answer brief and to the point (1-2 sentences maximum)\n';
+            prompt += '- If information is not available, return "Information not available"\n';
+            prompt += '- Return ONLY the answer text with no quotes, explanations, or additional commentary\n\n';
+        }
+
+        prompt += 'IMPORTANT: Return ONLY the suggested answer. No explanations, no JSON, no additional text.';
+
+        return prompt;
+    }
+
     // ========== WRAPPER CLASSES ==========
 
     /**
