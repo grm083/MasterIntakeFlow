@@ -813,6 +813,24 @@ export default class MasterIntakeForm extends LightningModal {
         return completed === 1 ? '1 question answered' : `${completed} questions answered`;
     }
 
+    /**
+     * Get previous answers formatted for AI context
+     * Returns array of question/answer pairs for completed questions
+     */
+    get previousAnswersForAI() {
+        if (!this.state.questionHistory || this.state.questionHistory.length === 0) {
+            return [];
+        }
+
+        // Get completed questions only
+        return this.state.questionHistory
+            .filter(q => q.isComplete)
+            .map(q => ({
+                question: q.questionText,
+                answer: q.answerValue || q.selectedOutcomeText
+            }));
+    }
+
     // ========== CASE INFO PANEL GETTERS ==========
 
     get showCaseInfoPanel() {

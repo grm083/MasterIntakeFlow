@@ -30,6 +30,49 @@
             <span class="question-text">{question.questionText}</span>
         </div>
 
+        <!-- AI Suggestion (shown for active questions) -->
+        <template if:true={shouldShowSuggestion}>
+            <div class="ai-suggestion-container">
+                <div class="ai-suggestion-badge">
+                    <lightning-icon
+                        icon-name="utility:einstein"
+                        size="x-small"
+                        class="ai-icon">
+                    </lightning-icon>
+                    <span class="ai-label">AI Suggestion:</span>
+                    <span class="ai-suggestion-text">{suggestionDisplayText}</span>
+                </div>
+                <div class="ai-suggestion-actions">
+                    <lightning-button
+                        label="Use This"
+                        variant="brand"
+                        onclick={handleAcceptSuggestion}
+                        class="accept-button">
+                    </lightning-button>
+                    <lightning-button-icon
+                        icon-name="utility:close"
+                        variant="bare"
+                        alternative-text="Dismiss"
+                        title="Dismiss suggestion"
+                        onclick={handleDismissSuggestion}
+                        class="dismiss-button">
+                    </lightning-button-icon>
+                </div>
+            </div>
+        </template>
+
+        <!-- Loading Suggestion Indicator -->
+        <template if:true={isFetchingSuggestion}>
+            <div class="ai-loading-container">
+                <lightning-spinner
+                    alternative-text="Generating suggestion"
+                    size="x-small"
+                    class="ai-loading-spinner">
+                </lightning-spinner>
+                <span class="ai-loading-text">AI is analyzing your case...</span>
+            </div>
+        </template>
+
         <!-- Completed Question Summary -->
         <template if:true={isCompleted}>
             <div class="answer-summary">
