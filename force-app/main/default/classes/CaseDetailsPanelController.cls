@@ -58,7 +58,16 @@ public with sharing class CaseDetailsPanelController {
                        Location__r.Portal_Name__c,
                        // Client fields
                        Client__c,
-                       Client__r.Name
+                       Client__r.Name,
+                       // Contact fields
+                       ContactId,
+                       Contact.Name,
+                       Contact.Phone,
+                       Contact.MobilePhone,
+                       Contact.Email,
+                       Contact.Preferred_Method__c,
+                       Contact.Email_Validated__c,
+                       Contact_Title__c
                 FROM Case
                 WHERE Id = :caseId
                 LIMIT 1
@@ -68,6 +77,7 @@ public with sharing class CaseDetailsPanelController {
             wrapper.caseRecord = caseRecord;
             wrapper.hasAsset = caseRecord.AssetId != null;
             wrapper.hasLocation = caseRecord.Location__c != null;
+            wrapper.hasContact = caseRecord.ContactId != null;
 
             // Get service details if Asset exists
             if (wrapper.hasAsset) {
@@ -140,11 +150,13 @@ public with sharing class CaseDetailsPanelController {
         @AuraEnabled public Case caseRecord { get; set; }
         @AuraEnabled public Boolean hasAsset { get; set; }
         @AuraEnabled public Boolean hasLocation { get; set; }
+        @AuraEnabled public Boolean hasContact { get; set; }
         @AuraEnabled public ServiceDetailsWrapper serviceDetails { get; set; }
 
         public CaseDetailsWrapper() {
             this.hasAsset = false;
             this.hasLocation = false;
+            this.hasContact = false;
         }
     }
 

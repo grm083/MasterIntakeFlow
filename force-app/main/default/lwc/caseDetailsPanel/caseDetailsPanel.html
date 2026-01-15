@@ -302,13 +302,70 @@
             </div>
         </template>
 
+        <!-- Contact Section -->
+        <template if:true={hasContactData}>
+            <div class="detail-section">
+                <!-- Contact Header (Clickable) -->
+                <div class="section-header" onclick={handleContactToggle}>
+                    <lightning-icon
+                        icon-name={contactIcon}
+                        size="x-small"
+                        class="slds-m-right_x-small toggle-icon">
+                    </lightning-icon>
+                    <div class="section-title">
+                        <lightning-icon
+                            icon-name="standard:contact"
+                            size="x-small"
+                            class="slds-m-right_xx-small">
+                        </lightning-icon>
+                        <span class="slds-text-heading_small">Contact Information</span>
+                    </div>
+                </div>
+
+                <!-- Contact Content (Collapsible) -->
+                <template if:true={isContactExpanded}>
+                    <div class="section-content">
+                        <!-- Contact Header Info -->
+                        <div class="contact-header-info slds-m-bottom_small">
+                            <div class="slds-text-heading_small">{contactName}</div>
+                            <div class="slds-text-body_small slds-text-color_weak">{contactTitle}</div>
+                        </div>
+
+                        <!-- Contact Details -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Phone</div>
+                                <div class="info-value">{contactPhone}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Preferred Method</div>
+                                <div class="info-value">{preferredMethod}</div>
+                            </div>
+                        </div>
+
+                        <div class="info-item full-width">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">{contactEmail}</div>
+                        </div>
+
+                        <div class="info-item full-width">
+                            <div class="info-label">Email Validated</div>
+                            <div class="info-value">{emailValidated}</div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
         <!-- No Data Message -->
         <template if:false={hasAssetData}>
             <template if:false={hasLocationData}>
-                <template if:true={caseDetails}>
-                    <div class="slds-m-around_small slds-text-align_center slds-text-color_weak">
-                        <p class="slds-text-body_small">No Asset or Location information available</p>
-                    </div>
+                <template if:false={hasContactData}>
+                    <template if:true={caseDetails}>
+                        <div class="slds-m-around_small slds-text-align_center slds-text-color_weak">
+                            <p class="slds-text-body_small">No Asset, Location, or Contact information available</p>
+                        </div>
+                    </template>
                 </template>
             </template>
         </template>

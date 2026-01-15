@@ -8,6 +8,7 @@ export default class CaseDetailsPanel extends LightningElement {
     error;
     isAssetExpanded = true;  // Asset section expanded by default
     isLocationExpanded = true;  // Location section expanded by default
+    isContactExpanded = true;  // Contact section expanded by default
 
     // Wire the case details from Apex
     @wire(getCaseDetails, { caseId: '$caseId' })
@@ -29,6 +30,10 @@ export default class CaseDetailsPanel extends LightningElement {
 
     get hasLocationData() {
         return this.caseDetails?.hasLocation && this.caseDetails?.caseRecord?.Location__r;
+    }
+
+    get hasContactData() {
+        return this.caseDetails?.hasContact && this.caseDetails?.caseRecord?.Contact;
     }
 
     get asset() {
@@ -227,6 +232,41 @@ export default class CaseDetailsPanel extends LightningElement {
         return this.location?.Portal_Name__c || 'N/A';
     }
 
+    // Contact field getters
+    get contact() {
+        return this.caseDetails?.caseRecord?.Contact;
+    }
+
+    get contactName() {
+        return this.contact?.Name || 'N/A';
+    }
+
+    get contactTitle() {
+        return this.caseDetails?.caseRecord?.Contact_Title__c || 'N/A';
+    }
+
+    get contactEmail() {
+        return this.contact?.Email || 'N/A';
+    }
+
+    get contactPhone() {
+        const preferredMethod = this.contact?.Preferred_Method__c;
+        if (preferredMethod === 'MobilePhone') {
+            return this.contact?.MobilePhone || 'N/A';
+        } else if (preferredMethod === 'Phone') {
+            return this.contact?.Phone || 'N/A';
+        }
+        return 'N/A';
+    }
+
+    get preferredMethod() {
+        return this.contact?.Preferred_Method__c || 'N/A';
+    }
+
+    get emailValidated() {
+        return this.contact?.Email_Validated__c ? 'Yes' : 'No';
+    }
+
     // Section toggle handlers
     handleAssetToggle() {
         this.isAssetExpanded = !this.isAssetExpanded;
@@ -234,6 +274,10 @@ export default class CaseDetailsPanel extends LightningElement {
 
     handleLocationToggle() {
         this.isLocationExpanded = !this.isLocationExpanded;
+    }
+
+    handleContactToggle() {
+        this.isContactExpanded = !this.isContactExpanded;
     }
 
     // Helper methods
@@ -254,5 +298,9 @@ export default class CaseDetailsPanel extends LightningElement {
 
     get locationIcon() {
         return this.isLocationExpanded ? 'utility:chevrondown' : 'utility:chevronright';
+    }
+
+    get contactIcon() {
+        return this.isContactExpanded ? 'utility:chevrondown' : 'utility:chevronright';
     }
 }
