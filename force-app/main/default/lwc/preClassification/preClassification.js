@@ -66,6 +66,19 @@ export default class PreClassification extends LightningElement {
         return `width: ${percentage}%; background-color: ${color};`;
     }
 
+    // Display caseReason or show it's optional if null
+    get displayCaseReason() {
+        if (this.result.caseReason) {
+            return this.result.caseReason;
+        }
+        return '(Not specified - incomplete match preferred)';
+    }
+
+    // Check if caseReason has a value
+    get hasCaseReason() {
+        return this.result.caseReason != null && this.result.caseReason !== '';
+    }
+
     // ========== LIFECYCLE ==========
 
     connectedCallback() {

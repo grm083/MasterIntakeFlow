@@ -13,6 +13,17 @@
                 <p class="slds-text-body_regular">{outcomeStatement}</p>
             </div>
 
+            <!-- Additional Comments - Moved to appear directly after outcome -->
+            <div class="slds-m-bottom_medium">
+                <lightning-textarea
+                    label="Additional Comments (Optional)"
+                    placeholder="Add any additional notes or instructions..."
+                    value={additionalComments}
+                    onchange={handleCommentsChange}
+                    max-length="5000">
+                </lightning-textarea>
+            </div>
+
             <!-- Submit Button - Prominently placed for easy access -->
             <div class="slds-m-bottom_medium slds-text-align_center">
                 <lightning-button
@@ -89,17 +100,6 @@
                         </template>
                     </div>
                 </template>
-            </div>
-
-            <!-- Additional Comments -->
-            <div class="slds-m-bottom_medium">
-                <lightning-textarea
-                    label="Additional Comments (Optional)"
-                    placeholder="Add any additional notes or instructions..."
-                    value={additionalComments}
-                    onchange={handleCommentsChange}
-                    max-length="5000">
-                </lightning-textarea>
             </div>
 
         </div>

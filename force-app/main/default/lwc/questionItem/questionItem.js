@@ -1,9 +1,18 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
+import suggestAnswer from '@salesforce/apex/IntakeAnswerSuggestionController.suggestAnswer';
 
 export default class QuestionItem extends LightningElement {
     @api question;      // Full question object with outcomes
     @api isActive;      // Whether this is the current/active question
     @api index;         // Position in question history (0-based)
+    @api caseId;        // Case ID for AI context
+    @api previousAnswers; // Previous Q&A in session for AI context
+
+    // AI Suggestion state
+    @track aiSuggestion = null;
+    @track showSuggestion = false;
+    @track isFetchingSuggestion = false;
+    @track suggestionError = false;
 
     // ========== COMPUTED PROPERTIES ==========
 
@@ -174,8 +183,8 @@ export default class QuestionItem extends LightningElement {
     }
 
     /**
-     * Handle instruction display
-     * Auto-advances after brief delay to allow user to read
+     * Handle instruction display and fetch AI suggestion for active questions
+     * Auto-advances after brief delay for instructions
      */
     connectedCallback() {
         if (this.isInstruction && this.isActive) {
@@ -190,6 +199,9 @@ export default class QuestionItem extends LightningElement {
                     );
                 }
             }, 500);
+        } else if (this.isActive && !this.isInstruction && this.caseId) {
+            // Fetch AI suggestion for active questions
+            this.fetchAISuggestion();
         }
     }
 
@@ -227,5 +239,134 @@ export default class QuestionItem extends LightningElement {
         });
 
         this.dispatchEvent(event);
+    }
+
+    // ========== AI SUGGESTION METHODS ==========
+
+    /**
+     * Fetch AI suggestion for the current question
+     * Uses case context and previous answers to suggest an appropriate response
+     */
+    async fetchAISuggestion() {
+        // Don't fetch if already fetching or suggestion already shown
+        if (this.isFetchingSuggestion || this.showSuggestion) {
+            return;
+        }
+
+        try {
+            this.isFetchingSuggestion = true;
+            this.suggestionError = false;
+
+            // Prepare picklist options if applicable
+            let picklistOptionsJson = '[]';
+            if (this.isPicklist && this.question.outcomes) {
+                const options = this.question.outcomes.map(o => o.outcomeText);
+                picklistOptionsJson = JSON.stringify(options);
+            }
+
+            // Prepare previous answers
+            const previousAnswersJson = this.previousAnswers ? JSON.stringify(this.previousAnswers) : '[]';
+
+            console.log('[QuestionItem] Fetching AI suggestion for:', this.question.questionText);
+
+            // Call Apex controller
+            const result = await suggestAnswer({
+                caseId: this.caseId,
+                questionText: this.question.questionText,
+                questionType: this.question.inputType,
+                picklistOptions: picklistOptionsJson,
+                previousAnswers: previousAnswersJson
+            });
+
+            if (result.success && result.suggestedAnswer) {
+                this.aiSuggestion = result.suggestedAnswer;
+                this.showSuggestion = true;
+                console.log('[QuestionItem] AI suggestion received:', this.aiSuggestion);
+            } else {
+                console.log('[QuestionItem] AI suggestion not available');
+            }
+
+        } catch (error) {
+            console.error('[QuestionItem] Error fetching AI suggestion:', error);
+            this.suggestionError = true;
+            // Silently fail - suggestion is optional feature
+        } finally {
+            this.isFetchingSuggestion = false;
+        }
+    }
+
+    /**
+     * Handle accepting the AI suggestion
+     * Auto-fills the answer with the suggested value
+     */
+    handleAcceptSuggestion() {
+        if (!this.aiSuggestion) return;
+
+        console.log('[QuestionItem] Accepting AI suggestion:', this.aiSuggestion);
+
+        if (this.isPicklist) {
+            // For picklist, find the outcome that matches the suggestion
+            const matchingOutcome = this.question.outcomes.find(
+                o => o.outcomeText.toLowerCase().trim() === this.aiSuggestion.toLowerCase().trim()
+            );
+
+            if (matchingOutcome) {
+                // Auto-select and advance
+                this.dispatchAnswerSelected(
+                    matchingOutcome.outcomeId,
+                    matchingOutcome.outcomeText,
+                    matchingOutcome.outcomeText
+                );
+            } else {
+                console.error('[QuestionItem] Could not find matching option for suggestion');
+            }
+        } else if (this.isText) {
+            // For text input, find the "Any Value" outcome
+            const anyValueOutcome = this.question.outcomes.find(o => o.anyValue === true);
+            const selectedOutcome = anyValueOutcome || this.question.outcomes[0];
+
+            if (selectedOutcome) {
+                // Auto-fill and advance
+                this.dispatchAnswerSelected(
+                    selectedOutcome.outcomeId,
+                    this.aiSuggestion,
+                    this.aiSuggestion
+                );
+            }
+        }
+
+        // Hide suggestion after accepting
+        this.showSuggestion = false;
+    }
+
+    /**
+     * Handle dismissing the AI suggestion
+     * User wants to answer manually
+     */
+    handleDismissSuggestion() {
+        console.log('[QuestionItem] Dismissing AI suggestion');
+        this.showSuggestion = false;
+        this.aiSuggestion = null;
+    }
+
+    /**
+     * Get display text for suggestion based on question type
+     */
+    get suggestionDisplayText() {
+        if (!this.aiSuggestion) return '';
+
+        // Truncate long suggestions for display
+        if (this.aiSuggestion.length > 60) {
+            return this.aiSuggestion.substring(0, 60) + '...';
+        }
+
+        return this.aiSuggestion;
+    }
+
+    /**
+     * Check if suggestion should be shown
+     */
+    get shouldShowSuggestion() {
+        return this.isActive && this.showSuggestion && this.aiSuggestion && !this.isInstruction;
     }
 }

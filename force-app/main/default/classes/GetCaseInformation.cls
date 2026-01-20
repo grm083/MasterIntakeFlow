@@ -2746,17 +2746,76 @@ public static map<Id, String> getAssetDetailNonPickup(map<Id, Date> assetParam){
 	@AuraEnabled
     public static Boolean launchCPQQuoteValidation(String CaseId) {
         //Call the validation flow for CPQ via Apex for the ShowCaseMessages aura bundle
-        
+
         Boolean eligibility = false;
-        
+
         Map<String, Object> flowParams = new Map<String, Object>();
         flowParams.put('caseRecordId', CaseId);
         Flow.Interview.Validation_Add_Change_Scope_Evaluation validationFlow = new Flow.Interview.Validation_Add_Change_Scope_Evaluation(flowParams);
         validationFlow.start();
-        
+
         eligibility = (Boolean)validationFlow.getvariableValue('OutputQuoteEligible');
-        
+
         return eligibility;
     }
-	
+
+    /**
+     * Check if Master Intake Flow completion warning should be shown
+     * Warning shows when progressing case if:
+     * 1. Master_Intake_Complete__c == false
+     * 2. AND scripts are available (intake questions exist)
+     *
+     * @param caseId The ID of the case being progressed
+     * @return IntakeWarningWrapper indicating if warning should be shown
+     */
+    @AuraEnabled
+    public static IntakeWarningWrapper checkMasterIntakeWarning(Id caseId) {
+        IntakeWarningWrapper result = new IntakeWarningWrapper();
+        result.showWarning = false;
+        result.warningMessage = '';
+
+        try {
+            // 1. Check if Master Intake is complete
+            Case c = [
+                SELECT Id, Master_Intake_Complete__c
+                FROM Case
+                WHERE Id = :caseId
+                LIMIT 1
+            ];
+
+            // If intake is already complete, no warning needed
+            if (c.Master_Intake_Complete__c == true) {
+                return result;
+            }
+
+            // 2. Check if scripts/questions are available
+            // Call IntakeProcessController to see if intake questions exist
+            IntakeProcessController.InitialDataWrapper intakeData =
+                IntakeProcessController.initializeIntake(caseId);
+
+            // If there are available scripts (firstQuestion is not null), show warning
+            if (intakeData != null && intakeData.firstQuestion != null) {
+                result.showWarning = true;
+                result.warningMessage = 'Master Intake Flow has not been completed. ' +
+                    'It is recommended to complete the intake before progressing this case. ' +
+                    'Would you like to proceed anyway?';
+            }
+
+        } catch (Exception e) {
+            // If error occurs, don't block progression - just log and continue
+            System.debug('Error checking Master Intake warning: ' + e.getMessage());
+            result.showWarning = false;
+        }
+
+        return result;
+    }
+
+    /**
+     * Wrapper class for Master Intake warning response
+     */
+    public class IntakeWarningWrapper {
+        @AuraEnabled public Boolean showWarning { get; set; }
+        @AuraEnabled public String warningMessage { get; set; }
+    }
+
 }

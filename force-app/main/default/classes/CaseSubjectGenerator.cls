@@ -154,7 +154,8 @@ public with sharing class CaseSubjectGenerator {
     }
 
     /**
-     * Generate subject line from case comments using AI
+     * Generate subject line from case data using AI
+     * Includes comments, tasks, emails, quotes, and history
      *
      * @param caseRecord The Case record to generate subject for
      * @return String the generated subject line
@@ -168,15 +169,81 @@ public with sharing class CaseSubjectGenerator {
             ORDER BY CreatedDate ASC
         ];
 
-        if (comments.isEmpty()) {
-            System.debug('[CaseSubjectGenerator] No comments found for Case ' + caseRecord.CaseNumber);
+        // Query all tasks related to this case
+        List<Task> tasks = [
+            SELECT Id, Subject, Description, ActivityDate, Status, CreatedDate, CreatedBy.Name
+            FROM Task
+            WHERE WhatId = :caseRecord.Id
+            ORDER BY CreatedDate ASC
+        ];
+
+        // Query all emails related to this case
+        List<EmailMessage> emails = [
+            SELECT Id, Subject, TextBody, HtmlBody, MessageDate, FromAddress, ToAddress,
+                   CreatedDate, CreatedBy.Name
+            FROM EmailMessage
+            WHERE ParentId = :caseRecord.Id
+            ORDER BY MessageDate ASC
+        ];
+
+        // Query all quotes related to this case (through Opportunity)
+        List<SBQQ__Quote__c> quotes = [
+            SELECT Id, Name, SBQQ__Status__c, SBQQ__Primary__c, CreatedDate, CreatedBy.Name,
+                   SBQQ__LineItemCount__c, SBQQ__NetAmount__c
+            FROM SBQQ__Quote__c
+            WHERE SBQQ__Opportunity2__r.Case__c = :caseRecord.Id
+            ORDER BY CreatedDate ASC
+        ];
+
+        // Query Case History for tracked field changes
+        List<CaseHistory> caseHistory = [
+            SELECT Id, Field, OldValue, NewValue, CreatedDate, CreatedBy.Name
+            FROM CaseHistory
+            WHERE CaseId = :caseRecord.Id
+            ORDER BY CreatedDate ASC
+        ];
+
+        // Query Quote History if quotes exist
+        List<SBQQ__QuoteHistory__c> quoteHistory = new List<SBQQ__QuoteHistory__c>();
+        if (!quotes.isEmpty()) {
+            Set<Id> quoteIds = new Set<Id>();
+            for (SBQQ__Quote__c quote : quotes) {
+                quoteIds.add(quote.Id);
+            }
+
+            quoteHistory = [
+                SELECT Id, Field, OldValue, NewValue, CreatedDate, CreatedBy.Name, ParentId
+                FROM SBQQ__QuoteHistory__c
+                WHERE ParentId IN :quoteIds
+                ORDER BY CreatedDate ASC
+            ];
+        }
+
+        // Check if we have any data at all
+        if (comments.isEmpty() && tasks.isEmpty() && emails.isEmpty() &&
+            quotes.isEmpty() && caseHistory.isEmpty()) {
+            System.debug('[CaseSubjectGenerator] No data found for Case ' + caseRecord.CaseNumber);
             return null;
         }
 
-        System.debug('[CaseSubjectGenerator] Found ' + comments.size() + ' comments for Case ' + caseRecord.CaseNumber);
+        System.debug('[CaseSubjectGenerator] Found data for Case ' + caseRecord.CaseNumber + ':');
+        System.debug('  Comments: ' + comments.size());
+        System.debug('  Tasks: ' + tasks.size());
+        System.debug('  Emails: ' + emails.size());
+        System.debug('  Quotes: ' + quotes.size());
+        System.debug('  Case History: ' + caseHistory.size());
+        System.debug('  Quote History: ' + quoteHistory.size());
 
-        // Call Google Gemini AI to generate subject from comments
-        String generatedSubject = GoogleGeminiService.generateSubjectFromComments(comments, caseRecord);
+        // Call Google Gemini AI to generate subject from all available data
+        String generatedSubject = GoogleGeminiService.generateSubjectFromComments(
+            comments,
+            tasks,
+            emails,
+            quotes,
+            caseHistory,
+            quoteHistory,
+            caseRecord
+        );
 
         return generatedSubject;
     }

@@ -1,10 +1,29 @@
-/* Modal Content */
-.intake-modal-content {
+/* Modal Content Wrapper - Flex layout for side panel */
+.intake-modal-content-wrapper {
+    display: flex;
     min-height: 400px;
     max-height: 70vh;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+/* Main Content Area */
+.intake-modal-content {
+    flex: 1 1 65%;
     overflow-y: auto;
     padding: 0;
     background-color: #ffffff;
+    border-right: 2px solid #e0e0e0;
+}
+
+/* Side Panel */
+.intake-side-panel {
+    flex: 0 0 35%;
+    min-width: 320px;
+    max-width: 400px;
+    overflow-y: auto;
+    background-color: #f8f8f2;
+    border-left: 1px solid #dddbda;
 }
 
 /* Case Info Panel - WM Brand Styling */
@@ -164,6 +183,30 @@
 }
 
 /* Responsive Design - WM Mobile Optimization */
+@media (max-width: 1024px) {
+    /* Stack layout vertically on tablets and smaller */
+    .intake-modal-content-wrapper {
+        flex-direction: column;
+        max-height: none;
+    }
+
+    .intake-modal-content {
+        flex: 1 1 auto;
+        border-right: none;
+        border-bottom: 2px solid #e0e0e0;
+        max-height: 50vh;
+    }
+
+    .intake-side-panel {
+        flex: 0 0 auto;
+        min-width: 100%;
+        max-width: 100%;
+        max-height: 40vh;
+        border-left: none;
+        border-top: 2px solid #1c8200;
+    }
+}
+
 @media (max-width: 768px) {
     .question-stack {
         max-height: 500px;
@@ -192,6 +235,10 @@
 
     .case-info-panel {
         padding: 1rem !important;
+    }
+
+    .intake-side-panel {
+        max-height: 50vh;
     }
 }
 

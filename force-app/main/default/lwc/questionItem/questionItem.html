@@ -1,38 +1,77 @@
 <template>
     <div class={containerClass}>
 
+        <!-- Edit button for completed questions - positioned in upper right -->
+        <template if:true={canEdit}>
+            <div class="edit-button-container">
+                <lightning-button
+                    label="Edit"
+                    variant="base"
+                    onclick={handleEditClick}
+                    class="edit-button">
+                </lightning-button>
+            </div>
+        </template>
+
         <!-- Question Header -->
         <div class={questionHeaderClass}>
-            <div class="slds-grid slds-grid_align-spread">
-                <div class="slds-col">
-                    <!-- Checkmark for completed questions -->
-                    <template if:true={isCompleted}>
-                        <lightning-icon
-                            icon-name="utility:check"
-                            size="x-small"
-                            variant="success"
-                            class="slds-m-right_x-small">
-                        </lightning-icon>
-                    </template>
+            <!-- Checkmark for completed questions -->
+            <template if:true={isCompleted}>
+                <lightning-icon
+                    icon-name="utility:check"
+                    size="x-small"
+                    variant="success"
+                    class="slds-m-right_x-small">
+                </lightning-icon>
+            </template>
 
-                    <!-- Question number and text -->
-                    <span class="question-number">Q{questionNumber}:</span>
-                    <span class="question-text">{question.questionText}</span>
-                </div>
-
-                <!-- Edit button for completed questions -->
-                <template if:true={canEdit}>
-                    <div class="slds-col slds-no-flex">
-                        <lightning-button
-                            label="Edit"
-                            variant="base"
-                            onclick={handleEditClick}
-                            class="edit-button">
-                        </lightning-button>
-                    </div>
-                </template>
-            </div>
+            <!-- Question number and text -->
+            <span class="question-number">Q{questionNumber}:</span>
+            <span class="question-text">{question.questionText}</span>
         </div>
+
+        <!-- AI Suggestion (shown for active questions) -->
+        <template if:true={shouldShowSuggestion}>
+            <div class="ai-suggestion-container">
+                <div class="ai-suggestion-badge">
+                    <lightning-icon
+                        icon-name="utility:einstein"
+                        size="x-small"
+                        class="ai-icon">
+                    </lightning-icon>
+                    <span class="ai-label">AI Suggestion:</span>
+                    <span class="ai-suggestion-text">{suggestionDisplayText}</span>
+                </div>
+                <div class="ai-suggestion-actions">
+                    <lightning-button
+                        label="Use This"
+                        variant="brand"
+                        onclick={handleAcceptSuggestion}
+                        class="accept-button">
+                    </lightning-button>
+                    <lightning-button-icon
+                        icon-name="utility:close"
+                        variant="bare"
+                        alternative-text="Dismiss"
+                        title="Dismiss suggestion"
+                        onclick={handleDismissSuggestion}
+                        class="dismiss-button">
+                    </lightning-button-icon>
+                </div>
+            </div>
+        </template>
+
+        <!-- Loading Suggestion Indicator -->
+        <template if:true={isFetchingSuggestion}>
+            <div class="ai-loading-container">
+                <lightning-spinner
+                    alternative-text="Generating suggestion"
+                    size="x-small"
+                    class="ai-loading-spinner">
+                </lightning-spinner>
+                <span class="ai-loading-text">AI is analyzing your case...</span>
+            </div>
+        </template>
 
         <!-- Completed Question Summary -->
         <template if:true={isCompleted}>

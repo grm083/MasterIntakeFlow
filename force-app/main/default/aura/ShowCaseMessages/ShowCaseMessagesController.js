@@ -246,22 +246,46 @@
     },
 	*/
     showPgrsBtns: function (component, event, helper) {
-        $A.createComponent(
-            "c:OpenCloseModal",
-            {
-                "caseRecordId": component.get("v.recordId"),
-                "showButtons": true,
-                "caseStatus": component.get("v.caseRecord.Status")
-            },
-            function (msgBox) {
-                if (component.isValid()) {
-                    var targetCmp = component.find('progressComp');
-                    var body = targetCmp.get("v.body");
-                    body.push(msgBox);
-                    targetCmp.set("v.body", body);
+        // Check if Master Intake warning should be shown
+        var caseId = component.get("v.recordId");
+        var action = component.get('c.checkMasterIntakeWarning');
+
+        action.setParams({
+            "caseId": caseId
+        });
+
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                var warningResult = response.getReturnValue();
+
+                if (warningResult.showWarning) {
+                    // Show warning modal
+                    component.set("v.intakeWarningMessage", warningResult.warningMessage);
+                    component.set("v.showIntakeWarning", true);
+                } else {
+                    // No warning needed, proceed directly
+                    helper.openProgressModal(component);
                 }
+            } else {
+                // On error, proceed without warning (don't block user)
+                console.log('Error checking intake warning: ' + response.getError());
+                helper.openProgressModal(component);
             }
-        );
+        });
+
+        $A.enqueueAction(action);
+    },
+
+    // Handle user clicking "Proceed Anyway" on intake warning
+    proceedWithoutIntake: function(component, event, helper) {
+        component.set("v.showIntakeWarning", false);
+        helper.openProgressModal(component);
+    },
+
+    // Handle user clicking "Cancel" on intake warning
+    cancelProgressCase: function(component, event, helper) {
+        component.set("v.showIntakeWarning", false);
     },
     
      addCaseAsset: function (component, event, helper) {

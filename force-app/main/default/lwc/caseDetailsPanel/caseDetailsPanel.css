@@ -1,0 +1,188 @@
+/* Case Details Panel - WM Brand */
+.details-panel {
+    height: 100%;
+    overflow-y: auto;
+    background-color: #f8f8f2;
+    padding: 0;
+}
+
+.panel-header {
+    padding: 1rem 1rem 0.5rem 1rem;
+    background-color: #ffffff;
+    border-bottom: 2px solid #1c8200;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Detail Section */
+.detail-section {
+    background-color: #ffffff;
+    margin: 0.75rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+/* Section Header (Clickable) */
+.section-header {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: #f0f9ed;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+
+.section-header:hover {
+    background-color: #e3f5dc;
+}
+
+.section-header:active {
+    background-color: #d6f1c9;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #024731;
+    flex: 1;
+}
+
+.toggle-icon {
+    color: #1c8200;
+    transition: transform 0.2s ease;
+}
+
+/* Section Content */
+.section-content {
+    padding: 1rem;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 2000px;
+    }
+}
+
+/* Header Info */
+.asset-header-info,
+.location-header-info {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-item.full-width {
+    margin-bottom: 0.75rem;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4f4f58;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-size: 0.875rem;
+    color: #024731;
+    word-wrap: break-word;
+}
+
+.info-value.price-value {
+    color: #1c8200;
+    font-weight: 600;
+}
+
+/* Section Divider */
+.section-divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 0.75rem 0;
+}
+
+/* Pricing Section */
+.pricing-section {
+    padding: 0.75rem;
+    background-color: #f0f9ed;
+    border-radius: 4px;
+    border: 1px solid #d6f1c9;
+}
+
+.pricing-header {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* End Date Highlighting */
+.info-item.has-end-date .info-label {
+    color: #c23934;
+}
+
+.info-item.has-end-date .info-value {
+    color: #c23934;
+    font-weight: 600;
+}
+
+/* Scrollbar Styling */
+.details-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.details-panel::-webkit-scrollbar-track {
+    background: #f8f8f2;
+}
+
+.details-panel::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 4px;
+}
+
+.details-panel::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-content {
+        padding: 0.75rem;
+    }
+
+    .details-panel {
+        padding: 0;
+    }
+
+    .detail-section {
+        margin: 0.5rem;
+    }
+}

@@ -92,10 +92,13 @@
         </div>
     </template>
 
-    <!-- Modal Content -->
-    <div class="slds-modal__content intake-modal-content" id="modal-content">
+    <!-- Modal Content with Side Panel Layout -->
+    <div class="slds-modal__content intake-modal-content-wrapper" id="modal-content">
 
-        <!-- Draft Resume Prompt -->
+        <!-- Main Content Area -->
+        <div class="intake-modal-content">
+
+            <!-- Draft Resume Prompt -->
         <template if:true={showDraftPrompt}>
             <div class="slds-p-around_medium">
                 <div class="draft-prompt">
@@ -186,6 +189,8 @@
                         question={question}
                         is-active={question.isActive}
                         index={index}
+                        case-id={recordId}
+                        previous-answers={previousAnswersForAI}
                         onanswerselected={handleAnswerSelected}
                         oneditquestion={handleEditQuestion}>
                     </c-question-item>
@@ -234,5 +239,15 @@
             </div>
         </template>
 
+        </div>
+        <!-- End Main Content Area -->
+
+        <!-- Side Panel - Case Details -->
+        <div class="intake-side-panel">
+            <c-case-details-panel case-id={recordId}></c-case-details-panel>
+        </div>
+        <!-- End Side Panel -->
+
     </div>
+    <!-- End Modal Content Wrapper -->
 </template>

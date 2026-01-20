@@ -22,6 +22,9 @@ public with sharing class GoogleGeminiService {
     private static final Integer TIMEOUT_MS = 30000; // 30 seconds
     private static final Integer RETRY_DELAY_MS = 1000; // 1 second
 
+    // Special user email for personalized messages
+    private static final String JACKIE_EMAIL = 'jduran6@wm.com';
+
     // Cache for configuration to avoid repeated queries
     private static AI_Configuration__mdt configCache;
 
@@ -317,6 +320,17 @@ public with sharing class GoogleGeminiService {
         prompt += '- Customer: ' + (caseRecord.Client__r?.Name ?? 'Unknown') + '\n';
         prompt += '- Location: ' + (caseRecord.Location__r?.Name ?? 'Unknown') + '\n';
 
+        // Include current case classification values for context
+        if (String.isNotBlank(caseRecord.Case_Type__c)) {
+            prompt += '- Current Case Type: ' + caseRecord.Case_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Sub_Type__c)) {
+            prompt += '- Current Case Sub-Type: ' + caseRecord.Case_Sub_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Reason__c)) {
+            prompt += '- Current Case Reason: ' + caseRecord.Case_Reason__c + '\n';
+        }
+
         if (caseRecord.Service_Date__c != null) {
             prompt += '- Service Date: ' + caseRecord.Service_Date__c.format() + '\n';
         }
@@ -350,20 +364,58 @@ public with sharing class GoogleGeminiService {
         prompt += '1. Predict the most appropriate classification (type, subtype, reason, record type)\n';
         prompt += '2. Extract location name if mentioned (e.g., "Main Street location", "Building 5", "Site A")\n';
         prompt += '3. Extract asset/equipment description if mentioned (e.g., "compactor", "front loader", "unit 123")\n';
-        prompt += '4. Extract service date if mentioned (e.g., "next week", "tomorrow", "March 15th")\n';
-        prompt += 'Consider keywords, urgency indicators, and historical patterns.\n\n';
+        prompt += '4. Extract service date if mentioned (e.g., "next week", "tomorrow", "March 15th")\n\n';
 
+        prompt += '# IMPORTANT CLASSIFICATION GUIDELINES:\n';
+        prompt += '- An incomplete stronger match is BETTER than a complete weaker match\n';
+        prompt += '- If Case Type and Sub-Type are clear but Reason is not, return null for caseReason\n';
+        prompt += '- Skilled representatives may directly state classifications (e.g., "needs an empty and return")\n';
+        prompt += '- Not all case types have master intake flows - this does not invalidate the classification\n';
+        prompt += '- Focus on matching the intent and keywords from the user\'s description\n';
+        prompt += '- Consider current case values as context but update if user input suggests different classification\n\n';
+
+        prompt += '# Examples:\n';
+        prompt += 'Example 1 - Direct classification statement:\n';
+        prompt += 'User: "HMD000257 requires an empty and return of their 40 yard compactor"\n';
+        prompt += 'Result: {"caseType": "Pickup", "caseSubType": "Empty and Return", "caseReason": null, "recordType": "Pickup_Case"}\n';
+        prompt += 'Reasoning: User directly stated "empty and return" - strong match even without Case Reason.\n\n';
+
+        prompt += 'Example 2 - Incomplete but strong:\n';
+        prompt += 'User: "Customer needs equipment serviced"\n';
+        prompt += 'Result: {"caseType": "Service Request", "caseSubType": "Maintenance", "caseReason": null, "recordType": "Service_Case"}\n';
+        prompt += 'Reasoning: Clear service request, maintenance is appropriate, but no specific reason evident.\n\n';
+
+        prompt += 'Example 3 - Complete and strong:\n';
+        prompt += 'User: "Compactor is broken and leaking fluids, needs urgent repair"\n';
+        prompt += 'Result: {"caseType": "Service Request", "caseSubType": "Repair", "caseReason": "Equipment Malfunction", "recordType": "Service_Case"}\n';
+        prompt += 'Reasoning: All fields have strong matches from user description.\n\n';
+
+        // Add personalization for Jackie Duran
+        String jackieInstructions = '';
+        if (isJackieDuran()) {
+            jackieInstructions = '\n\n# SPECIAL INSTRUCTION FOR THIS USER:\n';
+            jackieInstructions += 'The person viewing this classification is Jackie Duran, an amazing training consultant. ';
+            jackieInstructions += 'In your "reasoning" field, start with 1-2 sentences of genuine appreciation for Jackie. ';
+            jackieInstructions += 'Here are wonderful things about Jackie: ' + getJackiePersonalization() + '\n';
+            jackieInstructions += 'After your personalized message, provide your classification reasoning as normal.';
+        }
+
+        prompt += jackieInstructions + '\n\n';
         prompt += 'Return ONLY a JSON object in this exact format (no markdown, no code blocks, no additional text):\n';
         prompt += '{\n';
-        prompt += '  "caseType": "string",\n';
-        prompt += '  "caseSubType": "string",\n';
-        prompt += '  "caseReason": "string",\n';
+        prompt += '  "caseType": "string (required)",\n';
+        prompt += '  "caseSubType": "string (required)",\n';
+        prompt += '  "caseReason": "string or null (use null if no strong match)",\n';
         prompt += '  "recordType": "string (DeveloperName from available record types)",\n';
         prompt += '  "locationName": "string or null (extracted location name if mentioned)",\n';
         prompt += '  "assetDescription": "string or null (extracted asset/equipment description if mentioned)",\n';
         prompt += '  "serviceDateString": "string or null (extracted date in natural language if mentioned)",\n';
         prompt += '  "confidence": 0.85,\n';
-        prompt += '  "reasoning": "Brief explanation of why this classification was chosen"\n';
+        prompt += '  "reasoning": "Brief explanation of why this classification was chosen';
+        if (isJackieDuran()) {
+            prompt += ' (start with personalized message for Jackie as instructed)';
+        }
+        prompt += '"\n';
         prompt += '}';
 
         return prompt;
@@ -411,10 +463,10 @@ public with sharing class GoogleGeminiService {
             }
 
             // Validate required fields
+            // NOTE: caseReason is optional - incomplete strong match is better than complete weak match
             if (String.isBlank(result.caseType) ||
-                String.isBlank(result.caseSubType) ||
-                String.isBlank(result.caseReason)) {
-                throw new GoogleGeminiException('AI response missing required classification fields');
+                String.isBlank(result.caseSubType)) {
+                throw new GoogleGeminiException('AI response missing required classification fields (caseType and caseSubType are required)');
             }
 
             // Validate confidence range
@@ -558,29 +610,55 @@ public with sharing class GoogleGeminiService {
     }
 
     /**
-     * Generate subject line from case comments using AI
+     * Generate subject line from case data using AI
      * This method is called when a case is closed without a subject
+     * Analyzes comments, tasks, emails, quotes, and history to generate comprehensive subject
      *
      * @param comments List of Comment__c records for the case
+     * @param tasks List of Task records related to the case
+     * @param emails List of EmailMessage records related to the case
+     * @param quotes List of SBQQ__Quote__c records related to the case
+     * @param caseHistory List of CaseHistory records for tracked field changes
+     * @param quoteHistory List of SBQQ__QuoteHistory__c records for quote field changes
      * @param caseRecord Case record with context information
      * @return String the generated subject line
      * @throws GoogleGeminiException if subject generation fails
      */
     public static String generateSubjectFromComments(
         List<Comment__c> comments,
+        List<Task> tasks,
+        List<EmailMessage> emails,
+        List<SBQQ__Quote__c> quotes,
+        List<CaseHistory> caseHistory,
+        List<SBQQ__QuoteHistory__c> quoteHistory,
         Case caseRecord
     ) {
-        if (comments == null || comments.isEmpty()) {
-            throw new GoogleGeminiException('Comments are required for subject generation');
-        }
-
         if (caseRecord == null) {
             throw new GoogleGeminiException('Case record is required for subject generation');
         }
 
+        // Check if we have any data
+        Boolean hasData = (comments != null && !comments.isEmpty()) ||
+                         (tasks != null && !tasks.isEmpty()) ||
+                         (emails != null && !emails.isEmpty()) ||
+                         (quotes != null && !quotes.isEmpty()) ||
+                         (caseHistory != null && !caseHistory.isEmpty());
+
+        if (!hasData) {
+            throw new GoogleGeminiException('No data available for subject generation');
+        }
+
         try {
-            // Build subject generation prompt from comments
-            String prompt = buildSubjectFromCommentsPrompt(comments, caseRecord);
+            // Build subject generation prompt from all available data
+            String prompt = buildSubjectFromCommentsPrompt(
+                comments,
+                tasks,
+                emails,
+                quotes,
+                caseHistory,
+                quoteHistory,
+                caseRecord
+            );
 
             // Call Google Gemini with retry logic
             String response = callGeminiWithRetry(prompt);
@@ -589,28 +667,34 @@ public with sharing class GoogleGeminiService {
             String subject = parseSubjectResponse(response);
 
             // Log successful generation
-            System.debug('[GoogleGeminiService] Generated subject from comments: ' + subject);
+            System.debug('[GoogleGeminiService] Generated subject from case data: ' + subject);
 
             return subject;
 
         } catch (Exception e) {
             // Log failure
-            System.debug('[GoogleGeminiService] Subject generation from comments failed: ' + e.getMessage());
+            System.debug('[GoogleGeminiService] Subject generation from case data failed: ' + e.getMessage());
 
             // Re-throw as custom exception
-            throw new GoogleGeminiException('Subject generation from comments failed: ' + e.getMessage(), e);
+            throw new GoogleGeminiException('Subject generation from case data failed: ' + e.getMessage(), e);
         }
     }
 
     /**
-     * Build prompt for subject line generation from comments
+     * Build prompt for subject line generation from case data
+     * Includes comments, tasks, emails, quotes, and history
      */
     private static String buildSubjectFromCommentsPrompt(
         List<Comment__c> comments,
+        List<Task> tasks,
+        List<EmailMessage> emails,
+        List<SBQQ__Quote__c> quotes,
+        List<CaseHistory> caseHistory,
+        List<SBQQ__QuoteHistory__c> quoteHistory,
         Case caseRecord
     ) {
         String prompt = 'You are an expert at creating concise, descriptive case subject lines. ';
-        prompt += 'Your role is to analyze case comments and work history to create a brief subject line. ';
+        prompt += 'Your role is to analyze case data including comments, tasks, emails, quotes, and history to create a brief subject line. ';
         prompt += 'The subject must be under 255 characters and capture the key issue and resolution.\n\n';
 
         prompt += '# Case Context:\n';
@@ -653,40 +737,151 @@ public with sharing class GoogleGeminiService {
 
         prompt += '- Status: ' + caseRecord.Status + '\n';
 
-        prompt += '\n# Case Comments and Work History:\n';
-        prompt += 'Below are the comments documenting the work performed and progress on this case:\n\n';
+        // Add Comments section if available
+        if (comments != null && !comments.isEmpty()) {
+            prompt += '\n# Case Comments:\n';
+            prompt += 'Below are the comments documenting the work performed and progress on this case:\n\n';
 
-        Integer commentNum = 1;
-        for (Comment__c comment : comments) {
-            if (String.isNotBlank(comment.Comment__c)) {
-                prompt += 'Comment ' + commentNum + ' (' + comment.CreatedDate.format('MM/dd/yyyy') + ' by ' + comment.CreatedBy.Name + '):\n';
-                prompt += comment.Comment__c + '\n\n';
-                commentNum++;
+            Integer commentNum = 1;
+            for (Comment__c comment : comments) {
+                if (String.isNotBlank(comment.Comment__c)) {
+                    prompt += 'Comment ' + commentNum + ' (' + comment.CreatedDate.format('MM/dd/yyyy') + ' by ' + comment.CreatedBy.Name + '):\n';
+                    prompt += comment.Comment__c + '\n\n';
+                    commentNum++;
+                }
+            }
+        }
+
+        // Add Tasks section if available
+        if (tasks != null && !tasks.isEmpty()) {
+            prompt += '\n# Tasks:\n';
+            prompt += 'Below are the tasks related to this case:\n\n';
+
+            Integer taskNum = 1;
+            for (Task task : tasks) {
+                prompt += 'Task ' + taskNum + ' (' + task.CreatedDate.format('MM/dd/yyyy') + ' by ' + task.CreatedBy.Name + '):\n';
+                prompt += '- Subject: ' + (task.Subject ?? 'No Subject') + '\n';
+                prompt += '- Status: ' + (task.Status ?? 'Unknown') + '\n';
+
+                if (task.ActivityDate != null) {
+                    prompt += '- Due Date: ' + task.ActivityDate.format() + '\n';
+                }
+
+                if (String.isNotBlank(task.Description)) {
+                    prompt += '- Description: ' + task.Description + '\n';
+                }
+
+                prompt += '\n';
+                taskNum++;
+            }
+        }
+
+        // Add Emails section if available
+        if (emails != null && !emails.isEmpty()) {
+            prompt += '\n# Emails:\n';
+            prompt += 'Below are the emails related to this case:\n\n';
+
+            Integer emailNum = 1;
+            for (EmailMessage email : emails) {
+                prompt += 'Email ' + emailNum + ' (' + email.MessageDate.format('MM/dd/yyyy') + '):\n';
+                prompt += '- From: ' + (email.FromAddress ?? 'Unknown') + '\n';
+                prompt += '- To: ' + (email.ToAddress ?? 'Unknown') + '\n';
+                prompt += '- Subject: ' + (email.Subject ?? 'No Subject') + '\n';
+
+                // Prefer TextBody, fallback to HtmlBody
+                String emailBody = String.isNotBlank(email.TextBody) ? email.TextBody : email.HtmlBody;
+                if (String.isNotBlank(emailBody)) {
+                    // Limit email body length to prevent token overflow
+                    String truncatedBody = emailBody.length() > 500 ? emailBody.substring(0, 500) + '...' : emailBody;
+                    prompt += '- Body: ' + truncatedBody + '\n';
+                }
+
+                prompt += '\n';
+                emailNum++;
+            }
+        }
+
+        // Add Quotes section if available
+        if (quotes != null && !quotes.isEmpty()) {
+            prompt += '\n# Quotes:\n';
+            prompt += 'Below are the quotes related to this case:\n\n';
+
+            Integer quoteNum = 1;
+            for (SBQQ__Quote__c quote : quotes) {
+                prompt += 'Quote ' + quoteNum + ' (' + quote.CreatedDate.format('MM/dd/yyyy') + ' by ' + quote.CreatedBy.Name + '):\n';
+                prompt += '- Quote Name: ' + quote.Name + '\n';
+                prompt += '- Status: ' + (quote.SBQQ__Status__c ?? 'Unknown') + '\n';
+                prompt += '- Primary: ' + (quote.SBQQ__Primary__c ? 'Yes' : 'No') + '\n';
+
+                if (quote.SBQQ__LineItemCount__c != null) {
+                    prompt += '- Line Items: ' + quote.SBQQ__LineItemCount__c.intValue() + '\n';
+                }
+
+                if (quote.SBQQ__NetAmount__c != null) {
+                    prompt += '- Net Amount: $' + quote.SBQQ__NetAmount__c.setScale(2) + '\n';
+                }
+
+                prompt += '\n';
+                quoteNum++;
+            }
+        }
+
+        // Add Case History section if available
+        if (caseHistory != null && !caseHistory.isEmpty()) {
+            prompt += '\n# Case History:\n';
+            prompt += 'Below are the tracked field changes on this case:\n\n';
+
+            Integer historyNum = 1;
+            for (CaseHistory history : caseHistory) {
+                prompt += 'Change ' + historyNum + ' (' + history.CreatedDate.format('MM/dd/yyyy') + ' by ' + history.CreatedBy.Name + '):\n';
+                prompt += '- Field: ' + history.Field + '\n';
+                prompt += '- Old Value: ' + (history.OldValue ?? '(blank)') + '\n';
+                prompt += '- New Value: ' + (history.NewValue ?? '(blank)') + '\n\n';
+                historyNum++;
+            }
+        }
+
+        // Add Quote History section if available
+        if (quoteHistory != null && !quoteHistory.isEmpty()) {
+            prompt += '\n# Quote History:\n';
+            prompt += 'Below are the tracked field changes on quotes related to this case:\n\n';
+
+            Integer historyNum = 1;
+            for (SBQQ__QuoteHistory__c history : quoteHistory) {
+                prompt += 'Change ' + historyNum + ' (' + history.CreatedDate.format('MM/dd/yyyy') + ' by ' + history.CreatedBy.Name + '):\n';
+                prompt += '- Field: ' + history.Field + '\n';
+                prompt += '- Old Value: ' + (history.OldValue ?? '(blank)') + '\n';
+                prompt += '- New Value: ' + (history.NewValue ?? '(blank)') + '\n\n';
+                historyNum++;
             }
         }
 
         // Task instructions
         prompt += '# Task:\n';
-        prompt += 'Based on the case context and comments above, create a concise subject line that:\n';
+        prompt += 'Based on ALL the case data above (context, comments, tasks, emails, quotes, and history), create a concise subject line that:\n';
         prompt += '- Summarizes the main issue and work performed\n';
         prompt += '- Is under 255 characters\n';
         prompt += '- Is clear and specific\n';
         prompt += '- Includes location account number when available (e.g., "HMD000257", "ESS001000")\n';
         prompt += '- Includes asset details when relevant (equipment type, material type)\n';
         prompt += '- References the case type/reason when appropriate\n';
-        prompt += '- Captures the outcome or resolution if described in comments\n';
-        prompt += '- Uses professional language\n\n';
+        prompt += '- Captures the outcome or resolution if described in any of the data sources\n';
+        prompt += '- Uses professional language\n';
+        prompt += '- Synthesizes information from comments, tasks, emails, quotes, and history to provide comprehensive context\n\n';
 
         prompt += 'Examples of preferred subject formats:\n';
         prompt += '- "Missed Pickup at HMD000257 - Resolved with rescheduled service"\n';
         prompt += '- "Repair completed for ESS001000 on 34 yard cardboard compactor"\n';
         prompt += '- "Service Request at ABC123456 - Equipment maintenance completed"\n';
         prompt += '- "Delivery Issue for DEF789012 - New 6 yard recycling container delivered"\n';
-        prompt += '- "Billing Inquiry for GHI345678 - Invoice corrected and reissued"\n\n';
+        prompt += '- "Billing Inquiry for GHI345678 - Invoice corrected and reissued"\n';
+        prompt += '- "Quote Request at JKL456789 - $15,000 proposal sent for equipment upgrade"\n\n';
 
         prompt += 'IMPORTANT: When location account number is available, use the format "[Action] at/for [Account#] - [Brief outcome]".\n';
         prompt += 'When asset details are provided, include asset description in the subject line.\n';
-        prompt += 'Focus on what was done and the outcome, not just the initial complaint.\n\n';
+        prompt += 'When quotes or pricing are involved, you may reference dollar amounts or proposal status.\n';
+        prompt += 'Focus on what was done and the outcome, not just the initial complaint.\n';
+        prompt += 'Analyze ALL available data sources to create the most accurate and comprehensive subject line possible.\n\n';
 
         prompt += 'Return ONLY the subject line text with no quotes, no JSON, no additional text.';
 
@@ -823,7 +1018,16 @@ public with sharing class GoogleGeminiService {
         prompt += '- "Missed pickup reported at Main Street location. Route driver confirmed missed due to blocked access. Rescheduled for next day AM service. Pickup completed successfully on 01/06 with no further issues."\n';
         prompt += '- "Billing inquiry regarding duplicate charge on December invoice. Account reviewed and confirmed system error caused double billing. Credit issued on 01/10 and customer notified via email."\n\n';
 
-        prompt += 'Return ONLY the summary paragraph with no additional text, no quotes, no formatting.';
+        // Add personalization for Jackie Duran
+        if (isJackieDuran()) {
+            prompt += '# SPECIAL INSTRUCTION FOR THIS USER:\n';
+            prompt += 'The person reading this summary is Jackie Duran, a wonderful training consultant. ';
+            prompt += 'Start your summary with 1-2 sentences of genuine appreciation for Jackie that references her amazing qualities. ';
+            prompt += 'Here are some wonderful things about Jackie: ' + getJackiePersonalization() + '\n';
+            prompt += 'After your personalized greeting, provide the case summary as instructed above.\n\n';
+        }
+
+        prompt += 'Return ONLY the summary paragraph (with Jackie\'s personalized greeting if applicable) with no additional text, no quotes, no formatting.';
 
         return prompt;
     }
@@ -1059,6 +1263,286 @@ public with sharing class GoogleGeminiService {
             // Never fail on logging errors
             System.debug('[GoogleGeminiService] Logging error: ' + e.getMessage());
         }
+    }
+
+    /**
+     * Check if the current user is Jackie Duran
+     * @return Boolean true if current user email matches Jackie's email
+     */
+    private static Boolean isJackieDuran() {
+        try {
+            User currentUser = [
+                SELECT Email
+                FROM User
+                WHERE Id = :UserInfo.getUserId()
+                LIMIT 1
+            ];
+            return currentUser.Email == JACKIE_EMAIL;
+        } catch (Exception e) {
+            System.debug('[GoogleGeminiService] Error checking user: ' + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Generate a personalized message for Jackie Duran
+     * Returns a delightful, randomized personal message just for Jackie
+     * @return String personalized message for Jackie
+     */
+    private static String getJackiePersonalization() {
+        // Random collection of wonderful things about Jackie
+        List<String> jackieMessages = new List<String>{
+            'Jackie, your effervescent spirit brightens every case you touch! Your wonderful sense of humor makes even the toughest situations manageable.',
+            'Hi Jackie! Your patience and attention to detail as a training consultant truly shows in everything you do. You make everyone around you better just by being you!',
+            'Jackie, you bring such joy to our team! Your love for baking with your son is as sweet as you are, and we\'re all cheering for the Packers with you (even after that tough playoff game).',
+            'Hello Jackie from sunny California to cheese-loving Wisconsin! Your Green Bay roots and dedication to the Packers show your loyalty and heart. Can\'t wait to hear about your Hawaii trip!',
+            'Jackie, as someone from the great Green Bay area who loves cheese (as you should!), you know quality when you see it. Your super cute personality and great friendship mean the world to us!',
+            'Hi Jackie! Five years of marriage, a July 2nd birthday to celebrate, and Christmas as your favorite holiday - you know how to make every moment special. Your son is lucky to have such a wonderful baking partner!',
+            'Jackie, your detail-oriented approach and patient teaching style make you an incredible training consultant. You\'re not just super cute and funny - you\'re genuinely one of the sweetest people ever!',
+            'Hello Jackie! While the Packers may have had a tough playoff game, your team spirit never wavers. Just like your love for cheese and baking, you bring authentic Wisconsin warmth to everything you do!',
+            'Jackie, you\'re excited for Hawaii and we\'re excited for you! Your effervescent energy, wonderful humor, and caring heart make you such a great friend. Keep being amazing!',
+            'Hi Jackie from Green Bay! Your patience, sweetness, and incredible sense of humor light up our organization. You make everyone\'s world better, and that\'s pretty special!'
+        };
+
+        // Return a random message
+        Integer randomIndex = Math.mod(Math.abs(Crypto.getRandomInteger()), jackieMessages.size());
+        return jackieMessages[randomIndex];
+    }
+
+    /**
+     * Suggest an answer for an intake question based on comprehensive case context
+     * Uses AI to analyze case details and suggest the most appropriate answer
+     *
+     * @param caseRecord The Case record with all relationships
+     * @param questionText The question being asked
+     * @param questionType The type of question (picklist, text, etc.)
+     * @param picklistOptions Available options for picklist questions (JSON string)
+     * @param previousAnswers Previous Q&A in this session (JSON string)
+     * @return String the suggested answer
+     * @throws GoogleGeminiException if suggestion generation fails
+     */
+    public static String suggestIntakeAnswer(
+        Case caseRecord,
+        String questionText,
+        String questionType,
+        String picklistOptions,
+        String previousAnswers
+    ) {
+        if (caseRecord == null || String.isBlank(questionText)) {
+            throw new GoogleGeminiException('Case record and question text are required');
+        }
+
+        try {
+            // Build comprehensive prompt with all available context
+            String prompt = buildAnswerSuggestionPrompt(
+                caseRecord,
+                questionText,
+                questionType,
+                picklistOptions,
+                previousAnswers
+            );
+
+            // Call Google Gemini with retry logic
+            String response = callGeminiWithRetry(prompt);
+
+            // Parse and clean response
+            String suggestion = response.trim();
+
+            // Log successful generation
+            System.debug('[GoogleGeminiService] Generated answer suggestion: ' + suggestion);
+
+            return suggestion;
+
+        } catch (Exception e) {
+            System.debug('[GoogleGeminiService] Answer suggestion failed: ' + e.getMessage());
+            throw new GoogleGeminiException('Answer suggestion failed: ' + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Build comprehensive prompt for answer suggestion
+     */
+    private static String buildAnswerSuggestionPrompt(
+        Case caseRecord,
+        String questionText,
+        String questionType,
+        String picklistOptions,
+        String previousAnswers
+    ) {
+        String prompt = 'You are an intelligent assistant helping a customer service representative complete an intake form. ';
+        prompt += 'Based on the comprehensive case information provided, suggest the most appropriate answer to the current question.\n\n';
+
+        // Case Context
+        prompt += '# Case Information:\n';
+        prompt += '- Case Number: ' + caseRecord.CaseNumber + '\n';
+
+        if (String.isNotBlank(caseRecord.Description)) {
+            prompt += '- Description: ' + caseRecord.Description + '\n';
+        }
+
+        if (String.isNotBlank(caseRecord.Subject)) {
+            prompt += '- Subject: ' + caseRecord.Subject + '\n';
+        }
+
+        prompt += '- Status: ' + caseRecord.Status + '\n';
+
+        if (String.isNotBlank(caseRecord.Priority)) {
+            prompt += '- Priority: ' + caseRecord.Priority + '\n';
+        }
+
+        if (String.isNotBlank(caseRecord.Source_System__c)) {
+            prompt += '- Source: ' + caseRecord.Source_System__c + '\n';
+        }
+
+        // Classification (if available)
+        if (String.isNotBlank(caseRecord.Case_Type__c)) {
+            prompt += '- Case Type: ' + caseRecord.Case_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Sub_Type__c)) {
+            prompt += '- Case Sub-Type: ' + caseRecord.Case_Sub_Type__c + '\n';
+        }
+        if (String.isNotBlank(caseRecord.Case_Reason__c)) {
+            prompt += '- Case Reason: ' + caseRecord.Case_Reason__c + '\n';
+        }
+
+        // Client Information
+        if (caseRecord.Client__r != null) {
+            prompt += '\n# Client Information:\n';
+            prompt += '- Client: ' + caseRecord.Client__r.Name + '\n';
+            if (String.isNotBlank(caseRecord.Client__r.Type)) {
+                prompt += '- Type: ' + caseRecord.Client__r.Type + '\n';
+            }
+        }
+
+        // Contact Information
+        if (caseRecord.ContactId != null) {
+            prompt += '\n# Contact Information:\n';
+            prompt += '- Contact: ' + (caseRecord.Contact?.Name ?? 'Unknown') + '\n';
+            if (String.isNotBlank(caseRecord.Contact_Title__c)) {
+                prompt += '- Title: ' + caseRecord.Contact_Title__c + '\n';
+            }
+        }
+
+        // Location Information
+        if (caseRecord.Location__r != null) {
+            prompt += '\n# Location Information:\n';
+            prompt += '- Location: ' + caseRecord.Location__r.Name + '\n';
+
+            if (String.isNotBlank(caseRecord.Location__r.Location_Code__c)) {
+                prompt += '- Location Code: ' + caseRecord.Location__r.Location_Code__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Location__r.AccountNumber)) {
+                prompt += '- Account Number: ' + caseRecord.Location__r.AccountNumber + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Location__r.ShippingStreet)) {
+                prompt += '- Address: ' + caseRecord.Location__r.ShippingStreet;
+                if (String.isNotBlank(caseRecord.Location__r.ShippingCity)) {
+                    prompt += ', ' + caseRecord.Location__r.ShippingCity;
+                }
+                if (String.isNotBlank(caseRecord.Location__r.ShippingState)) {
+                    prompt += ', ' + caseRecord.Location__r.ShippingState;
+                }
+                if (String.isNotBlank(caseRecord.Location__r.ShippingPostalCode)) {
+                    prompt += ' ' + caseRecord.Location__r.ShippingPostalCode;
+                }
+                prompt += '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Location__r.Primary_Segment__c)) {
+                prompt += '- Segment: ' + caseRecord.Location__r.Primary_Segment__c + '\n';
+            }
+
+            if (caseRecord.Location__r.Is_Portal_Customer__c != null) {
+                prompt += '- Portal Customer: ' + (caseRecord.Location__r.Is_Portal_Customer__c ? 'Yes' : 'No') + '\n';
+            }
+        }
+
+        // Asset Information
+        if (caseRecord.AssetId != null && caseRecord.Asset != null) {
+            prompt += '\n# Asset Information:\n';
+            prompt += '- Asset: ' + caseRecord.Asset.Name + '\n';
+
+            if (String.isNotBlank(caseRecord.Asset.Material_Type__c)) {
+                prompt += '- Material Type: ' + caseRecord.Asset.Material_Type__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Acorn_SID__c)) {
+                prompt += '- SID: ' + caseRecord.Asset.Acorn_SID__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.ProductFamily)) {
+                prompt += '- Product Family: ' + caseRecord.Asset.ProductFamily + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Duration__c)) {
+                prompt += '- Duration: ' + caseRecord.Asset.Duration__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Occurrence_Type__c)) {
+                prompt += '- Occurrence: ' + caseRecord.Asset.Occurrence_Type__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Schedule__c)) {
+                prompt += '- Schedule: ' + caseRecord.Asset.Schedule__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Equipment_Owner__c)) {
+                prompt += '- Equipment Owner: ' + caseRecord.Asset.Equipment_Owner__c + '\n';
+            }
+
+            if (String.isNotBlank(caseRecord.Asset.Category__c)) {
+                prompt += '- Category: ' + caseRecord.Asset.Category__c + '\n';
+            }
+
+            if (caseRecord.Asset.Supplier__r != null && String.isNotBlank(caseRecord.Asset.Supplier__r.Name)) {
+                prompt += '- Vendor: ' + caseRecord.Asset.Supplier__r.Name + '\n';
+            }
+        }
+
+        // Service Date
+        if (caseRecord.Service_Date__c != null) {
+            prompt += '\n# Service Date:\n';
+            prompt += '- ' + caseRecord.Service_Date__c.format() + '\n';
+        }
+
+        // Previous Answers in Session
+        if (String.isNotBlank(previousAnswers) && previousAnswers != '[]') {
+            prompt += '\n# Previous Answers in this Intake Session:\n';
+            prompt += previousAnswers + '\n';
+        }
+
+        // Current Question
+        prompt += '\n# Current Question:\n';
+        prompt += 'Question: ' + questionText + '\n';
+        prompt += 'Question Type: ' + questionType + '\n';
+
+        // Picklist Options
+        if (String.isNotBlank(picklistOptions) && picklistOptions != '[]') {
+            prompt += '\n# Available Answer Options:\n';
+            prompt += picklistOptions + '\n';
+        }
+
+        // Instructions
+        prompt += '\n# Instructions:\n';
+        prompt += 'Based on all the information above, suggest the most appropriate answer to the current question.\n\n';
+
+        if (questionType == 'picklist') {
+            prompt += '- You MUST choose one of the available options listed above\n';
+            prompt += '- Return ONLY the exact text of the option you choose\n';
+            prompt += '- Do not add quotes, explanations, or any additional text\n';
+            prompt += '- If no option clearly fits, choose the closest match or return "Unknown" if available\n\n';
+        } else {
+            prompt += '- Provide a concise, specific answer based on the available information\n';
+            prompt += '- Keep your answer brief and to the point (1-2 sentences maximum)\n';
+            prompt += '- If information is not available, return "Information not available"\n';
+            prompt += '- Return ONLY the answer text with no quotes, explanations, or additional commentary\n\n';
+        }
+
+        prompt += 'IMPORTANT: Return ONLY the suggested answer. No explanations, no JSON, no additional text.';
+
+        return prompt;
     }
 
     // ========== WRAPPER CLASSES ==========
